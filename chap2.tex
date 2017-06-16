@@ -1,26 +1,27 @@
 \chapter{Simulating sequences undergoing affinity maturation}
 
 \section{Introduction}
-Antibodies have an important role in adaptive immunity by specifically binding to invading pathogens like bacteria and viruses.
-Developing specific antibodies involves reactions across the entire immune system, but it is B cells that mature and secrete antibodies after undergoing several rounds of selections in the bone marrow and the germinal centers (GCs).
-B cells undergoing GC affinity maturation express antibodies as B cell receptors (BCRs) and these are subject to a strict selection scheme, where many different factors come into play e.g.  antigen affinity, receptor expression -and folding, codon choice affecting translation rates and affinity to self antigens.
-However all these factors leads back to antigen binding measured by nearby T cells and effecting the mutual probabilities of proliferation or apoptosis \cite{Bannard_Cyster_2017}, \cite{victora2012germinal}.
-As an example in a GC there is a direct selection for higher BCR affinity to sequester more antigen, while the selection against binding self antigens is mediated by the binding competition that leads to less binding of less antigen from the pathogen.
-Therefore, in its most simple way, affinity maturation is driven by affinity towards the presented antigen and all the effects also attributed to selection, like folding, stability and aggregation, is selected by their effect on affinity.
+Antibodies have an important role in adaptive immunity by specifically binding to and neutralizing invading pathogens like bacteria and viruses.
+Developing specific antibodies involves reactions across the entire immune system, but it is B cells that mature and secrete antibodies, after undergoing several rounds of selections in the bone marrow and the germinal centers (GCs).
+B cells undergoing GC affinity maturation express antibodies as B cell receptors (BCRs), and these are subject to a strict selection scheme, where many different factors come into play e.g. antigen affinity, receptor expression -and folding, codon choice affecting translation rates and affinity to self antigens.
+All these factors leads back to the same thing: the ability to bind antigen, and this is measured by nearby T cells, which will be effecting the mutual probabilities of proliferation or apoptosis \cite{Bannard_Cyster_2017}, \cite{victora2012germinal}.
+As an example in a GC there is a direct T cell mediated selection for higher BCR affinity by means of sequestering more antigen.
+Selection against binding of self antigens is mediated by the fact that binding self antigens will block binding of pathogen antigens, resulting in decreased T cell help.
+Therefore, in its most simple way, affinity maturation is driven by affinity towards the presented antigen, and all the effects also attributed to selection, like folding, stability and aggregation, is selected by means of their shared effect on affinity.
 
-Affinity maturation is clearly a strong selection imposed on the B cell evolution and this poses a challenge to phylogenetic reconstruction.% which presumably will break .
-To validate the correctness of phylogenetic methods simulation studies are the most important tool.
-Classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions but simulations can also be configured to have selection.
-But while many groups have simulated affinity maturation over time \cite{Reshetova_2017}, \cite{Balelli_2016}, \cite{Childs_Baskerville_Cobey_2015} there have been no example of affinity centric simulations on single sequence level.
+Affinity maturation is a strong selective pressure imposed on the B cell evolution, and this poses a challenge to phylogenetic reconstruction.% which presumably will break .
+To validate the correctness of phylogenetic methods simulation studies are among the most important tool.
+Classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions, but simulations can also be configured to have selection.
+While many groups have simulated affinity maturation over time \cite{Reshetova_2017}, \cite{Balelli_2016}, \cite{Childs_Baskerville_Cobey_2015}, there have been no example of affinity centric simulations on single sequence level, and indeed most GC simulation studies treat the BCR sequence as a hidden state to focus on the summary statistics of the whole GC.
 
 We propose a simple model of affinity maturation that models sequence fitness as a function of BCR affinity.
-If the BCR affinity is high it means that the B cell will endocytose a lot of antigen and thereby get plenty of T cell help decreasing the changes of undergoing apoptosis while increasing the chances of proliferation.
-Contrary if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
-Under this setup it is not the absolute affinity that matters but rather the affinity relative to the affinities of all competing cell in the whole GC, and the total amount of antigens to compete for.
+If the BCR affinity is high it means that the B cell will endocytose a lot of antigen, thereby getting plenty of T cell help to decrease the changes of undergoing apoptosis while increasing the chances of proliferation.
+Contrary, if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
+Under this setup it is not the absolute affinity that matters, but rather the affinity relative to the affinities of all the competing cell in the whole GC, held against the total amount of antigens to compete for.
 By modularizing the simulation code we first make a model for a neutral branching process, and then make an optional affinity selection step that works in conjunction with the neutral process used to introduce substitutions.
 
-The purpose of the presented simulation method is to generate more realistic sequence simulations that can be widely used to assess performance of phylogenetic methods.
-The model is suppose to capture the most dominant effect of affinity maturation without being a full mechanistic model, however sufficient to recapitulate the features of real GC data.
+The purpose of the presented simulation method is to generate more realistic sequence simulations of clonal families to be widely used for assessing the performance of phylogenetic methods.
+The model is suppose to capture the most influential effects of affinity maturation without being a detailed mechanistic model, however sufficient to recapitulate the features of real GC data.
 
 
 
@@ -30,33 +31,35 @@ The model is suppose to capture the most dominant effect of affinity maturation 
 \section{Methods}
 
 \subsection{Neutral branching process}
-A neutral branching process, independent from the later described affinity model, was setup as a reference point.
-This can be viewed as a model of cell divisions where at each generation a cell can either die or produce a number of offspring and each offspring has some probability of carrying a mutation.
+A neutral branching process, independent from the later described affinity model, was setup as a reference point for simulation.
+It can be viewed as a model of cell divisions, where at each generation a cell can either die or produce a number of offspring, and each offspring has some probability of carrying a mutation.
 The neutrality assumption lies in the fact that the mutations introduced will have no fitness effect in later generations.
-At initialization of this simulation the root sequence is given and this gets evolved through a stochastic branching process that also includes stochastic introduction of mutations at each generation.
-The branching process is controlled by an arbitrary discrete distribution, but due to the flexible nature and convenient mathematical properties of the Poisson distribution, this is the default choice.
-Therefore in future sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
-Furthermore at each generation all progeny cells will undergo a mutation process determined by another discrete distribution, again we use Poisson.
-The number of nucleotide mutations is drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
-Since the mutations happen sequentially there is a possibility of back mutations.
-Mutations can be introduced using a uniform probability over all sites, but because it is well known that BCR sequences do not mutate uniformly random \cite{Yeap2015-nl} we used an empirical approximation of the neutral mutation process called S5F \cite{cui2016model}.
-The S5F model contain mutability of the middle base of all 5'mer motifs, and substitution preferences given a mutation i.e. if a random process chooses to mutate the 5'mer \texttt{AAAAA}, then the S5F model also provides a list of probabilities for each middle base substitution, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, summing to 1.
-A 5'mer mutability cannot be used directly on a site at the start or end of a sequence because of missing context, so in those cases we put the an unknown base, N, instead of the missing context and marginalized over all possible motifs fitting this ambiguous context.
+The root sequence is given at initialization as a starting point to evolve through a stochastic branching process, that also includes stochastic introduction of mutations at each generation.
+The branching process is controlled by an arbitrary discrete distribution, in this case, due to the flexible nature and convenient mathematical properties, the Poisson distribution is the default choice.
+In below sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
+%Furthermore at each generation all progeny cells will undergo a mutation process determined by discrete distribution, again we use Poisson.
+%The number of nucleotide mutations is drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
+Furthermore at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
+Sequential mutations allow the possibility of back mutations.
+Mutations can be introduced using a uniform probability over all sites, but because it is well known that BCR sequences do not mutate uniformly random \cite{Yeap2015-nl}, we used an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
+The S5F model contain mutability of the middle base of all 5'mer DNA motifs, and for each motif the base preferences given a mutation i.e. if a random process chooses to mutate the 5'mer \texttt{AAAAA}, then the S5F model will provides a list of probabilities for each middle base substitutions, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, probabilities summing to 1.
+A 5'mer mutability cannot be used directly on sites at the start or end of a sequence because of missing context.
+We fill in missing context with the unknown base, N, and average over all possible motifs fitting into this ambiguous context.
 
-Termination of the neutral branching process was enforced in either of three ways: 1) by simulating under a subcritical process ($\lambda < 1$) \cite{gwp} following it until extinction, 2) by using a stopping time $T$, or 3) by stopping after a max population of $N$ has been reach.
-In addition we introduced a parameter for down-sampling the cell population down to $n$ cells after termination.
-Down-sampling allow us to simulate incomplete sampling of cells e.g. by fall out during PCR, sequencing or quality control steps.
-This gives a five parameter model, tabulated in table \ref{neut_constants}, but only one of the stopping criteria can be used, effectively making it a four parameter model.
+Termination of the neutral branching process is enforced in either of three ways: 1) by simulating under a subcritical process ($\lambda < 1$) \cite{gwp} and following it until extinction, 2) by using a stopping time $T$, or 3) by stopping after a max population of $N$ has been reach.
+Leafs are sampled from last time point, or in the case of 1) only terminated leafs, and in addition we introduced a parameter for down-sampling the cell population to $n$ cells.
+Down-sampling allows for emulating the incomplete sampling of a GC cell population, which is expected to happen in HTS data due to fall out during PCR, sequencing, quality control steps and limited sampling e.g. in the case of data from PBMCs.
+The five parameters of the model is tabulated in table \ref{neut_constants}, but only one of the stopping criteria can be used in a run, effectively making it a four parameter model.
 
 \begin{table}[ht]
 \centering
 \begin{tabular}{ll}
 Parameter    & Description \\ \hline
 $\lambda$ & $\operatorname{Pois}(\lambda)$ progeny distribution \\
-$\lambda_0$ & $\operatorname{Pois}(\lambda_0)$ sequence mutability \\
+$\lambda_0$ & $\operatorname{Pois}(\lambda_0)$ mutation distribution \\
 $T$ & Stopping time \\
-$N$ & Stopping at this number of sequences \\
-$n$ & Down-sampled number of sequence
+$N$ & Stopping number of sequences \\
+$n$ & Down-sampled number of sequences
 \end{tabular}
 \caption{
 \label{neut_constants}

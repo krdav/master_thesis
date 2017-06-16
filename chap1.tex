@@ -39,7 +39,6 @@ In this chapter I will describe the theoretical fundamentals of the chapters to 
 
 
 
-% \subsection{Biology of B cells}
 \section{Adaptive immunity}
 The function of the immune system is to protect its host against invading pathogens.
 To carry out this role the effector cells of the immune system have been equipt with a license to kill, and not only to kill pathogen, but also to kill its own host cells.
@@ -204,7 +203,7 @@ However the subgroup level is \textit{not} defined phylogenetically, even though
 Each subgroup has a number of genes that are defined by their chromosomal position (locus) and present in all individuals in a species.
 Each gene is encoded by a single sequence, the allele, that can very between individuals.
 % A gene can have many different observed alleles in a population, and although indels are possible, allelic difference between individuals usually alleles just differ by a single nucleotide polymorphism.
-A gene can have many different observed alleles in a population, and usually allelic differences between individuals are just single nucleotide polymorphism, although indels are possible they are rare.
+A gene can have many different observed alleles in a population, and while these allelic differences between individuals are usually just single nucleotide polymorphism, indels do occur causing some alleles of the same gene to have different length.
 
 
 
@@ -239,12 +238,6 @@ Clearly FRs are suppose to be more conserved and less structurally flexible whil
 In this work FRs are considered to be the most structurally conserved beta-sheets in the immunoglobulin domain, and CDRs are considered to be the structurally flexible loops connecting these beta-sheets.
 This definition is recapitulated in the CDR centric numbers tabulated by Andreas Pl{\"u}ckthun (\url{https://www.bioc.uzh.ch/plueckthun/antibody/Numbering/}).
 The FR1-4 ranges are: \texttt{1-27, 41-57, 78-108, 138-149} and the CDR1-3 ranges are: \texttt{28-40, 58-77, 109-137}.
-
-
-
-
-
-
 
 
 
@@ -570,16 +563,11 @@ Contrarily, if integrating over germline and junctional annotation uncertainties
 \end{figure}
 
 
-% Now we begin to understand that the root cause of the clustering problem is propagation of point estimates, i.e. germline gene assignment to a BCR sequence that has undergone SHM and is associated with substantial uncertainty.
 Now it should be clear that the root cause of the clustering problem is propagation of errors in point estimates, i.e. ignoring the substantial uncertainty in VDJ annotations of a BCR sequence that has undergone SHM.
 When a clustering criterion is based on the point estimate of both the V and J assignment, both the assignment uncertainties are affecting the clustering performance negatively.
 The junction length is also problematic to use because it is also just a point estimate, and often estimated from by a problematic alignment method as outlined in the example in table \ref{extend_or_not}.
 Lastly, hamming distance is weighting a mismatch in the N/P base region equally likely as a mismatch in the middle of germline gene while there is much more certainty of a real SHM event in the later case.
 In the example in figure \ref{fig:VJ_CDR3_agglomeration} VJ junction agglomeration is overestimating the number of clusters and indeed this intuition is also observed in simulation studies \cite{ralph2016likelihood}.
-
-%%%% Naaah to so true because most samples are from a single individual with just one allele per gene.
-%But while this probably is the main shortcoming of VJ junction agglomeration, ironically, because the method disregards the allele it is also prone to clustering of sequences from different germline alleles and thereby underestimating the number of clusters.
-% Because it is too obvious that clustering on allele level is going to break due to mis-annotations, the allele level information a sequence might have is discarded and only the gene annotation is used, thereby increasing the chance of merging sequences with different germline alleles.
 
 A completely different approach is taken by Ralph et al. \cite{ralph2016likelihood}, extending on their HMM framework for germline gene annotation.
 They use the naive sequence as a centrality point for clustering, not in terms of hamming distance, but in the terms of likelihood.
@@ -674,22 +662,6 @@ When sampling has converged the resulting posterior distributions of all paramet
 The real drawback of Bayesian phylogeny is that sampling can make runtime much slower than a similar ML problem.
 There can also be a problem of reaching convergence in cases where sampling is difficult.
 
-
-
-
-
-\iffalse
-\subsection{Phylogeny of a clonal family}
-In this work we consider how to apply phylogeny to BCR sequence evolution.
-Specifically we used the definition of a clonal family that has single shared root state given a priori as a naive sequence.
-Often clonal families and their naive sequences are inferred from high throughput sequencing (HTS) data generated from bulk RNA extracted from peripheral blood mononuclear cell (PBMC).
-However PBMCs do not contain a single time point of B cell from the GC reaction, rather they contain memory -and plasma cells that have been continuously exported while their GC reaction was taking place.
-
-
-%%% The problem gets harder with PBMC samples because this may be containing multiple sample times because the memory/plasma cells fraction has been exported throughout the GC reaction.
-
-% Standard phylogeny does not handle cases with multiple time point samples, or sampling of ancestral states in general.
-\fi
 
 
 
