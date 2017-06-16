@@ -1,0 +1,123 @@
+
+\iffalse
+
+
+
+
+\chapter{B cell receptor amino acid profiles}
+
+%%%%%%% from aammp paper
+Germinal center (GC) maturation is a central process of the adaptive immune system.
+The Darwinian selection undertaken inside a GC is driven by B cells' ability to bind the antigen through the membrane bound B cell receptor (BCR), also known as an antibody.
+The population of B cells are under stringent selection while being highly mutated, driving the cell population towards higher and higher affinity until the GC is eventually dissolved.
+
+Each GC are though of as founded by one or a few B cells and binding just a single epitope \cite{tas2016visualizing}.
+The evolutionary process is undertaken in small steps to improve the binding to this specific epitope surface and therefore it is unlikely that a switch in epitope specificity will occur.
+Assuming that this holds, all cell within a clonal family will have evolved in the same context, with the objective of improving binding to the same surface as the founder cell.
+Different GCs can have different epitope specificities and in these different contexts each GC will have their own fitness landscape.
+
+When sequencing B cell repertoires it is possible to establish the clonal identity of each sequence with reasonable confidence \cite{ralph2016likelihood}, thereby relating each sequence to the GC they arose, but it is much more difficult to reconstruct the evolutionary process and the selection that happened inside the GC.
+We separate selection into two classes, local -and global selection.
+Local selection is the context specific selection happening on all of the B cell of a single GC because they evolve towards binding the same epitope.
+Local selection is therefore working on the level of epitope binding with positive selection for those mutations that confer tighter binding and vice versa.
+Local selection is strictly related to binding of a single epitope surface but whether change in binding is due to direct antibody epitope contact or indirect effects improving binding by framework stabilizing or other ways, is irrelevant.
+In fact the local effects capture everything we would like to estimate, there is just not sufficient data to do so and therefore we turn to global effects.
+Global effects on selection are the subset of local effects shared between clonal families.
+These will be different from direct binding effects and typically reflect conservation of general antibody features such as frame work beta sheet interactions and protein stability.
+Analysis of global effect in a large repertoire was recently undertaken by McCoy et al. where it was found that selection was correlated with surface exposure of a residue \cite{mccoy2015quantifying}.
+This might be an indirect effect related to the correlation between surface exposure of a residue and its effect on protein stability \cite{echave2016causes}.
+
+In the selection process some mutations will increase the BCR affinity and eventually be fixed, while some might be deleterious and counter selected, and finally some are just neutral accumulating throughout the evolution.
+This can be expressed in the terms of a observation probability vector for each position, where the probability of is observing a given amino acid is proportional to the fitness of that amino acid vs.
+the other 19 possible substitutions.
+Raw counts of amino acids over each site will at the limit of an infinite number of sequence observations correspond to the true vector of probabilities however due to the limited number of sequences occurring in a GC, raw counts is not a good estimator.
+Therefore it is necessary to enforce the estimate of selection within a single GC with information derived from similar GCs.
+In this scheme the local context specific effects will be combined with global information derived from many more sequences from related GCs by using the global effects as prior information feeding into the selection estimate on local scale.
+
+While germinal center phylogenetic reconstruction is highly informed by nucleotide sequences, selection is working on protein sequences and synonymous codons, coding the same amino acid, does not possess any fitness advantage.
+The functional form of the BCR is a protein and therefore the purpose of our model is the describe the selection on codon level.
+Furthermore the codon level of selection is of increasing interest due to the potential use in engineering antibodies for human disease therapy like cancer, acute infections, auto-immune disease and rare genetic disease.
+
+In this article we are suggesting a new approach to leverage global constraints on the BCR protein sequence across different epitope contexts with local information of sequences sharing the same epitope context.
+Using this model it is possible to find the conserved sites and most likely allowed substitutions, useful in antibody engineering while keeping the target epitope conserved.
+
+
+%%%%%%
+
+
+
+
+
+
+
+
+
+
+Bla bla introduction
+This can be used for bla 
+
+
+Observed BCR sequences does not necessarily have therapeutic potential e.g. B cell don't care about aggregation and viscosity, and probably doesn't care much about heat stability and pH tolerance either.
+What observed BCR sequences really provide is a lower bound on what can be a therapeutic antibody i.e. if an antibody cannot be functional in a B cell it will never get to be a therapeutic antibody, but just because it has been observed it does not mean that it have full potential to as a therapeutic antibody.
+
+
+
+\section{Model description}
+%Amrit has a small section on a math description of aammp:
+Maybe insert math description:
+\url{https://www.overleaf.com/8548257cyshmbtrkywn#/30398139/}
+
+
+
+
+Simulation of expected substitution profile given the naive sequence, mutation burden and motif model.
+
+
+
+
+
+
+
+
+\fi
+
+\chapter{Perspectives}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% From the validation study:
+Pretty much no difference.
+Maybe IgPhyML is over-parameterized.
+    - Or selection is strong enough to make the tree look shallow in mutational landscape (long trunk and bushy canopy)
+    - This could be assessed by taking multiple time points on the tree
+
+Why don't we see any difference? For affinity selection this could be because that information is lost during the selection steps i.e. many mutations are getting selected against.
+
+
+It would be interesting is investigate the effect of using joint reconstruction or just assess the likelihood difference between maximum likelihood and the second highest likelihood. If these are close joint reconstruction might change the results substantially but if they are always far away then jointly reconstructing all ancestral sequences are very likely to be the same, in which case joint reconstruction would be a waste of computations.
+
+% Multiple time point sampling
+
+% Parsimony tree ranking based on an AID motif likelihood.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%### Symphogen data:
+%Maybe include the results of the inferred naive Abs binding with 100-1000x lower affinity than the mature.
+%Maybe maybe include the first line of results from the Symphogen ASR sequences we ordered.
+%%% Include all this as unpublished data and personal communication with Nikolaj to avoid having to get any permissions from Symphogen
+
+
+Bayesian phylogenetic pairing of heavy -and light chains.
+
+
+HIV vaccine design and also vaccine design in general.
+
+
+
+% Round of by making bold claims about using these techniques to optimize/engineer antibody selection e.g. for minimizing CMC problems like aggregation, stability, viscosity, ...
+
+
+
+

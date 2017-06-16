@@ -1,0 +1,128 @@
+% -*- Mode:TeX -*-
+
+%% IMPORTANT: The official thesis specifications are available at:
+%%            http://libraries.mit.edu/archives/thesis-specs/
+%%
+%%            Please verify your thesis' formatting and copyright
+%%            assignment before submission.  If you notice any
+%%            discrepancies between these templates and the 
+%%            MIT Libraries' specs, please let us know
+%%            by e-mailing thesis@mit.edu
+
+%% The documentclass options along with the pagestyle can be used to generate
+%% a technical report, a draft copy, or a regular thesis.  You may need to
+%% re-specify the pagestyle after you \include  cover.tex.  For more
+%% information, see the first few lines of mitthesis.cls. 
+
+%\documentclass[12pt,vi,twoside]{mitthesis}
+%%
+%%  If you want your thesis copyright to you instead of MIT, use the
+%%  ``vi'' option, as above.
+%%
+%\documentclass[12pt,twoside,leftblank]{mitthesis}
+%%
+%% If you want blank pages before new chapters to be labelled ``This
+%% Page Intentionally Left Blank'', use the ``leftblank'' option, as
+%% above. 
+
+\documentclass[12pt,twoside]{mitthesis}
+\usepackage{lgrind}
+\pagestyle{plain}
+
+
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[arrows=pgf-filled]{mhchem}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=bash,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  tabsize=4,
+    literate={A}{{A\allowbreak}}{1}
+    {a}{{a\allowbreak}}{1}
+}
+
+
+
+% Text in math:
+\newcommand{\COAR}{\text{COAR}}
+\newcommand{\alignscore}{\text{alignscore}}
+\newcommand{\leaf}{\text{leaf}}
+\newcommand{\Inf}{\text{Inf}}
+\newcommand{\length}{\text{length}}
+\newcommand{\adcomment}[1]{({\color{blue}{AD's comment:}} \textbf{\color{blue}{#1}})}
+\newcommand{\adcommentKD}[1]{({\color{green}{KD's comment:}} \textbf{\color{blue}{#1}})}
+\newcommand{\off}{\text{off}}
+\newcommand{\on}{\text{on}}
+\newcommand{\bound}{\text{bound}}
+\newcommand{\total}{\text{total}}
+\newcommand{\full}{\text{full}}
+\newcommand{\naive}{\text{naive}}
+\newcommand{\mature}{\text{mature}}
+\newcommand{\hamdist}{\text{hamming\textunderscore dist}}
+\newcommand{\argmin}{\mathop{\mathrm{\min}}\limits}
+\newcommand{\hamming}{\text{hamming}}
+\newcommand{\dist}{\text{dist}}
+\newcommand{\expansion}{\text{expansion}}
+\newcommand{\burst}{\text{burst}}
+\newcommand{\AAAAA}{\text{\texttt{AAAAA}}}
+\newcommand{\AATAA}{\text{\texttt{AATAA}}}
+\newcommand{\AAGAA}{\text{\texttt{AAGAA}}}
+\newcommand{\AACAA}{\text{\texttt{AACAA}}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\MRCA}{\text{\text{MRCA}}}
+
+
+%% This bit allows you to either specify only the files which you wish to
+%% process, or `all' to process all files which you \include.
+%% Krishna Sethuraman (1990).
+%
+%\typein [\files]{Enter file names to process, (chap1,chap2 ...), or `all' to process all files:}
+%\def\all{all}
+%\ifx\files\all \typeout{Including all files.} \else \typeout{Including only \files.} \includeonly{\files} \fi
+
+\begin{document}
+
+\include{cover}
+% Some departments (e.g. 5) require an additional signature page.  See
+% signature.tex for more information and uncomment the following line if
+% applicable.
+% \include{signature}
+\pagestyle{plain}
+\include{contents}
+\include{chap1}
+\include{chap2}
+\include{chap3}
+\include{chap4}
+\appendix
+\include{appa}
+\include{appb}
+\include{appc}
+\include{biblio}
+\end{document}
+

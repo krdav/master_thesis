@@ -1,0 +1,2509 @@
+@preamble{ "\newcommand{\noopsort}[1]{} "
+	# "\newcommand{\printfirst}[2]{#1} "
+	# "\newcommand{\singleletter}[1]{#1} "
+	# "\newcommand{\switchargs}[2]{#2#1} " }
+
+@ARTICLE{article-minimal,
+   author = {L[eslie] A. Aamport},
+   title = {The Gnats and Gnus Document Preparation System},
+   journal = {\mbox{G-Animal's} Journal},
+   year = 1986,
+}
+
+@ARTICLE{article-full,
+   author = {L[eslie] A. Aamport},
+   title = {The Gnats and Gnus Document Preparation System},
+   journal = {\mbox{G-Animal's} Journal},
+   year = 1986,
+   volume = 41,
+   number = 7,
+   pages = "73+",
+   month = jul,
+   note = "This is a full ARTICLE entry",
+}
+
+The KEY field is here to override the KEY field in the journal being
+cross referenced (so is the NOTE field, in addition to its imparting
+information).
+
+@ARTICLE{article-crossref,
+   crossref = {WHOLE-JOURNAL},
+   key = "",
+   author = {L[eslie] A. Aamport},
+   title = {The Gnats and Gnus Document Preparation System},
+   pages = "73+",
+   note = "This is a cross-referencing ARTICLE entry",
+}
+
+@ARTICLE{whole-journal,
+   key = "GAJ",
+   journal = {\mbox{G-Animal's} Journal},
+   year = 1986,
+   volume = 41,
+   number = 7,
+   month = jul,
+   note = {The entire issue is devoted to gnats and gnus
+		(this entry is a cross-referenced ARTICLE (journal))},
+}
+
+@INBOOK{inbook-minimal,
+   author = "Donald E. Knuth",
+   title = "Fundamental Algorithms",
+   publisher = "Addison-Wesley",
+   year = "{\noopsort{1973b}}1973",
+   chapter = "1.2",
+}
+
+@INBOOK{inbook-full,
+   author = "Donald E. Knuth",
+   title = "Fundamental Algorithms",
+   volume = 1,
+   series = "The Art of Computer Programming",
+   publisher = "Addison-Wesley",
+   address = "Reading, Massachusetts",
+   edition = "Second",
+   month = "10~" # jan,
+   year = "{\noopsort{1973b}}1973",
+   type = "Section",
+   chapter = "1.2",
+   pages = "10--119",
+   note = "This is a full INBOOK entry",
+}
+
+@INBOOK{inbook-crossref,
+   crossref = "whole-set",
+   title = "Fundamental Algorithms",
+   volume = 1,
+   series = "The Art of Computer Programming",
+   edition = "Second",
+   year = "{\noopsort{1973b}}1973",
+   type = "Section",
+   chapter = "1.2",
+   note = "This is a cross-referencing INBOOK entry",
+}
+
+@BOOK{book-minimal,
+   author = "Donald E. Knuth",
+   title = "Seminumerical Algorithms",
+   publisher = "Addison-Wesley",
+   year = "{\noopsort{1973c}}1981",
+}
+
+@BOOK{book-full,
+   author = "Donald E. Knuth",
+   title = "Seminumerical Algorithms",
+   volume = 2,
+   series = "The Art of Computer Programming",
+   publisher = "Addison-Wesley",
+   address = "Reading, Massachusetts",
+   edition = "Second",
+   month = "10~" # jan,
+   year = "{\noopsort{1973c}}1981",
+   note = "This is a full BOOK entry",
+}
+
+@BOOK{book-crossref,
+   crossref = "whole-set",
+   title = "Seminumerical Algorithms",
+   volume = 2,
+   series = "The Art of Computer Programming",
+   edition = "Second",
+   year = "{\noopsort{1973c}}1981",
+   note = "This is a cross-referencing BOOK entry",
+}
+
+@BOOK{whole-set,
+   author = "Donald E. Knuth",
+   publisher = "Addison-Wesley",
+   title = "The Art of Computer Programming",
+   series = "Four volumes",
+   year = "{\noopsort{1973a}}{\switchargs{--90}{1968}}",
+   note = "Seven volumes planned (this is a cross-referenced set of BOOKs)",
+}
+
+@BOOKLET{booklet-minimal,
+   key = "Kn{\printfirst{v}{1987}}",
+   title = "The Programming of Computer Art",
+}
+
+@BOOKLET{booklet-full,
+   author = "Jill C. Knvth",
+   title = "The Programming of Computer Art",
+   howpublished = "Vernier Art Center",
+   address = "Stanford, California",
+   month = feb,
+   year = 1988,
+   note = "This is a full BOOKLET entry",
+}
+
+@INCOLLECTION{incollection-minimal,
+   author = "Daniel D. Lincoll",
+   title = "Semigroups of Recurrences",
+   booktitle = "High Speed Computer and Algorithm Organization",
+   publisher = "Academic Press",
+   year = 1977,
+}
+
+@INCOLLECTION{incollection-full,
+   author = "Daniel D. Lincoll",
+   title = "Semigroups of Recurrences",
+   editor = "David J. Lipcoll and D. H. Lawrie and A. H. Sameh",
+   booktitle = "High Speed Computer and Algorithm Organization",
+   number = 23,
+   series = "Fast Computers",
+   chapter = 3,
+   type = "Part",
+   pages = "179--183",
+   publisher = "Academic Press",
+   address = "New York",
+   edition = "Third",
+   month = sep,
+   year = 1977,
+   note = "This is a full INCOLLECTION entry",
+}
+
+@INCOLLECTION{incollection-crossref,
+   crossref = "whole-collection",
+   author = "Daniel D. Lincoll",
+   title = "Semigroups of Recurrences",
+   pages = "179--183",
+   note = "This is a cross-referencing INCOLLECTION entry",
+}
+
+@BOOK{whole-collection,
+   editor = "David J. Lipcoll and D. H. Lawrie and A. H. Sameh",
+   title = "High Speed Computer and Algorithm Organization",
+   booktitle = "High Speed Computer and Algorithm Organization",
+   number = 23,
+   series = "Fast Computers",
+   publisher = "Academic Press",
+   address = "New York",
+   edition = "Third",
+   month = sep,
+   year = 1977,
+   note = "This is a cross-referenced BOOK (collection) entry",
+}
+
+@MANUAL{manual-minimal,
+   key = "Manmaker",
+   title = "The Definitive Computer Manual",
+}
+
+@MANUAL{manual-full,
+   author = "Larry Manmaker",
+   title = "The Definitive Computer Manual",
+   organization = "Chips-R-Us",
+   address = "Silicon Valley",
+   edition = "Silver",
+   month = apr # "-" # may,
+   year = 1986,
+   note = "This is a full MANUAL entry",
+}
+
+@MASTERSTHESIS{mastersthesis-minimal,
+   author = "{\'{E}}douard Masterly",
+   title = "Mastering Thesis Writing",
+   school = "Stanford University",
+   year = 1988,
+}
+
+@MASTERSTHESIS{mastersthesis-full,
+   author = "{\'{E}}douard Masterly",
+   title = "Mastering Thesis Writing",
+   school = "Stanford University",
+   type = "Master's project",
+   address = "English Department",
+   month = jun # "-" # aug,
+   year = 1988,
+   note = "This is a full MASTERSTHESIS entry",
+}
+
+@MISC{misc-minimal,
+   key = "Missilany",
+   note = "This is a minimal MISC entry",
+}
+
+@MISC{misc-full,
+   author = "Joe-Bob Missilany",
+   title = "Handing out random pamphlets in airports",
+   howpublished = "Handed out at O'Hare",
+   month = oct,
+   year = 1984,
+   note = "This is a full MISC entry",
+}
+
+@STRING{STOC-key = "OX{\singleletter{stoc}}"}
+
+@STRING{ACM = "The OX Association for Computing Machinery"}
+
+@STRING{STOC = " Symposium on the Theory of Computing"}
+
+@INPROCEEDINGS{inproceedings-minimal,
+   author = "Alfred V. Oaho and Jeffrey D. Ullman and Mihalis Yannakakis",
+   title = "On Notions of Information Transfer in {VLSI} Circuits",
+   booktitle = "Proc. Fifteenth Annual ACM" # STOC,
+   year = 1983,
+}
+
+@INPROCEEDINGS{inproceedings-full,
+   author = "Alfred V. Oaho and Jeffrey D. Ullman and Mihalis Yannakakis",
+   title = "On Notions of Information Transfer in {VLSI} Circuits",
+   editor = "Wizard V. Oz and Mihalis Yannakakis",
+   booktitle = "Proc. Fifteenth Annual ACM" # STOC,
+   number = 17,
+   series = "All ACM Conferences",
+   pages = "133--139",
+   month = mar,
+   year = 1983,
+   address = "Boston",
+   organization = ACM,
+   publisher = "Academic Press",
+   note = "This is a full INPROCEDINGS entry",
+}
+
+@INPROCEEDINGS{inproceedings-crossref,
+   crossref = "whole-proceedings",
+   author = "Alfred V. Oaho and Jeffrey D. Ullman and Mihalis Yannakakis",
+   title = "On Notions of Information Transfer in {VLSI} Circuits",
+   organization = "",
+   pages = "133--139",
+   note = "This is a cross-referencing INPROCEEDINGS entry",
+}
+
+@PROCEEDINGS{proceedings-minimal,
+   key = STOC-key,
+   title = "Proc. Fifteenth Annual" # STOC,
+   year = 1983,
+}
+
+@PROCEEDINGS{proceedings-full,
+   editor = "Wizard V. Oz and Mihalis Yannakakis",
+   title = "Proc. Fifteenth Annual" # STOC,
+   number = 17,
+   series = "All ACM Conferences",
+   month = mar,
+   year = 1983,
+   address = "Boston",
+   organization = ACM,
+   publisher = "Academic Press",
+   note = "This is a full PROCEEDINGS entry",
+}
+
+@PROCEEDINGS{whole-proceedings,
+   key = STOC-key,
+   organization = ACM,
+   title = "Proc. Fifteenth Annual" # STOC,
+   address = "Boston",
+   year = 1983,
+   booktitle = "Proc. Fifteenth Annual ACM" # STOC,
+   note = "This is a cross-referenced PROCEEDINGS",
+}
+
+@PHDTHESIS{phdthesis-minimal,
+   author = "F. Phidias Phony-Baloney",
+   title = "Fighting Fire with Fire: Festooning {F}rench Phrases",
+   school = "Fanstord University",
+   year = 1988,
+}
+
+@PHDTHESIS{phdthesis-full,
+   author = "F. Phidias Phony-Baloney",
+   title = "Fighting Fire with Fire: Festooning {F}rench Phrases",
+   school = "Fanstord University",
+   type = "{PhD} Dissertation",
+   address = "Department of French",
+   month = jun # "-" # aug,
+   year = 1988,
+   note = "This is a full PHDTHESIS entry",
+}
+
+@TECHREPORT{techreport-minimal,
+   author = "Tom Terrific",
+   title = "An {$O(n \log n / \! \log\log n)$} Sorting Algorithm",
+   institution = "Fanstord University",
+   year = 1988,
+}
+
+@TECHREPORT{techreport-full,
+   author = "Tom T{\'{e}}rrific",
+   title = "An {$O(n \log n / \! \log\log n)$} Sorting Algorithm",
+   institution = "Fanstord University",
+   type = "Wishful Research Result",
+   number = "7",
+   address = "Computer Science Department, Fanstord, California",
+   month = oct,
+   year = 1988,
+   note = "This is a full TECHREPORT entry",
+}
+
+@UNPUBLISHED{unpublished-minimal,
+   author = "Ulrich {\"{U}}nderwood and Ned {\~N}et and Paul {\={P}}ot",
+   title = "Lower Bounds for Wishful Research Results",
+   note = "Talk at Fanstord University (this is a minimal UNPUBLISHED entry)",
+}
+
+@UNPUBLISHED{unpublished-full,
+   author = "Ulrich {\"{U}}nderwood and Ned {\~N}et and Paul {\={P}}ot",
+   title = "Lower Bounds for Wishful Research Results",
+   month = nov # ", " # dec,
+   year = 1988,
+   note = "Talk at Fanstord University (this is a full UNPUBLISHED entry)",
+}
+
+@MISC{random-note-crossref,
+   key = {Volume-2},
+   note = "Volume~2 is listed under Knuth \cite{book-full}"
+}
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% ASR articles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@ARTICLE{Kepler2013-sy,
+title = "Reconstructing a B-cell clonal lineage. I. Statistical inference of unobserved ancestors",
+author = "Kepler, Thomas B",
+affiliation = "Department of Microbiology, Boston University School of Medicine, Boston, MA, 02118, USA ; Department of Mathematics \& Statistics, Boston University, Boston, MA, 02118, USA.",
+journal = "F1000Res.",
+volume =  2,
+pages = "103",
+month =  "3~" # apr,
+year =  2013,
+url = "http://dx.doi.org/10.12688/f1000research.2-103.v1",
+issn = "2046-1402",
+pmid = "24555054",
+doi = "10.12688/f1000research.2-103.v1",
+pmc = "PMC3901458"
+}
+
+
+@ARTICLE{Barak2008-fw,
+title = "{IgTree} (c) : Creating Immunoglobulin variable region gene lineage trees",
+author = "Barak, M and Zuckerman, NS and Edelman, H and Unger, R and Mehr, R",
+journal = "Journal of Immunological Methods",
+publisher = "Elsevier",
+volume =  338,
+number = "1-2",
+pages = "67--74",
+year =  2008,
+url = "http://dx.doi.org/10.1016/j.jim.2008.06.006",
+doi = "10.1016/j.jim.2008.06.006"
+}
+
+
+@ARTICLE{Doria-Rose2014-vi,
+title = "Developmental pathway for potent {V1V2-directed} {HIV-neutralizing} antibodies",
+author = "Doria-Rose, Nicole A. and Schramm, Chaim A. and Gorman, Jason and Moore, Penny L. and Bhiman, Jinal N. and DeKosky, Brandon J. and Ernandes, Michael J. and Georgiev, Ivelin S. and Kim, Helen J. and Pancera, Marie and Staupe, Ryan P. and Altae-Tran, Han R. and Bailer, Robert T. and Crooks, Ema T. and Cupo, Albert and Druz, Aliaksandr and Garrett, Nigel J. and Hoi, Kam H. and Kong, Rui and Louder, Mark K. and Longo, Nancy S. and McKee, Krisha and Nonyane, Molati and O’Dell, Sijy and Roark, Ryan S. and Rudicell, Rebecca S. and Schmidt, Stephen D. and Sheward, Daniel J. and Soto, Cinque and Wibmer, Constantinos Kurt and Yang, Yongping and Zhang, Zhenhai and Sequencing, Nisc Comparative and Mullikin, James C. and Binley, James M. and Sanders, Rogier W. and Wilson, Ian A. and Moore, John P. and Ward, Andrew B. and Georgiou, George and Williamson, Carolyn and Abdool Karim, Salim S. and Morris, Lynn and Kwong, Peter D. and Shapiro, Lawrence and Mascola, John R.",
+journal = "Nature",
+publisher = "Nature Publishing Group",
+month =  "2~" # mar,
+year =  2014,
+url = "http://dx.doi.org/10.1038/nature13036",
+issn = "0028-0836, 1476-4687",
+doi = "10.1038/nature13036"
+}
+
+
+@ARTICLE{Yeap2015-nl,
+title = "{Sequence-Intrinsic} Mechanisms that Target {AID} Mutational Outcomes on Antibody Genes",
+author = "Yeap, Leng-Siew and Hwang, Joyce K and Du, Zhou and Meyers, Robin M and Meng, Fei-Long and Jakubauskait{\.e}, Agn{\.e} and Liu, Mengyuan and Mani, Vinidhra and Neuberg, Donna and Kepler, Thomas B and Wang, Jing H and Alt, Frederick W",
+journal = "Cell",
+publisher = "Elsevier",
+year =  2015,
+url = "http://www.sciencedirect.com/science/article/pii/S0092867415013975",
+issn = "0092-8674",
+doi = "10.1016/j.cell.2015.10.042"
+}
+
+
+@ARTICLE{Yaari2015-ss,
+title = "The mutation patterns in B-cell immunoglobulin receptors reflect the influence of selection acting at multiple time-scales",
+author = "Yaari, Gur and Benichou, Jennifer I C and Vander Heiden, Jason A and Kleinstein, Steven H and Louzoun, Yoram",
+affiliation = "Bioengineering Program, Faculty of Engineering, Bar-Ilan University, Ramat Gan 5290002, Israel. Department of Mathematics, Bar-Ilan University, Ramat Gan 5290002, Israel. Interdepartmental Program in Computational Biology and Bioinformatics, Yale University, New Haven, CT 06511, USA. Interdepartmental Program in Computational Biology and Bioinformatics, Yale University, New Haven, CT 06511, USA Departments of Pathology and Immunobiology, Yale School of Medicine, New Haven, CT 06511, USA steven.kleinstein@yale.edu. Department of Mathematics, Bar-Ilan University, Ramat Gan 5290002, Israel Gonda Brain Research Center, Bar-Ilan University, Ramat Gan 5290002, Israel louzouy@math.biu.ac.il.",
+journal = "Philos. Trans. R. Soc. Lond. B Biol. Sci.",
+volume =  370,
+number =  1676,
+month =  "5~" # sep,
+year =  2015,
+url = "http://dx.doi.org/10.1098/rstb.2014.0242",
+annote = "<div>MBSM has significantly different selection pressure estimates than Baseline!</div><div><br></div><div>MBSM appears to be to allow for different mutation rates in different regions of the gene-- but in the application it appears that wholly different selection estimates are being investigated for the various regions.</div>",
+keywords = "B-cell receptor; affinity maturation; antigen-driven selection; lineage trees; mutations; next generation sequencing",
+issn = "0962-8436, 1471-2970",
+pmid = "26194756",
+doi = "10.1098/rstb.2014.0242"
+}
+
+
+
+@ARTICLE{Tas2016-lq,
+title = "Visualizing antibody affinity maturation in germinal centers",
+author = "Tas, Jeroen M J and Mesin, Luka and Pasqual, Giulia and Targ, Sasha and Jacobsen, Johanne T and Mano, Yasuko M and Chen, Casie S and Weill, Jean-Claude and Reynaud, Claude-Agn{\`e}s and Browne, Edward P and Meyer-Hermann, Michael and Victora, Gabriel D",
+affiliation = "Whitehead Institute for Biomedical Research, Cambridge, MA 02142, USA. Whitehead Institute for Biomedical Research, Cambridge, MA 02142, USA. Whitehead Institute for Biomedical Research, Cambridge, MA 02142, USA. Whitehead Institute for Biomedical Research, Cambridge, MA 02142, USA. Whitehead Institute for Biomedical Research, Cambridge, MA 02142, USA. Whitehead Institute for Biomedical Research, Cambridge, MA 02142, USA. Whitehead Institute for Biomedical Research, Cambridge, MA 02142, USA. Institut Necker-Enfants Malades, INSERM U1151-CNRS UMR 8253, Sorbonne Paris Cit{\'e}, Universit{\'e} Paris Descartes, Facult{\'e} de M{\'e}decine-Site Broussais, 75014 Paris, France. Institut Necker-Enfants Malades, INSERM U1151-CNRS UMR 8253, Sorbonne Paris Cit{\'e}, Universit{\'e} Paris Descartes, Facult{\'e} de M{\'e}decine-Site Broussais, 75014 Paris, France. Koch Institute for Integrative Cancer Research, Massachusetts Institute of Technology (MIT), Cambridge, MA 02142, USA. Broad Institute of Harvard and MIT, Cambridge, MA 02142, USA. Department of Systems Immunology and Braunschweig Integrated Centre of Systems Biology, Helmholtz Centre for Infection Research, Inhoffenstra$\beta$e7, 38124 Braunschweig, Germany. Institute for Biochemistry, Biotechnology and Bioinformatics, Technische Universit{\"a}t Braunschweig, Braunschweig, Germany. Whitehead Institute for Biomedical Research, Cambridge, MA 02142, USA. victora@wi.mit.edu.",
+journal = "Science",
+publisher = "American Association for the Advancement of Science",
+volume =  351,
+number =  6277,
+pages = "1048--1054",
+month =  "4~" # mar,
+year =  2016,
+url = "http://dx.doi.org/10.1126/science.aad3439",
+issn = "0036-8075, 1095-9203",
+pmid = "26912368",
+doi = "10.1126/science.aad3439"
+}
+
+@UNPUBLISHED{Hoehn2016-wg,
+  title    = "A phylogenetic codon substitution model for antibody lineages",
+  author   = "Hoehn, Kenneth and Lunter, Gerton and Pybus, Oliver",
+  abstract = "Phylogenetic methods have shown promise in understanding the
+              development of broadly neutralizing antibody lineages (bNAbs).
+              However, the mutational process that generates these
+              lineages---somatic hypermutation (SHM)---is biased by hotspot
+              motifs, which violates important assumptions in most phylogenetic
+              substitution models. Here, we develop a modified GY94-type
+              substitution model that partially accounts for this
+              context-dependency while preserving independence of sites during
+              calculation. This model shows a substantially better fit to three
+              well-characterized bNAb lineages than the standard GY94 model. We
+              show through simulations that accounting for hotspot motifs can
+              lead to reduced bias of other substitution parameters, and more
+              accurate ancestral state reconstructions. We also demonstrate how
+              our model can be used to test hypotheses concerning the roles of
+              different hotspot and coldspot motifs in the evolution of B-cell
+              lineages. Further, we explore the consequences of the idea that
+              the number of hotspot motifs---and perhaps the mutation rate in
+              general---is expected to decay over time in individual bNAb
+              lineages.",
+  journal  = "bioRxiv",
+  pages    = "078279",
+  month    =  "28~" # sep,
+  year     =  2016,
+  language = "en"
+}
+
+@article{needleman1970general,
+  title={A general method applicable to the search for similarities in the amino acid sequence of two proteins},
+  author={Needleman, Saul B and Wunsch, Christian D},
+  journal={Journal of molecular biology},
+  volume={48},
+  number={3},
+  pages={443--453},
+  year={1970},
+  publisher={Elsevier}
+}
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% aammp articles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@ARTICLE{Randall2016-kq,
+  title       = "An experimental phylogeny to benchmark ancestral sequence
+                 reconstruction",
+  author      = "Randall, Ryan N and Radford, Caelan E and Roof, Kelsey A and
+                 Natarajan, Divya K and Gaucher, Eric A",
+  affiliation = "School of Biological Sciences, Georgia Institute of
+                 Technology, Atlanta, Georgia 30332, USA. School of Biological
+                 Sciences, Georgia Institute of Technology, Atlanta, Georgia
+                 30332, USA. School of Biological Sciences, Georgia Institute
+                 of Technology, Atlanta, Georgia 30332, USA. School of
+                 Biological Sciences, Georgia Institute of Technology, Atlanta,
+                 Georgia 30332, USA. School of Biological Sciences, Georgia
+                 Institute of Technology, Atlanta, Georgia 30332, USA.
+                 Institute for Bioengineering and Biosciences, Georgia
+                 Institute of Technology, Atlanta, Georgia 30332, USA.",
+  abstract    = "Ancestral sequence reconstruction (ASR) is a still-burgeoning
+                 method that has revealed many key mechanisms of molecular
+                 evolution. One criticism of the approach is an inability to
+                 validate its algorithms within a biological context as opposed
+                 to a computer simulation. Here we build an experimental
+                 phylogeny using the gene of a single red fluorescent protein
+                 to address this criticism. The evolved phylogeny consists of
+                 19 operational taxonomic units (leaves) and 17 ancestral
+                 bifurcations (nodes) that display a wide variety of
+                 fluorescent phenotypes. The 19 leaves then serve as 'modern'
+                 sequences that we subject to ASR analyses using various
+                 algorithms and to benchmark against the known ancestral
+                 genotypes and ancestral phenotypes. We confirm computer
+                 simulations that show all algorithms infer ancient sequences
+                 with high accuracy, yet we also reveal wide variation in the
+                 phenotypes encoded by incorrectly inferred sequences.
+                 Specifically, Bayesian methods incorporating rate variation
+                 significantly outperform the maximum parsimony criterion in
+                 phenotypic accuracy. Subsampling of extant sequences had minor
+                 effect on the inference of ancestral sequences.",
+  journal     = "Nat. Commun.",
+  volume      =  7,
+  pages       = "12847",
+  month       =  "15~" # sep,
+  year        =  2016,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+@ARTICLE{Williams2006-ig,
+  title       = "Assessing the accuracy of ancestral protein reconstruction
+                 methods",
+  author      = "Williams, Paul D and Pollock, David D and Blackburne, Benjamin
+                 P and Goldstein, Richard A",
+  affiliation = "Department of Chemistry, University of Michigan, Ann Arbor,
+                 Michigan, USA.",
+  abstract    = "The phylogenetic inference of ancestral protein sequences is a
+                 powerful technique for the study of molecular evolution, but
+                 any conclusions drawn from such studies are only as good as
+                 the accuracy of the reconstruction method. Every inference
+                 method leads to errors in the ancestral protein sequence,
+                 resulting in potentially misleading estimates of the ancestral
+                 protein's properties. To assess the accuracy of ancestral
+                 protein reconstruction methods, we performed computational
+                 population evolution simulations featuring near-neutral
+                 evolution under purifying selection, speciation, and
+                 divergence using an off-lattice protein model where fitness
+                 depends on the ability to be stable in a specified target
+                 structure. We were thus able to compare the thermodynamic
+                 properties of the true ancestral sequences with the properties
+                 of ``ancestral sequences'' inferred by maximum parsimony,
+                 maximum likelihood, and Bayesian methods. Surprisingly, we
+                 found that methods such as maximum parsimony and maximum
+                 likelihood that reconstruct a ``best guess'' amino acid at
+                 each position overestimate thermostability, while a Bayesian
+                 method that sometimes chooses less-probable residues from the
+                 posterior probability distribution does not. Maximum
+                 likelihood and maximum parsimony apparently tend to eliminate
+                 variants at a position that are slightly detrimental to
+                 structural stability simply because such detrimental variants
+                 are less frequent. Other properties of ancestral proteins
+                 might be similarly overestimated. This suggests that ancestral
+                 reconstruction studies require greater care to come to
+                 credible conclusions regarding functional evolution. Inferred
+                 functional patterns that mimic reconstruction bias should be
+                 reevaluated.",
+  journal     = "PLoS Comput. Biol.",
+  volume      =  2,
+  number      =  6,
+  pages       = "e69",
+  month       =  "23~" # jun,
+  year        =  2006,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+@ARTICLE{Hanson-Smith2010-ie,
+  title       = "Robustness of ancestral sequence reconstruction to
+                 phylogenetic uncertainty",
+  author      = "Hanson-Smith, Victor and Kolaczkowski, Bryan and Thornton,
+                 Joseph W",
+  affiliation = "Department of Computer and Information Science, University of
+                 Oregon, USA.",
+  abstract    = "Ancestral sequence reconstruction (ASR) is widely used to
+                 formulate and test hypotheses about the sequences, functions,
+                 and structures of ancient genes. Ancestral sequences are
+                 usually inferred from an alignment of extant sequences using a
+                 maximum likelihood (ML) phylogenetic algorithm, which
+                 calculates the most likely ancestral sequence assuming a
+                 probabilistic model of sequence evolution and a specific
+                 phylogeny--typically the tree with the ML. The true phylogeny
+                 is seldom known with certainty, however. ML methods ignore
+                 this uncertainty, whereas Bayesian methods incorporate it by
+                 integrating the likelihood of each ancestral state over a
+                 distribution of possible trees. It is not known whether
+                 Bayesian approaches to phylogenetic uncertainty improve the
+                 accuracy of inferred ancestral sequences. Here, we use
+                 simulation-based experiments under both simplified and
+                 empirically derived conditions to compare the accuracy of ASR
+                 carried out using ML and Bayesian approaches. We show that
+                 incorporating phylogenetic uncertainty by integrating over
+                 topologies very rarely changes the inferred ancestral state
+                 and does not improve the accuracy of the reconstructed
+                 ancestral sequence. Ancestral state reconstructions are robust
+                 to uncertainty about the underlying tree because the
+                 conditions that produce phylogenetic uncertainty also make the
+                 ancestral state identical across plausible trees; conversely,
+                 the conditions under which different phylogenies yield
+                 different inferred ancestral states produce little or no
+                 ambiguity about the true phylogeny. Our results suggest that
+                 ML can produce accurate ASRs, even in the face of phylogenetic
+                 uncertainty. Using Bayesian integration to incorporate this
+                 uncertainty is neither necessary nor beneficial.",
+  journal     = "Mol. Biol. Evol.",
+  volume      =  27,
+  number      =  9,
+  pages       = "1988--1999",
+  month       =  sep,
+  year        =  2010,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+@ARTICLE{Matrices_undated-ki,
+  title    = "Markov Chains and Models of Molecular Evolution",
+  author   = "Matrices, Transition Probability",
+  keywords = "ASR"
+}
+
+@MISC{noauthor_undated-hn,
+  title    = "{Chapter9-Markov\_Models\_of\_Protein\_Evolution.pdf}",
+  keywords = "ASR"
+}
+
+@INCOLLECTION{Huelsenbeck2005-jb,
+  title     = "Bayesian Analysis of Molecular Evolution Using {MrBayes}",
+  booktitle = "Statistical Methods in Molecular Evolution",
+  author    = "Huelsenbeck, John P and Ronquist, Fredrik",
+  publisher = "Springer New York",
+  pages     = "183--226",
+  series    = "Statistics for Biology and Health",
+  year      =  2005,
+  keywords  = "ASR",
+  language  = "en"
+}
+
+@ARTICLE{Cole2013-wl,
+  title       = "Reconstructing evolutionary adaptive paths for protein
+                 engineering",
+  author      = "Cole, Megan F and Cox, Vanessa E and Gratton, Kelsey L and
+                 Gaucher, Eric A",
+  affiliation = "School of Biology, Georgia Institute of Technology, Atlanta,
+                 GA, USA.",
+  abstract    = "Reconstructing Evolutionary Adaptive Paths (REAP) is one of
+                 several methods to improve enzyme -functionality. This
+                 approach incorporates computational and theoretical aspects of
+                 protein engineering to create a focused library of protein
+                 variety with a high degree of functionality. In contrast to
+                 other -techniques like DNA shuffling, REAP allows a library to
+                 have diverse functionality among relatively few variants. REAP
+                 is a low-throughput method which takes advantage of natural
+                 selection and uses ancestral protein sequences to direct gene
+                 mutations, thereby creating a library with a high density of
+                 viable proteins. These proteins must then be assayed to
+                 characterize their functionality to identify which variants
+                 have the desired traits such as acid stability or
+                 thermostability.",
+  journal     = "Methods Mol. Biol.",
+  volume      =  978,
+  pages       = "115--125",
+  year        =  2013,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+
+@ARTICLE{Ahrenfeldt2017-id,
+  title       = "Bacterial whole genome-based phylogeny: construction of a new
+                 benchmarking dataset and assessment of some existing methods",
+  author      = "Ahrenfeldt, Johanne and Skaarup, Carina and Hasman, Henrik and
+                 Pedersen, Anders Gorm and Aarestrup, Frank M{\o}ller and Lund,
+                 Ole",
+  affiliation = "Center for Biological Sequence Analysis, DTU Bioinformatics,
+                 Technical University of Denmark, Kongens Lyngby, Denmark.
+                 johah@cbs.dtu.dk. Center for Biological Sequence Analysis, DTU
+                 Bioinformatics, Technical University of Denmark, Kongens
+                 Lyngby, Denmark. Department of Microbiology and Infection
+                 Control, Statens Serum Institute, Copenhagen, Denmark. Center
+                 for Biological Sequence Analysis, DTU Bioinformatics,
+                 Technical University of Denmark, Kongens Lyngby, Denmark.
+                 Research Group for Genomic Epidemiology, DTU FOOD, Technical
+                 University of Denmark, Kongens Lyngby, Denmark. Center for
+                 Biological Sequence Analysis, DTU Bioinformatics, Technical
+                 University of Denmark, Kongens Lyngby, Denmark.",
+  abstract    = "BACKGROUND: Whole genome sequencing (WGS) is increasingly used
+                 in diagnostics and surveillance of infectious diseases. A
+                 major application for WGS is to use the data for identifying
+                 outbreak clusters, and there is therefore a need for methods
+                 that can accurately and efficiently infer phylogenies from
+                 sequencing reads. In the present study we describe a new
+                 dataset that we have created for the purpose of benchmarking
+                 such WGS-based methods for epidemiological data, and also
+                 present an analysis where we use the data to compare the
+                 performance of some current methods. RESULTS: Our aim was to
+                 create a benchmark data set that mimics sequencing data of the
+                 sort that might be collected during an outbreak of an
+                 infectious disease. This was achieved by letting an E. coli
+                 hypermutator strain grow in the lab for 8 consecutive days,
+                 each day splitting the culture in two while also collecting
+                 samples for sequencing. The result is a data set consisting of
+                 101 whole genome sequences with known phylogenetic
+                 relationship. Among the sequenced samples 51 correspond to
+                 internal nodes in the phylogeny because they are ancestral,
+                 while the remaining 50 correspond to leaves. We also used the
+                 newly created data set to compare three different online
+                 available methods that infer phylogenies from whole-genome
+                 sequencing reads: NDtree, CSI Phylogeny and REALPHY. One
+                 complication when comparing the output of these methods with
+                 the known phylogeny is that phylogenetic methods typically
+                 build trees where all observed sequences are placed as leafs,
+                 even though some of them are in fact ancestral. We therefore
+                 devised a method for post processing the inferred trees by
+                 collapsing short branches (thus relocating some leafs to
+                 internal nodes), and also present two new measures of tree
+                 similarity that takes into account the identity of both
+                 internal and leaf nodes. CONCLUSIONS: Based on this analysis
+                 we find that, among the investigated methods, CSI Phylogeny
+                 had the best performance, correctly identifying 73\% of all
+                 branches in the tree and 71\% of all clades. We have made all
+                 data from this experiment (raw sequencing reads, consensus
+                 whole-genome sequences, as well as descriptions of the known
+                 phylogeny in a variety of formats) publicly available, with
+                 the hope that other groups may find this data useful for
+                 benchmarking and exploring the performance of epidemiological
+                 methods. All data is freely available at:
+                 https://cge.cbs.dtu.dk/services/evolution\_data.php .",
+  journal     = "BMC Genomics",
+  volume      =  18,
+  number      =  1,
+  pages       = "19",
+  month       =  "5~" # jan,
+  year        =  2017,
+  keywords    = "Benchmark; Evolution; Phylogeny; WGS;ASR",
+  language    = "en"
+}
+
+@article{Zhu_undated-zz,
+  title={Mining the antibodyome for HIV-1--neutralizing antibodies with next-generation sequencing and phylogenetic pairing of heavy/light chains},
+  author={Zhu, Jiang and Ofek, Gilad and Yang, Yongping and Zhang, Baoshan and Louder, Mark K and Lu, Gabriel and McKee, Krisha and Pancera, Marie and Skinner, Jeff and Zhang, Zhenhai and others},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={110},
+  number={16},
+  pages={6470--6475},
+  year={2013},
+  publisher={National Acad Sciences}
+}
+
+
+
+@ARTICLE{Safonova2015-je,
+  title       = "{IgSimulator}: a versatile immunosequencing simulator",
+  author      = "Safonova, Yana and Lapidus, Alla and Lill, Jennie",
+  affiliation = "Center of Algorithmic biotechnology, Institute of
+                 Translational Biomedicine, St. Petersburg State University,
+                 Russia, Algorithmic Biology Laboratory, St. Petersburg
+                 Academic University, St. Petersburg, Russia and. Center of
+                 Algorithmic biotechnology, Institute of Translational
+                 Biomedicine, St. Petersburg State University, Russia,
+                 Algorithmic Biology Laboratory, St. Petersburg Academic
+                 University, St. Petersburg, Russia and. Department of Protein
+                 Chemistry, Genentech, 1 DNA Way, South San Francisco, CA
+                 94080, USA.",
+  abstract    = "MOTIVATION: The recent introduction of next-generation
+                 sequencing technologies to antibody studies have resulted in a
+                 growing number of immunoinformatics tools for antibody
+                 repertoire analysis. However, benchmarking these newly
+                 emerging tools remains problematic since the gold standard
+                 datasets that are needed to validate these tools are typically
+                 not available. RESULTS: Since simulating antibody repertoires
+                 is often the only feasible way to benchmark new
+                 immunoinformatics tools, we developed the IgSimulator tool
+                 that addresses various complications in generating realistic
+                 antibody repertoires. IgSimulator's code has modular structure
+                 and can be easily adapted to new requirements to simulation.
+                 AVAILABILITY AND IMPLEMENTATION: IgSimulator is open source
+                 and freely available as a C++ and Python program running on
+                 all Unix-compatible platforms. The source code is available
+                 from yana-safonova.github.io/ig\_simulator. CONTACT:
+                 safonova.yana@gmail.com SUPPLEMENTARY INFORMATION:
+                 Supplementary data are available at Bioinformatics online.",
+  journal     = "Bioinformatics",
+  volume      =  31,
+  number      =  19,
+  pages       = "3213--3215",
+  month       =  "1~" # oct,
+  year        =  2015,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+@ARTICLE{Bournazos2016-xz,
+  title     = "Bispecific {Anti-HIV-1} Antibodies with Enhanced Breadth and
+               Potency",
+  author    = "Bournazos, Stylianos and Gazumyan, Anna and Seaman, Michael S
+               and Nussenzweig, Michel C and Ravetch, Jeffrey V",
+  abstract  = "A new generation of bispecific anti-HIV-1 antibodies combines
+               the breadth and potency of previous broadly neutralizing
+               antibodies in a synergistic manner, producing enhanced in vitro
+               viral neutralization and better control of viremia in vivo.",
+  journal   = "Cell",
+  publisher = "Elsevier",
+  volume    =  165,
+  number    =  7,
+  pages     = "1609--1620",
+  month     =  "16~" # jun,
+  year      =  2016,
+  keywords  = "ASR",
+  language  = "en"
+}
+
+
+@ARTICLE{Koenig2017-ak,
+  title       = "Mutational landscape of antibody variable domains reveals a
+                 switch modulating the interdomain conformational dynamics and
+                 antigen binding",
+  author      = "Koenig, Patrick and Lee, Chingwei V and Walters, Benjamin T
+                 and Janakiraman, Vasantharajan and Stinson, Jeremy and
+                 Patapoff, Thomas W and Fuh, Germaine",
+  affiliation = "Department of Antibody Engineering, Genentech Research and
+                 Early Development, Genentech, Inc., South San Francisco, CA
+                 94080; koenig.patrick@gmail.com germainefuh@gmail.com.
+                 Department of Antibody Engineering, Genentech Research and
+                 Early Development, Genentech, Inc., South San Francisco, CA
+                 94080. Department of Early-Stage Pharmaceutical Development,
+                 Pharma Technical Development, Genentech, Inc., South San
+                 Francisco, CA 94080. Department of Molecular Biology,
+                 Genentech Research and Early Development, Genentech, Inc.,
+                 South San Francisco, CA 94080. Department of Molecular
+                 Biology, Genentech Research and Early Development, Genentech,
+                 Inc., South San Francisco, CA 94080. Department of Early-Stage
+                 Pharmaceutical Development, Pharma Technical Development,
+                 Genentech, Inc., South San Francisco, CA 94080. Department of
+                 Antibody Engineering, Genentech Research and Early
+                 Development, Genentech, Inc., South San Francisco, CA 94080;
+                 koenig.patrick@gmail.com germainefuh@gmail.com.",
+  abstract    = "Somatic mutations within the antibody variable domains are
+                 critical to the immense capacity of the immune repertoire.
+                 Here, via a deep mutational scan, we dissect how mutations at
+                 all positions of the variable domains of a high-affinity
+                 anti-VEGF antibody G6.31 impact its antigen-binding function.
+                 The resulting mutational landscape demonstrates that large
+                 portions of antibody variable domain positions are open to
+                 mutation, and that beneficial mutations can be found
+                 throughout the variable domains. We determine the role of one
+                 antigen-distal light chain position 83, demonstrating that
+                 mutation at this site optimizes both antigen affinity and
+                 thermostability by modulating the interdomain conformational
+                 dynamics of the antigen-binding fragment. Furthermore, by
+                 analyzing a large number of human antibody sequences and
+                 structures, we demonstrate that somatic mutations occur
+                 frequently at position 83, with corresponding domain
+                 conformations observed for G6.31. Therefore, the modulation of
+                 interdomain dynamics represents an important mechanism during
+                 antibody maturation in vivo.",
+  journal     = "Proc. Natl. Acad. Sci. U. S. A.",
+  month       =  "5~" # jan,
+  year        =  2017,
+  keywords    = "affinity maturation; antibody; conformational dynamics; deep
+                 mutational scanning; immunology;ASR",
+  language    = "en"
+}
+
+
+@ARTICLE{Wilson2015-vi,
+  title       = "Kinase dynamics. Using ancient protein kinases to unravel a
+                 modern cancer drug's mechanism",
+  author      = "Wilson, C and Agafonov, R V and Hoemberger, M and Kutter, S
+                 and Zorba, A and Halpin, J and Buosi, V and Otten, R and
+                 Waterman, D and Theobald, D L and Kern, D",
+  affiliation = "Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 Department of Biochemistry, Brandeis University, Waltham, MA
+                 02452, USA. Howard Hughes Medical Institute and Department of
+                 Biochemistry, Brandeis University, Waltham, MA 02452, USA.
+                 dkern@brandeis.edu.",
+  abstract    = "Macromolecular function is rooted in energy landscapes, where
+                 sequence determines not a single structure but an ensemble of
+                 conformations. Hence, evolution modifies a protein's function
+                 by altering its energy landscape. Here, we recreate the
+                 evolutionary pathway between two modern human oncogenes, Src
+                 and Abl, by reconstructing their common ancestors. Our
+                 evolutionary reconstruction combined with x-ray structures of
+                 the common ancestor and pre-steady-state kinetics reveals a
+                 detailed atomistic mechanism for selectivity of the successful
+                 cancer drug Gleevec. Gleevec affinity is gained during the
+                 evolutionary trajectory toward Abl and lost toward Src,
+                 primarily by shifting an induced-fit equilibrium that is also
+                 disrupted in the clinical T315I resistance mutation. This work
+                 reveals the mechanism of Gleevec specificity while offering
+                 insights into how energy landscapes evolve.",
+  journal     = "Science",
+  volume      =  347,
+  number      =  6224,
+  pages       = "882--886",
+  month       =  "20~" # feb,
+  year        =  2015,
+  language    = "en"
+}
+ @article{Romppanen_1981, title={A morphometrical method for analyzing germinal centers in the chicken spleen}, volume={89}, ISSN={0304-1328}, abstractNote={A morphometric method for the analysis of the germinal centers in the chicken spleen is presented. Based on counts in the two-dimensional tissue sections, the following three-dimensional germinal center characteristics were calculated: volume density (VVgc); numerical density (NVgc); total number in the spleen (Ngcsp); nearest neighbour distance (delta 3), and mean diameter (D). The total number of the germinal centers in the spleen of the six-week-old and the ten-week-old unimmunized chickens was 803 and 642, respectively. The mean diameter of the germinal centers was 102-108 micrometer, but its size distribution ranged from 50 to 175 micrometer.}, number={4}, journal={Acta pathologica et microbiologica Scandinavica. Section C, Immunology}, author={Romppanen, T.}, year={1981}, month={Aug}, pages={263–268}}
+
+@article{cui2016model,
+  title={A Model of Somatic Hypermutation Targeting in Mice Based on High-Throughput Ig Sequencing Data},
+  author={Cui, Ang and Di Niro, Roberto and Vander Heiden, Jason A and Briggs, Adrian W and Adams, Kris and Gilbert, Tamara and O’Connor, Kevin C and Vigneault, Francois and Shlomchik, Mark J and Kleinstein, Steven H},
+  journal={The Journal of Immunology},
+  volume={197},
+  number={9},
+  pages={3566--3574},
+  year={2016},
+  publisher={Am Assoc Immnol}
+}
+
+@incollection{kroese1990germinal,
+  title={Germinal center reaction and B lymphocytes: morphology and function},
+  author={Kroese, FGM and Timens, W and Nieuwenhuis, P},
+  booktitle={Reaction Patterns of the lymph node},
+  pages={103--148},
+  year={1990},
+  publisher={Springer}
+}
+
+ @article{Childs_Baskerville_Cobey_2015, title={Trade-offs in antibody repertoires to complex antigens}, volume={370}, ISSN={0962-8436}, url={http://dx.doi.org/10.1098/rstb.2014.0245}, DOI={10.1098/rstb.2014.0245}, abstractNote={Pathogens vary in their antigenic complexity. While some pathogens such as measles present a few relatively invariant targets to the immune system, others such as malaria display considerable antigenic diversity. How the immune response copes in the presence of multiple antigens, and whether a trade-off exists between the breadth and efficacy of antibody (Ab)-mediated immune responses, are unsolved problems. We present a theoretical model of affinity maturation of B-cell receptors (BCRs) during a primary infection and examine how variation in the number of accessible antigenic sites alters the Ab repertoire. Naive B cells with randomly generated receptor sequences initiate the germinal centre (GC) reaction. The binding affinity of a BCR to an antigen is quantified via a genotype-phenotype map, based on a random energy landscape, that combines local and distant interactions between residues. In the presence of numerous antigens or epitopes, B-cell clones with different specificities compete for stimulation during rounds of mutation within GCs. We find that the availability of many epitopes reduces the affinity and relative breadth of the Ab repertoire. Despite the stochasticity of somatic hypermutation, patterns of immunodominance are strongly shaped by chance selection of naive B cells with specificities for particular epitopes. Our model provides a mechanistic basis for the diversity of Ab repertoires and the evolutionary advantage of antigenically complex pathogens.}, number={1676}, journal={Philosophical transactions of the Royal Society of London. Series B, Biological sciences}, author={Childs, Lauren M. and Baskerville, Edward B. and Cobey, Sarah}, year={2015}, month={Sep}}
+
+ @article{Kelsoe_2016, title={Complex Antigens Drive Permissive Clonal Selection in Germinal Centers}, volume={44}, ISSN={1074-7613}, abstractNote={Germinal center (GC) B cells evolve toward increased affinity by a Darwinian process that has been studied primarily in genetically restricted, hapten-specific responses. We explored the population dynamics of genetically diverse GC responses to two complex antigens-Bacillus anthracis protective antigen and influenza hemagglutinin-in which B cells competed both intra- and interclonally for distinct epitopes. Preferred VH rearrangements among antigen-binding, naive B cells were similarly abundant in early GCs but, unlike responses to haptens, clonal diversity increased in GC B cells as early “winners” were replaced by rarer, high-affinity clones. Despite affinity maturation, inter- and intraclonal avidities varied greatly, and half of GC B cells did not bind the immunogen but nonetheless exhibited biased VH use, V(D)J mutation, and clonal expansion comparable to antigen-binding cells. GC reactions to complex antigens permit a range of specificities and affinities, with potential advantages for broad protection.}, number={3}, journal={Immunity}, author={Kuraoka, Masayuki and Schmidt, Aaron G. and Nojima, Takuya and Feng, Feng and Watanabe, Akiko and Kitamura, Daisuke and Harrison, Stephen C. and Kepler, Thomas B. and Kelsoe, Garnett}, year={2016}, month={Mar}, pages={542–552}}
+
+@article{phan2006high,
+  title={High affinity germinal center B cells are actively selected into the plasma cell compartment},
+  author={Phan, Tri Giang and Paus, Didrik and Chan, Tyani D and Turner, Marian L and Nutt, Stephen L and Basten, Antony and Brink, Robert},
+  journal={Journal of Experimental Medicine},
+  volume={203},
+  number={11},
+  pages={2419--2424},
+  year={2006},
+  publisher={Rockefeller University Press}
+}
+
+@article{ulrich1997interplay,
+  title={The interplay between binding energy and catalysis in the evolution of a catalytic antibody},
+  author={Ulrich, Helle D and Mundorff, Emily and Santarsiero, Bernard D and Driggers, Edward M and Stevens, Raymond C and Schultz, Peter G},
+  journal={Nature},
+  volume={389},
+  number={6648},
+  pages={271--275},
+  year={1997},
+  publisher={Nature Publishing Group}
+}
+
+@article{berek1987mutation,
+  title={Mutation drift and repertoire shift in the maturation of the immune response},
+  author={Berek, Claudia and Milstein, Cesar},
+  journal={Immunological reviews},
+  volume={96},
+  number={1},
+  pages={23--41},
+  year={1987},
+  publisher={Wiley Online Library}
+}
+
+@article{frank2015simple,
+  title={A simple flow-cytometric method measuring B cell surface immunoglobulin avidity enables characterization of affinity maturation to influenza A virus},
+  author={Frank, Gregory M and Angeletti, Davide and Ince, William L and Gibbs, James S and Khurana, Surender and Wheatley, Adam K and Max, Edward E and McDermott, Adrian B and Golding, Hana and Stevens, James and others},
+  journal={mBio},
+  volume={6},
+  number={4},
+  pages={e01156--15},
+  year={2015},
+  publisher={Am Soc Microbiol}
+}
+
+@article{tas2016visualizing,
+  title={Visualizing antibody affinity maturation in germinal centers},
+  author={Tas, Jeroen MJ and Mesin, Luka and Pasqual, Giulia and Targ, Sasha and Jacobsen, Johanne T and Mano, Yasuko M and Chen, Casie S and Weill, Jean-Claude and Reynaud, Claude-Agn{\`e}s and Browne, Edward P and others},
+  journal={Science},
+  volume={351},
+  number={6277},
+  pages={1048--1054},
+  year={2016},
+  publisher={American Association for the Advancement of Science}
+}
+
+@article{ralph2016likelihood,
+  title={Likelihood-Based Inference of B Cell Clonal Families},
+  author={Ralph, Duncan K and Matsen IV, Frederick A},
+  journal={PLoS Comput Biol},
+  volume={12},
+  number={10},
+  pages={e1005086},
+  year={2016},
+  publisher={Public Library of Science}
+}
+
+@article{mccoy2015quantifying,
+  title={Quantifying evolutionary constraints on B-cell affinity maturation},
+  author={McCoy, Connor O and Bedford, Trevor and Minin, Vladimir N and Bradley, Philip and Robins, Harlan and Matsen, Frederick A},
+  journal={Phil. Trans. R. Soc. B},
+  volume={370},
+  number={1676},
+  pages={20140244},
+  year={2015},
+  publisher={The Royal Society}
+}
+
+@article{echave2016causes,
+  title={Causes of evolutionary rate variation among protein sites},
+  author={Echave, Julian and Spielman, Stephanie J and Wilke, Claus O},
+  journal={Nature Reviews Genetics},
+  year={2016},
+  publisher={Nature Publishing Group}
+}
+
+@article{nelson2010development,
+  title={Development trends for human monoclonal antibody therapeutics},
+  author={Nelson, Aaron L and Dhimolea, Eugen and Reichert, Janice M},
+  journal={Nature reviews Drug discovery},
+  volume={9},
+  number={10},
+  pages={767--774},
+  year={2010},
+  publisher={Nature Publishing Group}
+}
+
+@article{lee2007selection,
+  title={Selection of human antibody fragments by phage display},
+  author={Lee, Carol MY and Iorno, Niccolo and Sierro, Frederic and Christ, Daniel},
+  journal={Nature protocols},
+  volume={2},
+  number={11},
+  pages={3001--3008},
+  year={2007},
+  publisher={Nature Publishing Group}
+}
+@article{lipovsek2004vitro,
+  title={In-vitro protein evolution by ribosome display and mRNA display},
+  author={Lipovsek, Dasa and Pl{\"u}ckthun, Andreas},
+  journal={Journal of immunological methods},
+  volume={290},
+  number={1},
+  pages={51--67},
+  year={2004},
+  publisher={Elsevier}
+}
+@article{chao2006isolating,
+  title={Isolating and engineering human antibodies using yeast surface display},
+  author={Chao, Ginger and Lau, Wai L and Hackel, Benjamin J and Sazinsky, Stephen L and Lippow, Shaun M and Wittrup, K Dane},
+  journal={Nature protocols},
+  volume={1},
+  number={2},
+  pages={755--768},
+  year={2006},
+  publisher={Nature Publishing Group}
+}
+
+@article{chan2010therapeutic,
+  title={Therapeutic antibodies for autoimmunity and inflammation},
+  author={Chan, Andrew C and Carter, Paul J},
+  journal={Nature Reviews Immunology},
+  volume={10},
+  number={5},
+  pages={301--316},
+  year={2010},
+  publisher={Nature Publishing Group}
+}
+
+@article{beck2010strategies,
+  title={Strategies and challenges for the next generation of therapeutic antibodies},
+  author={Beck, Alain and Wurch, Thierry and Bailly, Christian and Corvaia, Nathalie},
+  journal={Nature Reviews Immunology},
+  volume={10},
+  number={5},
+  pages={345--352},
+  year={2010},
+  publisher={Nature Publishing Group}
+}
+
+@article{lonberg2008fully,
+  title={Fully human antibodies from transgenic mouse and phage display platforms},
+  author={Lonberg, Nils},
+  journal={Current opinion in immunology},
+  volume={20},
+  number={4},
+  pages={450--459},
+  year={2008},
+  publisher={Elsevier}
+}
+
+@article{shapiro2003sequence,
+  title={Sequence-specific targeting of two bases on both DNA strands by the somatic hypermutation mechanism},
+  author={Shapiro, Gary S and Ellison, Misoo C and Wysocki, Lawrence J},
+  journal={Molecular immunology},
+  volume={40},
+  number={5},
+  pages={287--295},
+  year={2003},
+  publisher={Elsevier}
+}
+
+@article{hoehn2016diversity,
+  title={The diversity and molecular evolution of B cell receptors during infection},
+  author={Hoehn, Kenneth B and Fowler, Anna and Lunter, Gerton and Pybus, Oliver G},
+  journal={Molecular biology and evolution},
+  pages={msw015},
+  year={2016},
+  publisher={SMBE}
+}
+
+@article{sheng2016effects,
+  title={Effects of Darwinian selection and mutability on rate of broadly neutralizing antibody evolution during HIV-1 infection},
+  author={Sheng, Zizhang and Schramm, Chaim A and Connors, Mark and Morris, Lynn and Mascola, John R and Kwong, Peter D and Shapiro, Lawrence},
+  journal={PLoS Comput Biol},
+  volume={12},
+  number={5},
+  pages={e1004940},
+  year={2016},
+  publisher={Public Library of Science}
+}
+
+@article{mckean1984generation,
+  title={Generation of antibody diversity in the immune response of BALB/c mice to influenza virus hemagglutinin},
+  author={McKean, David and Huppi, Konrad and Bell, Michael and Staudt, Louis and Gerhard, Walter and Weigert, Martin},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={81},
+  number={10},
+  pages={3180--3184},
+  year={1984},
+  publisher={National Acad Sciences}
+}
+
+@article{rieckmann2017social,
+  title={Social network architecture of human immune cells unveiled by quantitative proteomics},
+  author={Rieckmann, Jan C and Geiger, Roger and Hornburg, Daniel and Wolf, Tobias and Kveler, Ksenya and Jarrossay, David and Sallusto, Federica and Shen-Orr, Shai S and Lanzavecchia, Antonio and Mann, Matthias and others},
+  journal={Nature Immunology},
+  year={2017},
+  publisher={Nature Research}
+}
+
+@article{mccandlish2011visualizing,
+  title={Visualizing fitness landscapes},
+  author={McCandlish, David M},
+  journal={Evolution},
+  volume={65},
+  number={6},
+  pages={1544--1558},
+  year={2011},
+  publisher={Wiley Online Library}
+}
+
+@article{kauffman1989nk,
+  title={The NK model of rugged fitness landscapes and its application to maturation of the immune response},
+  author={Kauffman, Stuart A and Weinberger, Edward D},
+  journal={Journal of theoretical biology},
+  volume={141},
+  number={2},
+  pages={211--245},
+  year={1989},
+  publisher={Elsevier}
+}
+
+@article{romero2009exploring,
+  title={Exploring protein fitness landscapes by directed evolution},
+  author={Romero, Philip A and Arnold, Frances H},
+  journal={Nature Reviews Molecular Cell Biology},
+  volume={10},
+  number={12},
+  pages={866--876},
+  year={2009},
+  publisher={Nature Publishing Group}
+}
+
+@phdthesis{shafee2014evolvability,
+  title={Evolvability of a viral protease: experimental evolution of catalysis, robustness and specificity},
+  author={Shafee, Thomas},
+  year={2014},
+  school={University of Cambridge}
+}
+
+@article{gong2013stability,
+  title={Stability-mediated epistasis constrains the evolution of an influenza protein},
+  author={Gong, Lizhi Ian and Suchard, Marc A and Bloom, Jesse D},
+  journal={Elife},
+  volume={2},
+  pages={e00631},
+  year={2013},
+  publisher={eLife Sciences Publications Limited}
+}
+
+
+@article{schramm2017gene,
+  title={Gene-specific substitution profiles describe the types and frequencies of amino acid changes during antibody somatic hypermutation},
+  author={Schramm, Chaim A and Kong, Rui and Mullikin, James C and Mascola, John R and Kwong, Peter D and Shapiro, Lawrence and others},
+  journal={Frontiers in Immunology},
+  volume={8},
+  pages={537},
+  year={2017},
+  publisher={Frontiers}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% master thesis notes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@ARTICLE{Randall2016-kq,
+  title       = "An experimental phylogeny to benchmark ancestral sequence
+                 reconstruction",
+  author      = "Randall, Ryan N and Radford, Caelan E and Roof, Kelsey A and
+                 Natarajan, Divya K and Gaucher, Eric A",
+  affiliation = "School of Biological Sciences, Georgia Institute of
+                 Technology, Atlanta, Georgia 30332, USA. School of Biological
+                 Sciences, Georgia Institute of Technology, Atlanta, Georgia
+                 30332, USA. School of Biological Sciences, Georgia Institute
+                 of Technology, Atlanta, Georgia 30332, USA. School of
+                 Biological Sciences, Georgia Institute of Technology, Atlanta,
+                 Georgia 30332, USA. School of Biological Sciences, Georgia
+                 Institute of Technology, Atlanta, Georgia 30332, USA.
+                 Institute for Bioengineering and Biosciences, Georgia
+                 Institute of Technology, Atlanta, Georgia 30332, USA.",
+  abstract    = "Ancestral sequence reconstruction (ASR) is a still-burgeoning
+                 method that has revealed many key mechanisms of molecular
+                 evolution. One criticism of the approach is an inability to
+                 validate its algorithms within a biological context as opposed
+                 to a computer simulation. Here we build an experimental
+                 phylogeny using the gene of a single red fluorescent protein
+                 to address this criticism. The evolved phylogeny consists of
+                 19 operational taxonomic units (leaves) and 17 ancestral
+                 bifurcations (nodes) that display a wide variety of
+                 fluorescent phenotypes. The 19 leaves then serve as 'modern'
+                 sequences that we subject to ASR analyses using various
+                 algorithms and to benchmark against the known ancestral
+                 genotypes and ancestral phenotypes. We confirm computer
+                 simulations that show all algorithms infer ancient sequences
+                 with high accuracy, yet we also reveal wide variation in the
+                 phenotypes encoded by incorrectly inferred sequences.
+                 Specifically, Bayesian methods incorporating rate variation
+                 significantly outperform the maximum parsimony criterion in
+                 phenotypic accuracy. Subsampling of extant sequences had minor
+                 effect on the inference of ancestral sequences.",
+  journal     = "Nat. Commun.",
+  volume      =  7,
+  pages       = "12847",
+  month       =  "15~" # sep,
+  year        =  2016,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+@ARTICLE{Williams2006-ig,
+  title       = "Assessing the accuracy of ancestral protein reconstruction
+                 methods",
+  author      = "Williams, Paul D and Pollock, David D and Blackburne, Benjamin
+                 P and Goldstein, Richard A",
+  affiliation = "Department of Chemistry, University of Michigan, Ann Arbor,
+                 Michigan, USA.",
+  abstract    = "The phylogenetic inference of ancestral protein sequences is a
+                 powerful technique for the study of molecular evolution, but
+                 any conclusions drawn from such studies are only as good as
+                 the accuracy of the reconstruction method. Every inference
+                 method leads to errors in the ancestral protein sequence,
+                 resulting in potentially misleading estimates of the ancestral
+                 protein's properties. To assess the accuracy of ancestral
+                 protein reconstruction methods, we performed computational
+                 population evolution simulations featuring near-neutral
+                 evolution under purifying selection, speciation, and
+                 divergence using an off-lattice protein model where fitness
+                 depends on the ability to be stable in a specified target
+                 structure. We were thus able to compare the thermodynamic
+                 properties of the true ancestral sequences with the properties
+                 of ``ancestral sequences'' inferred by maximum parsimony,
+                 maximum likelihood, and Bayesian methods. Surprisingly, we
+                 found that methods such as maximum parsimony and maximum
+                 likelihood that reconstruct a ``best guess'' amino acid at
+                 each position overestimate thermostability, while a Bayesian
+                 method that sometimes chooses less-probable residues from the
+                 posterior probability distribution does not. Maximum
+                 likelihood and maximum parsimony apparently tend to eliminate
+                 variants at a position that are slightly detrimental to
+                 structural stability simply because such detrimental variants
+                 are less frequent. Other properties of ancestral proteins
+                 might be similarly overestimated. This suggests that ancestral
+                 reconstruction studies require greater care to come to
+                 credible conclusions regarding functional evolution. Inferred
+                 functional patterns that mimic reconstruction bias should be
+                 reevaluated.",
+  journal     = "PLoS Comput. Biol.",
+  volume      =  2,
+  number      =  6,
+  pages       = "e69",
+  month       =  "23~" # jun,
+  year        =  2006,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+@ARTICLE{Hanson-Smith2010-ie,
+  title       = "Robustness of ancestral sequence reconstruction to
+                 phylogenetic uncertainty",
+  author      = "Hanson-Smith, Victor and Kolaczkowski, Bryan and Thornton,
+                 Joseph W",
+  affiliation = "Department of Computer and Information Science, University of
+                 Oregon, USA.",
+  abstract    = "Ancestral sequence reconstruction (ASR) is widely used to
+                 formulate and test hypotheses about the sequences, functions,
+                 and structures of ancient genes. Ancestral sequences are
+                 usually inferred from an alignment of extant sequences using a
+                 maximum likelihood (ML) phylogenetic algorithm, which
+                 calculates the most likely ancestral sequence assuming a
+                 probabilistic model of sequence evolution and a specific
+                 phylogeny--typically the tree with the ML. The true phylogeny
+                 is seldom known with certainty, however. ML methods ignore
+                 this uncertainty, whereas Bayesian methods incorporate it by
+                 integrating the likelihood of each ancestral state over a
+                 distribution of possible trees. It is not known whether
+                 Bayesian approaches to phylogenetic uncertainty improve the
+                 accuracy of inferred ancestral sequences. Here, we use
+                 simulation-based experiments under both simplified and
+                 empirically derived conditions to compare the accuracy of ASR
+                 carried out using ML and Bayesian approaches. We show that
+                 incorporating phylogenetic uncertainty by integrating over
+                 topologies very rarely changes the inferred ancestral state
+                 and does not improve the accuracy of the reconstructed
+                 ancestral sequence. Ancestral state reconstructions are robust
+                 to uncertainty about the underlying tree because the
+                 conditions that produce phylogenetic uncertainty also make the
+                 ancestral state identical across plausible trees; conversely,
+                 the conditions under which different phylogenies yield
+                 different inferred ancestral states produce little or no
+                 ambiguity about the true phylogeny. Our results suggest that
+                 ML can produce accurate ASRs, even in the face of phylogenetic
+                 uncertainty. Using Bayesian integration to incorporate this
+                 uncertainty is neither necessary nor beneficial.",
+  journal     = "Mol. Biol. Evol.",
+  volume      =  27,
+  number      =  9,
+  pages       = "1988--1999",
+  month       =  sep,
+  year        =  2010,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+@ARTICLE{Matrices_undated-ki,
+  title    = "Markov Chains and Models of Molecular Evolution",
+  author   = "Matrices, Transition Probability",
+  keywords = "ASR"
+}
+
+@MISC{noauthor_undated-hn,
+  title    = "{Chapter9-Markov\_Models\_of\_Protein\_Evolution.pdf}",
+  keywords = "ASR"
+}
+
+@INCOLLECTION{Huelsenbeck2005-jb,
+  title     = "Bayesian Analysis of Molecular Evolution Using {MrBayes}",
+  booktitle = "Statistical Methods in Molecular Evolution",
+  author    = "Huelsenbeck, John P and Ronquist, Fredrik",
+  publisher = "Springer New York",
+  pages     = "183--226",
+  series    = "Statistics for Biology and Health",
+  year      =  2005,
+  keywords  = "ASR",
+  language  = "en"
+}
+
+@ARTICLE{Cole2013-wl,
+  title       = "Reconstructing evolutionary adaptive paths for protein
+                 engineering",
+  author      = "Cole, Megan F and Cox, Vanessa E and Gratton, Kelsey L and
+                 Gaucher, Eric A",
+  affiliation = "School of Biology, Georgia Institute of Technology, Atlanta,
+                 GA, USA.",
+  abstract    = "Reconstructing Evolutionary Adaptive Paths (REAP) is one of
+                 several methods to improve enzyme -functionality. This
+                 approach incorporates computational and theoretical aspects of
+                 protein engineering to create a focused library of protein
+                 variety with a high degree of functionality. In contrast to
+                 other -techniques like DNA shuffling, REAP allows a library to
+                 have diverse functionality among relatively few variants. REAP
+                 is a low-throughput method which takes advantage of natural
+                 selection and uses ancestral protein sequences to direct gene
+                 mutations, thereby creating a library with a high density of
+                 viable proteins. These proteins must then be assayed to
+                 characterize their functionality to identify which variants
+                 have the desired traits such as acid stability or
+                 thermostability.",
+  journal     = "Methods Mol. Biol.",
+  volume      =  978,
+  pages       = "115--125",
+  year        =  2013,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+
+@ARTICLE{Ahrenfeldt2017-id,
+  title       = "Bacterial whole genome-based phylogeny: construction of a new
+                 benchmarking dataset and assessment of some existing methods",
+  author      = "Ahrenfeldt, Johanne and Skaarup, Carina and Hasman, Henrik and
+                 Pedersen, Anders Gorm and Aarestrup, Frank M{\o}ller and Lund,
+                 Ole",
+  affiliation = "Center for Biological Sequence Analysis, DTU Bioinformatics,
+                 Technical University of Denmark, Kongens Lyngby, Denmark.
+                 johah@cbs.dtu.dk. Center for Biological Sequence Analysis, DTU
+                 Bioinformatics, Technical University of Denmark, Kongens
+                 Lyngby, Denmark. Department of Microbiology and Infection
+                 Control, Statens Serum Institute, Copenhagen, Denmark. Center
+                 for Biological Sequence Analysis, DTU Bioinformatics,
+                 Technical University of Denmark, Kongens Lyngby, Denmark.
+                 Research Group for Genomic Epidemiology, DTU FOOD, Technical
+                 University of Denmark, Kongens Lyngby, Denmark. Center for
+                 Biological Sequence Analysis, DTU Bioinformatics, Technical
+                 University of Denmark, Kongens Lyngby, Denmark.",
+  abstract    = "BACKGROUND: Whole genome sequencing (WGS) is increasingly used
+                 in diagnostics and surveillance of infectious diseases. A
+                 major application for WGS is to use the data for identifying
+                 outbreak clusters, and there is therefore a need for methods
+                 that can accurately and efficiently infer phylogenies from
+                 sequencing reads. In the present study we describe a new
+                 dataset that we have created for the purpose of benchmarking
+                 such WGS-based methods for epidemiological data, and also
+                 present an analysis where we use the data to compare the
+                 performance of some current methods. RESULTS: Our aim was to
+                 create a benchmark data set that mimics sequencing data of the
+                 sort that might be collected during an outbreak of an
+                 infectious disease. This was achieved by letting an E. coli
+                 hypermutator strain grow in the lab for 8 consecutive days,
+                 each day splitting the culture in two while also collecting
+                 samples for sequencing. The result is a data set consisting of
+                 101 whole genome sequences with known phylogenetic
+                 relationship. Among the sequenced samples 51 correspond to
+                 internal nodes in the phylogeny because they are ancestral,
+                 while the remaining 50 correspond to leaves. We also used the
+                 newly created data set to compare three different online
+                 available methods that infer phylogenies from whole-genome
+                 sequencing reads: NDtree, CSI Phylogeny and REALPHY. One
+                 complication when comparing the output of these methods with
+                 the known phylogeny is that phylogenetic methods typically
+                 build trees where all observed sequences are placed as leafs,
+                 even though some of them are in fact ancestral. We therefore
+                 devised a method for post processing the inferred trees by
+                 collapsing short branches (thus relocating some leafs to
+                 internal nodes), and also present two new measures of tree
+                 similarity that takes into account the identity of both
+                 internal and leaf nodes. CONCLUSIONS: Based on this analysis
+                 we find that, among the investigated methods, CSI Phylogeny
+                 had the best performance, correctly identifying 73\% of all
+                 branches in the tree and 71\% of all clades. We have made all
+                 data from this experiment (raw sequencing reads, consensus
+                 whole-genome sequences, as well as descriptions of the known
+                 phylogeny in a variety of formats) publicly available, with
+                 the hope that other groups may find this data useful for
+                 benchmarking and exploring the performance of epidemiological
+                 methods. All data is freely available at:
+                 https://cge.cbs.dtu.dk/services/evolution\_data.php .",
+  journal     = "BMC Genomics",
+  volume      =  18,
+  number      =  1,
+  pages       = "19",
+  month       =  "5~" # jan,
+  year        =  2017,
+  keywords    = "Benchmark; Evolution; Phylogeny; WGS;ASR",
+  language    = "en"
+}
+
+@ARTICLE{Safonova2015-je,
+  title       = "{IgSimulator}: a versatile immunosequencing simulator",
+  author      = "Safonova, Yana and Lapidus, Alla and Lill, Jennie",
+  affiliation = "Center of Algorithmic biotechnology, Institute of
+                 Translational Biomedicine, St. Petersburg State University,
+                 Russia, Algorithmic Biology Laboratory, St. Petersburg
+                 Academic University, St. Petersburg, Russia and. Center of
+                 Algorithmic biotechnology, Institute of Translational
+                 Biomedicine, St. Petersburg State University, Russia,
+                 Algorithmic Biology Laboratory, St. Petersburg Academic
+                 University, St. Petersburg, Russia and. Department of Protein
+                 Chemistry, Genentech, 1 DNA Way, South San Francisco, CA
+                 94080, USA.",
+  abstract    = "MOTIVATION: The recent introduction of next-generation
+                 sequencing technologies to antibody studies have resulted in a
+                 growing number of immunoinformatics tools for antibody
+                 repertoire analysis. However, benchmarking these newly
+                 emerging tools remains problematic since the gold standard
+                 datasets that are needed to validate these tools are typically
+                 not available. RESULTS: Since simulating antibody repertoires
+                 is often the only feasible way to benchmark new
+                 immunoinformatics tools, we developed the IgSimulator tool
+                 that addresses various complications in generating realistic
+                 antibody repertoires. IgSimulator's code has modular structure
+                 and can be easily adapted to new requirements to simulation.
+                 AVAILABILITY AND IMPLEMENTATION: IgSimulator is open source
+                 and freely available as a C++ and Python program running on
+                 all Unix-compatible platforms. The source code is available
+                 from yana-safonova.github.io/ig\_simulator. CONTACT:
+                 safonova.yana@gmail.com SUPPLEMENTARY INFORMATION:
+                 Supplementary data are available at Bioinformatics online.",
+  journal     = "Bioinformatics",
+  volume      =  31,
+  number      =  19,
+  pages       = "3213--3215",
+  month       =  "1~" # oct,
+  year        =  2015,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+@ARTICLE{Bournazos2016-xz,
+  title     = "Bispecific {Anti-HIV-1} Antibodies with Enhanced Breadth and
+               Potency",
+  author    = "Bournazos, Stylianos and Gazumyan, Anna and Seaman, Michael S
+               and Nussenzweig, Michel C and Ravetch, Jeffrey V",
+  abstract  = "A new generation of bispecific anti-HIV-1 antibodies combines
+               the breadth and potency of previous broadly neutralizing
+               antibodies in a synergistic manner, producing enhanced in vitro
+               viral neutralization and better control of viremia in vivo.",
+  journal   = "Cell",
+  publisher = "Elsevier",
+  volume    =  165,
+  number    =  7,
+  pages     = "1609--1620",
+  month     =  "16~" # jun,
+  year      =  2016,
+  keywords  = "ASR",
+  language  = "en"
+}
+
+@ARTICLE{Wu2011-yj,
+  title       = "Focused evolution of {HIV-1} neutralizing antibodies revealed
+                 by structures and deep sequencing",
+  author      = "Wu, Xueling and Zhou, Tongqing and Zhu, Jiang and Zhang,
+                 Baoshan and Georgiev, Ivelin and Wang, Charlene and Chen,
+                 Xuejun and Longo, Nancy S and Louder, Mark and McKee, Krisha
+                 and O'Dell, Sijy and Perfetto, Stephen and Schmidt, Stephen D
+                 and Shi, Wei and Wu, Lan and Yang, Yongping and Yang, Zhi-Yong
+                 and Yang, Zhongjia and Zhang, Zhenhai and Bonsignori, Mattia
+                 and Crump, John A and Kapiga, Saidi H and Sam, Noel E and
+                 Haynes, Barton F and Simek, Melissa and Burton, Dennis R and
+                 Koff, Wayne C and Doria-Rose, Nicole A and Connors, Mark and
+                 {NISC Comparative Sequencing Program} and Mullikin, James C
+                 and Nabel, Gary J and Roederer, Mario and Shapiro, Lawrence
+                 and Kwong, Peter D and Mascola, John R",
+  affiliation = "Vaccine Research Center, National Institutes of Health,
+                 Bethesda, MD 20892, USA.",
+  abstract    = "Antibody VRC01 is a human immunoglobulin that neutralizes
+                 about 90\% of HIV-1 isolates. To understand how such broadly
+                 neutralizing antibodies develop, we used x-ray crystallography
+                 and 454 pyrosequencing to characterize additional VRC01-like
+                 antibodies from HIV-1-infected individuals. Crystal structures
+                 revealed a convergent mode of binding for diverse antibodies
+                 to the same CD4-binding-site epitope. A functional genomics
+                 analysis of expressed heavy and light chains revealed common
+                 pathways of antibody-heavy chain maturation, confined to the
+                 IGHV1-2*02 lineage, involving dozens of somatic changes, and
+                 capable of pairing with different light chains. Broadly
+                 neutralizing HIV-1 immunity associated with VRC01-like
+                 antibodies thus involves the evolution of antibodies to a
+                 highly affinity-matured state required to recognize an
+                 invariant viral structure, with lineages defined from
+                 thousands of sequences providing a genetic roadmap of their
+                 development.",
+  journal     = "Science",
+  volume      =  333,
+  number      =  6049,
+  pages       = "1593--1602",
+  month       =  "16~" # sep,
+  year        =  2011,
+  keywords    = "ASR",
+  language    = "en"
+}
+
+@ARTICLE{Koenig2017-ak,
+  title       = "Mutational landscape of antibody variable domains reveals a
+                 switch modulating the interdomain conformational dynamics and
+                 antigen binding",
+  author      = "Koenig, Patrick and Lee, Chingwei V and Walters, Benjamin T
+                 and Janakiraman, Vasantharajan and Stinson, Jeremy and
+                 Patapoff, Thomas W and Fuh, Germaine",
+  affiliation = "Department of Antibody Engineering, Genentech Research and
+                 Early Development, Genentech, Inc., South San Francisco, CA
+                 94080; koenig.patrick@gmail.com germainefuh@gmail.com.
+                 Department of Antibody Engineering, Genentech Research and
+                 Early Development, Genentech, Inc., South San Francisco, CA
+                 94080. Department of Early-Stage Pharmaceutical Development,
+                 Pharma Technical Development, Genentech, Inc., South San
+                 Francisco, CA 94080. Department of Molecular Biology,
+                 Genentech Research and Early Development, Genentech, Inc.,
+                 South San Francisco, CA 94080. Department of Molecular
+                 Biology, Genentech Research and Early Development, Genentech,
+                 Inc., South San Francisco, CA 94080. Department of Early-Stage
+                 Pharmaceutical Development, Pharma Technical Development,
+                 Genentech, Inc., South San Francisco, CA 94080. Department of
+                 Antibody Engineering, Genentech Research and Early
+                 Development, Genentech, Inc., South San Francisco, CA 94080;
+                 koenig.patrick@gmail.com germainefuh@gmail.com.",
+  abstract    = "Somatic mutations within the antibody variable domains are
+                 critical to the immense capacity of the immune repertoire.
+                 Here, via a deep mutational scan, we dissect how mutations at
+                 all positions of the variable domains of a high-affinity
+                 anti-VEGF antibody G6.31 impact its antigen-binding function.
+                 The resulting mutational landscape demonstrates that large
+                 portions of antibody variable domain positions are open to
+                 mutation, and that beneficial mutations can be found
+                 throughout the variable domains. We determine the role of one
+                 antigen-distal light chain position 83, demonstrating that
+                 mutation at this site optimizes both antigen affinity and
+                 thermostability by modulating the interdomain conformational
+                 dynamics of the antigen-binding fragment. Furthermore, by
+                 analyzing a large number of human antibody sequences and
+                 structures, we demonstrate that somatic mutations occur
+                 frequently at position 83, with corresponding domain
+                 conformations observed for G6.31. Therefore, the modulation of
+                 interdomain dynamics represents an important mechanism during
+                 antibody maturation in vivo.",
+  journal     = "Proc. Natl. Acad. Sci. U. S. A.",
+  month       =  "5~" # jan,
+  year        =  2017,
+  keywords    = "affinity maturation; antibody; conformational dynamics; deep
+                 mutational scanning; immunology;ASR",
+  language    = "en"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% new
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@article{pupko2000fast,
+  title={A fast algorithm for joint reconstruction of ancestral amino acid sequences},
+  author={Pupko, Tal and Pe, Itsik and Shamir, Ron and Graur, Dan},
+  journal={Molecular Biology and Evolution},
+  volume={17},
+  number={6},
+  pages={890--896},
+  year={2000},
+  publisher={SMBE}
+}
+
+@article{georgiou2014promise,
+  title={The promise and challenge of high-throughput sequencing of the antibody repertoire},
+  author={Georgiou, George and Ippolito, Gregory C and Beausang, John and Busse, Christian E and Wardemann, Hedda and Quake, Stephen R},
+  journal={Nature biotechnology},
+  volume={32},
+  number={2},
+  pages={158--168},
+  year={2014},
+  publisher={Nature Research}
+}
+
+@article{ye2013igblast,
+  title={IgBLAST: an immunoglobulin variable domain sequence analysis tool},
+  author={Ye, Jian and Ma, Ning and Madden, Thomas L and Ostell, James M},
+  journal={Nucleic acids research},
+  pages={gkt382},
+  year={2013},
+  publisher={Oxford Univ Press}
+}
+
+@article{vander2014presto,
+  title={pRESTO: a toolkit for processing high-throughput sequencing raw reads of lymphocyte receptor repertoires},
+  author={Vander Heiden, Jason A and Yaari, Gur and Uduman, Mohamed and Stern, Joel NH and O’Connor, Kevin C and Hafler, David A and Vigneault, Francois and Kleinstein, Steven H},
+  journal={Bioinformatics},
+  pages={btu138},
+  year={2014},
+  publisher={Oxford Univ Press}
+}
+
+@article{stern2014b,
+  title={B cells populating the multiple sclerosis brain mature in the draining cervical lymph nodes},
+  author={Stern, Joel NH and Yaari, Gur and Vander Heiden, Jason A and Church, George and Donahue, William F and Hintzen, Rogier Q and Huttner, Anita J and Laman, Jon D and Nagra, Rashed M and Nylander, Alyssa and others},
+  journal={Science translational medicine},
+  volume={6},
+  number={248},
+  pages={248ra107--248ra107},
+  year={2014},
+  publisher={American Association for the Advancement of Science}
+}
+
+@article{larrick1989polymemse,
+  title={Polymemse Chain Reaction Using Mixed Primers: Cloning of Human Monoclonal Antibody Variable Region Genes from Single Hybridoma Cells},
+  author={Larrick, James W and Danielsson, Lena and Brenner, Carol A and Wallace, Ellen F and Abrahamson, Magnus and Fry, Kirk E and Borrebaeck, Carl AK},
+  journal={Nature Biotechnology},
+  volume={7},
+  number={9},
+  pages={934--938},
+  year={1989},
+  publisher={Nature Publishing Group}
+}
+
+@article{yamada1991preferential,
+  title={Preferential utilization of specific immunoglobulin heavy chain diversity and joining segments in adult human peripheral blood B lymphocytes},
+  author={Yamada, Masao and Wasserman, Robert and Reichard, Betty Anne and Shane, Sara and Caton, Andrew J and Rovera, Giovanni},
+  journal={J Exp med},
+  volume={173},
+  number={2},
+  pages={395--407},
+  year={1991}
+}
+
+@article{laustsen2017exploration,
+  title={Exploration of immunoglobulin transcriptomes from mice immunized with three-finger toxins and phospholipases A2 from the Central American coral snake, Micrurus nigrocinctus},
+  author={Laustsen, Andreas H and Engmark, Mikael and Clouser, Christopher and Timberlake, Sonia and Vigneault, Francois and Guti{\'e}rrez, Jos{\'e} Mar{\'\i}a and Lomonte, Bruno},
+  journal={PeerJ},
+  volume={5},
+  pages={e2924},
+  year={2017},
+  publisher={PeerJ Inc.}
+}
+
+@article{turchaninova2016high,
+  title={High-quality full-length immunoglobulin profiling with unique molecular barcoding},
+  author={Turchaninova, MA and Davydov, A and Britanova, OV and Shugay, M and Bikos, V and Egorov, ES and Kirgizova, VI and Merzlyak, EM and Staroverov, DB and Bolotin, DA and others},
+  journal={Nature Protocols},
+  volume={11},
+  number={9},
+  pages={1599--1616},
+  year={2016},
+  publisher={Nature Research}
+}
+
+@article{reddy2010monoclonal,
+  title={Monoclonal antibodies isolated without screening by analyzing the variable-gene repertoire of plasma cells},
+  author={Reddy, Sai T and Ge, Xin and Miklos, Aleksandr E and Hughes, Randall A and Kang, Seung Hyun and Hoi, Kam Hon and Chrysostomou, Constantine and Hunicke-Smith, Scott P and Iverson, Brent L and Tucker, Philip W and others},
+  journal={Nature biotechnology},
+  volume={28},
+  number={9},
+  pages={965--969},
+  year={2010},
+  publisher={Nature Publishing Group}
+}
+
+@article{kwong2017antibodyomics,
+  title={Antibodyomics: bioinformatics technologies for understanding B-cell immunity to HIV-1},
+  author={Kwong, Peter D and Chuang, Gwo-Yu and DeKosky, Brandon J and Gindin, Tatyana and Georgiev, Ivelin S and Lemmin, Thomas and Schramm, Chaim A and Sheng, Zizhang and Soto, Cinque and Yang, An-Suei and others},
+  journal={Immunological Reviews},
+  volume={275},
+  number={1},
+  pages={108--128},
+  year={2017},
+  publisher={Wiley Online Library}
+}
+
+@article{huang2016identification,
+  title={Identification of a CD4-binding-site antibody to HIV that evolved near-pan neutralization breadth},
+  author={Huang, Jinghe and Kang, Byong H and Ishida, Elise and Zhou, Tongqing and Griesman, Trevor and Sheng, Zizhang and Wu, Fan and Doria-Rose, Nicole A and Zhang, Baoshan and McKee, Krisha and others},
+  journal={Immunity},
+  volume={45},
+  number={5},
+  pages={1108--1121},
+  year={2016},
+  publisher={Elsevier}
+}
+
+@article{glanville2009precise,
+  title={Precise determination of the diversity of a combinatorial antibody library gives insight into the human immunoglobulin repertoire},
+  author={Glanville, Jacob and Zhai, Wenwu and Berka, Jan and Telman, Dilduz and Huerta, Gabriella and Mehta, Gautam R and Ni, Irene and Mei, Li and Sundar, Purnima D and Day, Giles MR and others},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={106},
+  number={48},
+  pages={20216--20221},
+  year={2009},
+  publisher={National Acad Sciences}
+}
+
+@article {Briggs134841,
+	author = {Briggs, Adrian W and Goldfless, Stephen J and Timberlake, Sonia and Belmont, Brian J and Clouser, Christopher R and Koppstein, David and Sok, Devin and Heiden, Jason Vander A and Tamminen, Manu V and Kleinstein, Steven H and Burton, Dennis R and Church, George M and Vigneault, Francois},
+	title = {Tumor-infiltrating immune repertoires captured by single-cell barcoding in emulsion},
+	year = {2017},
+	doi = {10.1101/134841},
+	publisher = {Cold Spring Harbor Labs Journals},
+	abstract = {Tumor-infiltrating lymphocytes (TILs) are critical to anti-cancer immune responses, but their diverse phenotypes and functions remain poorly understood and challenging to study. We therefore developed a single-cell barcoding technology for deep characterization of TILs without the need for cell-sorting or culture. Our emulsion-based method captures full-length, natively paired B-cell and T-cell receptor (BCR and TCR) sequences from lymphocytes among millions of input cells. We validated the method with 3 million B-cells from healthy human blood and 350,000 B-cells from an HIV elite controller, before processing 400,000 cells from an unsorted dissociated ovarian adenocarcinoma and recovering paired BCRs and TCRs from over 11,000 TILs. We then extended the barcoding method to detect DNA-labeled antibodies, allowing ultra-high throughput, simultaneous protein detection and RNA sequencing from single cells.},
+	URL = {http://biorxiv.org/content/early/2017/05/05/134841},
+	eprint = {http://biorxiv.org/content/early/2017/05/05/134841.full.pdf},
+	journal = {bioRxiv}
+}
+
+@article{mcdaniel2016ultra,
+  title={Ultra-high-throughput sequencing of the immune receptor repertoire from millions of lymphocytes},
+  author={McDaniel, Jonathan R and DeKosky, Brandon J and Tanno, Hidetaka and Ellington, Andrew D and Georgiou, George},
+  journal={Nature protocols},
+  volume={11},
+  number={3},
+  pages={429--442},
+  year={2016},
+  publisher={Nature Publishing Group}
+}
+
+@misc{andrews2010fastqc,
+  title={FastQC: a quality control tool for high throughput sequence data},
+  author={Andrews, Simon and others},
+  year={2010}
+}
+
+@article{lefranc2003imgt,
+  title={IMGT unique numbering for immunoglobulin and T cell receptor variable domains and Ig superfamily V-like domains},
+  author={Lefranc, Marie-Paule and Pommi{\'e}, Christelle and Ruiz, Manuel and Giudicelli, V{\'e}ronique and Foulquier, Elodie and Truong, Lisa and Thouvenin-Contet, Val{\'e}rie and Lefranc, G{\'e}rard},
+  journal={Developmental \& Comparative Immunology},
+  volume={27},
+  number={1},
+  pages={55--77},
+  year={2003},
+  publisher={Elsevier}
+}
+
+@book{national1983sequences,
+  title={Sequences of proteins of immunological interest},
+  author={National Institutes of Health and Kabat, Elvin Abraham and others},
+  year={1983},
+  publisher={National Institutes of Health}
+}
+
+@article{chothia1987canonical,
+  title={Canonical structures for the hypervariable regions of immunoglobulins},
+  author={Chothia, Cyrus and Lesk, Arthur M},
+  journal={Journal of molecular biology},
+  volume={196},
+  number={4},
+  pages={901--917},
+  year={1987},
+  publisher={Elsevier}
+}
+
+@article{honegger2001yet,
+  title={Yet another numbering scheme for immunoglobulin variable domains: an automatic modeling and analysis tool},
+  author={Honegger, Annemarie and Pl{\"u}ckthun, Andreas},
+  journal={Journal of molecular biology},
+  volume={309},
+  number={3},
+  pages={657--670},
+  year={2001},
+  publisher={Elsevier}
+}
+
+@article{gupta2017hierarchical,
+  title={Hierarchical clustering can identify B cell clones with high confidence in Ig repertoire sequencing data},
+  author={Gupta, Namita T and Adams, Kristofor D and Briggs, Adrian W and Timberlake, Sonia C and Vigneault, Francois and Kleinstein, Steven H},
+  journal={The Journal of Immunology},
+  volume={198},
+  number={6},
+  pages={2489--2499},
+  year={2017},
+  publisher={Am Assoc Immnol}
+}
+
+@article{ralph2016consistency,
+  title={Consistency of VDJ rearrangement and substitution parameters enables accurate B cell receptor sequence annotation},
+  author={Ralph, Duncan K and Matsen IV, Frederick A},
+  journal={PLoS Comput Biol},
+  volume={12},
+  number={1},
+  pages={e1004409},
+  year={2016},
+  publisher={Public Library of Science}
+}
+
+@article{pham2003processive,
+  title={Processive AID-catalysed cytosine deamination on single-stranded DNA simulates somatic hypermutation},
+  author={Pham, Phuong and Bransteitter, Ronda and Petruska, John and Goodman, Myron F},
+  journal={Nature},
+  volume={424},
+  number={6944},
+  pages={103--107},
+  year={2003},
+  publisher={Nature Publishing Group}
+}
+
+@article{li2013imgt,
+  title={IMGT/HighV QUEST paradigm for T cell receptor IMGT clonotype diversity and next generation repertoire immunoprofiling},
+  author={Li, Shuo and Lefranc, Marie-Paule and Miles, John J and Alamyar, Eltaf and Giudicelli, V{\'e}ronique and Duroux, Patrice and Freeman, J Douglas and Corbin, Vincent DA and Scheerlinck, Jean-Pierre and Frohman, Michael A and others},
+  journal={Nature communications},
+  volume={4},
+  year={2013},
+  publisher={Nature Publishing Group}
+}
+
+@book{durbin1998biological,
+  title={Biological sequence analysis: probabilistic models of proteins and nucleic acids},
+  author={Durbin, Richard and Eddy, Sean R and Krogh, Anders and Mitchison, Graeme},
+  year={1998},
+  publisher={Cambridge university press}
+}
+
+@article{glanville2011naive,
+  title={Naive antibody gene-segment frequencies are heritable and unaltered by chronic lymphocyte ablation},
+  author={Glanville, Jacob and Kuo, Tracy C and von B{\"u}dingen, H-Christian and Guey, Lin and Berka, Jan and Sundar, Purnima D and Huerta, Gabriella and Mehta, Gautam R and Oksenberg, Jorge R and Hauser, Stephen L and others},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={108},
+  number={50},
+  pages={20066--20071},
+  year={2011},
+  publisher={National Acad Sciences}
+}
+
+@article{jiang2013lineage,
+  title={Lineage structure of the human antibody repertoire in response to influenza vaccination},
+  author={Jiang, Ning and He, Jiankui and Weinstein, Joshua A and Penland, Lolita and Sasaki, Sanae and He, Xiao-Song and Dekker, Cornelia L and Zheng, Nai-Ying and Huang, Min and Sullivan, Meghan and others},
+  journal={Science translational medicine},
+  volume={5},
+  number={171},
+  pages={171ra19--171ra19},
+  year={2013},
+  publisher={American Association for the Advancement of Science}
+}
+
+@article{giudicelli1999ontology,
+  title={Ontology for immunogenetics: the IMGT-ONTOLOGY},
+  author={Giudicelli, Veronique and Lefranc, Marie-Paule},
+  journal={Bioinformatics},
+  volume={15},
+  number={12},
+  pages={1047--1054},
+  year={1999},
+  publisher={Oxford Univ Press}
+}
+
+@article{suchard2006bali,
+  title={BAli-Phy: simultaneous Bayesian inference of alignment and phylogeny},
+  author={Suchard, Marc A and Redelings, Benjamin D},
+  journal={Bioinformatics},
+  volume={22},
+  number={16},
+  pages={2047--2048},
+  year={2006},
+  publisher={Oxford Univ Press}
+}
+
+@article{stamatakis2008rapid,
+  title={A rapid bootstrap algorithm for the RAxML web servers},
+  author={Stamatakis, Alexandros and Hoover, Paul and Rougemont, Jacques and Renner, Susanne},
+  journal={Systematic biology},
+  volume={57},
+  number={5},
+  pages={758--771},
+  year={2008},
+  publisher={Oxford University Press}
+}
+
+@article{zhang20173d,
+  title={3D: diversity, dynamics, differential testing--a proposed pipeline for analysis of next-generation sequencing T cell repertoire data},
+  author={Zhang, Li and Cham, Jason and Paciorek, Alan and Trager, James and Sheikh, Nadeem and Fong, Lawrence},
+  journal={BMC bioinformatics},
+  volume={18},
+  number={1},
+  pages={129},
+  year={2017},
+  publisher={BioMed Central}
+}
+
+
+@article{campbell2008subclonal,
+  title={Subclonal phylogenetic structures in cancer revealed by ultra-deep sequencing},
+  author={Campbell, Peter J and Pleasance, Erin D and Stephens, Philip J and Dicks, Ed and Rance, Richard and Goodhead, Ian and Follows, George A and Green, Anthony R and Futreal, P Andy and Stratton, Michael R},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={105},
+  number={35},
+  pages={13081--13086},
+  year={2008},
+  publisher={National Acad Sciences}
+}
+@article{boyd2008high,
+  title={High-Throughput Sequencing for Diagnosis, Prognosis and Monitoring of Lymphoid Malignancies},
+  author={Boyd, Scott D and Merker, Jason D and Zehnder, James L and Fire, Andrew Z},
+  journal={Blood},
+  volume={112},
+  number={11},
+  pages={3779--3779},
+  year={2008},
+  publisher={Am Soc Hematology}
+}
+
+@article{dewitt2016public,
+  title={A Public Database of Memory and Naive B-Cell Receptor Sequences},
+  author={DeWitt, William S and Lindau, Paul and Snyder, Thomas M and Sherwood, Anna M and Vignali, Marissa and Carlson, Christopher S and Greenberg, Philip D and Duerkopp, Natalie and Emerson, Ryan O and Robins, Harlan S},
+  journal={PloS one},
+  volume={11},
+  number={8},
+  pages={e0160853},
+  year={2016},
+  publisher={Public Library of Science}
+}
+
+@article{vander2017dysregulation,
+  title={Dysregulation of B cell repertoire formation in myasthenia gravis patients revealed through deep sequencing},
+  author={Vander Heiden, Jason A and Stathopoulos, Panos and Zhou, Julian Q and Chen, Luan and Gilbert, Tamara J and Bolen, Christopher R and Barohn, Richard J and Dimachkie, Mazen M and Ciafaloni, Emma and Broering, Teresa J and others},
+  journal={The Journal of Immunology},
+  volume={198},
+  number={4},
+  pages={1460--1473},
+  year={2017},
+  publisher={Am Assoc Immnol}
+}
+
+@article{martin2010protein,
+  title={Protein sequence and structure analysis of antibody variable domains},
+  author={Martin, Andrew CR},
+  journal={Antibody engineering},
+  pages={33--51},
+  year={2010},
+  publisher={Springer}
+}
+
+@article{dunbar2016anarci,
+  title={ANARCI: antigen receptor numbering and receptor classification},
+  author={Dunbar, James and Deane, Charlotte M},
+  journal={Bioinformatics},
+  volume={32},
+  number={2},
+  pages={298--300},
+  year={2016},
+  publisher={Oxford University Press}
+}
+
+ @article{Bannard_Cyster_2017, title={Germinal centers: programmed for affinity maturation and antibody diversification}, volume={45}, ISSN={0952-7915}, abstractNote={The seminal discovery by Eisen that antibodies undergo improvements in antigen-binding affinity over the course of an immune response led to a long running search for the underlying mechanism. Germinal centers in lymphoid organs are now recognized to be critically involved in this phenomenon, known as antibody affinity maturation. As well as improving in affinity for specific epitopes, some antibody responses maintain or even increase their breadth of antigen-recognition over time. This has led to another intense line of research aimed at understanding how broadly neutralizing anti-pathogen responses are generated. Recent work indicates that germinal centers also play an important role in the diversification process. We discuss current understanding of how germinal centers are programmed to support both affinity maturation and antibody diversification.}, journal={Current opinion in immunology}, author={Bannard, Oliver and Cyster, Jason G.}, year={2017}, month={Jan}, pages={21–30}}
+
+@article{victora2014clonal,
+  title={Clonal and cellular dynamics in germinal centers},
+  author={Victora, Gabriel D and Mesin, Luka},
+  journal={Current opinion in immunology},
+  volume={28},
+  pages={90--96},
+  year={2014},
+  publisher={Elsevier}
+}
+
+@article{rosenfeld2017immunedb,
+  title={ImmuneDB: a system for the analysis and exploration of high-throughput adaptive immune receptor sequencing data},
+  author={Rosenfeld, Aaron M and Meng, Wenzhao and Luning Prak, Eline T and Hershberg, Uri},
+  journal={Bioinformatics},
+  volume={33},
+  number={2},
+  pages={292--293},
+  year={2017},
+  publisher={Oxford University Press}
+}
+
+@article{li2012recombinatorial,
+  title={Recombinatorial biases and convergent recombination determine interindividual TCR$\beta$ sharing in murine thymocytes},
+  author={Li, Hanjie and Ye, Congting and Ji, Guoli and Wu, Xiaohui and Xiang, Zhe and Li, Yuanyue and Cao, Yonghao and Liu, Xiaolong and Douek, Daniel C and Price, David A and others},
+  journal={The Journal of Immunology},
+  volume={189},
+  number={5},
+  pages={2404--2413},
+  year={2012},
+  publisher={Am Assoc Immnol}
+}
+
+@article{murugan2012statistical,
+  title={Statistical inference of the generation probability of T-cell receptors from sequence repertoires},
+  author={Murugan, Anand and Mora, Thierry and Walczak, Aleksandra M and Callan, Curtis G},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={109},
+  number={40},
+  pages={16161--16166},
+  year={2012},
+  publisher={National Acad Sciences}
+}
+
+@article{elhanati2015inferring,
+  title={Inferring processes underlying B-cell repertoire diversity},
+  author={Elhanati, Yuval and Sethna, Zachary and Marcou, Quentin and Callan, Curtis G and Mora, Thierry and Walczak, Aleksandra M},
+  journal={Phil. Trans. R. Soc. B},
+  volume={370},
+  number={1676},
+  pages={20140243},
+  year={2015},
+  publisher={The Royal Society}
+}
+
+@article{murphy2008immunobiology,
+  title={Immunobiology. 7th},
+  author={Murphy, K and Travers, P and Walport, M and Janeway, C},
+  journal={New York: Garland Science},
+  year={2008}
+}
+
+@article{lefranc2001nomenclature,
+  title={Nomenclature of the human immunoglobulin heavy (IGH) genes},
+  author={Lefranc, M-P},
+  journal={Experimental and clinical immunogenetics},
+  volume={18},
+  number={2},
+  pages={100--116},
+  year={2001},
+  publisher={Karger Publishers}
+}
+
+@article{victora2012germinal,
+  title={Germinal centers},
+  author={Victora, Gabriel D and Nussenzweig, Michel C},
+  journal={Annual review of immunology},
+  volume={30},
+  pages={429--457},
+  year={2012},
+  publisher={Annual Reviews}
+}
+
+ @article{McHeyzer_2015, title={Class-switched memory B cells remodel BCRs within secondary germinal centers}, volume={16}, ISSN={1529-2908}, abstractNote={Effective vaccines induce high-affinity memory B cells and durable antibody responses through accelerated mechanisms of natural selection. Secondary changes in antibody repertoires after vaccine boosts suggest progressive rediversification of B cell receptors (BCRs), but the underlying mechanisms remain unresolved. Here, the integrated specificity and function of individual memory B cell progeny revealed ongoing evolution of polyclonal antibody specificities through germinal center (GC)-specific transcriptional activity. At the clonal and subclonal levels, single-cell expression of the genes encoding the costimulatory molecule CD83 and the DNA polymerase Polη segregated the secondary GC transcriptional program into four stages that regulated divergent mechanisms of memory BCR evolution. Our studies demonstrate that vaccine boosts reactivate a cyclic program of GC function in class-switched memory B cells to remodel existing antibody specificities and enhance durable immunological protection.}, number={3}, journal={Nature immunology}, publisher={nature.com}, author={McHeyzer-Williams, Louise J. and Milpied, Pierre J. and Okitsu, Shinji L. and McHeyzer-Williams, Michael G.}, year={2015}, month={Mar}, pages={296–305}}
+
+
+ @article{Shinnakasu_2016, title={Regulated selection of germinal-center cells into the memory B cell compartment}, volume={17}, ISSN={1529-2908}, abstractNote={Despite the importance of memory B cells in protection from reinfection, how such memory cells are selected and generated during germinal-center (GC) reactions remains unclear. We found here that light-zone (LZ) GC B cells with B cell antigen receptors (BCRs) of lower affinity were prone to enter the memory B cell pool. Mechanistically, cells in this memory-prone fraction had higher expression of the transcriptional repressor Bach2 than that of their counterparts with BCRs of higher affinity. Haploinsufficiency of Bach2 resulted in reduced generation of memory B cells, independently of suppression of the gene encoding the transcription factor Blimp-1. Bach2 expression in GC cells was inversely correlated with the strength of help provided by T cells. Thus, we propose an instructive model in which weak help from T cells maintains relatively high expression of Bach2, which predisposes GC cells to enter the memory pool.}, number={7}, journal={Nature immunology}, author={Shinnakasu, Ryo and Inoue, Takeshi and Kometani, Kohei and Moriyama, Saya and Adachi, Yu and Nakayama, Manabu and Takahashi, Yoshimasa and Fukuyama, Hidehiro and Okada, Takaharu and Kurosaki, Tomohiro}, year={2016}, month={Jul}, pages={861–869}}
+
+@article{eisen1964variations,
+  title={Variations in affinities of antibodies during the immune response},
+  author={Eisen, Herman N and Siskind, Gregory W},
+  journal={Biochemistry},
+  volume={3},
+  number={7},
+  pages={996--1008},
+  year={1964},
+  publisher={ACS Publications}
+}
+
+@article{yaari2015mutation,
+  title={The mutation patterns in B-cell immunoglobulin receptors reflect the influence of selection acting at multiple time-scales},
+  author={Yaari, Gur and Benichou, Jennifer IC and Vander Heiden, Jason A and Kleinstein, Steven H and Louzoun, Yoram},
+  journal={Phil. Trans. R. Soc. B},
+  volume={370},
+  number={1676},
+  pages={20140242},
+  year={2015},
+  publisher={The Royal Society}
+}
+
+ @article{Sabouri_2014, title={Redemption of autoantibodies on anergic B cells by variable-region glycosylation and mutation away from self-reactivity}, volume={111}, ISSN={0027-8424}, abstractNote={The best-understood mechanisms for achieving antibody self/non-self discrimination discard self-reactive antibodies before they can be tested for binding microbial antigens, potentially creating holes in the repertoire. Here we provide evidence for a complementary mechanism: retaining autoantibodies in the repertoire displayed as low levels of IgM and high IgD on anergic B cells, masking a varying proportion of autoantibody-binding sites with carbohydrates, and removing their self-reactivity by somatic hypermutation and selection in germinal centers (GCs). Analysis of human antibody sequences by deep sequencing of isotype-switched memory B cells or in IgG antibodies elicited against allogeneic RhD+ erythrocytes, vaccinia virus, rotavirus, or tetanus toxoid provides evidence for reactivation of anergic IgM(low) IgD+ IGHV4-34+ B cells and removal of cold agglutinin self-reactivity by hypermutation, often accompanied by mutations that inactivated an N-linked glycosylation sequon in complementarity-determining region 2 (CDR2). In a Hy10 antibody transgenic model where anergic B cells respond to a biophysically defined lysozyme epitope displayed on both foreign and self-antigens, cell transfers revealed that anergic IgM(low) IgD+ B cells form twice as many GC progeny as naïve IgM(hi) IgD+ counterparts. Their GC progeny were rapidly selected for CDR2 mutations that blocked 72\% of antigen-binding sites with N-linked glycan, decreased affinity 100-fold, and then cleared the binding sites of blocking glycan. These results provide evidence for a mechanism to acquire self/non-self discrimination by somatic mutation away from self-reactivity, and reveal how varying the efficiency of N-glycosylation provides a mechanism to modulate antibody avidity.}, number={25}, journal={Proceedings of the National Academy of Sciences of the United States of America}, publisher={National Acad Sciences}, author={Sabouri, Zahra and Schofield, Peter and Horikawa, Keisuke and Spierings, Emily and Kipling, David and Randall, Katrina L. and Langley, David and Roome, Brendan and Vazquez-Lombardi, Rodrigo and Rouet, Romain and et al.}, year={2014}, month={Jun}, pages={E2567–75}}
+
+ @article{Yeap_2015, title={Sequence-Intrinsic Mechanisms that Target AID Mutational Outcomes on Antibody Genes}, volume={163}, ISSN={0092-8674}, abstractNote={In activated B lymphocytes, AID initiates antibody variable (V) exon somatic hypermutation (SHM) for affinity maturation in germinal centers (GCs) and IgH switch (S) region DNA breaks (DSBs) for class-switch recombination (CSR). To resolve long-standing questions, we have developed an in vivo assay to study AID targeting of passenger sequences replacing a V exon. First, we find AID targets SHM hotspots within V exon and S region passengers at similar frequencies and that the normal SHM process frequently generates deletions, indicating that SHM and CSR employ the same mechanism. Second, AID mutates targets in diverse non-Ig passengers in GC B cells at levels similar to those of V exons, definitively establishing the V exon location as “privileged” for SHM. Finally, Peyer’s patch GC B cells generate a reservoir of V exons that are highly mutated before selection for affinity maturation. We discuss the implications of these findings for harnessing antibody diversification mechanisms.}, number={5}, journal={Cell}, publisher={Elsevier}, author={Yeap, Leng-Siew and Hwang, Joyce K. and Du, Zhou and Meyers, Robin M. and Meng, Fei-Long and Jakubauskaitė, Agnė and Liu, Mengyuan and Mani, Vinidhra and Neuberg, Donna and Kepler, Thomas B. and et al.}, year={2015}, month={Nov}, pages={1124–1137}}
+
+ @article{Pham_2016, title={Structural analysis of the activation-induced deoxycytidine deaminase required in immunoglobulin diversification}, volume={43}, ISSN={1568-7864}, abstractNote={Activation-induced deoxycytidine deaminase (AID) initiates somatic hypermutation (SHM) and class-switch recombination (CSR) by deaminating C→U during transcription of Ig-variable (V) and Ig-switch (S) region DNA, which is essential to produce high-affinity antibodies. Here we report the crystal structure of a soluble human AID variant at 2.8Å resolution that favors targeting WRC motifs (W=A/T, R=A/G) in vitro, and executes Ig V SHM in Ramos B-cells. A specificity loop extending away from the active site to accommodate two purine bases next to C, differs significantly in sequence, length, and conformation from APOBEC proteins Apo3A and Apo3G, which strongly favor pyrimidines at -1 and -2 positions. Individual amino acid contributions to specificity and processivity were measured in relation to a proposed ssDNA binding cleft. This study provides a structural basis for residue contributions to DNA scanning properties unique to AID, and for disease mutations in human HIGM-2 syndrome.}, journal={DNA repair}, author={Pham, Phuong and Afif, Samir A. and Shimoda, Mayuko and Maeda, Kazuhiko and Sakaguchi, Nobuo and Pedersen, Lars C. and Goodman, Myron F.}, year={2016}, month={Jul}, pages={48–56}}
+
+@article{yaari2013models,
+  title={Models of somatic hypermutation targeting and substitution based on synonymous mutations from high-throughput immunoglobulin sequencing data},
+  author={Yaari, Gur and Vander Heiden, Jason A and Uduman, Mohamed and Gadala-Maria, Daniel and Gupta, Namita and Stern, Joel NH and O’Connor, Kevin C and Hafler, David A and Laserson, Uri and Vigneault, Francois and others},
+  journal={Frontiers in immunology},
+  volume={4},
+  year={2013},
+  publisher={Frontiers Media SA}
+}
+
+@article{liu2008two,
+  title={Two levels of protection for the B cell genome during somatic hypermutation},
+  author={Liu, Man and Duke, Jamie L and Richter, Daniel J and Vinuesa, Carola G and Goodnow, Christopher C and Kleinstein, Steven H and Schatz, David G},
+  journal={Nature},
+  volume={451},
+  number={7180},
+  pages={841--845},
+  year={2008},
+  publisher={Nature Publishing Group}
+}
+
+@incollection{cox1992regression,
+  title={Regression models and life-tables},
+  author={Cox, David R},
+  booktitle={Breakthroughs in statistics},
+  pages={527--541},
+  year={1992},
+  publisher={Springer}
+}
+
+@article{katoh2013mafft,
+  title={MAFFT multiple sequence alignment software version 7: improvements in performance and usability},
+  author={Katoh, Kazutaka and Standley, Daron M},
+  journal={Molecular biology and evolution},
+  volume={30},
+  number={4},
+  pages={772--780},
+  year={2013},
+  publisher={SMBE}
+}
+
+@article{huerta2016ete,
+  title={ETE 3: Reconstruction, analysis, and visualization of phylogenomic data},
+  author={Huerta-Cepas, Jaime and Serra, Fran{\c{c}}ois and Bork, Peer},
+  journal={Molecular biology and evolution},
+  volume={33},
+  number={6},
+  pages={1635--1638},
+  year={2016},
+  publisher={SMBE}
+}
+
+
+ @unpublished{Balelli_2016,
+ title={Multi-type Galton-Watson processes with affinity-dependent selection applied to antibody affinity maturation}, 
+ url={http://arxiv.org/abs/1609.00823}, 
+ abstractNote={We analyze the interactions between division, mutation and selection in a simplified evolutionary model, assuming that the population observed can be classified into fitness levels. The construction of our mathematical framework is motivated by the modeling of antibody affinity maturation of B-cells in Germinal Centers during an immune response. This is a key process in adaptive immunity leading to the production of high affinity antibodies against a presented antigen. Our aim is to understand how the different biological parameters affect the system’s functionality. We identify the existence of an optimal value of the selection rate, able to maximize the number of selected B-cells for a given generation.},
+ journal={arXiv [math.PR]},
+ author={Balelli, Irene and Milišić, Vuk and Wainrib, Gilles},
+ year={2016},
+ month={Sep},
+ }
+
+@MISC{gwp,
+   author = "Sebastien Roch",
+   title = "Branching processes",
+   howpublished = "Course work web page",
+   month = sep,
+   year = 2015,
+   note = "\url{https://www.math.wisc.edu/~roch/mdp/roch-mdp-chap5.pdf}",
+}
+
+@MISC{immprot,
+   author = "Rieckmann et al. 2017",
+   title = "Protein copy number estimates found by mass spec.",
+   howpublished = "Web resource for mass spec. data",
+   month = jan,
+   year = 2017,
+   note = "\url{http://www.immprot.org/}",
+}
+
+@MISC{CSTR,
+   author = "William Green, Jr.",
+   title = "course materials for 10.37 Chemical and Biological Reaction Engineering",
+   howpublished = "MIT OpenCourseWare (http://ocw.mit.edu)",
+   month = jun,
+   year = 2017,
+   note = "\url{https://ocw.mit.edu/courses/chemical-engineering/10-37-chemical-and-biological-reaction-engineering-spring-2007/lecture-notes/lec05_02212007_g.pdf}",
+}
+
+@article{shanno1985broyden,
+  title={On broyden-fletcher-goldfarb-shanno method},
+  author={Shanno, David F},
+  journal={Journal of Optimization Theory and Applications},
+  volume={46},
+  number={1},
+  pages={87--94},
+  year={1985}
+}
+
+ @article{Reshetova_2017, title={Computational Model Reveals Limited Correlation between Germinal Center B-Cell Subclone Abundancy and Affinity: Implications for Repertoire Sequencing}, volume={8}, ISSN={1664-3224}, url={http://journal.frontiersin.org/article/10.3389/fimmu.2017.00221/full}, DOI={10.3389/fimmu.2017.00221}, abstractNote={Immunoglobulin repertoire sequencing has successfully been applied to identify expanded antigen-activated B-cell clones that play a role in the pathogenesis of immune disorders. One challenge is the selection of the Ag-specific B cells from the measured repertoire for downstream analyses. A general feature of an immune response is the expansion of specific clones resulting in a set of subclones with common ancestry varying in abundance and in the number of acquired somatic mutations. The expanded subclones are expected to have BCR affinities for the Ag higher than the affinities of the naive B cells in the background population. For these reasons several groups successfully proceeded or suggested selecting highly abundant subclones from the repertoire to obtain the Ag-specific B-cells. Given the nature of affinity maturation one would expect that abundant subclones are of high affinity but since repertoire sequencing only provides information about abundancies, this can only be verified with additional experiments, which are very labor-intensive. Moreover, this would also require knowledge of the Ag which is often not available for clinical samples. Consequently, in general we do not know if the selected highly abundant subclone(s) are also the high(est) affinity subclones. Such knowledge would likely improve the selection of relevant subclones for further characterization and Ag screening. Therefore, to gain insight in the relation between subclone abundancy and affinity we developed a computational model that simulates affinity maturation in a single GC while tracking individual subclones in terms of abundancy and affinity. We show that the model correctly captures the overall GC dynamics, and that the amount of expansion is qualitatively comparable to expansion observed from B cells isolated from human lymph nodes. Analysis of the fraction of high- and low-affinity subclones among of the unexpanded and expanded subclones reveals a limited correlation between abundancy and affinity and shows that the low abundant subclones are of highest affinity. Thus, our model suggests that selecting highly abundant subclones from repertoire sequencing experiments would not always lead to the high(est) affinity B cells. Consequently, additional or alternative selection approaches need to be applied.}, journal={Frontiers in immunology}, publisher={Frontiers}, author={Reshetova, Polina and van Schaik, Barbera D. C. and Klarenbeek, Paul L. and Doorenspleet, Marieke E. and Esveldt, Rebecca E. E. and Tak, Paul-Peter and Guikema, Jeroen E. J. and de Vries, Niek and van Kampen, Antoine H. C.}, year={2017}}
+
+ @article{Shahaf_2008, title={Antigen-driven selection in germinal centers as reflected by the shape characteristics of immunoglobulin gene lineage trees: a large-scale simulation study}, volume={255}, ISSN={0022-5193}, abstractNote={During the immune response, the generation of memory B lymphocytes in germinal centers involves affinity maturation of the cells’ antigen receptors, based on somatic hypermutation of receptor genes and antigen-driven selection of the resulting mutants. Affinity maturation is vital for immune protection, and is the basis of humoral immune learning and memory. Lineage trees of somatically hypermutated immunoglobulin genes often serve to qualitatively illustrate claims concerning the dynamics of affinity maturation in germinal centers. Here, we derive the quantitative relationships between parameters characterizing affinity maturation dynamics (proliferation, differentiation and mutation rates, initial affinity of the Ig to the antigen, and selection thresholds) and the mathematical properties of lineage trees, using a computer simulation which combines mathematical models for all mature B cell populations, stochastic models of hypermutation and selection, lineage tree generation and measurement of graphical tree characteristics. We identified seven key lineage tree properties, and found correlations of these with initial clone affinity and with the selection threshold. These two parameters were found to be the main factors affecting lineage tree shapes in both primary and secondary response trees. The results also confirm that recycling from centrocytes back to centroblasts is highly likely.}, number={2}, journal={Journal of theoretical biology}, author={Shahaf, Gitit and Barak, Michal and Zuckerman, Neta S. and Swerdlin, Naamah and Gorfine, Malka and Mehr, Ramit}, year={2008}, month={Nov}, pages={210–222}}
+
+ @article{Chaudhury_2014, title={Simulation of B cell affinity maturation explains enhanced antibody cross-reactivity induced by the polyvalent malaria vaccine AMA1}, volume={193}, ISSN={0022-1767}, abstractNote={Polyvalent vaccines use a mixture of Ags representing distinct pathogen strains to induce an immune response that is cross-reactive and protective. However, such approaches often have mixed results, and it is unclear how polyvalency alters the fine specificity of the Ab response and what those consequences might be for protection. In this article, we present a coarse-grain theoretical model of B cell affinity maturation during monovalent and polyvalent vaccinations that predicts the fine specificity and cross-reactivity of the Ab response. We stochastically simulate affinity maturation using a population dynamics approach in which the host B cell repertoire is represented explicitly, and individual B cell subpopulations undergo rounds of stimulation, mutation, and differentiation. Ags contain multiple epitopes and are present in subpopulations of distinct pathogen strains, each with varying degrees of cross-reactivity at the epitope level. This epitope- and strain-specific model of affinity maturation enables us to study the composition of the polyclonal response in granular detail and identify the mechanisms driving serum specificity and cross-reactivity. We applied this approach to predict the Ab response to a polyvalent vaccine based on the highly polymorphic malaria Ag apical membrane antigen-1. Our simulations show how polyvalent apical membrane Ag-1 vaccination alters the selection pressure during affinity maturation to favor cross-reactive B cells to both conserved and strain-specific epitopes and demonstrate how a polyvalent vaccine with a small number of strains and only moderate allelic coverage may be broadly neutralizing. Our findings suggest that altered fine specificity and enhanced cross-reactivity may be a universal feature of polyvalent vaccines.}, number={5}, journal={Journal of immunology }, author={Chaudhury, Sidhartha and Reifman, Jaques and Wallqvist, Anders}, year={2014}, month={Sep}, pages={2073–2086}}
+
+ @article{Wang_Mata_2015, title={Manipulating the selection forces during affinity maturation to generate cross-reactive HIV antibodies}, volume={160}, ISSN={0092-8674}, abstractNote={Generation of potent antibodies by a mutation-selection process called affinity maturation is a key component of effective immune responses. Antibodies that protect against highly mutable pathogens must neutralize diverse strains. Developing effective immunization strategies to drive their evolution requires understanding how affinity maturation happens in an environment where variants of the same antigen are present. We present an in silico model of affinity maturation driven by antigen variants which reveals that induction of cross-reactive antibodies often occurs with low probability because conflicting selection forces, imposed by different antigen variants, can frustrate affinity maturation. We describe how variables such as temporal pattern of antigen administration influence the outcome of this frustrated evolutionary process. Our calculations predict, and experiments in mice with variant gp120 constructs of the HIV envelope protein confirm, that sequential immunization with antigen variants is preferred over a cocktail for induction of cross-reactive antibodies focused on the shared CD4 binding site epitope.}, number={4}, journal={Cell}, author={Wang, Shenshen and Mata-Fink, Jordi and Kriegsman, Barry and Hanson, Melissa and Irvine, Darrell J. and Eisen, Herman N. and Burton, Dennis R. and Wittrup, K. Dane and Kardar, Mehran and Chakraborty, Arup K.}, year={2015}, month={Feb}, pages={785–797}}
+
+@article{safonova2015igsimulator,
+  title={IgSimulator: a versatile immunosequencing simulator},
+  author={Safonova, Yana and Lapidus, Alla and Lill, Jennie},
+  journal={Bioinformatics},
+  pages={btv326},
+  year={2015},
+  publisher={Oxford Univ Press}
+}
+
+@article{russ2015htjoinsolver,
+  title={HTJoinSolver: Human immunoglobulin VDJ partitioning using approximate dynamic programming constrained by conserved motifs},
+  author={Russ, Daniel E and Ho, Kwan-Yuet and Longo, Nancy S},
+  journal={BMC bioinformatics},
+  volume={16},
+  number={1},
+  pages={170},
+  year={2015},
+  publisher={BioMed Central}
+}
+
+@article{robinson1981comparison,
+  title={Comparison of phylogenetic trees},
+  author={Robinson, David F and Foulds, Leslie R},
+  journal={Mathematical biosciences},
+  volume={53},
+  number={1-2},
+  pages={131--147},
+  year={1981},
+  publisher={Elsevier}
+}
+
+@article{mirsky2014antibody,
+  title={Antibody-specific model of amino acid substitution for immunological inferences from alignments of antibody sequences},
+  author={Mirsky, Alexander and Kazandjian, Linda and Anisimova, Maria},
+  journal={Molecular biology and evolution},
+  pages={msu340},
+  year={2014},
+  publisher={SMBE}
+}
+
+@article{plotree1989phylip,
+  title={PHYLIP-phylogeny inference package (version 3.2)},
+  author={Plotree, DOTREE and Plotgram, DOTGRAM},
+  journal={cladistics},
+  volume={5},
+  number={163},
+  pages={6},
+  year={1989},
+  publisher={Wiley Online Library}
+}
+
+@article{sheng2017gene,
+  title={Gene-specific substitution profiles describe the types and frequencies of amino acid changes during antibody somatic hypermutation},
+  author={Sheng, Zizhang and Schramm, Chaim A and Kong, Rui and Mullikin, James C and Mascola, John R and Kwong, Peter D and Shapiro, Lawrence and NISC Comparative Sequencing Program and others},
+  journal={Frontiers in Immunology},
+  volume={8},
+  year={2017},
+  publisher={Frontiers Media SA}
+}
+
+@article{gil2013codonphyml,
+  title={CodonPhyML: fast maximum likelihood phylogeny estimation under codon substitution models},
+  author={Gil, Manuel and Zanetti, Marcelo Serrano and Zoller, Stefan and Anisimova, Maria},
+  journal={Molecular biology and evolution},
+  pages={mst034},
+  year={2013},
+  publisher={SMBE}
+}
+
+@article{goldman1994codon,
+  title={A codon-based model of nucleotide substitution for protein-coding DNA sequences.},
+  author={Goldman, Nick and Yang, Ziheng},
+  journal={Molecular biology and evolution},
+  volume={11},
+  number={5},
+  pages={725--736},
+  year={1994},
+  publisher={SMBE}
+}
+
+@article{tamura2011mega5,
+  title={MEGA5: molecular evolutionary genetics analysis using maximum likelihood, evolutionary distance, and maximum parsimony methods},
+  author={Tamura, Koichiro and Peterson, Daniel and Peterson, Nicholas and Stecher, Glen and Nei, Masatoshi and Kumar, Sudhir},
+  journal={Molecular biology and evolution},
+  volume={28},
+  number={10},
+  pages={2731--2739},
+  year={2011},
+  publisher={SMBE}
+}
+
+@book{harris2002theory,
+  title={The theory of branching processes},
+  author={Harris, Theodore E},
+  year={2002},
+  publisher={Courier Corporation}
+}
+
+@inproceedings{fomel2007reproducible,
+  title={Reproducible computational experiments using SCons},
+  author={Fomel, Sergey and Hennenfent, Gilles},
+  booktitle={Acoustics, Speech and Signal Processing, 2007. ICASSP 2007. IEEE International Conference on},
+  volume={4},
+  pages={IV--1257},
+  year={2007},
+  organization={IEEE}
+}
+
+@article{fitch1971toward,
+  title={Toward defining the course of evolution: minimum change for a specific tree topology},
+  author={Fitch, Walter M},
+  journal={Systematic Biology},
+  volume={20},
+  number={4},
+  pages={406--416},
+  year={1971},
+  publisher={Oxford University Press}
+}
+
+@article{felsenstein1978number,
+  title={The number of evolutionary trees},
+  author={Felsenstein, Joseph},
+  journal={Systematic Biology},
+  volume={27},
+  number={1},
+  pages={27--33},
+  year={1978},
+  publisher={Oxford University Press}
+}
+
+@article{felsenstein1981evolutionary,
+  title={Evolutionary trees from DNA sequences: a maximum likelihood approach},
+  author={Felsenstein, Joseph},
+  journal={Journal of molecular evolution},
+  volume={17},
+  number={6},
+  pages={368--376},
+  year={1981},
+  publisher={Springer}
+}
+
+@article{tavare1986some,
+  title={Some probabilistic and statistical problems in the analysis of DNA sequences},
+  author={Tavar{\'e}, Simon},
+  journal={Lectures on mathematics in the life sciences},
+  volume={17},
+  pages={57--86},
+  year={1986}
+}
+
+@article{henikoff1992amino,
+  title={Amino acid substitution matrices from protein blocks},
+  author={Henikoff, Steven and Henikoff, Jorja G},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={89},
+  number={22},
+  pages={10915--10919},
+  year={1992},
+  publisher={National Acad Sciences}
+}
+
+@incollection{dayhoff197822,
+  title={22 A Model of Evolutionary Change in Proteins},
+  author={Dayhoff, MO and Schwartz, RM and Orcutt, BC},
+  booktitle={Atlas of protein sequence and structure},
+  volume={5},
+  pages={345--352},
+  year={1978},
+  publisher={National Biomedical Research Foundation Silver Spring, MD}
+}
+
+@article{muse1994likelihood,
+  title={A likelihood approach for comparing synonymous and nonsynonymous nucleotide substitution rates, with application to the chloroplast genome.},
+  author={Muse, Spencer V and Gaut, Brandon S},
+  journal={Molecular biology and evolution},
+  volume={11},
+  number={5},
+  pages={715--724},
+  year={1994},
+  publisher={SMBE}
+}
+
+@article{randall2016experimental,
+  title={An experimental phylogeny to benchmark ancestral sequence reconstruction},
+  author={Randall, Ryan N and Radford, Caelan E and Roof, Kelsey A and Natarajan, Divya K and Gaucher, Eric A},
+  journal={Nature Communications},
+  volume={7},
+  year={2016},
+  publisher={Nature Research}
+}
+
+
+
+
+
+

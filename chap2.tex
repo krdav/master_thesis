@@ -1,0 +1,703 @@
+\chapter{Simulating sequences undergoing affinity maturation}
+
+\section{Introduction}
+Antibodies have an important role in adaptive immunity by specifically binding to invading pathogens like bacteria and viruses.
+Developing specific antibodies involves reactions across the entire immune system, but it is B cells that mature and secrete antibodies after undergoing several rounds of selections in the bone marrow and the germinal centers (GCs).
+B cells undergoing GC affinity maturation express antibodies as B cell receptors (BCRs) and these are subject to a strict selection scheme, where many different factors come into play e.g.  antigen affinity, receptor expression -and folding, codon choice affecting translation rates and affinity to self antigens.
+However all these factors leads back to antigen binding measured by nearby T cells and effecting the mutual probabilities of proliferation or apoptosis \cite{Bannard_Cyster_2017}, \cite{victora2012germinal}.
+As an example in a GC there is a direct selection for higher BCR affinity to sequester more antigen, while the selection against binding self antigens is mediated by the binding competition that leads to less binding of less antigen from the pathogen.
+Therefore, in its most simple way, affinity maturation is driven by affinity towards the presented antigen and all the effects also attributed to selection, like folding, stability and aggregation, is selected by their effect on affinity.
+
+Affinity maturation is clearly a strong selection imposed on the B cell evolution and this poses a challenge to phylogenetic reconstruction.% which presumably will break .
+To validate the correctness of phylogenetic methods simulation studies are the most important tool.
+Classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions but simulations can also be configured to have selection.
+But while many groups have simulated affinity maturation over time \cite{Reshetova_2017}, \cite{Balelli_2016}, \cite{Childs_Baskerville_Cobey_2015} there have been no example of affinity centric simulations on single sequence level.
+
+We propose a simple model of affinity maturation that models sequence fitness as a function of BCR affinity.
+If the BCR affinity is high it means that the B cell will endocytose a lot of antigen and thereby get plenty of T cell help decreasing the changes of undergoing apoptosis while increasing the chances of proliferation.
+Contrary if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
+Under this setup it is not the absolute affinity that matters but rather the affinity relative to the affinities of all competing cell in the whole GC, and the total amount of antigens to compete for.
+By modularizing the simulation code we first make a model for a neutral branching process, and then make an optional affinity selection step that works in conjunction with the neutral process used to introduce substitutions.
+
+The purpose of the presented simulation method is to generate more realistic sequence simulations that can be widely used to assess performance of phylogenetic methods.
+The model is suppose to capture the most dominant effect of affinity maturation without being a full mechanistic model, however sufficient to recapitulate the features of real GC data.
+
+
+
+
+
+
+\section{Methods}
+
+\subsection{Neutral branching process}
+A neutral branching process, independent from the later described affinity model, was setup as a reference point.
+This can be viewed as a model of cell divisions where at each generation a cell can either die or produce a number of offspring and each offspring has some probability of carrying a mutation.
+The neutrality assumption lies in the fact that the mutations introduced will have no fitness effect in later generations.
+At initialization of this simulation the root sequence is given and this gets evolved through a stochastic branching process that also includes stochastic introduction of mutations at each generation.
+The branching process is controlled by an arbitrary discrete distribution, but due to the flexible nature and convenient mathematical properties of the Poisson distribution, this is the default choice.
+Therefore in future sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
+Furthermore at each generation all progeny cells will undergo a mutation process determined by another discrete distribution, again we use Poisson.
+The number of nucleotide mutations is drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
+Since the mutations happen sequentially there is a possibility of back mutations.
+Mutations can be introduced using a uniform probability over all sites, but because it is well known that BCR sequences do not mutate uniformly random \cite{Yeap2015-nl} we used an empirical approximation of the neutral mutation process called S5F \cite{cui2016model}.
+The S5F model contain mutability of the middle base of all 5'mer motifs, and substitution preferences given a mutation i.e. if a random process chooses to mutate the 5'mer \texttt{AAAAA}, then the S5F model also provides a list of probabilities for each middle base substitution, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, summing to 1.
+A 5'mer mutability cannot be used directly on a site at the start or end of a sequence because of missing context, so in those cases we put the an unknown base, N, instead of the missing context and marginalized over all possible motifs fitting this ambiguous context.
+
+Termination of the neutral branching process was enforced in either of three ways: 1) by simulating under a subcritical process ($\lambda < 1$) \cite{gwp} following it until extinction, 2) by using a stopping time $T$, or 3) by stopping after a max population of $N$ has been reach.
+In addition we introduced a parameter for down-sampling the cell population down to $n$ cells after termination.
+Down-sampling allow us to simulate incomplete sampling of cells e.g. by fall out during PCR, sequencing or quality control steps.
+This gives a five parameter model, tabulated in table \ref{neut_constants}, but only one of the stopping criteria can be used, effectively making it a four parameter model.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ll}
+Parameter    & Description \\ \hline
+$\lambda$ & $\operatorname{Pois}(\lambda)$ progeny distribution \\
+$\lambda_0$ & $\operatorname{Pois}(\lambda_0)$ sequence mutability \\
+$T$ & Stopping time \\
+$N$ & Stopping at this number of sequences \\
+$n$ & Down-sampled number of sequence
+\end{tabular}
+\caption{
+\label{neut_constants}
+    Parameters used in the neutral branching process simulation.}
+\end{table}
+
+
+
+
+
+
+\subsection{Simulating with affinity}
+
+\subsubsection{Model concept and biological assumptions}
+In the following sections we will be describing the model for affinity selection in detail but lets first make some basic assumptions to keep later definitions simpler.
+First of all the system we intent to model is affinity maturation that happening in the GC reaction.
+We argue that the major effect in this reaction is affinity towards a target antigen and therefore other effects are ignored.
+A real GC reaction is seeded with 50-200 naive B cells and is therefore in its initial state highly polyclonal \cite{tas2016visualizing}.
+However GCs are getting progressively polarized during the extend of a GC reaction \cite{tas2016visualizing} and may even reach full monoclonality.
+We use this trait to make the simplifying assumption that the simulated GC is monoclonal seeded by a single cell.
+We note that this assumption need not to be enforced and polyclonality can be integrated into the simulation method, however we see no reason why this assumption should change the simulation results radically and therefore prefer to keep the description simple.
+In this model it is the BCR amino acid sequence that is under selection which means that we ignore the possible fitness effects of synonymous mutations.
+In reality these might affect transcription and/or translation rates but these are classified as minor effects that is ignored to simplify the model.
+
+The system is modelled as a GC with constant volume and constant total concentration of antigen which a number of B cells compete to bind.
+Those B cells that have high affinity BCRs will bind more antigen and these B cells will be more likely to undergo proliferation, while the opposite is true for those BCRs with low affinity.
+Affinity must be a function of the BCR sequence it has two defined points: the affinity of the naive sequence seeding the GC and the affinity of the completely matured BCR.
+Finally when the binding equilibrium has been reached the progeny distribution for a B cell is evaluated given that amount of antigen bound.
+After progeny the binding equilibrium is updated and next B cell will be evaluated until all cells have been through.
+All this is summarized in figure \ref{fig:simulation_figure}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/simulation_figure.pdf}
+    \caption{
+        \label{fig:simulation_figure}
+        Simulation overview.
+        The system is considered as a closed environment with free floating antigen and a number of B cells presenting BCRs on their surface, as illustrated in the top panel.
+        Different colors correspond to different BCR sequences with different affinities.
+        In the middle panel a sequence alignment shows how the different BCR sequences and their distance to the target mature BCR.
+        Third panel shows first how distance from the mature BCR is used to find the affinity.
+        Next affinity of individual BCRs relative to affinity of all BCRs is used to find the fraction of bound BCRs for a given B cell.
+        The fraction bound BCR is then transformed to a $\lambda$ used in the progeny distribution for the next generation.
+        At the rightmost of panel three, a tree is showing the evolutionary path with an ellipse marking the B cells of the current generation also displayed in the top panel.
+    }
+\end{figure}
+
+
+
+
+
+
+
+\subsubsection{Kinetic model of BCRs binding antigen}
+Using the most simplistic view, B cells and antigens can be seen as molecules binding and unbinding at some rate intrinsic to the BCR sequences, and their dynamics can then be modelled as a continuously stirred tank reactor (CSTR) \cite{CSTR}, widely used in chemical engineering models.
+The CSTR model makes the assumption that the antigen is spread evenly across the GC and that the binding between BCRs and antigen is at equilibrium at all time.
+These assumptions will be used throughout the model definition.
+
+We are modelling the binding equilibrium between free antigen ($[A]$), the free B cell receptor ($[B]$) and the two bound ($[AB]$):
+\begin{equation}
+\ce{[A] + [B] <=>[k_{\on}][k_{\off}] [AB]}
+  \label{eq:bind1}
+\end{equation}
+
+\noindent
+The on -and off rate of binding is the expressed as constants $k_{\on}$ and $k_{\off}$. Affinity is the ratio of substrate and reactants at equilibrium, which is the same as the fraction between on vs. off rate:
+\begin{equation}
+K_d \equiv \frac{k_{\off}}{k_{\on}} = \frac{[A] [B]}{[AB]}
+  \label{eq:Kd_def}
+\end{equation}
+%The law of mass conservation gives us that $B_{\total} = B + AB$.
+
+\noindent
+Considering the BCRs as free molecules with a total concentration of $[B_{\total}]$, the fraction of BCRs bound to antigen at equilibrium is:
+$$
+Bf_{\bound} = \frac{[AB]}{[B_{\total}]}
+$$
+Which can be used as measure of the fitness of the B cell carrying this BCR.
+To derive this fraction we will first be looking at the binding at equilibrium:
+\begin{equation}
+\frac{d[B]}{dt} = k_{\off} [AB] - k_{\on} [A] [B] = 0
+  \label{eq:equilibrium}
+\end{equation}
+
+\noindent
+Isolating $[AB]$ and substituting in the affinity definition $K_d$ from \ref{eq:Kd_def}:
+$$
+[AB] = [B] \frac{[A]}{K_d}
+$$
+
+\noindent
+Substituting $[B]$ for its expression from mass conservation, $[B_{\total}] = [B] + [AB]$:
+$$
+[AB] = ([B_{\total}] - [AB]) \frac{[A]}{K_d}
+$$
+
+\noindent
+Which rearranges to:
+$$ 
+[AB] = \frac{[B_{\total}]}{1 + \frac{K_d}{[A]}}
+$$
+
+\noindent
+With this expression it is possible to find the average fraction of time the BCRs on a B cell interacts with antigen e.g. if the cell has 10,000 BCRs and the average BCR is bound to antigen 30\% of the time then this is equivalent to an average 3,000 BCR binding antigen.
+However currently this description only works for B cells with the same BCR all sharing the same $K_d$.
+We want to be able to model multiple BCR affinities:
+\[
+ \begin{matrix}
+  \ce{[A] + [B_1] <=>[k^1_{\on}][k^1_{\off}] [AB_1]} \\
+  \ce{[A] + [B_2] <=>[k^2_{\on}][k^2_{\off}] [AB_2]} \\
+  \vdots \\ 
+  \ce{[A] + [B_n] <=>[k^n_{\on}][k^n_{\off}] [AB_n]}
+ \end{matrix}
+\]
+
+\noindent
+Affinity is a constant for each BCR and since all B cells compete for the same antigen, each $[AB_i]$ is dependent only through the concentration of unbound antigen:
+\[
+ \begin{matrix}
+  [AB_1] = \frac{[B^1_{\total}]}{1 + \frac{K^1_d}{[A]}} \\
+  [AB_2] = \frac{[B^2_{\total}]}{1 + \frac{K^2_d}{[A]}} \\
+  \vdots \\
+  [AB_n] = \frac{[B^n_{\total}]}{1 + \frac{K^n_d}{[A]}} \\
+ \end{matrix}
+\]
+
+\noindent
+Now introducing mass conservation for $A$:
+\begin{equation}
+A_{\total} = [A] + \sum_{i=1}^{n} [AB_i] \equiv [A] + \sum_{i=1}^{n} \frac{[B^i_{\total}]}{1 + \frac{K^i_d}{[A]}}
+  \label{eq:A_objective}
+\end{equation}
+Under this notation B cells having the same BCR sequence is included in the same $B^i_{\total}$, but now lets expand this so the index, $i$, represents the total number of BCRs on just a single B cell, resulting in the simplification that $[B^1_{\total}] = [B^2_{\total}] = \ldots = [B^i_{\total}]$.
+In this notation multiple B cells can have the same BCR sequence, but each will have their own index because they are associated with different B cells. 
+This simplifies book keeping because the BCR index is always the same as the B cell index.
+
+Now it appears that given some total concentration of antigen, $A_{\total}$, the solution to the concentration of free antigen at equilibrium, $[A]$, reduces to finding the real positive root of the polynomial in \eqref{eq:A_objective}.
+Finding this root can easily be done using Newton's method, or by using a faster method like the Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm \cite{shanno1985broyden}.
+
+
+
+
+
+\subsubsection{Transforming distance to target to affinity}
+We have yet to define a way to calculate the affinity ($K_d$) of the BCRs.
+Potentially the affinities can be generated in any imaginable way, by having a function transforming a BCR sequence ($Bseq$) into a number that represents affinity.
+Formally this would be a function: $Af(Bseq_i) = K^i_d$.
+%This function is flexible and could take up any form e.g. it could be random and not depend on the BCR sequence, it could be a time dependent function, or something completely different.
+In a realistic, yet still minimalistic, model we would imagine that the BCRs in a GC were evolving towards a specific target sequence denoted $Tseq$.
+A target is the sequence with the highest affinity.
+It is fitness plateau where only loss in affinity is possible.
+%In the framework of affinity driven simulation of selection, the BCR sequence with the highest affinity will also be the most fit and therefore the target.
+Let us define the affinity of the naive input sequence as $K^{\naive}_d$ and correspondingly affinity for the mature target sequence, $K^{\mature}_d$.
+Now we can define an arbitrary function with reference points in $K^{\naive}_d$ and $K^{\mature}_d$, that transforms a distance between $Bseq$ and $Tseq$ to an affinity:
+$$
+Af(Bseq_i, Tseq, K^{\naive}_d, K^{\mature}_d) = K^i_d
+$$
+There are two conditions we want to impose.
+If the BCR sequences is equal to the naive sequence ($Nseq$), then it takes the affinity of the naive, and if it is equal to the mature, it takes the affinity of the mature sequence ($Mseq$):
+\begin{equation}
+\begin{split}
+Af(Nseq, Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\naive}_d \\
+Af(Mseq, Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d
+\end{split}
+\label{eq:hd2affy_cond}
+\end{equation}
+Any function $Af$ that fulfills these conditions are considered valid.
+One valid family of functions would be the exponential functions defined by:
+\begin{equation}
+Af(d, dm, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d + d^k \frac{K^{\naive}_d - K^{\mature}_d}{dm^k}
+\label{eq:hd2affy}
+\end{equation}
+Where $d$ is the distance between $Bseq$ and $Tseq$ and $dm$ is the distance from naive to mature.
+The exponent, $k$, can be chosen to adjust the mapping between distance and affinity, with the restriction that $0 < k < \infty$, see figure \ref{fig:hd2affy}.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/hd2affy.pdf}
+    \caption{
+        \label{fig:hd2affy}
+        Varying the exponent $k$ in equation \ref{eq:hd2affy} to achieve different mappings between distance and affinity. Naive -and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
+    }
+\end{figure}
+
+It is easy to imagine that in a real affinity maturation process there will be many different BCR sequences that are practically equally fit.
+E.g. this will happen when multiple amino acids are equally fit on a given position.
+It will also happen if there are multiple distinct maturation paths that ends up with equally fit BCRs.
+The later effect can be introduced into the model be adding more target sequences and then determining the affinity based on the shortest distance to all target sequences:
+$$
+d = \argmin_{Tseq \in Targets} dist(Bseq, Tseq)
+$$
+% Where $T$ is the list of target sequences.
+
+
+
+
+
+
+\subsubsection{Transforming BCR occupancy to fitness}
+In the affinity model the fitness of a B cell is determined by the amount of antigen it binds relative to the total number of receptors it has, we shall call this $Bf^i_{\bound}$ for the BCR $B_i$.
+The progeny distribution should adjust according to $Bf^i_{\bound}$, so if $Bf^i_{\bound}$ is small the progeny distribution should favor terminating the B cell and opposite, if $Bf^i_{\bound}$ is large this should cause the progeny distribution to favor cell division.
+The Poisson distribution will reflect this behaviour by setting $\lambda_i$ small when $Bf^i_{\bound}$ is small and $\lambda_i$ large when $Bf^i_{\bound}$ is large.
+To use $\operatorname{Pois}(\lambda_i)$ as the progeny distribution we need a function transforming $Bf^i_{\bound}$ to $\lambda_i$: $Y(Bf^i_{\bound}) = \lambda_i$.
+For this purpose we can use a generalized version of the logistic function since this has the properties we need:
+\begin{equation}
+\lambda_i = Y(Bf^i_{\bound}) = \alpha \frac{K - \alpha}{G + Q \exp(-\beta Bf^i_{\bound})}
+  \label{eq:BA_trans}
+\end{equation}
+$G$ is chosen to be the typical value of $1$.
+$K$ is the upper bound of the function and is set to $2$, reflecting that the fastest average growth rate is $2^t$, with $t$ generations (setting $\operatorname{max}(\lambda) = 2$ is a model choice, but could be changed).
+$\alpha$, $\beta$ and $Q$ are fitted to fulfill three conditions:
+\begin{equation}
+Y(0) = 0, \ \ \ T \left(\frac{f_{\full}}{U} \right) = 1, \ \ \ Y(f_{\full}) = 2 - \epsilon
+  \label{eq:BA_cond}
+\end{equation}
+With $0 < f_{\full} \leq 1$ being the fraction of bound BCRs ($Bf^i_{\bound}$) that is sufficient to make the B cell close to fully activated.
+Close in the sense that $Y(f_{\full})$ is close to the maximum $\lambda$ of 2, and therefore binding more antigen does not results in much change in the progeny distribution.
+The constant $U$ in condition 2 can be adjusted to set the value of $Bf^i_{bound}$ resulting in $\lambda_i = 1$, and because $\frac{f_{\full}}{U} < f_{\full}$ we have that $U > 1$.
+The interpretation of $U$ is that it is the fraction of BCRs binding antigen necessary to sustain the life of the B cell, but nothing more or less.
+Using these conditions $\alpha$, $\beta$ and $Q$ can be found and the logistic function is fully defined.
+$\alpha$ can be interpreted as the lower bound of the function and is therefore expected to be negative but close to 0, unless $U$ is large in which case $\alpha$ has to adjust accordingly to a large negative value, see figure \ref{fig:T_Bfbound_U}.
+$\beta$ is the growth rate, or steepness of the function, and it is coupled to the $Q$ parameter which will follow it according to the three conditions.
+The steepness has to be high if saturation is reached a low $Bf^i_{bound}$ making $f_{\full}$ small, see figure \ref{fig:T_Bfbound_f_full}.
+\vfill
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/T_Bfbound_U.pdf}
+    \caption{
+        \label{fig:T_Bfbound_U}
+        Using a constant $f_{\full} = 1$, changing the $U$ parameter in the conditions in equation \ref{eq:BA_cond} to achieve a shift of the inflection point, at $\lambda=1$, on the $Bf_{bound}$ axis.
+    }
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/T_Bfbound_f_full.pdf}
+    \caption{
+        \label{fig:T_Bfbound_f_full}
+        Using a constant $U = 5$, changing the $f_{\full}$ parameter in the conditions in equation \ref{eq:BA_cond} to change the point where $Bf_{bound}$ reaches the largest $\lambda$.
+    }
+\end{figure}
+
+
+
+
+
+
+
+
+\subsubsection{The carrying capacity of a GC}
+Finally we need to introduce the concept of a carrying capacity of a GC, which is defined as the number cells a GC is able to support in its micro environment.
+The carrying capacity is determined mainly by the total concentration of antigen, since binding to antigen controls the progeny distribution.
+BCR affinity is also influencing antigen binding, and therefore must influence the carrying capacity, but at high affinity nearly all antigen is bound, and hence the total antigen concentration is the most influential determinant of GC carrying capacity.
+At $\operatorname{Pois}(1)$ the progeny distribution is only just sustaining the population size of the GC, and given from condition 2 in equation \ref{eq:BA_cond} this happens at $\frac{f_{\full}}{U}$.
+Under the assumption that the population of B cells all have identical BCR sequences, the maximum carrying capacity is:
+\begin{equation}
+C([A_{\total}]) = U \frac{[A_{\total}] - [A]}{f_{\full}}
+  \label{eq:carry_cap}
+\end{equation}
+The concentration of unbound antigen is determined by the affinity and concentration of BCRs.
+It is fair to assume that there are many more BCRs than antigens, so for high affinity BCRs, the majority of antigen should be in a bound state allowing for the approximation of setting $[A]=0$.
+This makes it easy to calculate the carrying capacity given equation \ref{eq:carry_cap}.
+However in the cases with low affinity the concentration of free antigen cannot be assumed zero and in such cases $[A]$ can be determined through equation \ref{eq:A_objective}.
+
+In the situation where a newly arising mutant has higher affinity than the rest of the population the fraction of BCR binding antigen on this mutant will approach $f_{\full}$, and in the case of $f_{\full} < 1$ it is even possibly surpasses it.
+In these cases there is a probability that the clone will expand rapidly to overtake the GC population, also known as a clonal burst.
+The clonal burst has the characteristic time (average time of take over) being:
+$$
+T_{\burst} = log_\kappa \left(carrying\ capacity \right) = log_\kappa\left( U \frac{[A_{\total}] - [A]}{f_{\full}} \right)
+$$
+With $\kappa = \operatorname{max}(\lambda)$ in this model fixed to 2 and $U$ and $f_{\full}$ being constants defined in the next section.
+
+
+
+
+
+
+% \adcommentKD{This section will be supplemented by plots to justify the choice of parameters}
+
+\subsection{Parameter choice}
+%The choice of $f_{\full}$ determines the BCR occupancy when full activation of proliferation is achieved, but this interpretation is really just a simplification of the real biological system where multiple steps of interaction to both follicular dendritic cells and T cells are happening during the course of selection.
+The choice of $f_{\full}$ determines the BCR occupancy when full activation of proliferation is achieved.
+$f_{\full}$ does not have any known reference value so it is chosen to take a value of 1 because this is mathematically convenient.
+It turns out that the model is quite robust to different choices of $f_{\full}$ and it causes no substantial effect to change it from 1 to 0.05, see figure \ref{fig:no_effect_of_f_full}.
+Changing $f_{\full}$ will primarily effect the carrying capacity via. equation \ref{eq:carry_cap}, but by adjusting $[A_{\total}]$ to get the same carrying capacity simulations are indifferent to the choice of $f_{\full}$.
+Presumably this is because the shape of the logistic transformation $Y(\cdot)$ in equation \ref{eq:BA_trans} will remain intact, see figure \ref{fig:T_Bfbound_f_full}.
+%Choosing a lower $f_{\full}$ will increase the carrying capacity but the shape of the logistic transformation $T$ will remain intact, see figure \ref{fig:T_Bfbound_f_full}.
+%We have chosen $f_{\full}$ to be $1$, with the interpretation that when half of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are bound the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
+The choice if $f_{\full} = 1$ has the interpretation that when half of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are binding antigen, the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
+\begin{figure}[!ht]
+\begin{center} 
+\includegraphics[height=49mm]{figures/f_full_1.pdf}
+%\hspace{-40mm}
+\includegraphics[height=49mm]{figures/f_full_05.pdf}
+%\hspace{-40mm}
+\includegraphics[height=49mm]{figures/f_full_005.pdf} \newline%
+\end{center}
+\vspace{-8mm} \hspace{23mm} (a) \hspace{37mm} (b) \hspace{37mm} (c)
+    \caption{
+        \label{fig:no_effect_of_f_full}
+        Simulation with affinity selection for varying magnitudes of $f_{\full}$.
+        $f_{\full}=1$, $f_{\full}=0.5$, $f_{\full}=0.05$ for (a), (b) and (c) respectively. Simulations with $U=5$ and $[A_{\total}]$ adjusted to obtain a carrying capacity of 1000 cells. Each simulation is run for 100 generations with $t_d=10$ and the composition of sequence distances to their closest targets are plotted for each generation.
+        }
+\end{figure}
+
+We then chose the parameter $U$ in the logistic transformation to take a value to reflect our belief of how the shape of this transformation should look.
+Our expectation is that initially, when only a few BCRs are bound and stimulation is low, there will be a linear increase of the stimulus with increasing antigen binding.
+At some point close to $f_{\full}$, this increase in stimulus should level out because the cell can only be stimulated to $\operatorname{max}(\lambda)=2$.
+This expected shape is recapitulated by a $U=5$, see figure \ref{fig:T_Bfbound_U}, and therefore this is where we fix $U$.
+
+In the transformation from distance to affinity in equation \ref{eq:hd2affy}, we have to make a choice about which exponent to use.
+There is reason to believe that not all mutations are improving affinity with equal proportion and therefore the linear transformation is excluded.
+Another thing we would like to enforce is to disallow sequences to drift far away from both the mature -and naive sequence.
+A large sequence drift should not be very likely since it would complete abolish the binding of antigen.
+For this reason it is preferred to have an exponent $k>1$.
+We choose $k=2$ since this puts an extra penalty on simulated sequences that are drifting, without putting an excessive emphasis on the first two steps of approaching the mature sequence, see \ref{fig:hd2affy}.
+
+The logistic function is chosen to yield a maximum $\lambda$ of 2 since this would correspond to an average max progeny of 2 cells yielding a population exponentially increasing by $2^t$, which is a standard exponential population growth.
+%A $\operatorname{Pois}(2)$ progeny distribution is equal to saying that on average cells divide once per generation and that the total population is exponentially increasing by $2^t$, which is a standard exponential population growth.
+One useful feature of the logistic function is that it has a notion of maximum signal i.e. when more antigen binding does not give more signal.
+This flattening out is asymptotic approaching 2 which mean that the maximum growth rate of $\lambda=2$, is not reached completely at $f_{\full}$, so to fit the function we have to allow for this by choosing a small $\epsilon$ that make $Y(f_{\full})$ practically equivalent to 2.
+Here we choose $\epsilon=\frac{1}{1000}$ meaning that $Y(f_{\full}) = \frac{1999}{1000}$.
+
+Next we need to find some realistic numbers for the constants such as affinity, carrying capacity and $B^i_{\total}$.
+First lets consider affinity.
+$K_d$ for a naive sequence is likely in the low micro molar range range of $10^{-6} - 10^{-7} M$, while the mature affinity is in the nano -or subnano molar range of $10^{-8} - 10^{-10} M$ \cite{berek1987mutation}.
+Classically these affinity measurements have been done using hapten induced immunizations, and there is reason to believe that conclusions about affinities will be different for other antigens.
+Indeed it has been reported that naive sequences in some cases can be high affinity binders and affinity maturation is less useful \cite{frank2015simple}.
+Nevertheless several groups have reported 50-100 fold affinity increase due to affinity maturation in both complex and hapten induced immunizations \cite{Kelsoe_2016}, \cite{phan2006high}, \cite{ulrich1997interplay}.
+We choose the naive sequence to be $10^{-7} M$ ($100nM$) and the mature to be $10^{-9} M$ ($1nM$), giving a large span in affinity to select on.
+
+With the introduction of $K_d$'s we need to consider units.
+Lets start by estimating the concentration of BCRs per B cell in the GC, also denoted as $B^i_{\total}$.
+To simplify things we assume that the number of BCRs on each B cell is the same.
+In each GC there is an estimated $4 \times 10^3$ B cells \cite{kroese1990germinal}, but it has before been estimated to just $1000$ \cite{Childs_Baskerville_Cobey_2015} which we will use for convenience.
+On the surface each of these B cells have an estimated $10^4$ BCRs \cite{rieckmann2017social}, \cite{immprot} (highly uncertain estimate), resulting in $10^7$ BCRs per GC.
+Converting this to moles gives: $10^7\ 6 \times 10^{-23} moles$
+The GC is reported to have a diameter of $10^{-4} m$ \cite{Romppanen_1981}.
+Assuming the shape is spherical and converting to liters gives:
+$$
+\frac{4}{3} \pi (\frac{1}{2} \times 10^{-4} m)^3 10^3 \frac{L}{m^3} = \frac{1}{6} \pi \times 10^{-9} L
+$$
+Finally this gives:
+$$\frac{10^7\ 6 \times 10^{-23} moles}{\frac{1}{6} \pi 10^{-9} L} \approx 10^{-6} M \equiv 10^{3} nM
+$$
+This means that each B cell contribute with approximately $1nM$ to the total concentration of BCRs.
+Now to simplify things, everything is normalized to nano molar so e.g. the naive/mature affinity is changed to $100nM$ and $1nM$ respectively.
+All the above described values are tabulated in table \ref{constants} and used as constant in later simulations of sequences undergoing affinity selection.
+
+%We then make the assumption that the total concentration of antigen is equal to half of the total amount of BCRs in a fully grown GC with $10^3$ B cells each having $10^4$ BCRs.
+%This makes a convenient reference point which is not unrealistic and we shall see later that the outcome of the simulations are rather insensitive to the concentration of antigens over a certain threshold.
+%By looking at the definition of $[AB_n]$ it can be seen that changing the total concentration of antigen has the same effect as shifting the affinity of both the naive -and mature sequence by the same fraction and this is the way it can easily be investigated.
+%   - With the side effect of increasing the carrying capacity.
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{llll}
+Constant    & Value & Description & Reference \\ \hline
+$B^i_{\total}$ & $1\times10^{4}$     & Number of BCRs on each B cell & \cite{immprot}, \cite{rieckmann2017social}*     \\
+$n_t$ & 1000 & B cells per GC &  \cite{kroese1990germinal}, \cite{Childs_Baskerville_Cobey_2015} \\
+d & $10^{-4} m$ & GC diameter &  \cite{Romppanen_1981} \\
+U           & 5     & Fraction BCR bound necessary to sustain population & See text \\
+k           & 2     & Exponent of affinity transformation & See text  \\
+$f_{\full}$  & 1     & Fraction BCR bound at full response & See text \\
+$K_d^{\naive}$ & 100nM & Naive affinity & \cite{berek1987mutation} \\
+$K_d^{\mature}$ & 1nM & Mature affinity & \cite{berek1987mutation} \\
+\end{tabular}
+\caption{
+\label{constants}
+    Constants used in the model of affinity selection. *There is a lot of uncertainty in this number and depending on the method it is estimated from $10^3$ to $10^7$.}
+\end{table}
+
+
+
+
+
+
+
+
+
+\subsection{Implementation} 
+All the above model definitions have the single purpose of adjusting the progeny distribution of a cell through $\lambda_i$ given some fitness function.
+Under the neutral model this fitness function is constant resulting in the same $\lambda_i$ for all cells while in the affinity selection model $\lambda_i$ are updated to reflect B cell fitness in a GC reaction.
+Practically the simulation of sequences can be thought of as a process of constructing a phylogenetic tree, see figure \ref{fig:tree_iteration}.
+In each generation all non terminated leafs on the tree is sampled and an integer is drawn from each of their progeny distributions.
+The leaf can then either terminate or have $1$ to $N \in \Z_+$ progeny cells.
+If the leaf has progeny each will undergo their own mutation process following the S5F model and become leafs in the next generation.
+One generation is define as one iteration through all the non terminated leafs on the tree and this is done in random order to avoid any bias.
+Once every leaf has be evaluated this marks a new generation and the generation time is increased by one.
+For an overview see figure figure \ref{fig:tree_iteration}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{figures/tree_iteration.pdf}
+    \caption{
+        \label{fig:tree_iteration}
+        Illustration the sampling procedure in a time slice ($T=5$) of in the simulation of a phylogeny undergoing affinity selection.
+        A generation time is defined as the time when all nodes have been sampled and their progeny have been evaluated.
+        At each generation all non-terminated nodes will be evaluated in random order.
+        For neutral selection $\lambda_i$ is constant and identical for all cells.
+        For simulation with affinity selection $\lambda_i$ is B cell dependent and re-evaluated every time there is a change in the population of non-terminated nodes.
+        This re-evaluation of all the $\lambda$s that can be skipped to for a number of nodes to save computation time without any substantial difference in simulation characteristics.
+    }
+\end{figure}
+
+
+Using tree terminology the progeny distribution of a leaf depends on all the states (i.e. sequences) of the non terminated leafs.
+Then by definition the affinity model needs to be updated, by re-evaluating equation \ref{eq:A_objective} and finding all $[AB]_i$, every single time a new leaf is generated, and the need for updating $[AB]_i$ will be a computational burden at large population sizes.
+E.g. when simulating at a carrying capacity of 1000 cells, the vast majority of the computations are spent updating $[AB]_i$.
+An approximate solution is simply to skip some of these updates and rely the previous determination of $\lambda_i$.
+The rationale behind this is that when there is already a large population of cells, lets say 1000 non terminated leafs, then very little will change after a single leaf is evaluated.
+In fact it turns out that for simulations using a carrying capacity of 1000 cells, there are no distinct difference between updating $[AB]_i$ after every leaf is evaluated or once every $\frac{1}{100}$th leaf evaluation, see figure \ref{fig:skip_vs_no_skip_dist10}.
+\begin{figure}[!ht]
+\begin{center} 
+\includegraphics[width=80mm]{figures/sim_selection_default_run_dist10.pdf}
+\hspace{-22mm}
+\includegraphics[width=80mm]{figures/sim_selection_default_run_dist10_no_skip.pdf} \newline%
+\end{center}
+\vspace{-9mm} \hspace{34mm} (a) \hspace{53mm} (b)
+    \caption{
+        \label{fig:skip_vs_no_skip_dist10}
+        Simulation with selection comparing (a) with and (b) without skipping recalculation of $\lambda_i$ at each cell evaluation. In (a) no steps are skipped while, in (b), 99\% of all recalculations are skipped (10 updates to a population of 1000 B cells). Simulation parameters are default as in table \ref{aff_constants}, with $\lambda_0 = 0.3$ and $T=100$.
+        }
+\end{figure}
+
+\iffalse
+\begin{figure}[!ht]
+\begin{center} 
+\includegraphics[width=80mm]{figures/sim_selection_default_run_dist5.pdf}
+\hspace{-20mm}
+\includegraphics[width=80mm]{figures/sim_selection_default_run_dist5_no_skip.pdf} \newline%
+\end{center}
+\vspace{-9mm} \hspace{35mm} (a) \hspace{55mm} (b)
+    \caption{
+        \label{fig:skip_vs_no_skip_dist5}
+        Simulation with selection comparing (a) with and (b) without skipping recalculation of $\lambda_i$ at each cell evaluation. In (a) no steps are skipped while, in (b), 99\% of all recalculations are skipped (ten updates to a population of a thousand B cells). In this simulation distance from naive to the mature sequence was 5 and $U$ was set to 2. The rest of the parameters are set to default parameters.
+        }
+\end{figure}
+\fi
+
+
+Target sequences ($Tseq_i, i=1,2, \hdots, t_n$) can be arbitrarily defined by inputting a list of amino acid sequences.
+Since affinity selection works on protein level the distance that determines affinity is the hamming distance between two amino acid sequences.
+Either one or multiple target sequences can be used but all are assumed to have equal affinity, $K^{\mature}_d$.
+In the tests presented here we input the number of targets ($t_n$) and the amino acid distance from naive seed to target ($t_d$).
+Using these parameters the target sequences are simulated by introducing DNA mutations into the naive sequence until it has diverged $t_d$ away from its starting point.
+The mutations are introduced at DNA level given the neutral branching process described previously and thereby a distance of $t_d=10$ does not always correspond to 10 mutations, often the number is higher due to accumulation of synonymous mutations not counting towards protein level distance.
+The process is repeated until $t_n$ targets have been made.
+We reason that a good default choice of $t_d$, to achieve sufficient evolutionary distance, is 10, however the simulation behaviour seems rather indifferent to this, compare \ref{fig:no_effect_of_f_full} with \ref{fig:skip_vs_no_skip_dist10}.
+The default number of targets ($t_d$) is set to 100 to provoke epistatic effects.
+All default parameters in the affinity simulation is tabulated in table \ref{aff_constants}.
+The implementation is available as a simulation subprogram in the codebase of \texttt{GCtree} (\url{github.com/matsengrp/gctree}).
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lll}
+Parameter    & Default & Description \\ \hline
+$\lambda_0$ & None & $\operatorname{Pois}(\lambda_0)$ sequence mutability \\
+$T$ & None & Stopping time \\
+$cap$ & 1000 & Carrying capacity \\
+$t_n$ & 100 & Number of random target sequence \\
+$t_d$ & 10 & Distance from naive to target sequence \\
+$n$ & all & Down-sampled number of sequence
+\end{tabular}
+\caption{
+\label{aff_constants}
+    Default parameters used in the affinity selected simulations.}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+\subsubsection{The effect of having multiple mature targets}
+%It is clearly easy to extend the affinity simulation with multiple target sequences serving as end point for maturation.
+%%% More epistasis. It is already there before having multiple targets
+% Since the affinity transformation is non-linear the effects of mutations are non-additive by definition.
+By introducing multiple targets a side effect is that this introduces epistasis to the fitness landscape.
+Epistasis is defined as non additive interaction between mutations and is widely observed in nature e.g. the evolution of influenza nucleoprotein \cite{gong2013stability}.
+The manifestations of epistasis can be different, here is a simple example:
+$$
+ab = 1,\ Ab = 1,\ aB = 1,\ AB = 10
+$$
+There are four different genotypes, based on two loci (positions) with two alleles (gene variants), three having a fitness of 1 and one having a fitness of 10.
+Each position is tolerable to the two states but only a combination of state $A$ and $B$ improves fitness.
+In an linear additive, non epistatic, setting the effect of the intermediate states ($Ab$ and $aB$) should be measurable and sum to the effect of both:
+$$
+ab + (Ab - ab) + (aB -ab) = AB
+$$
+This is just one example of epistasis, where the effect is AND gate like.
+The effect could also confer deleteriousness to the intermediate:
+$$
+ab = 1,\ Ab = \frac{1}{2},\ aB = \frac{1}{4},\ AB = 10
+$$
+Or any other non additive influence.
+
+In the affinity simulation there is inherent epistasis because the transformation from distance to affinity is non-linear, although we could choose to fix $k=1$ in equation \ref{eq:hd2affy} to obtain linear additive distance effects.
+Regardless, if simulation is done using multiple different targets it will be epistatic with multimodal fitness landscape as illustrated in figure \ref{fig:epistasis}.
+
+\begin{figure}[!ht]
+\begin{center} 
+\includegraphics[height=35mm]{figures/fitness_overlap0.pdf}
+%\hspace{-40mm}
+\includegraphics[height=35mm]{figures/fitness_overlap3.pdf}
+%\hspace{-40mm}
+\includegraphics[height=35mm]{figures/fitness_overlap5.pdf} \newline%
+\end{center}
+\vspace{-6mm} \hspace{26mm} (a) \hspace{39mm} (b) \hspace{39mm} (c)
+    \caption{
+    \label{fig:epistasis}
+        The effect of two target sequence on the fitness landscape.
+        Two target sequences are created with varying overlap using $t_d=5$.
+        The fitness landscape is constructed using a linear distance to affinity function ($k=1$ in equation \ref{eq:hd2affy}).
+        In a) no overlap makes a long distance between the two peaks in fitness, in b) peaks are getting closer when targets overlap, and in c) when the overlap is complete the two targets match and the system no longer is epistatic.
+        }
+\end{figure}
+
+
+Indeed the predictions of epistasis can be observed in simulation with multiple targets.
+Often sequences are evolving towards a single target and once a few mutations have been accumulated a sequence is "committed" to this evolutionary trajectory.
+However trajectories can change when a few mutation coincides with another target as observed in figure \ref{fig:epistasis_figure}.
+These observations supports the view that the presented affinity simulation is a convoluted model being a good challenge to test the assumptions of inference methods.
+
+\begin{figure}[!ht]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/epistasis_figure.pdf}
+        \caption{
+        \label{fig:epistasis_figure}
+        Example of epistasis in a simulation run with multiple target sequences.
+        Colors correspond to the affinity of the simulated cells, see figure \ref{fig:collapsed_epistasis} in appendix B for run stats.
+        Arrows show the evolutionary trajectory from lower levels in the fitness landscape to higher levels corresponding to root to tip on the phylogenetic tree, in both cases starting at the unfilled black circle.
+        Zero amino acid distances leafs are collapsed and values inside nodes correspond to the number of B cells.
+        Here we see that the simulation trajectory is following along several targets.
+        There is even observed a jump between two target sequences trajectories, with the highest frequency node (green 40) yielding a decedent with two amino acid mutations (green 9) that is equally close to another target, resulting in a change in mutational trajectory.
+        }
+    \end{center}
+\end{figure}
+
+
+
+
+
+
+
+
+%\clearpage
+\section{Results}
+To test the simulation protocol and whether it recapitulates real world affinity maturation we needed a dataset with a known phylogeny starting from the naive sequence as a root node.
+It is practically impossible to get such a dataset but something close was made by Tas et al. \cite{tas2016visualizing} with single cells sequencing of B cell isolated from the same GC.
+The Tas. dataset consists of 65 BCR sequences.
+Some sequences appear in multiple B cells and these are deduplicated and assigned abundances leaving a total of 42 different genotypes as observed in figure \ref{fig:Tas_tree}.
+Reminding, that the phylogeny of the Tas. dataset is \textit{not} known but inferred based on a likelihood ranking of equally parsimonious trees (unpublished data).
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Tas_tree.pdf}
+    \caption{
+        \label{fig:Tas_tree}
+        Inferred phylogeny for the single GC dataset from Tas et al. \cite{tas2016visualizing}.
+        The inference method used is based on likelihood ranking of equally parsimonious trees, unpublished but implemented in the \texttt{GCtree} source code as a subprogram.
+        Figure credit William S. DeWitt.
+    }
+\end{figure}
+
+
+First we need a measure of accumulated SHM i.e. what is the percentage of mutations in the GC sequences and how is it distributed across the length of the tree.
+We plot this mutation distribution as an empirical cumulative distribution function (CDF), see a) in figure \ref{fig:Tas-affsim_Tas-data}.
+Next, genotype abundance is an important trait and indicator of clonal bursts.
+Higher abundance clones are assumed to be more fit and should therefore also yield more offspring.
+Some offspring will have a slightly different genotype with implication on fitness, hence high abundance clones should also have many different genotype descendents.
+A proxy for counting these descendents is to count the immediate neighbors being just a single hamming edit away, see b) in figure \ref{fig:Tas-affsim_Tas-data}.
+If the assumption holds there should be a positive correlation between abundance and hamming neighbors.
+
+In figure \ref{fig:Tas-affsim_Tas-data} plotting the two above mentioned measures for the Tas. dataset, and superimposing the same measures but for 100 simulation runs, shows a consistent good fit between simulations and real data.
+For this run parameters was set to $n=65$, $\lambda_0=0.25$, $t_d=5$, $T=35$ and default otherwise.
+The down-sampling parameter ($n$) was set to the same number as sampled B cells in the Tas. dataset.
+The seed naive sequence used was a V gene of 264 nt. and with the often referred SHM rate of $10^{-3}$ \cite{victora2012germinal} this gives $\lambda_0=0.264$ which was rounded to $\lambda_0=0.25$.
+Target distance ($t_d$) and simulation time ($T$) was adjusted so the simulated sequences had approx. the same minimum hamming distance to the naive sequence.
+
+\begin{figure}
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/Tas-affsim_Tas-data.pdf}\newline%
+    \end{center}
+    \vspace{-14mm} \hspace{42mm} (a) \hspace{52mm} (b)
+    \caption{
+        \label{fig:Tas-affsim_Tas-data}
+        Summary statistics for 100 simulations using $\lambda_0=0.25$, $t_d=5$, $T=35$ and $n=65$.
+        Simulations are colored and Tas. dataset is black.
+        In a) the cumulative distribution of mutations (empirical CDF) and b) the number of genotypes in 1 hamming distance away as function of genotype abundance.
+    }
+\end{figure}
+
+
+During affinity simulations the evolution of the cell population was plotted showing the emergence of new clones with higher affinity and their gradual take over of the cell population until an even more fit clone emerge, see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}.
+In all cases of affinity simulation there is a clear progression towards higher affinity as time passes until eventually a cell has reached the target sequence with highest affinity.
+Topologically simulated trees also capture this notion of clonal bursts with one genotype suddenly being very dominant and yielding many offspring, see figure \ref{fig:Tas_affsim_example.collapsed_runstat_color_tree}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Tas_affsim_example_collapsed_runstat_color_tree.pdf}
+    \caption{
+        \label{fig:Tas_affsim_example.collapsed_runstat_color_tree}
+        Simulated tree using $\lambda_0=0.25$, $t_d=5$, $T=35$ and $n=66$.
+        For simulation statistics and color to affinity mapping see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}.
+    }
+\end{figure}
+
+
+
+
+
+%%% If doing another iteration of this model I would probably make the fitness a function of antigen bound relative to all the other cells instead of fraction BCRs binding antigen.
+% Expressed in equations:
+% fitness([AB_i]) = AB_i/sum(AB_i, i from 1 to N)
+% In this way it would reflect T cell more realistically, but nevertheless the current model is already capturing most of this relative effect simply by binding more antigen when affinity is increased.
+\section{Discussion and conclusion}
+Previously many groups have made models of the GC reaction and affinity maturation \cite{Reshetova_2017}, \cite{Shahaf_2008}, \cite{Chaudhury_2014}, \cite{Wang_Mata_2015}, but none of these have included an explicit definition of the BCR sequences.
+Neutral branching processes can easily be setup to simulation sequences undergoing the same mutational patterns as BCR sequences but they have no way of capturing the important clonal bursts happening due to the fitness gain from having a higher affinity BCR.
+In this work we have addressed this problem through a simple but yet unexplored way of integrating affinity related fitness into the simulation of BCR sequence evolution.
+A valuable tool in the assessment of inference methods.
+
+It is interesting to see the similarities between the tree topologies of an affinity simulated tree compared to the inferred tree for the Tas. dataset.
+As it was also noted in the work of Tas et al. \cite{tas2016visualizing} this GC has undergone a clonal burst with a clear dominant genotype (abundance 17 in figure \ref{fig:Tas_tree}) having many slightly mutated offspring.
+Clearly this topological trait is very similar to the affinity simulated tree in figure \ref{fig:Tas_affsim_example_with_runstats}, and by mapping affinity to each node it can be seen that the clonal burst happened as a result of affinity gain
+However as they also observed in Tas et al. appearance of a high affinity genotype does not guarantee a clonal burst, and as expected this is also true in the affinity simulation.
+Under the best conditions a B cell has $\lambda=2$ from which it follows that $\operatorname{Pois}(termination | \lambda=2) = 0.135$, so there is roughly a 14\% chance of a high affinity clone turning extinct.
+
+
+%The fitness function presented in this model is based on some rough assumptions about having a number of target sequences and using the distance from these as a proxy for affinity.
+%However it is possible to plug in an arbitrary fitness function based on empirical values e.g. the affinity values determined from ancestral reconstruction of an antibody lineage like Doria-Rose et al. \cite{Doria-Rose2014-vi}.
+
+
+The distribution of clones over time (e.g. see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}) reveals that mutations conferring a fitness advantage are quickly found and fast at overtaking the whole cell population follows.
+If this represents real affinity maturation it poses the problem that the probability of a maturation trajectory will be defined by the steepness of the fitness function and not the fitness at the end of a trajectory.
+There is then a way of leading maturation into a dead end that is far lower in fitness than the global optimum but too high, compared to the naive state, to be reverted.
+Indeed such a mechanism is a reasonable explanation why broadly neutralizing HIV antibodies are so rare.
+
+

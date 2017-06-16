@@ -1,0 +1,41 @@
+\chapter{Source code}
+It is my view that code should be shared via. online code repositories.
+Git is a great resource for this as it keeps version control easy and tracks changes which makes it possible to track down unexpected behaviour.
+Indeed all code written for this work is part of a git repository on GitHub.
+
+Methods presented in chapter 3 and 4 is coded in Python and integrated into the GCtree code base accessible here:
+\url{somewhere.com}
+
+Methods in chapter 5 is coded in R, C++ and Python in its own repository accessible here:
+\url{somewhere.com}
+
+
+
+
+%It hardly makes any sense to append 200 pages of code.
+
+
+% Duplicate GH repos and add link:\newline
+% \url{https://help.github.com/articles/duplicating-a-repository/}
+
+
+\texttt{GCtree} source code:
+\url{github.com/matsengrp/gctree}
+
+\begin{lstlisting}
+nohup scons --simulate --igphyml --gctree --dnaml --outdir=cft_benchmark_Laura_aff --frame=1 --naive=CAGGTGCAGCTGGTGCAGTCTGGGGCTGAGGTGAAGAAGCCTGGGGCCTCAGTGAAGGTCTCCTGCAAGGCTTCTGGATACACCTTCACCGGCTACTATATGCACTGGGTGCGACAGGCCCCTGGACAAGGGCTTGAGTGGATGGGATGGATCAACCCTAACAGTGGTGGCACAAACTATGCACAGAAGTTTCAGGGCAGGGTCACCATGACCAGGGACACGTCCATCAGCACAGCCTACATGGAGCTGAGCAGGCTGAGATCTGACGACACGGCCGTGTATTACTGTGCGAGAGGGCCATTCCCGAATTACTATGGTACGGGGAGTTATTGGGGGGGTTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA --experimental=/home/matsengrp/working/csmall/cft/output/laura-mb-v9-dnapars/*-igh/*/run-viterbi-best-plus-0/pruned.fa --naiveIDexp=naive0 --lambda0=0.25 --selection --target_dist=10 --target_count=1000 --verbose --T=90 --carry_cap=10000 --skip_update=1000 --nsim=100 --n=150 --quick --jobs=500 --srun  &> cft_benchmark_Laura_aff.log &
+
+nohup scons --simulate --igphyml --gctree --dnaml --outdir=cft_benchmark_Laura_neut --frame=1 --nsim=100 --T=5 --lambda=2.5 --lambda0=3 --naive=CAGGTGCAGCTGGTGCAGTCTGGGGCTGAGGTGAAGAAGCCTGGGGCCTCAGTGAAGGTCTCCTGCAAGGCTTCTGGATACACCTTCACCGGCTACTATATGCACTGGGTGCGACAGGCCCCTGGACAAGGGCTTGAGTGGATGGGATGGATCAACCCTAACAGTGGTGGCACAAACTATGCACAGAAGTTTCAGGGCAGGGTCACCATGACCAGGGACACGTCCATCAGCACAGCCTACATGGAGCTGAGCAGGCTGAGATCTGACGACACGGCCGTGTATTACTGTGCGAGAGGGCCATTCCCGAATTACTATGGTACGGGGAGTTATTGGGGGGGTTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA --experimental=/home/matsengrp/working/csmall/cft/output/laura-mb-v9-dnapars/*-igh/*/run-viterbi-best-plus-0/pruned.fa --naiveIDexp=naive0 --quick --jobs=1000 --srun &> cft_benchmark_Laura_neut.log &
+
+nohup scons --simulate --gctree --igphyml --dnaml --frame=1 --outdir=cft_benchmark_Tas_aff --naive=ggacctagcctcgtgaaaccttctcagactctgtccctcacctgttctgtcactggcgactccatcaccagtggttactggaactggatccggaaattcccagggaataaacttgagtacatggggtacataagctacagtggtagcacttactacaatccatctctcaaaagtcgaatctccatcactcgagacacatccaagaaccagtactacctgcagttgaattctgtgactactgaggacacagccacatattactgt --experimental=/home/matsengrp/working/csmall/cft/output/laura-mb-v9-dnapars/*-igh/*/run-viterbi-best-plus-0/pruned.fa --naiveIDexp=naive0 --lambda0=0.25 --selection --target_dist=5 --target_count=100 --verbose --T=35 --nsim=100 --n=65 --jobs=1000 --srun &> cft_benchmark_Tas_aff.log &
+
+nohup scons --simulate --gctree --igphyml --dnaml --frame=1 --outdir=cft_benchmark_Tas_neut --nsim=100 --N=100 --n=70 --lambda=1.5 --lambda0=.25 --naive=ggacctagcctcgtgaaaccttctcagactctgtccctcacctgttctgtcactggcgactccatcaccagtggttactggaactggatccggaaattcccagggaataaacttgagtacatggggtacataagctacagtggtagcacttactacaatccatctctcaaaagtcgaatctccatcactcgagacacatccaagaaccagtactacctgcagttgaattctgtgactactgaggacacagccacatattactgt --experimental=/home/matsengrp/working/csmall/cft/output/laura-mb-v9-dnapars/*-igh/*/run-viterbi-best-plus-0/pruned.fa --naiveIDexp=naive0 --jobs=1000 --srun &> cft_benchmark_Tas_neut.log &
+
+\end{lstlisting}
+
+
+
+
+
+\clearpage
+\newpage
