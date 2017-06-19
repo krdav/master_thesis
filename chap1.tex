@@ -170,7 +170,7 @@ A similar process is happening for T cells in the thymus.
 \subsubsection{Germline nomenclature}
 The standard nomenclature for BCR genes used throughout this work is defined by the IMGT ontology summarized in figure \ref{fig:IMGT_classification} and described by Lefranc \cite{lefranc2001nomenclature}.
 The first part of the name is always "IG" then followed by a locus identifier that can be either H (for heavy chain), K or L (for kappa or lambda light chain).
-Next letter represents the the gene group which can be V, D or J for the variable region, and for the constant region the different isotypes e.g. A, E, G1, G2 etc.
+Next letter represents the the gene group which can be V, D or J for the variable region, and for the constant region the different isotypes e.g.\ A, E, G1, G2 etc.
 
 \begin{figure}[ht]
     \centering
@@ -221,7 +221,7 @@ Actually even the variable region of a highly mutated BCR is strictly following 
 Structural conservation enables consistent mapping from the amino acid sequence onto a protein structure.
 A mapping like this was first proposed as a numbering scheme where the immunoglobulin structural components are numbered and these numbers are mapped back to the linear amino acid sequence.
 First attempt on this was described by Kabat \cite{national1983sequences} and based on invariant residues and rule based matching (these rules are tabulated by Dr. Andrew Martins \url{http://www.bioinf.org.uk/abs/}).
-Unfortunately this scheme not good at handling insertion in the flexible CDR regions, e.g. CDR1 insertions and/or very long CDR3 \cite{martin2010protein}.
+Unfortunately this scheme not good at handling insertion in the flexible CDR regions, e.g.\ CDR1 insertions and/or very long CDR3 \cite{martin2010protein}.
 Years later came another numbering scheme named after the first author of Clothia et al. \cite{chothia1987canonical}.
 The Clothia scheme was set out to correct the wrong mapping of CDR1 insertions and thereby achieve structurally consistent mapping, but later this has been updated to also accommodate structural consistent mapping of framework indels.
 
@@ -230,7 +230,7 @@ In 2003 the IMGT numbering was proposed to unify numbering of BCRs and TCRs \cit
 Similar to the IMGT scheme another scheme, called AHo, was made unifying numbering of BCRs and TCRs \cite{honegger2001yet}.
 Like Clothia, AHo numbering is structurally consistent, but unlike any other scheme it has a fixed standard length of 149 positions with enough space for even very long CDR3 sequences.
 Only in rare cases of germline indels, or an extremely long junctions, the scheme has to use insertion codes, which are otherwise standard use in all other numbering schemes.
-This fixed length sequence numbering make analysis much more convenient and results easy to interpret e.g. all BCR sequences can be encoded by a vector of length 149 and a given position in this vector always correspond to the same position on the protein structure regardless of the sequence.
+This fixed length sequence numbering make analysis much more convenient and results easy to interpret e.g.\ all BCR sequences can be encoded by a vector of length 149 and a given position in this vector always correspond to the same position on the protein structure regardless of the sequence.
 Therefore whenever BCR numbering is used throughout with work AHo numbering will be used if nothing else stated.
 The software ANARCI is used to annotate BCR sequences with AHo numbers \cite{dunbar2016anarci}, (\url{http://opig.stats.ox.ac.uk/webapps/sabdab-sabpred/ANARCI.php}).
 
@@ -303,7 +303,7 @@ Self antigen binding B cells are simply clogging up MHCII molecules with self pe
 
 
 Despite the convincing mechanistic models it must be stressed that the GC reaction contains many, either mechanistically unknown, or purely stochastic elements.
-E.g. even though there is an observed relationship between clonal bursts and mutational gain in affinity, this does not appear to happen consistently i.e. large affinity gains are observed without clonal bursting \cite{tas2016visualizing}, leading to the conclusion that either the reaction is highly stochastic, or a mechanism is unknown or unmonitored e.g. higher affinity but worse expression could make the net balance of selection turn negative, while it appears to be positive if only looking at affinity.
+E.g.\ even though there is an observed relationship between clonal bursts and mutational gain in affinity, this does not appear to happen consistently i.e.\ large affinity gains are observed without clonal bursting \cite{tas2016visualizing}, leading to the conclusion that either the reaction is highly stochastic, or a mechanism is unknown or unmonitored e.g.\ higher affinity but worse expression could make the net balance of selection turn negative, while it appears to be positive if only looking at affinity.
 
 A notable case of a correction to the mechanistic understanding of the GC reaction happened recently.
 In 2012 a review by Victora, based on all previous evidence, suggested that GCs are initially colonized by little as 1-3 naive B cells \cite{victora2012germinal}.
@@ -384,7 +384,7 @@ Fitting the model is non-trivial, because neighboring motifs share the same cont
 \section{Monitoring adaptive immune responses}
 During the centuries of immunological research a large array of techniques have been directly invented or adapted from other fields of science to monitor the cells in an immune response.
 Starting with hybridoma techniques \cite{larrick1989polymemse}, antibodies could be produced and tested in a single cell setting after which sequencing would reveal the DNA encoding the antibody.
-A large number of other techniques was already used or followed e.g. ELISA, single cell staining and sorting, ELISPOT, fluorescence imaging techniques etc.
+A large number of other techniques was already used or followed e.g.\ ELISA, single cell staining and sorting, ELISPOT, fluorescence imaging techniques etc.
 Already in 1991, when Sanger sequencing was the most high throughput sequencing method, the diversity of the immunoglobulin genes and the matured BCR was being explored by sequencing single clones \cite{yamada1991preferential}.
 In more recent time sequencing by Illumina and Roche 454 have revolutionized the way we are monitoring adaptive immunity by enabling complete sequencing of millions of different BCR sequences.
 
@@ -442,7 +442,7 @@ These should be removed by trimming off the primer binding region or "masking" i
 Then the paired-end sequences are merged by merging on the overlapping stretch of read 1 and 2 using simple alignment score maximization.
 Read pairs that failed to merge are discarded but the reads are still kept in separate files to build a consensus sequence over the sequences with the same UMI.
 Then anther instance of pairing is done on these consensus sequences to synchronize the files followed by merging reads into the same file (orange and green in figure \ref{fig:UMIread_flow}).
-Next a series of filtering and deduplication steps are undertaken e.g. only allowing sequences with multiple reads, a maximum number of ambiguous nucleotides etc. to pass through.
+Next a series of filtering and deduplication steps are undertaken e.g.\ only allowing sequences with multiple reads, a maximum number of ambiguous nucleotides etc. to pass through.
 The final result should be a set of high confidence BCR sequences, and depending on the sequencing protocol, with or without information about the constant region and/or mRNA abundances.
 
 \begin{figure}[ht]
@@ -450,14 +450,14 @@ The final result should be a set of high confidence BCR sequences, and depending
     \includegraphics[width=0.5\textwidth]{figures/Stern2014_Flowchart.pdf}
     \caption{
         \label{fig:UMIread_flow}
-        Flow of the raw sequencing data through the pRESTO pipeline. This strategy is designed for Illumina paired-end reads, e.g. \ref{fig:UMIread}, and seen used in Stern et al. \cite{stern2014b}. From pRESTO readthedocs \cite{vander2014presto}.
+        Flow of the raw sequencing data through the pRESTO pipeline. This strategy is designed for Illumina paired-end reads, e.g.\ \ref{fig:UMIread}, and seen used in Stern et al. \cite{stern2014b}. From pRESTO readthedocs \cite{vander2014presto}.
     }
 \end{figure}
 
 
 All of the above described sequencing methods suffer under the substantial caveat that they are mixing the heavy -and light chain sequences from multiple cells under the mRNA isolation step.
 This means that a given heavy chain sequence could have been paired with any of the light chain sequences observed for the same sample - and with high throughout sequencing this is millions.
-Pairing is not always necessary e.g. in some cases of diagnostics, but if the function of an antibody is to be tested the correctly paired heavy/light chain needs to be found.
+Pairing is not always necessary e.g.\ in some cases of diagnostics, but if the function of an antibody is to be tested the correctly paired heavy/light chain needs to be found.
 Some authors have done so using random pairing and selecting for binding via phage display \cite{glanville2009precise}, others have ranked heavy -and light chains according to their frequencies from sequencing and matched the highest frequency clones \cite{reddy2010monoclonal}, yet others have used phylogenetics to infer trees and then pair similar topology heavy/light chain trees, guided by a known pair to link to trees \cite{Zhu_undated-zz}, \cite{kwong2017antibodyomics}, \cite{huang2016identification}.
 The latest development is to use micro-droplets to capture single cells and then perform the DNA prepping steps inside these drops.
 Some authors are pairing heavy/light by physically linking them together via overlap PCR \cite{mcdaniel2016ultra}, while others are amplifying a UMI inside the drop and attaching it to both heavy -and light chains \cite{Briggs134841}.
@@ -476,7 +476,7 @@ Next, an extension to inferring the germline genes is to infer the full naive VD
 Inferring the full naive sequence is a bit more complicated because it requires inferring the original sequence flanking the D gene, where the junctional diversity from N/P nucleotides is complicating the problem.
 Given a BCR sequence and assuming some distribution of N/P nucleotide insertion, how many bases is trimmed of the V-D junction and how many are trimmed of the D-J junction?
 %Assuming uniform randomly inserted N/P nucleotides nothing can be inferred other than the 25\% chance of either of the bases, however the problem is how many bases is trimmed of the V-D junction and how many are trimmed of the D-J junction?
-This question is non-trivial because of SHM e.g. if a single mismatch is preventing a V gene alignment match to extend further 4 bases downstream, see table \ref{extend_or_not}, should that be regarded as a mutation due to SHM, or is it regarded as the last 3 random N/P nucleotides incidentally had the same identity (uniform random chances $0.25^3=0.0156$)?
+This question is non-trivial because of SHM e.g.\ if a single mismatch is preventing a V gene alignment match to extend further 4 bases downstream, see table \ref{extend_or_not}, should that be regarded as a mutation due to SHM, or is it regarded as the last 3 random N/P nucleotides incidentally had the same identity (uniform random chances $0.25^3=0.0156$)?
 Clearly it looks like an extension to the alignment would be the optimal solution but what then if the last base was also a mismatch? Or that about the effect of the underlying distribution of N/P nucleotide insertions?
 In these complex cases intuition starts breaking down, instead there is need for a statistical model that can integrate over probabilities and give consistent estimates.
 \begin{table}[ht]
@@ -491,10 +491,10 @@ In these complex cases intuition starts breaking down, instead there is need for
 \end{table}
 
 The classical "go to" statistical model for biological sequence analysis is a hidden Markov model (HMM) \cite{durbin1998biological}.
-Briefly an HMM is set of user defined states, e.g. the V, D or J genes, N/P insertions, etc., and the jump between states are then connected by probabilities.
+Briefly an HMM is set of user defined states, e.g.\ the V, D or J genes, N/P insertions, etc., and the jump between states are then connected by probabilities.
 Each state has a list of emission probabilities that defines the probabilities of observing a given base.
-%There is also a probability of changing state e.g. from V gene to N/P insertion.
-The hidden/unknown part is the identity of the states at a given position in a sequence e.g. when is the V gene stopping and the N/P insertion starting, like the example above.
+%There is also a probability of changing state e.g.\ from V gene to N/P insertion.
+The hidden/unknown part is the identity of the states at a given position in a sequence e.g.\ when is the V gene stopping and the N/P insertion starting, like the example above.
 This is one of the question that is possible to answer using an HMM, specifically by calculating the so called Viterbi path, but what is more interesting is the inherent flexibility of an HMM to represent well known biological mechanisms in a statistical framework.
 % It is out of the scope of this work to explain the inner workings of HMMs, how to find the optimal path, estimating parameters etc.
 % For this the book by Durbin et al. \cite{durbin1998biological} is an excellent resource.
@@ -522,14 +522,14 @@ With the more subtle variations among the alleles, there probably is an even big
 Now returning to the alignment problem exemplified in table \ref{extend_or_not}.
 The real shortcoming of using a pure alignment methods is that there is no robust way of deciding what is N/P nucleotides and what is inherited from germline genes, thereby making it very difficult to reconstruct the true naive sequence.
 A problem that is well handled by an HMM which will also, as a side effect of calculating the Viterbi path, return the maximum likelihood estimate of the naive sequence.
-The speculations were confirmed in the simulation study of Ralph et al. that showed substantial performance gains in naive sequence reconstruction using HMMs vs. alignment methods, see figure \ref{fig:partis_naiveseq_comparison}.
+The speculations were confirmed in the simulation study of Ralph et al. that showed substantial performance gains in naive sequence reconstruction using HMMs vs.\ alignment methods, see figure \ref{fig:partis_naiveseq_comparison}.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{figures/partis_naiveseq_comparison.pdf}
     \caption{
         \label{fig:partis_naiveseq_comparison}
-        Distribution of hamming distances true vs. inferred for 30,000 simulations compared across different inference methods.
+        Distribution of hamming distances true vs.\ inferred for 30,000 simulations compared across different inference methods.
         There is a clear advantage of using HMM methods like partis, but the largest performance leap is to integrate over multiple (k=5) sequences from the same clonal family (explained in the clustering section).
         IHMMunealign and partis are the only HMM methods while the rest are alignment based.
         From \cite{ralph2016consistency}.
@@ -565,7 +565,7 @@ Contrarily, if integrating over germline and junctional annotation uncertainties
 \end{figure}
 
 
-Now it should be clear that the root cause of the clustering problem is propagation of errors in point estimates, i.e. ignoring the substantial uncertainty in VDJ annotations of a BCR sequence that has undergone SHM.
+Now it should be clear that the root cause of the clustering problem is propagation of errors in point estimates, i.e.\ ignoring the substantial uncertainty in VDJ annotations of a BCR sequence that has undergone SHM.
 When a clustering criterion is based on the point estimate of both the V and J assignment, both the assignment uncertainties are affecting the clustering performance negatively.
 The junction length is also problematic to use because it is also just a point estimate, and often estimated from by a problematic alignment method as outlined in the example in table \ref{extend_or_not}.
 Lastly, hamming distance is weighting a mismatch in the N/P base region equally likely as a mismatch in the middle of germline gene while there is much more certainty of a real SHM event in the later case.
@@ -574,7 +574,7 @@ In the example in figure \ref{fig:VJ_CDR3_agglomeration} VJ junction agglomerati
 A completely different approach is taken by Ralph et al. \cite{ralph2016likelihood}, extending on their HMM framework for germline gene annotation.
 They use the naive sequence as a centrality point for clustering, not in terms of hamming distance, but in the terms of likelihood.
 The HMM model is conveniently yielding a likelihood function defined over all possible naive sequences for each BCR sequence in the dataset.
-With this likelihood function it gets simple to do hypothesis testing based clustering e.g. to test whether a set of observed BCR sequences all belong to the same cluster through a common naive sequence ancestor, see figure \ref{fig:partis_clustering-with-likelihood_2}.
+With this likelihood function it gets simple to do hypothesis testing based clustering e.g.\ to test whether a set of observed BCR sequences all belong to the same cluster through a common naive sequence ancestor, see figure \ref{fig:partis_clustering-with-likelihood_2}.
 
 \begin{figure}
     \centering
@@ -614,7 +614,7 @@ The only information available is the BCR sequences at the sampling time.
 
 To represent the process of cell division and apoptosis in the GC it is convenient to use a tree.
 The root of this tree is the naive B cell, a branching event is a cell division and a terminal leaf is a B cell that have died.
-The tree model of evolution is also a useful way of representing relationship among sequences e.g. some sequences which are all members of the same tree clade share a common ancestor and most likely are more similar than some other sequence not included in this clade.
+The tree model of evolution is also a useful way of representing relationship among sequences e.g.\ some sequences which are all members of the same tree clade share a common ancestor and most likely are more similar than some other sequence not included in this clade.
 The phylogenetic tree should be viewed as a model framework used to describe the evolutionary process, the details that goes into the model framework depends on the problem at hand.
 
 
@@ -624,21 +624,16 @@ Now given that the evolution is following a tree model, the model for inferring 
 A classical method for inference is to maximize tree parsimony.
 Motivated by Occam's Razor the best tree is simply the tree that with the fewest changes explain the observed data.
 Practically this is done by calculating the tree parsimony score with Fitch's algorithm \cite{fitch1971toward} and then finding the tree with the lowest score.
-%EM Independence is a statistical term, and parsimony isn't a statistical concept. I'd just state the formula.
-Using the assumption of independence between sites ($p_i$) the parsimony score of a tree ($T$) can be calculated as a sum of all the scores at each site: $S(T) = \sum_{i=1}^m F(p_i | T)$.
+The parsimony score of a tree ($T$) can be calculated as a sum of all the scores at each site ($p_i$): $S(T) = \sum_{i=1}^m F(p_i | T)$.
+
 With a parsimony score function the possible tree space can be searched and the maximum parsimony (MP) tree can be found.
 Tree space can be searched exhaustively only with few taxa but everything above 10 taxa has more than tens of millions of tree making it practically impossible to search exhaustively \cite{felsenstein1978number}.
-%EM If you are going to describe branch and bound for trees, use a citation.
-The branch and bound algorithm is a way of decreasing search space but still finding the best solution, however even with this hill climbing methods have to be used.
+The branch and bound algorithm is a way of decreasing search space but still finding the best solution \cite{hendy1982branch}, however even with this hill climbing methods have to be used.
 In a hill climbing tree search various heuristic tree moves like, nearest neighbor interchange (NNI), subtree pruning and regrafting (SPR) and tree bisection and reconnection (TBR) are used to explore widely around the tree space.
 
 It it clear that the MP method for tree inference is very simple and while this will work in some applications the criterion of maximum parsimony is not strictly how evolution works.
-%EM This is a sentence fragment below.
-Especially in the case where a sequence undergoing evolution is also experiencing some kind of selection or maybe a biased mutation process.
-E.g. in parsimony all substitutions have equal weight but in a sequence with rate heterogeneity some sites might evolve much faster than other.
-%EM Actually, the Felsenstein paper shows that MP can do the wrong thing even with the simplest sequence evolution process!
-Such complex processes are not accounted for in the MP method making it prone to errors \cite{felsenstein1978cases}, and since there is no consistent way of adding parameters to model a complex process, most researchers have turned to model based tree inference.
-
+In cases with rate heterogeneity due to a biased mutation processes or selection some sites might evolve much faster than others and this makes the parsimony assumption of equal weight on all substitutions break.
+Such complex processes are not accounted for in the MP method making it prone to errors, but even with the simplest sequence evolution process theoretical arguments by Felsenstein have shown that parsimony is inconsistent \cite{felsenstein1978cases}, and since adding parameters to model a complex process is not readily compatible with parsimony, most researchers have turned to model based tree inference.
 
 
 
@@ -647,7 +642,7 @@ Such complex processes are not accounted for in the MP method making it prone to
 As an alternative to maximizing the parsimony a likelihood function could be formulated to return the likelihood of the data given the tree. Then the problem turns into finding the most likely tree, referred to as the maximum likelihood (ML) tree.
 The likelihood function is conditioned on a tree with branch lengths representing distances in a continuous mutation process driven by a mutation rate.% determined by a matrix of substitution rates.
 Using gradient decent tree parameters like branch lengths can be adjusted to their ML estimates.
-To accommodate more advanced things such as differences in substitution rates, e.g. higher rate of \texttt{T->G} than \texttt{T->A}, a rate matrix can be defined.
+To accommodate more advanced things such as differences in substitution rates, e.g.\ higher rate of \texttt{T->G} than \texttt{T->A}, a rate matrix can be defined.
 If the data is at DNA level the rate matrix contains all possible substitutions between DNA characters.
 Examples such matrices: the F81 model \cite{felsenstein1981evolutionary} or the widely used general time reversible (GTR) model \cite{tavare1986some}.
 
@@ -662,9 +657,9 @@ Two popular choices for a codon model are GY94 \cite{goldman1994codon} and MG94 
 
 \subsubsection{Bayesian phylogenetics}
 In the ML framework both tree, branch length and substitution parameters are all point estimates adjusted to maximize the likelihood function, but point estimates might not always be desirable.
-E.g. when information like time or rate is to be extracted from a tree then a single point estimate is not very useful because the variance of such estimate is unknown.
+E.g.\ when information like time or rate is to be extracted from a tree then a single point estimate is not very useful because the variance of such estimate is unknown.
 Bayesian phylogeny addresses this challenge by integrating over the distribution of trees, branch lengths and substitution parameters by Monte Carlo sampling.
-When sampling has converged the resulting posterior distributions of all parameters can be used to express confidence in the maximum a posteriori (MAP) estimate e.g. by providing the high density interval (HDI) along with the MAP estimate.
+When sampling has converged the resulting posterior distributions of all parameters can be used to express confidence in the maximum a posteriori (MAP) estimate e.g.\ by providing the high density interval (HDI) along with the MAP estimate.
 The real drawback of Bayesian phylogeny is that sampling can make runtime much slower than a similar ML problem.
 There can also be a problem of reaching convergence in cases where sampling is difficult.
 

@@ -156,7 +156,7 @@ We make the restriction that only one inferred tree can be evaluated i.e. if mul
     \includegraphics[width=0.7\textwidth]{figures/ASR_true_vs_inferred.pdf}
     \caption{
         \label{fig:ASR_true_vs_inferred}
-        True vs. inferred tree with colored leaves and grey ancestral states. Reconstruction from the light blue leaf is marked by a dashed red line and annotated with genotypes in parenthesis. N is the naive sequence, L is the leaf sequence and the As are ancestors $1,2,...,n$ with either true or inferred marked by $t$ or $i$, respectively, appended to the subscript. The inferred tree has misplaced the branch leading to the light blue node, resulting in a missing ancestor sequence. The missing ancestor is treated as a missing realization in the inferred mutation process.
+        True vs.\ inferred tree with colored leaves and grey ancestral states. Reconstruction from the light blue leaf is marked by a dashed red line and annotated with genotypes in parenthesis. N is the naive sequence, L is the leaf sequence and the As are ancestors $1,2,...,n$ with either true or inferred marked by $t$ or $i$, respectively, appended to the subscript. The inferred tree has misplaced the branch leading to the light blue node, resulting in a missing ancestor sequence. The missing ancestor is treated as a missing realization in the inferred mutation process.
     }
 \end{figure}
 
@@ -200,7 +200,7 @@ Leaf (L)             & \texttt{TTT} & \texttt{TTT}   & 5         \\ \hline
 
 \fi
 
-%To align the true vs. inferred lists of reconstructed ancestral lineages we will consider each sequence as a state that can be compared to another state to find
+%To align the true vs.\ inferred lists of reconstructed ancestral lineages we will consider each sequence as a state that can be compared to another state to find
 
 In cases of a wrongly inferred topology the true and inferred lists of ancestral lineage sequences can have different lengths, so we need a way of finding the best possible alignment between these lists.
 We know the start and end of this alignment since that is defined as the shared root and leaf sequences, but the sequences between are free to be shifted up or down to maximize the alignment fit.
@@ -236,7 +236,7 @@ We use negative scores to reflect that mismatches represents a loss.
 % To allow for different lengths of true and inferred list of ancestral sequences they are align with the possibility of a gap to be introduced.
 % This gap should be penalized to reflect the difference between true and inferred ancestral lineages.
 %%% Next line is true only because the gap penalty is influencing the maximum penalty and thereby shifting the COAR. It will never influence the actual alignment.
-%%%%%%% This depends or whether a restriction is put on the gap introduction. E.g. this could be allowed:
+%%%%%%% This depends or whether a restriction is put on the gap introduction. E.g.\ this could be allowed:
 % AA-AAA
 % BBB-BB
 % The magnitude of the gap penalty is determined to put appropriate amount of emphasis on correctness of the tree topology.
@@ -333,7 +333,7 @@ COAR                           & \multicolumn{4}{c|}{-1/-3=0.333}               
 
 \subsubsection{Most recent common ancestor distance}
 As an alternative to COAR we are also using a measure named the "most recent common ancestor" (MRCA) metric.
-In this more simple measure of correctness of ASR the MRCA ancestral sequence between two leaves are found and compared in the true vs. inferred phylogeny.
+In this more simple measure of correctness of ASR the MRCA ancestral sequence between two leaves are found and compared in the true vs.\ inferred phylogeny.
 By iterating through all pairwise combinations of leaves the MRCA distance can be found as the sum:
 $$
 \MRCA_{\dist} = \sum_{i=1}^{N} \sum_{j=i+1}^{N} \dist(T_{MRCA}(l_i, l_j), I_{MRCA}(l_i, l_j))
@@ -352,7 +352,7 @@ Hence validating the ASR should also express some degree of correctness of the t
 Regardless it is interesting to have a method solely expressing the correctness of inferred tree topology so for this purpose we use the Robinson–Foulds (RF) distance \cite{robinson1981comparison}.
 Briefly the RF distance is defined as the number of different tree partitions between two trees.
 Tree partitions are made by cutting a branch connecting two nodes, all possible cuts are performed and the resulting split of taxa are sorted and recorded into two columns.
-The after sorting the list of partitions they are compared true vs. inferred tree and for each partition mismatch the RF distance is increased by 1.
+The after sorting the list of partitions they are compared true vs.\ inferred tree and for each partition mismatch the RF distance is increased by 1.
 
 
 
