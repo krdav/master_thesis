@@ -13,9 +13,9 @@ In contrast, BCR evolution has some interesting features that violates the assum
 
 Validation studies are needed in order to understand weaknesses in the existing phylogenetic tool-chain, and opportunities to develop tools specific to the BCR case.
 Sequence simulation is the cornerstone of all validation studies but unfortunately there has been no publicly available method for simulation of BCR sequence evolution.
-%EM WRT simulation of SHM, many Kleinstein papers have done it. There are also many tools such as Clone that have simulated GCs (though not with a targeting model AFAIK).
-Multiple articles have described simulations of VDJ recombined sequences \cite{safonova2015igsimulator}, \cite{ralph2016likelihood}, \cite{russ2015htjoinsolver}, but these are recombination centric simulations not using a realistic model for simulating the SHM induced mutations in the GC reaction.
-We are using branching process, with and without selection, that is developed specifically for modelling the outcome of SHM in the GC reaction.
+Multiple articles have described simulations of VDJ recombined sequences \cite{safonova2015igsimulator}, \cite{ralph2016likelihood}, \cite{russ2015htjoinsolver} and few have also described simulation of B cell maturation \cite{shlomchik1998clone}, \cite{kleinstein2003estimating}.
+Recombination centric simulations are usually not using a realistic model for simulating the SHM induced mutations in the GC reaction because their purpose is to test VDJ inference, and the few simulation programs emulating maturation are either closed source, does not model central parts of the GC reaction or entirely avoids dealing with sequences.
+We are using a branching process, with and without selection, that is developed specifically for modelling the outcome of SHM in the GC reaction to test BCR lineage tree reconstruction under complex evolution.
 
 In this paper we benchmark the performance of classical phylogenetic tools when applied to B cell receptor sequences, including tools for phylogenetic tree inference and for ancestral sequence reconstruction (ASR).
 We do so in a realistic sequence simulation framework that can be used in the future for validating BCR specific methods as they develop.
