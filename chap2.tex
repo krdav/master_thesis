@@ -4,7 +4,7 @@
 Antibodies have an important role in adaptive immunity by specifically binding to and neutralizing invading pathogens like bacteria and viruses.
 Developing specific antibodies involves reactions across the entire immune system, but it is B cells that mature and secrete antibodies, after undergoing several rounds of selections in the bone marrow and the germinal centers (GCs).
 B cells undergoing GC affinity maturation express antibodies as B cell receptors (BCRs), and these are subject to a strict selection scheme, where many different factors come into play e.g.\ antigen affinity, receptor expression -and folding, codon choice affecting translation rates and affinity to self antigens.
-All these factors leads back to the same thing: the ability to bind antigen, and this is measured by nearby T cells, which will be effecting the mutual probabilities of proliferation or apoptosis \cite{Bannard_Cyster_2017}, \cite{victora2012germinal}.
+All these factors leads back to the same thing: the ability to bind antigen, and this is measured by nearby T cells, which will be affecting the mutual probabilities of proliferation or apoptosis \cite{Bannard_Cyster_2017}, \cite{victora2012germinal}.
 As an example in a GC there is a direct T cell mediated selection for higher BCR affinity by means of sequestering more antigen.
 Selection against binding of self antigens is mediated by the fact that binding self antigens will block binding of pathogen antigens, resulting in decreased T cell help.
 Therefore, in its most simple way, affinity maturation is driven by affinity towards the presented antigen, and all the effects also attributed to selection, like folding, stability and aggregation, is selected by means of their shared effect on affinity.
@@ -12,16 +12,17 @@ Therefore, in its most simple way, affinity maturation is driven by affinity tow
 Affinity maturation is a strong selective pressure imposed on the B cell evolution, and this poses a challenge to phylogenetic reconstruction.% which presumably will break .
 To validate the correctness of phylogenetic methods simulation studies are among the most important tool.
 Classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions, but simulations can also be configured to have selection.
+%EM I suggest lit review be a little expanded, and clarify that you are talking about nucleotide sequence. There are other things to cite-- see https://paperpile.com/shared/dAcoWo
 While many groups have simulated affinity maturation over time \cite{Reshetova_2017}, \cite{Balelli_2016}, \cite{Childs_Baskerville_Cobey_2015}, there have been no example of affinity centric simulations on single sequence level, and indeed most GC simulation studies treat the BCR sequence as a hidden state to focus on the summary statistics of the whole GC.
 
 We propose a simple model of affinity maturation that models sequence fitness as a function of BCR affinity.
 If the BCR affinity is high it means that the B cell will endocytose a lot of antigen, thereby getting plenty of T cell help to decrease the changes of undergoing apoptosis while increasing the chances of proliferation.
-Contrary, if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
-Under this setup it is not the absolute affinity that matters, but rather the affinity relative to the affinities of all the competing cell in the whole GC, held against the total amount of antigens to compete for.
+Alternatively, if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
+Under this setup it is not the absolute affinity that matters, but rather the affinity relative to the affinities of all the competing cells in the whole GC, held against the total amount of antigens to compete for.
 By modularizing the simulation code we first make a model for a neutral branching process, and then make an optional affinity selection step that works in conjunction with the neutral process used to introduce substitutions.
 
 The purpose of the presented simulation method is to generate more realistic sequence simulations of clonal families to be widely used for assessing the performance of phylogenetic methods.
-The model is suppose to capture the most influential effects of affinity maturation without being a detailed mechanistic model, however sufficient to recapitulate the features of real GC data.
+The model is supposed to capture the most influential effects of affinity maturation without being a detailed mechanistic model, although be sufficient to recapitulate the features of real GC sequence data.
 
 
 
@@ -35,15 +36,15 @@ A neutral branching process, independent from the later described affinity model
 It can be viewed as a model of cell divisions, where at each generation a cell can either die or produce a number of offspring, and each offspring has some probability of carrying a mutation.
 The neutrality assumption lies in the fact that the mutations introduced will have no fitness effect in later generations.
 The root sequence is given at initialization as a starting point to evolve through a stochastic branching process, that also includes stochastic introduction of mutations at each generation.
-The branching process is controlled by an arbitrary discrete distribution, in this case, due to the flexible nature and convenient mathematical properties, the Poisson distribution is the default choice.
-In below sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
+The branching process is controlled by an arbitrary discrete distribution, which in this case we take to be a Poisson distribution, due to its convenient mathematical properties.
+Thus, in the below sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
 %Furthermore at each generation all progeny cells will undergo a mutation process determined by discrete distribution, again we use Poisson.
 %The number of nucleotide mutations is drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
 Furthermore at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
 Sequential mutations allow the possibility of back mutations.
-Mutations can be introduced using a uniform probability over all sites, but because it is well known that BCR sequences do not mutate uniformly random \cite{Yeap2015-nl}, we used an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
-The S5F model contain mutability of the middle base of all 5'mer DNA motifs, and for each motif the base preferences given a mutation i.e.\ if a random process chooses to mutate the 5'mer \texttt{AAAAA}, then the S5F model will provides a list of probabilities for each middle base substitutions, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, probabilities summing to 1.
-A 5'mer mutability cannot be used directly on sites at the start or end of a sequence because of missing context.
+Mutations can be introduced using a uniform probability over all sites, but because it is well known that BCR sequences do not mutate uniformly at random \cite{Yeap2015-nl}, we used an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
+The S5F model describes mutability of the middle base of all 5-mer DNA motifs, and for each motif the base preferences given a mutation i.e.\ if a random process chooses to mutate the 5-mer \texttt{AAAAA}, then the S5F model will provides a list of probabilities for each middle base substitutions, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, probabilities summing to 1.
+A 5-mer mutability cannot be used directly on sites at the start or end of a sequence because of missing context.
 We fill in missing context with the unknown base, N, and average over all possible motifs fitting into this ambiguous context.
 
 Termination of the neutral branching process is enforced in either of three ways: 1) by simulating under a subcritical process ($\lambda < 1$) \cite{gwp} and following it until extinction, 2) by using a stopping time $T$, or 3) by stopping after a max population of $N$ has been reach.
@@ -158,7 +159,7 @@ $$
 
 \noindent
 Which rearranges to:
-$$ 
+$$
 [AB] = \frac{[B_{\total}]}{1 + \frac{K_d}{[A]}}
 $$
 
@@ -170,7 +171,7 @@ We want to be able to model multiple BCR affinities:
  \begin{matrix}
   \ce{[A] + [B_1] <=>[k^1_{\on}][k^1_{\off}] [AB_1]} \\
   \ce{[A] + [B_2] <=>[k^2_{\on}][k^2_{\off}] [AB_2]} \\
-  \vdots \\ 
+  \vdots \\
   \ce{[A] + [B_n] <=>[k^n_{\on}][k^n_{\off}] [AB_n]}
  \end{matrix}
 \]
@@ -193,7 +194,7 @@ A_{\total} = [A] + \sum_{i=1}^{n} [AB_i] \equiv [A] + \sum_{i=1}^{n} \frac{[B^i_
   \label{eq:A_objective}
 \end{equation}
 Under this notation B cells having the same BCR sequence is included in the same $B^i_{\total}$, but now lets expand this so the index, $i$, represents the total number of BCRs on just a single B cell, resulting in the simplification that $[B^1_{\total}] = [B^2_{\total}] = \ldots = [B^i_{\total}]$.
-In this notation multiple B cells can have the same BCR sequence, but each will have their own index because they are associated with different B cells. 
+In this notation multiple B cells can have the same BCR sequence, but each will have their own index because they are associated with different B cells.
 This simplifies book keeping because the BCR index is always the same as the B cell index.
 
 Now it appears that given some total concentration of antigen, $A_{\total}$, the solution to the concentration of free antigen at equilibrium, $[A]$, reduces to finding the real positive root of the polynomial in \eqref{eq:A_objective}.
@@ -350,7 +351,7 @@ Presumably this is because the shape of the logistic transformation $Y(\cdot)$ i
 %We have chosen $f_{\full}$ to be $1$, with the interpretation that when half of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are bound the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
 The choice if $f_{\full} = 1$ has the interpretation that when half of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are binding antigen, the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
 \begin{figure}[!ht]
-\begin{center} 
+\begin{center}
 \includegraphics[height=49mm]{figures/f_full_1.pdf}
 %\hspace{-40mm}
 \includegraphics[height=49mm]{figures/f_full_05.pdf}
@@ -441,14 +442,14 @@ $K_d^{\mature}$ & 1nM & Mature affinity & \cite{berek1987mutation} \\
 
 
 
-\subsection{Implementation} 
+\subsection{Implementation}
 All the above model definitions have the single purpose of adjusting the progeny distribution of a cell through $\lambda_i$ given some fitness function.
 Under the neutral model this fitness function is constant resulting in the same $\lambda_i$ for all cells while in the affinity selection model $\lambda_i$ are updated to reflect B cell fitness in a GC reaction.
 Practically the simulation of sequences can be thought of as a process of constructing a phylogenetic tree, see figure \ref{fig:tree_iteration}.
-In each generation all non terminated leafs on the tree is sampled and an integer is drawn from each of their progeny distributions.
+In each generation all non terminated leaves on the tree is sampled and an integer is drawn from each of their progeny distributions.
 The leaf can then either terminate or have $1$ to $N \in \Z_+$ progeny cells.
-If the leaf has progeny each will undergo their own mutation process following the S5F model and become leafs in the next generation.
-One generation is define as one iteration through all the non terminated leafs on the tree and this is done in random order to avoid any bias.
+If the leaf has progeny each will undergo their own mutation process following the S5F model and become leaves in the next generation.
+One generation is define as one iteration through all the non terminated leaves on the tree and this is done in random order to avoid any bias.
 Once every leaf has be evaluated this marks a new generation and the generation time is increased by one.
 For an overview see figure figure \ref{fig:tree_iteration}.
 
@@ -467,14 +468,18 @@ For an overview see figure figure \ref{fig:tree_iteration}.
 \end{figure}
 
 
+<<<<<<< 72660db01edc30f86515e47df7a11d7fce618097
 Using tree terminology the progeny distribution of a leaf depends on all the states (i.e.\ sequences) of the non terminated leafs.
+=======
+Using tree terminology the progeny distribution of a leaf depends on all the states (i.e. sequences) of the non terminated leaves.
+>>>>>>> Pass through neutral process.
 Then by definition the affinity model needs to be updated, by re-evaluating equation \ref{eq:A_objective} and finding all $[AB]_i$, every single time a new leaf is generated, and the need for updating $[AB]_i$ will be a computational burden at large population sizes.
 E.g.\ when simulating at a carrying capacity of 1000 cells, the vast majority of the computations are spent updating $[AB]_i$.
 An approximate solution is simply to skip some of these updates and rely the previous determination of $\lambda_i$.
-The rationale behind this is that when there is already a large population of cells, lets say 1000 non terminated leafs, then very little will change after a single leaf is evaluated.
+The rationale behind this is that when there is already a large population of cells, lets say 1000 non terminated leaves, then very little will change after a single leaf is evaluated.
 In fact it turns out that for simulations using a carrying capacity of 1000 cells, there are no distinct difference between updating $[AB]_i$ after every leaf is evaluated or once every $\frac{1}{100}$th leaf evaluation, see figure \ref{fig:skip_vs_no_skip_dist10}.
 \begin{figure}[!ht]
-\begin{center} 
+\begin{center}
 \includegraphics[width=80mm]{figures/sim_selection_default_run_dist10.pdf}
 \hspace{-22mm}
 \includegraphics[width=80mm]{figures/sim_selection_default_run_dist10_no_skip.pdf} \newline%
@@ -488,7 +493,7 @@ In fact it turns out that for simulations using a carrying capacity of 1000 cell
 
 \iffalse
 \begin{figure}[!ht]
-\begin{center} 
+\begin{center}
 \includegraphics[width=80mm]{figures/sim_selection_default_run_dist5.pdf}
 \hspace{-20mm}
 \includegraphics[width=80mm]{figures/sim_selection_default_run_dist5_no_skip.pdf} \newline%
@@ -566,7 +571,7 @@ In the affinity simulation there is inherent epistasis because the transformatio
 Regardless, if simulation is done using multiple different targets it will be epistatic with multimodal fitness landscape as illustrated in figure \ref{fig:epistasis}.
 
 \begin{figure}[!ht]
-\begin{center} 
+\begin{center}
 \includegraphics[height=35mm]{figures/fitness_overlap0.pdf}
 %\hspace{-40mm}
 \includegraphics[height=35mm]{figures/fitness_overlap3.pdf}
@@ -597,7 +602,7 @@ These observations supports the view that the presented affinity simulation is a
         Example of epistasis in a simulation run with multiple target sequences.
         Colors correspond to the affinity of the simulated cells, see figure \ref{fig:collapsed_epistasis} in appendix B for run stats.
         Arrows show the evolutionary trajectory from lower levels in the fitness landscape to higher levels corresponding to root to tip on the phylogenetic tree, in both cases starting at the unfilled black circle.
-        Zero amino acid distances leafs are collapsed and values inside nodes correspond to the number of B cells.
+        Zero amino acid distances leaves are collapsed and values inside nodes correspond to the number of B cells.
         Here we see that the simulation trajectory is following along several targets.
         There is even observed a jump between two target sequences trajectories, with the highest frequency node (green 40) yielding a decedent with two amino acid mutations (green 9) that is equally close to another target, resulting in a change in mutational trajectory.
         }
