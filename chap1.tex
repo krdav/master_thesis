@@ -4,7 +4,7 @@ During the 20th century an impressive amount of basic research effort resulted i
 Many areas of immunology later turned out to be directly applicable in medicine as vaccines, anti inflammatory agents, cancer treatment etc.
 Especially the area of adaptive immunity has been extensively studied due to its fascinating abilities to protect humans from diseases.
 
-B -and T cells and their receptors (BCRs and TCRs respectively) play a central role in the adaptive immune system which have classically been studied by low throughput techniques like microscopy, ELISA and PCR.
+B and T cells and their receptors (BCRs and TCRs respectively) play a central role in the adaptive immune system which have classically been studied by low throughput techniques like microscopy, ELISA and PCR.
 However the most important part of these cells are their receptors and the binding abilities of these, which are purely sequence dependent.
 After this was recognized the first sequencing studies were slowly undertaken but with no where near enough sequences to give detailed insights about BCR and TCR function.
 It was first recently, around 2008, that high throughput pyrosequencing (Roche 454) was used to sequence thousands of BCRs and TCRs \cite{campbell2008subclonal}, \cite{boyd2008high}.
@@ -51,7 +51,7 @@ The opposite is true for the adaptive immunity, this is not hard coded in the ge
 %This turns out to be wrong, and in fact innate immunity is much more important, and the reason is that there would not be any adaptive immunity without the help of the innate immunity.
 Innate immunity is the oldest of the defense mechanisms, adaptive immunity came along later with a huge advantage to the host, but always on the terms of the innate immune system.
 The innate immune system is broadly defined as both the physical barriers, like skin, mucous, stomach acid etc. but also covers cells like macrophages, dendritic cells and the proteins of the complement system.
-The adaptive immune system includes less elements and is defined as the cells of the B -and T cell lineages.
+The adaptive immune system includes less elements and is defined as the cells of the B and T cell lineages.
 There is a tight interaction between the two systems and events in the innate system can cause activation of elements in the adaptive, and vice versa, see figure \ref{fig:innate_and_adaptive}.
 % However the adaptive immune system always needs to be activated by the innate system before any event can happen here.
 
@@ -214,8 +214,8 @@ A gene can have many different observed alleles in a population, and while these
 
 
 \subsubsection{Antibody numbering}
-%All B -and T cell receptors are in the same protein structural family, the beta-sheet sandwich known as the immunoglobulin domain.
-For both B -and T cell receptors the huge diversity of the variable region is obvious on the sequence level, but much less so on the protein structural level.
+%All B and T cell receptors are in the same protein structural family, the beta-sheet sandwich known as the immunoglobulin domain.
+For both B and T cell receptors the huge diversity of the variable region is obvious on the sequence level, but much less so on the protein structural level.
 Actually even the variable region of a highly mutated BCR is strictly following the structural constraints of the beta-sheet sandwich structure of the immunoglobulin domain.
 Structural conservation enables consistent mapping from the amino acid sequence onto a protein structure.
 A mapping like this was first proposed as a numbering scheme where the immunoglobulin structural components are numbered and these numbers are mapped back to the linear amino acid sequence.
@@ -252,19 +252,21 @@ Before dissolving, a GC will export plasma cells, that secretes large quantities
 %after the death of plasma cells.
 
 Taking a step back, the formation of a GC starts with an immune reaction against an antigen.
-Two things are required in the initial phase, a) T cells with a TCR specific for an MHCII-peptide from the immunizing antigen and b) B cells with a BCR that can bind this antigen, engulf it and present its peptides in MHCII for the T cells to bind, see figure \ref{fig:GC_reaction}.
+Two things are required in the initial phase, a) T cells with a TCR specific for an MHCII-peptide, with the peptide from the antigen and b) B cells with a BCR that can bind the whole antigen, engulf it and present its peptides in MHCII for the T cells to bind, see figure \ref{fig:GC_reaction}.
 When these two requirements are fulfilled GC foci will start to form in the lymph nodes.
 A GC is a micro-environment containing follicular dendritic cells (FDCs), T follicular helper (Tfh) cells and of course B cells.
+The FDCs are antigen storage cells, they engulf large amounts of whole immunogenic proteins and slowly presents them intactly on the cell surface where they can be extracted by B cells.
 The B cells are undergoing a mutation/selection process with two elements a) T cell help and selection and followed by b) mutation and proliferation.
 The two elements are spatially separated in the GC and defined as the light zone (LZ) and the dark zone (DZ), called so because the dark zone is more densely populated with cells and appears darker when viewed under the microscope.
-In the LZ B cells are rolling along the large surface of the FDC membrane while the FDC is exposing full-sized, intact antigens for the BCRs to bind.
-Some B cells will have BCR affinities strong enough that they are able to release antigen from the FDC membrane.
+In the LZ B cells are attracted to the large surface of the FDC membrane through secretion of the chemokine CXCL13, some B cells will have BCR affinities strong enough that they are able to release antigen from the FDC membrane \cite{suzuki2009visualizing}.
 Bound and released antigen will be engulfed, processed and presented in MHCII molecules for the Tfh cells to bind.
 The more antigen a B cells is sequestering, the more peptide is presented and the more Tfh binding will occur.
-If sufficient Tfh binding is achieved the B cell is signaled to migrate to the DZ where it expresses high levels of the somatic hypermutation (SHM) inducing enzyme activation-induced cytidine deaminase (AID).
+If sufficient Tfh binding is achieved the B cell is signaled to migrate to the DZ by following another chemokine called CXCL12.
+In the DZ it proliferates while expressing high levels of the somatic hypermutation (SHM) inducing enzyme activation-induced cytidine deaminase (AID).
 With an approximate mutation rate of $10^{-3}$ per position per cell generation ($10^{6}$ higher than the normal rate) and a cell cycle time of only 6-12 hours, a large amount of variability is introduced in the DZ cells \cite{victora2012germinal}.
 Eventually the progeny cells re-enter the LZ and the SHM induced variability will undergo selection, thereby completing the cycle.
-B Cells are constantly cycling between LZ and DZ, in a process called cyclic re-entry, until the GC is dissolved.
+B Cells are constantly cycling between LZ and DZ by switching between high expression of chemokine receptor CXCR5 and low expression of CXCR4 to migrate towards chemokine CXCL13 in the LZ, and low expression of CXCR5 and high expression of CXCR4 to migrate towards CXCL12 in the DZ.
+This process is called cyclic re-entry and it continues until the GC dissolves.
 During selection there are a limited amount of Tfh cells, so this is where B cells have to compete to get the activation signal.
 The more antigen a B cell can sequester relative to the others, the more likely it is to get Tfh help, migrate to the DZ and go to proliferation, as oppose to undergoing apoptosis if Tfh help is insufficient.
 A fraction of the B cells in the LZ will get a special Tfh differentiation signal and these are exported outside of the GC with fate as either a plasma cell or a memory cell.
