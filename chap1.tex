@@ -1,7 +1,7 @@
 \chapter{Introduction}
-Since the first vaccine research, by Edward Jenner on small pox, it has been clear that the human immune system is adaptable and able to protect its host from serious infections.
+Since the first vaccine research, by Edward Jenner on smallpox, it has been clear that the human immune system is adaptable and able to protect its host from serious infections.
 During the 20th century an impressive amount of basic research effort resulted in the deep understanding we have about immunology today.
-Many areas of immunology later turned out to be directly applicable in medicine as vaccines, anti inflammatory agents, cancer treatment etc.
+Many areas of immunology later turned out to be directly applicable in medicine as vaccines, anti-inflammatory agents, cancer treatment etc.
 Especially the area of adaptive immunity has been extensively studied due to its fascinating abilities to protect humans from diseases.
 
 B and T cells and their receptors (BCRs and TCRs respectively) play a central role in the adaptive immune system which have classically been studied by low throughput techniques like microscopy, ELISA and PCR.
@@ -10,15 +10,16 @@ After this was recognized the first sequencing studies were slowly undertaken bu
 It was first recently, around 2008, that high throughput pyrosequencing (Roche 454) was used to sequence thousands of BCRs and TCRs \cite{campbell2008subclonal}, \cite{boyd2008high}.
 Since then high throughput sequencing is becoming a more standard lab technique and sequencing BCR/TCR repertoires (Rep-Seq) is now done by many academic groups and commercially by several companies.
 
-Despite the initial enthusiasm around Rep-Seq, the dust have settled, revealing the slightly disappointing reality.
+Despite the initial enthusiasm around Rep-Seq, the dust has settled, revealing a slightly disappointing reality.
 Slightly disappointing because Rep-Seq is, for various reasons, not answering as many scientific questions as it was hoped.
-There has been a number of studies showing just how vast a diverse the immune receptor repertoire is \cite{zhang20173d}, \cite{elhanati2015inferring}, and how there is a repertoire bias across different individuals \cite{dewitt2016public}, \cite{vander2017dysregulation}, but because BCR sequences themselves does not provide information about their function, interpretation of Rep-Seq results is difficult and too often ends up being a hunt for significant case vs. control changes that has little meaningful interpretation.
+There has been a number of studies showing just how vast a diverse the immune receptor repertoire is \cite{zhang20173d}, \cite{elhanati2015inferring}, and how there is a repertoire bias across different individuals \cite{dewitt2016public}, \cite{vander2017dysregulation}, but because BCR sequences themselves does not provide information about their function, interpretation of Rep-Seq results is difficult and too often ends up being a hunt for significant case vs.\ control changes that has little meaningful interpretation.
 For example there might be a significant change in the use of certain germline genes, under circumstances of an auto-immune disease, but is this caused by the self reactive auto-antibodies or is it just a side effect of the disease's influence on the repertoire?
 Questions like this are difficult to answer without extra information about the function of the antibody present in the sample.
-However Rep-Seq is still in its infancy and indeed is starting to find a niche of applications e.g. lineage tracing for vaccine response \cite{Doria-Rose2014-vi}, \cite{Wu2011-yj} and in antibody discovery applications \cite{reddy2010monoclonal}.
+However Rep-Seq is still in its infancy and indeed is starting to find a niche of applications e.g.\ lineage tracing for vaccine response \cite{Doria-Rose2014-vi}, \cite{Wu2011-yj} and in antibody discovery applications \cite{reddy2010monoclonal}.
 
 Missing functional information for Rep-Seq data is what makes it difficult to interpret because there is no known truth to use as a reference.
-E.g. it cannot be known exactly which B cells are sharing the same common ancestor cell (clonal relationship), it can only be inferred from sequence similarity and epitope binding specificity.
+%EM I'm going to stop adding backslashes, but it's the right thing to do in latex.
+E.g.\ it cannot be known exactly which B cells are sharing the same common ancestor cell (clonal relationship), it can only be inferred from sequence similarity and epitope binding specificity.
 Most often epitope binding specificity it not available for each cell so clonal relationship is inferred solely based on sequence similarity with no test to validate this assumptions.
 In such cases when sequence information is rich, but functional and relational information is sparse, or non-existing, the importance of simulation studies cannot be understated.
 Simulating the missing information is often the only way to validate Rep-Seq analysis tools and therefore there is a real need for setting up simulation protocols mimicking real Rep-Seq data.
@@ -41,10 +42,10 @@ In this chapter I will describe the theoretical fundamentals of the chapters to 
 
 \section{Adaptive immunity}
 The function of the immune system is to protect its host against invading pathogens.
-To carry out this role the effector cells of the immune system have been equipt with a license to kill, and not only to kill pathogen, but also to kill its own host cells.
+To carry out this role the effector cells of the immune system have been equipped with a license to kill, and not only to kill pathogen, but also to kill its own host cells.
 With this potential harmful weapon the immune system needs to be tightly regulated to balance between fighting off pathogens while doing least possible harm on the host.
 
-At the lowest level of classification the immune system is split up into innate -and adaptive immunity.
+At the lowest level of classification the immune system is split up into innate and adaptive immunity.
 As the name suggested the innate immunity is hard coded in the genome and cannot change during the course of an infection.
 The opposite is true for the adaptive immunity, this is not hard coded in the genome and is undergoing development throughout the course of an infection.
 %Without more information one could think that the adaptive immunity is sufficient for protection and the innate immunity is superfluous when having a specific response from the adaptive immunity.
@@ -62,11 +63,11 @@ A macrophage will process the engulfed bacteria in small intracellular membrane 
 The vesicles of chopped up bacteria will contain short peptides that was previously part of full-sized bacterial proteins, and these peptides are loaded into special surface receptors called the major histocompatibility complex class II (MHCII) and presented on the surface of macrophages.
 A large number of T cell with different TCRs are monitoring the blood stream and some will carry a TCR that binds specifically to an MHCII presenting a bacterial peptide on the surface of a macrophage.
 Upon binding the macrophage activates the T cell to undergo proliferation and a burst of T cells with identical TCRs will emerge (clonal burst).
-At the same time a large number of B cell with different BCRs are monitoring the blood stream binding a variety of different protein.
+At the same time a large number of B cells with different BCRs are monitoring the blood stream binding a variety of different proteins.
 Whatever these B cells bind to their BCR is getting transported into the cell, chopped up and presented in MHCII is a similar fashion as the macrophages.
 Some of these B cell will bind proteins from the immunizing pathogen and present peptides from these protein in MHCII on its cell surface.
 Now some of these MHCII:peptide complexes are identical to the ones presented on the macrophages and the clonally expanded T cells bind them.
-When a TCR bind an MHCII:peptide complex presented by a B cell this activates the B cell to undergo a number of steps, which will be discussed in details later in this section.
+When a TCR binds an MHCII:peptide complex presented by a B cell this activates the B cell to undergo a number of steps, which will be discussed in details later in this section.
 The result is secretion of large quantities of antibodies (a secreted form of a BCR) that binds to the surface proteins of the pathogen and thereby signalling the complement system and other immune cells to clear the infection.
 % Antibodies are just a secreted from of the B cells BCRs.
 %Clearance can occur rapidly and only when pathogens are flagged for phagocytosis by an antibody.
@@ -87,12 +88,12 @@ The initial unspecific engulfing of extracellular fluids by macrophages will not
 Summarized, a typical path to adaptive immunity goes through the following steps:
 \begin{itemize}
   \item An antigen presenting cell (macrophage or dendritic cell) presents a foreign peptide in its MHCII.
-  \item A T cell clone have TCRs binding the MHCII:peptide complex and gets clonally expanded.
+  \item A T cell clone with TCRs binding the MHCII:peptide complex gets clonally expanded.
   \item A B cell clone binds a foreign protein, engulfs it and presents its peptides in MHCII.
   \item The clonally expanded T cells bind MHCII:peptide complexes complementary to its TCR, inducing B cell proliferation and the production of antibodies.
 %  \item The TCR of the clonally expanded T cells bind complementary MHCII:peptide complexes on a B cell and induces it to proliferate and produce antibodies.
 \end{itemize}
-Each item on the list has many details omitted for the sake of simplicity, but one important thing missing is the concept of memory .
+Each item on the list has many details omitted for the sake of simplicity, but one important thing missing is the concept of memory.
 The above list ends with clearance of the infection through secretion of antibodies binding the pathogen, but the process is slow and energy consuming, so keeping memory of the response is an mechanism for rapid response to repeated infections.
 Memory is build by immortalizing T -and B cells involved in the adaptive immunity reaction of the first encounter with a pathogen, then whenever the same pathogen is encountered again, memory cells will quickly start clearing of the invasion.
 
@@ -111,7 +112,7 @@ Mechanisms of generation of BCRs and TCRs are so overlapping that it will be suf
 Antibodies are the secreted form of a BCRs, but the structure is the same, except for the missing membrane anchor.
 A BCR is a tetrameric protein of two identical heavy chains and two identical light chains, so called because one is longer than the other, see a) in figure \ref{fig:BCR_structure2}.
 The heavy/light chain pairs are linked together covalently by disulfide bonds, and so are the two heavy chains from each pair, making a BCR a very stable structure.
-Both heavy -and light chain starts with a variable region, defining their antigen binding capacity, and ends with a  a non-variable constant region (CH1-3/CL).
+Both heavy -and light chain starts with a variable region, defining their antigen binding capacity, and ends with a non-variable constant region (CH1-3/CL).
 %Both heavy -and light chains have a non-variable constant region (CH1-3/CL), but at the be of each chain they have a variable region which defines its antigen binding.
 The number of different variable regions found in a sample of naive (non antigen experienced) human B cells reveal that there are orders of magnitude too many different BCRs for them to be encoded as single genes on the genome.
 Instead the diversity is introduced by recombining several pieces of DNA from different loci into a full-sized variable region, see b) in figure \ref{fig:BCR_structure2}.
@@ -136,7 +137,7 @@ But the combinatorics of all the germline genes is only modest, $\approx 39\time
 The rest of the observed diversity comes from another stochastic process involving trimming and inserting new nucleotides at the DNA ends that are joined together, see figure \ref{fig:VDJ_recomb}.
 The extra nucleotides added in the junction between V-D and D-J are called N/P nucleotides and the length of these insertions can vary from zero to tens of nucleotides.
 Although the length of the junctions are not uniformly random, and there is a bias in the inserted nucleotides \cite{murugan2012statistical}, \cite{elhanati2015inferring}, the process adds orders of magnitude more diversity to the combinatorics of gene recombination.
-Furthermore all the junctional diversity is contained in the complementary defining region (CDR), as opposed to the framework region (FR), see figure \ref{fig:VDJ_recomb}.
+Furthermore all the junctional diversity is contained in the complementarity defining region (CDR), as opposed to the framework region (FR), see figure \ref{fig:VDJ_recomb}.
 As the name suggests the CDR is the structural region that binds the antigen, and to enable binding of a wide range of structures this must contain a lot of diversity.
 Based on a combination of gene recombination and junction diversity, and weighted by their biases, Elhanati et al. estimated that the naive repertoire is $10^{16} - 10^{18}$ productive sequences \cite{elhanati2015inferring}.
 The resulting sequence of VDJ genes and N/P bases are referred to as the naive sequence to reflect that this is the stage before antigen experience and germinal center maturation explained later.
@@ -256,7 +257,7 @@ Two things are required in the initial phase, a) T cells with a TCR specific for
 When these two requirements are fulfilled GC foci will start to form in the lymph nodes.
 A GC is a micro-environment containing follicular dendritic cells (FDCs), T follicular helper (Tfh) cells and of course B cells.
 The FDCs are antigen storage cells, they engulf large amounts of whole immunogenic proteins and slowly presents them intactly on the cell surface where they can be extracted by B cells.
-The B cells are undergoing a mutation/selection process with two elements a) T cell help and selection and followed by b) mutation and proliferation.
+The B cells undergo a mutation/selection process with two elements a) T cell help and selection and followed by b) mutation and proliferation.
 The two elements are spatially separated in the GC and defined as the light zone (LZ) and the dark zone (DZ), called so because the dark zone is more densely populated with cells and appears darker when viewed under the microscope.
 In the LZ B cells are attracted to the large surface of the FDC membrane through secretion of the chemokine CXCL13, some B cells will have BCR affinities strong enough that they are able to release antigen from the FDC membrane \cite{suzuki2009visualizing}.
 Bound and released antigen will be engulfed, processed and presented in MHCII molecules for the Tfh cells to bind.
@@ -295,9 +296,8 @@ Self antigen binding B cells are simply clogging up MHCII molecules with self pe
     \includegraphics[width=0.7\textwidth]{figures/GC_reaction.pdf}
     \caption{
         \label{fig:GC_reaction}
-        Dynamics of the GC reaction, adapted from \cite{victora2014clonal}. 
+        Dynamics of the GC reaction, adapted from \cite{victora2014clonal}.
         Follicular dendritic (FDZ) cell in red, T follicular helper (Tfh) cells in blue and B cells in orange.
-        Figure credit Frederick Matsen.
     }
 \end{figure}
 
@@ -350,12 +350,12 @@ Increased mutation rate during SHM is therefore the combined effects of AID and 
 With a whopping $10^6$ times increase in mutation rate during SHM (from $10^{-9}$ to $10^{-3}$ mutations per bp per cell generation) there is a need to contain SHM so it does not destroy the function of the cell itself.
 SHM achieves this by working preferentially close to the chromosomal location of the variable region genes \cite{Yeap_2015}, \cite{liu2008two}.
 In addition SHM appears to be biased and preferentially introduce mutations in some contexts rather than others, incidentally this context is over represented in the variable chain genes.
-The contextual bias of AID was initially described as hot/cold spots defined by a few specific 3'mer motifs (WRC/GYW hotspots and SYG/GRS coldspots) observed to change mutation rate significantly by preferentially recruiting AID \cite{pham2003processive}.
+The contextual bias of AID was initially described as hot/cold spots defined by a few specific 3-mer motifs (WRC/GYW hotspots and SYG/GRS coldspots) observed to change mutation rate significantly by preferentially recruiting AID \cite{pham2003processive}.
 
 It can be difficult to tease apart the different biases introduced by both AID and the DNA repair enzymes, and though the majority of the observed SHM bias most likely comes from preferential AID activity \cite{Pham_2016}, it is their combined effect that is observed as SHM during affinity maturation.
 Instead of a mechanistic model of SHM an empirical context model can be setup purely based on a large number of observed mutations and their nucleotide context.
 Such a model has been described by Yaari et al. \cite{yaari2013models} and later in an improved version called S5F \cite{cui2016model}.
-The S5F model is simply the complete set of 1024 5'mer DNA motifs and the relative probability of observing the middle base mutating.
+The S5F model is simply the complete set of 1024 5-mer DNA motifs and the relative probability of observing the middle base mutating.
 Given a motif and a mutation on its middle base, the S5F model also provides the probability of the nucleotide identity of the resulting mutation.
 A motif model is completely empirical and relies on the input data which is a large number of BCR sequences that have undergone SHM.
 A survival model \cite{cox1992regression} is a good way to describe the observed data, with the event rate Theta, being proportional to the logarithm of the mutation rate of the motif (unpublished data from David Shaw and Jean Feng), see figure \ref{fig:SAMM_plot}.
@@ -366,7 +366,7 @@ Fitting the model is non-trivial, because neighboring motifs share the same cont
     \includegraphics[width=0.5\textwidth]{figures/SAMM_plot.pdf}
     \caption{
         \label{fig:SAMM_plot}
-        Plot of a 5'mer SHM motif model similar to S5F \cite{cui2016model}. Bottom row is the 5'-end of the motif progressing upwards to the 3'-end with G as the central base. Theta is the rate parameter of the survival model, used to fit the data, and is proportional to the logarithm of the mutation rate.
+        Plot of a 5-mer SHM motif model analogous to S5F \cite{cui2016model}. Bottom row is the 5'-end of the motif progressing upwards to the 3'-end with G as the central base. Theta is the rate parameter of the survival model, used to fit the data, and is proportional to the logarithm of the mutation rate.
         Figure credit: David Shaw and Jean Feng.
     }
 \end{figure}
@@ -393,7 +393,7 @@ In more recent time sequencing by Illumina and Roche 454 have revolutionized the
 In the following the focus will be on BCR sequencing but the same considerations apply to TCR sequencing.
 Several sequencing strategies have been devised to capture various aspects of the immunoglobulin genes, but most start at the same place; the BCR transcripts.
 The use of genomic DNA is also possible, but with only a single copy of a highly variable gene, this is prone to failure.
-Maybe more importantly, the transcript levels can also be useful information that genome level sequencing cannot provide and therefore most studies do bulk mRNA isolation from tissue or cells of interest, followed by reverse transcriptase PCR (RT-PCR) to create a pool DNA with PCR primed ends, see figure \ref{fig:BCR_RTPCR}.
+Maybe more importantly, the transcript levels can also be useful information that genome level sequencing cannot provide and therefore most studies do bulk mRNA isolation from tissue or cells of interest, followed by reverse transcriptase PCR (RT-PCR) to create a pool of DNA with PCR primed ends, see figure \ref{fig:BCR_RTPCR}.
 
 \begin{figure}[ht]
     \centering
@@ -458,9 +458,9 @@ The final result should be a set of high confidence BCR sequences, and depending
 All of the above described sequencing methods suffer under the substantial caveat that they are mixing the heavy -and light chain sequences from multiple cells under the mRNA isolation step.
 This means that a given heavy chain sequence could have been paired with any of the light chain sequences observed for the same sample - and with high throughout sequencing this is millions.
 Pairing is not always necessary e.g. in some cases of diagnostics, but if the function of an antibody is to be tested the correctly paired heavy/light chain needs to be found.
-Some authors have done so using random pairing and selecting for binding via. phage display \cite{glanville2009precise}, others have ranked heavy -and light chains according to their frequencies from sequencing and matched the highest frequency clones \cite{reddy2010monoclonal}, yet others have used phylogenetics to infer trees and then pair similar topology heavy/light chain trees, guided by a known pair to link to trees \cite{Zhu_undated-zz}, \cite{kwong2017antibodyomics}, \cite{huang2016identification}.
-Latest development is to use micro-droplets to capture single cells and then perform the DNA prepping steps inside these drops.
-Some authors are pairing heavy/light by physically linking them together via. overlap PCR \cite{mcdaniel2016ultra}, while others are amplifying a UMI inside the drop and attaching it to both heavy -and light chains \cite{Briggs134841}.
+Some authors have done so using random pairing and selecting for binding via phage display \cite{glanville2009precise}, others have ranked heavy -and light chains according to their frequencies from sequencing and matched the highest frequency clones \cite{reddy2010monoclonal}, yet others have used phylogenetics to infer trees and then pair similar topology heavy/light chain trees, guided by a known pair to link to trees \cite{Zhu_undated-zz}, \cite{kwong2017antibodyomics}, \cite{huang2016identification}.
+The latest development is to use micro-droplets to capture single cells and then perform the DNA prepping steps inside these drops.
+Some authors are pairing heavy/light by physically linking them together via overlap PCR \cite{mcdaniel2016ultra}, while others are amplifying a UMI inside the drop and attaching it to both heavy -and light chains \cite{Briggs134841}.
 Though the methods for paired heavy/light chain sequencing now exists they are not widely used because of the requirement of having a micro-droplet platform and expert knowledge which is not common stock for most labs.
 Still the vast majority of public BCR sequencing data is unpaired and it will likely remain so for at least some years to come.
 
@@ -624,15 +624,19 @@ Now given that the evolution is following a tree model, the model for inferring 
 A classical method for inference is to maximize tree parsimony.
 Motivated by Occam's Razor the best tree is simply the tree that with the fewest changes explain the observed data.
 Practically this is done by calculating the tree parsimony score with Fitch's algorithm \cite{fitch1971toward} and then finding the tree with the lowest score.
+%EM Independence is a statistical term, and parsimony isn't a statistical concept. I'd just state the formula.
 Using the assumption of independence between sites ($p_i$) the parsimony score of a tree ($T$) can be calculated as a sum of all the scores at each site: $S(T) = \sum_{i=1}^m F(p_i | T)$.
 With a parsimony score function the possible tree space can be searched and the maximum parsimony (MP) tree can be found.
 Tree space can be searched exhaustively only with few taxa but everything above 10 taxa has more than tens of millions of tree making it practically impossible to search exhaustively \cite{felsenstein1978number}.
-The branch and bound algorithm can is a way of decreasing search space but still finding the best solution, however even with this hill climbing methods have to be used.
+%EM If you are going to describe branch and bound for trees, use a citation.
+The branch and bound algorithm is a way of decreasing search space but still finding the best solution, however even with this hill climbing methods have to be used.
 In a hill climbing tree search various heuristic tree moves like, nearest neighbor interchange (NNI), subtree pruning and regrafting (SPR) and tree bisection and reconnection (TBR) are used to explore widely around the tree space.
 
-It it clear that the MP method for tree inference is very simple and while this will work in some applications the criterion of maximum parsimony is not strictly how evolution work.
+It it clear that the MP method for tree inference is very simple and while this will work in some applications the criterion of maximum parsimony is not strictly how evolution works.
+%EM This is a sentence fragment below.
 Especially in the case where a sequence undergoing evolution is also experiencing some kind of selection or maybe a biased mutation process.
 E.g. in parsimony all substitutions have equal weight but in a sequence with rate heterogeneity some sites might evolve much faster than other.
+%EM Actually, the Felsenstein paper shows that MP can do the wrong thing even with the simplest sequence evolution process!
 Such complex processes are not accounted for in the MP method making it prone to errors \cite{felsenstein1978cases}, and since there is no consistent way of adding parameters to model a complex process, most researchers have turned to model based tree inference.
 
 
@@ -652,14 +656,14 @@ Therefore it might be useful to translate a DNA sequence into its protein sequen
 Information is lost in the translation process so if an amino acid model is to replace the DNA model, information loss needs to be outweighed by the gain in performance.
 Alternatively a codon model is defined on DNA level, but with DNA level substitutions working on units defined by protein encoding codons.
 In this way a codon model will both account for a difference in the rate of synonymous and non-synonymous substitutions and the rate difference between amino acids.
-Two popular choices for a codon model exists: GY94 \cite{goldman1994codon}, MG94 \cite{muse1994likelihood}.
+Two popular choices for a codon model are GY94 \cite{goldman1994codon} and MG94 \cite{muse1994likelihood}.
 
 
 
 \subsubsection{Bayesian phylogenetics}
 In the ML framework both tree, branch length and substitution parameters are all point estimates adjusted to maximize the likelihood function, but point estimates might not always be desirable.
 E.g. when information like time or rate is to be extracted from a tree then a single point estimate is not very useful because the variance of such estimate is unknown.
-Bayesian phylogeny address this challenge by integrating over the distribution of trees, branch lengths and substitution parameters by Monte Carlo sampling.
+Bayesian phylogeny addresses this challenge by integrating over the distribution of trees, branch lengths and substitution parameters by Monte Carlo sampling.
 When sampling has converged the resulting posterior distributions of all parameters can be used to express confidence in the maximum a posteriori (MAP) estimate e.g. by providing the high density interval (HDI) along with the MAP estimate.
 The real drawback of Bayesian phylogeny is that sampling can make runtime much slower than a similar ML problem.
 There can also be a problem of reaching convergence in cases where sampling is difficult.
@@ -671,7 +675,7 @@ There can also be a problem of reaching convergence in cases where sampling is d
 \subsection{Ancestral sequence reconstruction}
 As a side result of inferring a phylogeny it is also possible to reconstruct the sequence of those nodes that are internal and unobserved in a tree.
 This process is known as ancestral sequence reconstruction (ASR).
-For the MP algorithm these ancestral states are part of the tree inference and found via. Fitch's algorithm, but for a model based method ancestral sequences must be estimated by extracting the maximum likelihood estimate of each internal node.
+For the MP algorithm these ancestral states are part of the tree inference and found via Fitch's algorithm, but for a model based method ancestral sequences must be estimated by extracting the maximum likelihood estimate of the sequence at each internal node.
 ASR on ML trees can either be done as a marginal -or a joint reconstruction.
 In the marginal case each node is reconstructed independently from one another, found as the ML estimate without fixing the sequence of any of the other internal nodes.
 Notice that when one ancestral sequence is found this will change likelihood function for the tree and thereby affecting all the other internal node.
@@ -687,11 +691,11 @@ Results showed high accurary of 97.17-98.88\% correct reconstruction and only sm
 
 
 \subsection{Genotype collapsed tree}
-While B cell in a GC reaction are having a high mutation rate there are still many B cell with the same genotype.
-Especially after a clonal expansion many B cell will have the same genotype, and furthermore ancestral B cells might have the same genotype as their descendents.
+While B cells in a GC reaction are having a high mutation rate there are still many B cell with the same genotype.
+Especially after a clonal expansion many B cells will have the same genotype, and furthermore ancestral B cells might have the same genotype as their descendents.
 BCR clonal family sequences are generally of low complexity and not very divergent, but because there are many B cells in a GC their phylogenetic trees are seemingly complex with hundreds to thousands of taxa.
 To reduce this complexity we use the concept of a genotype collapsed tree (GCtree).
-In a GCtree B cells with the same genotype are merge into a single node carrying their total abundance and a leaf descending from a B cell with the same genotype is merged upwards, see figure \ref{fig:GCtree_illu}.
+In a GCtree B cells with the same genotype are merged into a single node carrying their total abundance and a leaf descending from a B cell with the same genotype is merged upwards, see figure \ref{fig:GCtree_illu}.
 
 \begin{figure}[!ht]
     \centering
