@@ -9,7 +9,7 @@ By large the use of phylogenetics in BCR GC evolution has been made with the sta
 However we find that no study has yet investigated the validity of the phylogenetic assumptions in the context of BCR evolution.
 It is important to note that most algorithms for phylogenetic inference have been made to study population genetics largely evolving under a neutrality or track the evolution of organisms over millions of years.
 The consequences being that model assumptions are adjusted and validated in a completely different context than the highly selective, small population evolution that BCRs undergo in the GC reaction.
-In contrast, BCR evolution has some interesting features that violates the assumption of classical phylogenetic methods e.g. the mutation model is DNA context sensitive, the root of the tree is known, high selection pressure on selected sites, sampled ancestors, very high mutation rates etc.
+In contrast, BCR evolution has some interesting features that violates the assumption of classical phylogenetic methods e.g.\ the mutation model is DNA context sensitive, the root of the tree is known, high selection pressure on selected sites, sampled ancestors, very high mutation rates etc.
 
 Validation studies are needed in order to understand weaknesses in the existing phylogenetic tool-chain, and opportunities to develop tools specific to the BCR case.
 Sequence simulation is the cornerstone of all validation studies but unfortunately there has been no publicly available method for simulation of BCR sequence evolution.
@@ -49,22 +49,16 @@ The model based methods tested in this work are all using marginal reconstructio
 
 \subsection{Measuring correctness of ancestral reconstruction}
 In the following section we will introduce a benchmark metric for ancestral sequence reconstruction, we call this metric correctness of ancestral reconstruction (COAR).
-The correctness of a reconstruction compared to the true evolutionary history can be measured by multiple similarity measures e.g. a) topological similarity, b) branch length similarity and c) sequence similarity between inferred and real ancestors.
-All these measures are inter-dependent e.g. the inferred sequences are affected by the branch lengths and the topology and the branch lengths are determined given a topology etc.
+The correctness of a reconstruction compared to the true evolutionary history can be measured by multiple similarity measures e.g.\ a) topological similarity, b) branch length similarity and c) sequence similarity between inferred and real ancestors.
+All these measures are inter-dependent e.g.\ the inferred sequences are affected by the branch lengths and the topology and the branch lengths are determined given a topology etc.
 
 Assume the loss function for ancestral sequence reconstruction is comprised of the three above mentioned terms.
-The tree topology is the model of the phylogeny by which we can extract useful information like relatedness, ancestral sequences, distances and more.
-%EM this next sentence seems strange to me.
-Using a wrong topology will therefore be detrimental to the correctness of the phylogeny and likewise the inferred ancestral sequences.
-%%% By branch length I also mean the distance from a node to the root
-%EM perhaps define branch lengths (expected number of substitutions per site)
-Branch lengths are mostly important, in terms of interpretation, if the model underlying the phylogeny is a clock-model.
-If a clock-model is not used the interpretation of the branch lengths can be more difficult, but regardless of their magnitude, the branch lengths are merely numbers adjusted by the underlying phylogenetic model, and therefore the correctness of these are of secondary importance.
-Lastly, the actual inferred ancestral sequences are determined by a combination of the underlying model, the chosen tree and its branch lengths.
-%EM I suggest removing this sentence:
-Therefore if the inferred ancestral sequences are correct this gives strong indications about the correctness of both tree topology and branch lengths.
-From another perspective the correctness of the inferred ancestral sequences are also the foremost important objective of an ancestral sequence reconstruction when these sequences are used for real applications involving DNA synthesis, protein expression and lab tests.
-For these reasons the sole purpose of the COAR metric is to capture the correctness of the inferred ancestral sequences.
+The tree topology is the model framework of the phylogeny by which we can extract useful information like relatedness, ancestral sequences, distances and more.
+In a model based phylogeny branch lengths are a measure for the expected number of substitutions per site so picking the correct branch lengths are important for reconstruction.
+If the model underlying the phylogeny is a clock-model where the branch lengths are related to evolutionary time, then the branch lengths are also interpretable, but otherwise interpretation is more difficult, and regardless of their magnitude, the branch lengths are merely numbers adjusted by the underlying phylogenetic model, and therefore the correctness of these are of secondary importance.
+Lastly, the actual inferred ancestral sequences are determined by a combination of the underlying substitution model, the chosen tree and its branch lengths.
+While inferring correct tree topology is also important, the correctness of the inferred ancestral sequences are the foremost important objective of an ancestral sequence reconstruction when these sequences are used for real applications involving DNA synthesis, protein expression and lab tests.
+For this reason the sole purpose of the COAR metric is to capture the correctness of the inferred ancestral sequences.
 
 %EM I suggest reorganizing this paragraph in such a way that the definition is clear and concise. For example, we hear about gap penalties before we even know what our objective function is.
 %EM You could start by describing why we are especially interested in comparing reconstructions from leaf to root, perhaps introducing the ancestral lineage, then note that these lineages can be of different lengths, making comparison non-obvious. The solution is COAR, defined as follows.
@@ -74,21 +68,13 @@ The lists are the ancestral sequences of all the nodes in the direct path going 
 This is extracted by starting at a leaf node and traversing upwards in the tree, parent by parent, until the root is reached.
 In the following, this list of sequences will be referred to as the ancestral lineage.
 Two such lists are made, one for the true -and one for the inferred tree, and it is the similarity of these two lists which is the core of the COAR metric.
-For lists of similar length the list comparison is easy, it will simply be the cumulated distance between the elements in the two list at the same position e.g. compare list 1 element 1 with list 2 element 1 and list 1 element 2 with list 2 element 2 etc.
+For lists of similar length the list comparison is easy, it will simply be the cumulated distance between the elements in the two list at the same position e.g.\ compare list 1 element 1 with list 2 element 1 and list 1 element 2 with list 2 element 2 etc.
 This corresponds to the sum of hamming distances between inferred and true ancestors.
 However complications arise when the lengths of the lists are not the same which can happen in the case of a wrong topology.
 To make a fair comparison between the true -and inferred tree we therefore need to align the two lists and introduce a missing state, called a gap, into one of the lists.
 The optimal solution to this alignment problem was described and solved by Needleman and Wunsch \cite{needleman1970general}.
-%%% Only if the root is known.
-% But also for inferred roots because this has been inferred as the oldest state. OBS: does not apply for some twisted examples:
-%T L*****     ***r
-%I L*****r
-% *is a branching point or cell
 We restrict the global alignment result so that it has to start at the root of the tree and end at the leaf sequence because these two states are known, or explicitly inferred, for both the true and inferred phylogenies.
-%We restrict the global alignment result so that it has to end at the leaf sequence because this state is known for both the true and inferred phylogenies.
-%In the case of phylogenies with known root sequences, e.g. B cell clonal families, there are two known states and therefore another restriction on the alignment.
-%EM I think you are saying in this sentence that we further restrict the N-W algorithm to ...
-A further restriction on the standard Needleman-Wunsch algorithm is that gaps are only allowed to be introduced in the shortest of the two lists being aligned.
+We further restrict the Needleman-Wunsch algorithm so that gaps are only allowed to be introduced in the shortest of the two lists being aligned.
 %EM Could you be a little more specific about "undermined"?
 The reasoning behind this is that gaps are just a tool to make the most favorable comparison between ancestral lineages, and by introducing gaps in both lists the purpose of comparing sequences is undermined.
 With this restriction on gaps, the number of gaps is determined solely by the differences in list lengths and as long as the gap penalty is less than or equal to zero the gaps will always be at the same positions.
@@ -104,7 +90,7 @@ The COAR value is then a similarity measure between the realizations of the two 
 In this view more sequences in the inferred ancestral lineage means more realization along the mutational path and vice versa.
 The important point being that that those extra realizations could in fact be correctly inferred sequences with no observations in the true phylogeny.
 For this reason the gap penalty is chosen to be zero so that the COAR value will only reflect the difference in ancestral lineages and not try to address the possible differences in tree topology.
-The correctness of the tree topology can the be assessed separately by other metrics e.g. Robinson-Foulds distance.
+The correctness of the tree topology can the be assessed separately by other metrics e.g.\ Robinson-Foulds distance.
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/mutation_process2.pdf}
@@ -147,7 +133,7 @@ Where $L_N$ is the number of leaves on the tree.
 As an example of how the COAR metric works we will present a small example, summarized in figure \ref{fig:ASR_true_vs_inferred} with the light blue leaf chosen for lineage reconstruction and the true and inferred ancestral lineages marked in each tree with red dashed lines.
 The example is on the phylogeny of a B cell receptor (BCR) clonal family in which case the root sequence is a known state called the naive sequence.
 Assume that the true phylogeny is known with corresponding ancestral sequences along the tree.
-Given the leaves of this tree and their sequences a phylogeny can be inferred using any method e.g. maximum parsimony, maximum likelihood, Bayesian methods etc.
+Given the leaves of this tree and their sequences a phylogeny can be inferred using any method e.g.\ maximum parsimony, maximum likelihood, Bayesian methods etc.
 We make the restriction that only one inferred tree can be evaluated i.e. if multiple equally parsimonious trees exists one should be chosen at random, or using prior expectations, and if a Bayesian method is used the maximum posterior tree or a random tree weighted according to the posterior distribution should be chosen.
 % The true tree will often be derived from simulations while the inferred tree can be made by many different tree algorithms nevertheless these are the basic input to determine the COAR.
 
@@ -241,7 +227,7 @@ We use negative scores to reflect that mismatches represents a loss.
 % BBB-BB
 % The magnitude of the gap penalty is determined to put appropriate amount of emphasis on correctness of the tree topology.
 % In this example we will use a hard penalty on wrong topology by setting the gap penalty to -10.
-% In a realistic setting the gap penalty should depend on the length of the sequences on the input tree and e.g. a gap penalty of 10\% of the sequence length would be sufficient to penalize wrong topologies without over emphasizing the importance compared to similarity in ancestral sequences.
+% In a realistic setting the gap penalty should depend on the length of the sequences on the input tree and e.g.\ a gap penalty of 10\% of the sequence length would be sufficient to penalize wrong topologies without over emphasizing the importance compared to similarity in ancestral sequences.
 % So in the example of an input tree with sequences of length 300 a gap penalty of -30 would be a good choice.
 %It it worth to notice that in this example, because the first and last sequence in the alignment is fixed to the root and leaf, the number of gaps is fixed
 
@@ -360,7 +346,7 @@ The after sorting the list of partitions they are compared true vs.\ inferred tr
 With the exception of a few methods there has been little published about BCR phylogeny specific software.
 Barak et al. made some vaguely defined rules written into a an algorithm they named IgTree \cite{Barak2008-fw}.
 The description of IgTree is similar to that of maximum parsimony (MP) and it is unclear whether there is any difference at all.
-For that reason we use the MP algorithm \texttt{dnapars} from PHYLIP \cite{plotree1989phylip} as a substitute for IgTree and other methods e.g. Tas et al. \cite{tas2016visualizing}.
+For that reason we use the MP algorithm \texttt{dnapars} from PHYLIP \cite{plotree1989phylip} as a substitute for IgTree and other methods e.g.\ Tas et al. \cite{tas2016visualizing}.
 
 In the paper from Doria-Rose et al. \cite{Doria-Rose2014-vi} they use the general time reversible (GTR) model implemented in MEGA5 \cite{tamura2011mega5}.
 Similarly Kepler \cite{Kepler2013-sy} was using \texttt{dnaml} from the PHYLIP package to infer BCR phylogenetic trees.
