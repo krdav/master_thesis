@@ -74,19 +74,16 @@ However complications arise when the lengths of the lists are not the same which
 To make a fair comparison between the true -and inferred tree we therefore need to align the two lists and introduce a missing state, called a gap, into one of the lists.
 The optimal solution to this alignment problem was described and solved by Needleman and Wunsch \cite{needleman1970general}.
 We restrict the global alignment result so that it has to start at the root of the tree and end at the leaf sequence because these two states are known, or explicitly inferred, for both the true and inferred phylogenies.
-We further restrict the Needleman-Wunsch algorithm so that gaps are only allowed to be introduced in the shortest of the two lists being aligned.
-%EM Could you be a little more specific about "undermined"?
-The reasoning behind this is that gaps are just a tool to make the most favorable comparison between ancestral lineages, and by introducing gaps in both lists the purpose of comparing sequences is undermined.
+We further restrict the Needleman-Wunsch algorithm so that gaps are only allowed to be introduced in the shortest of the two lists being aligned to force the maximum number of true vs.\ inferred node comparisons.
 With this restriction on gaps, the number of gaps is determined solely by the differences in list lengths and as long as the gap penalty is less than or equal to zero the gaps will always be at the same positions.
 Practically this means that the magnitude of the gap penalty only serves the purpose of introducing an extra penalty for inferring a wrong topology and can be adjusted to put more, or less, emphasis on tree topological correctness.
 A larger gap penalty meaning more emphasis on correctness of tree topology and vice versa.
 
 One interpretation of the COAR value is that it is the distance between the true -and inferred mutation processes as shown in figure \ref{fig:mutation_process}.
-%EM in what sense is it continuous?
-With two fixed points, the root and the leaf, whatever is in between, is a continuous mutation process with realizations along this path.
-%EM Not sure what this next sentence means.
-Realizations in the true tree is a cell division and while it is a branching point on the inferred tree.
-The COAR value is then a similarity measure between the realizations of the two mutation processes and in case of missing realizations this will turn into an alignment gap.
+In this representation of an ancestral lineage the root and the leaf are two fixed states with a continuous mutation process running between them.
+The internal nodes in the ancestral lineage is discrete states in the continues process, and while on the true tree this corresponds to a single cell, on the inferred tree no such thing exists.
+Instead we can think about internal nodes on an inferred ancestral lineage as realizations along the continues mutation process defined by the inferred tree.
+The COAR value is then a similarity measured between the true cell genotype and the inferred realizations, each sampled from the true -and inferred mutation processes respectively, and now in the case of a mismatch between the number of realizations and cells, a gap will be introduced in the alignment to compensate.
 In this view more sequences in the inferred ancestral lineage means more realization along the mutational path and vice versa.
 The important point being that that those extra realizations could in fact be correctly inferred sequences with no observations in the true phylogeny.
 For this reason the gap penalty is chosen to be zero so that the COAR value will only reflect the difference in ancestral lineages and not try to address the possible differences in tree topology.
