@@ -214,11 +214,14 @@ Formally this would be a function: $Af(Bseq_i) = K^i_d$.
 In a realistic, yet still minimalistic, model we would imagine that the BCRs in a GC were evolving towards a specific target sequence denoted $Tseq$.
 A target is the sequence with the highest affinity.
 It is fitness plateau where only loss in affinity is possible.
+We will define a fitness landscape around this plateau using a distance function $\operatorname{dist}$ which we assume to be given.
+%EM In this application we use will use Hamming distance on amino acids?
+
 %In the framework of affinity driven simulation of selection, the BCR sequence with the highest affinity will also be the most fit and therefore the target.
 Let us define the affinity of the naive input sequence as $K^{\naive}_d$ and correspondingly affinity for the mature target sequence, $K^{\mature}_d$.
 Now we can define an arbitrary function with reference points in $K^{\naive}_d$ and $K^{\mature}_d$, that transforms a distance between $Bseq$ and $Tseq$ to an affinity:
 $$
-Af(Bseq_i, Tseq, K^{\naive}_d, K^{\mature}_d) = K^i_d
+Af(Bseq, Tseq, K^{\naive}_d, K^{\mature}_d) = K^i_d
 $$
 There are two conditions we want to impose.
 If the BCR sequences is equal to the naive sequence ($Nseq$), then it takes the affinity of the naive, and if it is equal to the mature, it takes the affinity of the mature sequence ($Mseq$):
@@ -229,20 +232,21 @@ Af(Mseq, Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d
 \end{split}
 \label{eq:hd2affy_cond}
 \end{equation}
-Any function $Af$ that fulfills these conditions are considered valid.
-One valid family of functions would be the exponential functions defined by:
+These conditions are satisfied by:
+%EM 1. I found dm as a variable name to be very confusing, given that d is already a variable name. If you don't like m you could use d_t for d and d_m for dm.
+%EM 2. I think this ratio form is clearer.
 \begin{equation}
-Af(d, dm, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d + d^k \frac{K^{\naive}_d - K^{\mature}_d}{dm^k}
+Af(d, m, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d + {\frac{d}{m}}^k (K^{\naive}_d - K^{\mature}_d)
 \label{eq:hd2affy}
 \end{equation}
-Where $d$ is the distance between $Bseq$ and $Tseq$ and $dm$ is the distance from naive to mature.
-The exponent, $k$, can be chosen to adjust the mapping between distance and affinity, with the restriction that $0 < k < \infty$, see figure \ref{fig:hd2affy}.
+Where $d$ is the distance between $Bseq$ and $Tseq$ and $m$ is the distance from naive to mature.
+The exponent, $k$, can be chosen to adjust the mapping between distance and affinity, with the restriction that $0 < k < \infty$ (figure \ref{fig:hd2affy}).
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{figures/hd2affy.pdf}
     \caption{
         \label{fig:hd2affy}
-        Varying the exponent $k$ in equation \ref{eq:hd2affy} to achieve different mappings between distance and affinity. Naive -and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
+        Varying the exponent $k$ in \eqref{eq:hd2affy} to achieve different mappings between distance and affinity. Naive -and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
     }
 \end{figure}
 
@@ -251,7 +255,7 @@ E.g.\ this will happen when multiple amino acids are equally fit on a given posi
 It will also happen if there are multiple distinct maturation paths that ends up with equally fit BCRs.
 The later effect can be introduced into the model be adding more target sequences and then determining the affinity based on the shortest distance to all target sequences:
 $$
-d = \argmin_{Tseq \in Targets} dist(Bseq, Tseq)
+d = \argmin_{Tseq \in Targets} \operatorname{dist}(Bseq, Tseq)
 $$
 % Where $T$ is the list of target sequences.
 
@@ -272,8 +276,9 @@ For this purpose we can use a generalized version of the logistic function since
 \end{equation}
 $G$ is chosen to be the typical value of $1$.
 $K$ is the upper bound of the function and is set to $2$, reflecting that the fastest average growth rate is $2^t$, with $t$ generations (setting $\operatorname{max}(\lambda) = 2$ is a model choice, but could be changed).
-$\alpha$, $\beta$ and $Q$ are fitted to fulfill three conditions:
+$\alpha$, $\beta$ and $Q$ are fit to fulfill three conditions:
 \begin{equation}
+%EM What is T? Note that it's used above for the stopping time.
 Y(0) = 0, \ \ \ T \left(\frac{f_{\full}}{U} \right) = 1, \ \ \ Y(f_{\full}) = 2 - \epsilon
   \label{eq:BA_cond}
 \end{equation}
