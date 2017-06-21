@@ -88,10 +88,9 @@ Although these might affect transcription and/or translation rates, we ignore th
 
 The system is modelled as a GC with constant volume and constant total concentration of antigen which a number of B cells compete to bind, summarized here and detailed below (figure~\ref{fig:simulation_figure}).
 Those B cells that have high affinity BCRs will bind more antigen and these B cells will be more likely to undergo proliferation, while the opposite is true for those BCRs with low affinity.
-%EM I'm not sure what this next sentence means. Is it necessary?
-Affinity must be a function of the BCR sequence it has two defined points: the affinity of the naive sequence seeding the GC and the affinity of the completely matured BCR.
-Finally when the binding equilibrium has been reached the progeny distribution for a B cell is evaluated given that amount of antigen bound.
-After cell division the binding equilibrium is updated and next B cell will be evaluated until all cells have been through.
+When the binding equilibrium has been reached the progeny distribution for a B cell is evaluated given the amount of antigen bound.
+Affinity of a progeny cell is a function of the BCR sequence, as defined by the BCR fitness landscape, and after cell division the binding equilibrium is updated according to the progeny cells and their affinities.
+Finally when all B cells have been evaluated a new round of selection starts.
 
 \begin{figure}[ht!]
     \centering
@@ -214,19 +213,17 @@ $$
 \Affinity(\Bseq, \Tseq, K^{\naive}_d, K^{\mature}_d) = K^i_d
 $$
 There are two conditions we want to impose.
-If the BCR sequences is equal to the naive sequence ($\Nseq$), then it takes the affinity of the naive, and if it is equal to the mature, it takes the affinity of the mature sequence ($\Mseq$):
+If the BCR sequences is equal to the naive sequence ($\Nseq$), then it takes the affinity of the naive, and if it is equal to the mature target sequence ($\Tseq$), it takes the affinity of the mature:
 \begin{equation}
 \begin{split}
 \Affinity(\Nseq, \Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\naive}_d \\
-\Affinity(\Mseq, \Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d
+\Affinity(\Tseq, \Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d
 \end{split}
 \label{eq:hd2affy_cond}
 \end{equation}
 These conditions are satisfied by:
-%EM 1. I found dm as a variable name to be very confusing, given that d is already a variable name. If you don't like m you could use d_t for d and d_m for dm.
-%EM 2. I think this ratio form is clearer.
 \begin{equation}
-\Affinity(d, t_d, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d + {\frac{d}{t_d}}^k (K^{\naive}_d - K^{\mature}_d)
+\Affinity(d, t_d, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d + \left ( \frac{d}{t_d} \right )^k (K^{\naive}_d - K^{\mature}_d)
 \label{eq:hd2affy}
 \end{equation}
 Where $d$ is the distance between $\Bseq$ and $\Tseq$ and $t_d$ is the distance from naive to the target (mature BCR).
@@ -247,7 +244,6 @@ The later effect can be introduced into the model be adding more target sequence
 $$
 d = \argmin_{\Tseq \in \Targets} \operatorname{dist}(\Bseq, \Tseq) 
 $$
-% Where $T$ is the list of target sequences.
 
 
 
