@@ -60,6 +60,20 @@ Lastly, the actual inferred ancestral sequences are determined by a combination 
 While inferring correct tree topology is also important, the correctness of the inferred ancestral sequences are the foremost important objective of a sequence reconstruction when these sequences are used for real applications involving DNA synthesis, protein expression and lab tests.
 For this reason the sole purpose of the COAR metric is to capture the correctness of the inferred ancestral sequences.
 
+
+
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/ASR_true_vs_inferred.pdf}
+    \caption{
+        \label{fig:ASR_true_vs_inferred}
+        True vs.\ inferred tree with colored leaves and grey ancestral states. Reconstruction from the light blue leaf is marked by a dashed red line and annotated with genotypes in parenthesis. N is the naive sequence, L is the leaf sequence and the As are ancestors $1,2,...,n$ with either true or inferred marked by $t$ or $i$, respectively, appended to the subscript. The inferred tree has misplaced the branch leading to the light blue node, resulting in a missing ancestor sequence. The missing ancestor is treated as a missing realization in the inferred mutation process.
+    }
+\end{figure}
+
+
+
 %EM I suggest reorganizing this paragraph in such a way that the definition is clear and concise. For example, we hear about gap penalties before we even know what our objective function is.
 %EM You could start by describing why we are especially interested in comparing reconstructions from leaf to root, perhaps introducing the ancestral lineage, then note that these lineages can be of different lengths, making comparison non-obvious. The solution is COAR, defined as follows.
 %EM fig:ASR_true_vs_inferred is a great figure for motivating COAR.
@@ -133,14 +147,14 @@ Given the leaves of this tree and their sequences a phylogeny can be inferred us
 We make the restriction that only one inferred tree can be evaluated i.e. if multiple equally parsimonious trees exists one should be chosen at random, or using prior expectations, and if a Bayesian method is used the maximum posterior tree or a random tree weighted according to the posterior distribution should be chosen.
 % The true tree will often be derived from simulations while the inferred tree can be made by many different tree algorithms nevertheless these are the basic input to determine the COAR.
 
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=0.7\textwidth]{figures/ASR_true_vs_inferred.pdf}
-    \caption{
-        \label{fig:ASR_true_vs_inferred}
-        True vs.\ inferred tree with colored leaves and grey ancestral states. Reconstruction from the light blue leaf is marked by a dashed red line and annotated with genotypes in parenthesis. N is the naive sequence, L is the leaf sequence and the As are ancestors $1,2,...,n$ with either true or inferred marked by $t$ or $i$, respectively, appended to the subscript. The inferred tree has misplaced the branch leading to the light blue node, resulting in a missing ancestor sequence. The missing ancestor is treated as a missing realization in the inferred mutation process.
-    }
-\end{figure}
+%\begin{figure}[ht!]
+%    \centering
+%    \includegraphics[width=0.7\textwidth]{figures/ASR_true_vs_inferred.pdf}
+%    \caption{
+%        \label{fig:ASR_true_vs_inferred}
+%        True vs.\ inferred tree with colored leaves and grey ancestral states. Reconstruction from the light blue leaf is marked by a %dashed red line and annotated with genotypes in parenthesis. N is the naive sequence, L is the leaf sequence and the As are ancestors %$1,2,...,n$ with either true or inferred marked by $t$ or $i$, respectively, appended to the subscript. The inferred tree has misplaced %the branch leading to the light blue node, resulting in a missing ancestor sequence. The missing ancestor is treated as a missing %realization in the inferred mutation process.
+%    }
+%\end{figure}
 
 Now take a leaf sequence on the tree and reconstruct its ancestral lineage by extracting the parent, the parent's parent, etc. until the root is reached.
 Results for the trees in figure \ref{fig:ASR_true_vs_inferred} are tabulated in table \ref{true_vs_inferred_table}.
