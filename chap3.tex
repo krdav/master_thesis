@@ -55,9 +55,9 @@ All these measures are inter-dependent e.g.\ the inferred sequences are affected
 Assume the loss function for ancestral sequence reconstruction is comprised of the three above mentioned terms.
 The tree topology is the model framework of the phylogeny by which we can extract useful information like relatedness, ancestral sequences, distances and more.
 In a model based phylogeny branch lengths are a measure for the expected number of substitutions per site so picking the correct branch lengths are important for reconstruction.
-If the model underlying the phylogeny is a clock-model where the branch lengths are related to evolutionary time, then the branch lengths are also interpretable, but otherwise interpretation is more difficult, and regardless of their magnitude, the branch lengths are merely numbers adjusted by the underlying phylogenetic model, and therefore the correctness of these are of secondary importance.
+If the model underlying the phylogeny is a clock-model, where the branch lengths are related to evolutionary time, then the branch lengths are also interpretable, but otherwise interpretation is more difficult, and regardless of their magnitude, the branch lengths are merely numbers adjusted by the underlying phylogenetic model, and therefore the correctness of these are of secondary importance.
 Lastly, the actual inferred ancestral sequences are determined by a combination of the underlying substitution model, the chosen tree and its branch lengths.
-While inferring correct tree topology is also important, the correctness of the inferred ancestral sequences are the foremost important objective of an ancestral sequence reconstruction when these sequences are used for real applications involving DNA synthesis, protein expression and lab tests.
+While inferring correct tree topology is also important, the correctness of the inferred ancestral sequences are the foremost important objective of a sequence reconstruction when these sequences are used for real applications involving DNA synthesis, protein expression and lab tests.
 For this reason the sole purpose of the COAR metric is to capture the correctness of the inferred ancestral sequences.
 
 %EM I suggest reorganizing this paragraph in such a way that the definition is clear and concise. For example, we hear about gap penalties before we even know what our objective function is.
@@ -116,7 +116,6 @@ Likewise the smallest possible alignment score is negative thereby canceling out
 
 COAR is defined in the range from 0 to 1, where 0 is a perfect ancestral sequence reconstruction and 1 is the worst possible.
 The COAR value is comparable across different trees, methods and datasets because of this normalization, and if the score is proportional to the sequence distance, COAR can be interpreted directly as the average per site error in the inferred ancestral lineage sequences.
-%EM This definition more heavily weights the nodes close to the root-- is this an advantage?
 COAR for a single ancestral lineage can be expanded to the tree level by calculating the mean COAR value for the whole tree:
 $$
 \operatorname{mean}(\COAR) = \sum^{L_N}_{i=1} \frac{\alignscore(\leaf_i)}{\alignscore_{\min}(\leaf_i)} / L_N

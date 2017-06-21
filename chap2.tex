@@ -201,10 +201,9 @@ A solution will be elaborated in the implementation section.
 Next we describe how to simulate the affinity ($K_d$) of the BCRs.
 Potentially the affinities can be generated in any imaginable way, by having a function transforming a BCR sequence ($\Bseq$) into a number that represents affinity.
 Formally this would be a function: $\Affinity(\Bseq_i) = K^i_d$.
-%This function is flexible and could take up any form e.g.\ it could be random and not depend on the BCR sequence, it could be a time dependent function, or something completely different.
 In a realistic, yet still minimalistic, model we would imagine that the BCRs in a GC were evolving towards a specific target sequence denoted $\Tseq$.
 A target is the sequence with the highest affinity, the state where fitness plateaus out.
-We will define a fitness landscape around this plateau using a distance function $\operatorname{dist}$ which we assume to be given as the Hamming distance between amino acid sequences.
+We will define a fitness landscape around this plateau using a distance function, $\operatorname{dist}(\cdot,\cdot)$, which we assume to be given as the Hamming distance between amino acid sequences.
 
 %In the framework of affinity driven simulation of selection, the BCR sequence with the highest affinity will also be the most fit and therefore the target.
 Let us define the affinity of the naive input sequence as $K^{\naive}_d$ and correspondingly affinity for the mature target sequence, $K^{\mature}_d$.
@@ -223,14 +222,14 @@ If the BCR sequences is equal to the naive sequence ($\Nseq$), then it takes the
 \end{equation}
 These conditions are satisfied by:
 \begin{equation}
-\Affinity(d, t_d, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d + \left ( \frac{d}{t_d} \right )^k (K^{\naive}_d - K^{\mature}_d)
+\Affinity(\Bseq, \Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d + \left ( \frac{d}{t_{\naive}} \right )^k (K^{\naive}_d - K^{\mature}_d)
 \label{eq:hd2affy}
 \end{equation}
-Where $d$ is the distance between $\Bseq$ and $\Tseq$ and $t_d$ is the distance from naive to the target (mature BCR).
+Where $d = \operatorname{dist}(\Bseq, \Tseq)$ is the distance between BCR -and target sequence and $t_{\naive} = \operatorname{dist}(\Nseq, \Tseq)$ is the distance between naive -and target sequence.
 The exponent, $k$, can be chosen to adjust the mapping between distance and affinity, with the restriction that $0 < k < \infty$ (figure \ref{fig:hd2affy}).
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/hd2affy.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/hd2affy.pdf}
     \caption{
         \label{fig:hd2affy}
         Varying the exponent $k$ in \eqref{eq:hd2affy} to achieve different mappings between distance and affinity. Naive -and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
@@ -354,7 +353,7 @@ The choice if $f_{\full} = 1$ has the interpretation that when half of the BCRs 
     \caption{
         \label{fig:no_effect_of_f_full}
         Simulation with affinity selection for varying magnitudes of $f_{\full}$.
-        $f_{\full}=1$, $f_{\full}=0.5$, $f_{\full}=0.05$ for (a), (b) and (c) respectively. Simulations with $U=5$ and $[A_{\total}]$ adjusted to obtain a carrying capacity of 1000 cells. Each simulation is run for 100 generations with $t_d=10$ and the composition of sequence distances to their closest targets are plotted for each generation.
+        $f_{\full}=1$, $f_{\full}=0.5$, $f_{\full}=0.05$ for (a), (b) and (c) respectively. Simulations with $U=5$ and $[A_{\total}]$ adjusted to obtain a carrying capacity of 1000 cells. Each simulation is run for 100 generations with $t_{\naive}=10$ and the composition of sequence distances to their closest targets are plotted for each generation.
         }
 \end{figure}
 
@@ -509,12 +508,12 @@ In fact it turns out that for simulations using a carrying capacity of 1000 cell
 Target sequences ($\Tseq_i, i=1,2, \hdots, t_n$) can be arbitrarily defined by inputting a list of amino acid sequences.
 Since affinity selection works on protein level the distance that determines affinity is the Hamming distance between two amino acid sequences.
 Either one or multiple target sequences can be used but all are assumed to have equal affinity, $K^{\mature}_d$.
-In the tests presented here we input the number of targets ($t_n$) and the amino acid distance from naive seed to target ($t_d$).
-Using these parameters the target sequences are simulated by introducing DNA mutations into the naive sequence until it has diverged $t_d$ away from its starting point.
-The mutations are introduced at DNA level given the neutral branching process described previously and thereby a distance of $t_d=10$ does not always correspond to 10 mutations, often the number is higher due to accumulation of synonymous mutations not counting towards protein level distance.
+In the tests presented here we input the number of targets ($t_n$) and the amino acid distance from naive seed to target ($t_{\naive}$).
+Using these parameters the target sequences are simulated by introducing DNA mutations into the naive sequence until it has diverged $t_{\naive}$ away from its starting point.
+The mutations are introduced at DNA level given the neutral branching process described previously and thereby a distance of $t_{\naive}=10$ does not always correspond to 10 mutations, often the number is higher due to accumulation of synonymous mutations not counting towards protein level distance.
 The process is repeated until $t_n$ targets have been made.
-We reason that a good default choice of $t_d$, to achieve sufficient evolutionary distance, is 10, however the simulation behaviour seems rather indifferent to this, compare \ref{fig:no_effect_of_f_full} with \ref{fig:skip_vs_no_skip_dist10}.
-The default number of targets ($t_d$) is set to 100 to provoke epistatic effects.
+We reason that a good default choice of $t_{\naive}$, to achieve sufficient evolutionary distance, is 10, however the simulation behaviour seems rather indifferent to this, compare \ref{fig:no_effect_of_f_full} with \ref{fig:skip_vs_no_skip_dist10}.
+The default number of targets ($t_{\naive}$) is set to 100 to provoke epistatic effects.
 All default parameters in the affinity simulation is tabulated in table \ref{aff_constants}.
 The implementation is available as a simulation subprogram in the codebase of \texttt{GCtree} (\url{github.com/matsengrp/gctree}).
 
@@ -526,7 +525,7 @@ $\lambda_0$ & None & $\operatorname{Pois}(\lambda_0)$ sequence mutability \\
 $T$ & None & Stopping time \\
 $cap$ & 1000 & Carrying capacity \\
 $t_n$ & 100 & Number of random target sequence \\
-$t_d$ & 10 & Distance from naive to target sequence \\
+$t_{\naive}$ & 10 & Distance from naive to target sequence \\
 $n$ & all & Down-sampled number of sequence
 \end{tabular}
 \caption{
@@ -581,7 +580,7 @@ Regardless, if simulation is done using multiple different targets it will be ep
     \caption{
     \label{fig:epistasis}
         The effect of two target sequence on the fitness landscape.
-        Two target sequences are created with varying overlap using $t_d=5$.
+        Two target sequences are created with varying overlap using $t_{\naive}=5$.
         The fitness landscape is constructed using a linear distance to affinity function ($k=1$ in equation \ref{eq:hd2affy}).
         In a) no overlap makes a long distance between the two peaks in fitness, in b) peaks are getting closer when targets overlap, and in c) when the overlap is complete the two targets match and the system no longer is epistatic.
         }
@@ -644,10 +643,10 @@ A proxy for counting these descendents is to count the immediate neighbors being
 If the assumption holds there should be a positive correlation between abundance and Hamming neighbors.
 
 In figure \ref{fig:Tas-affsim_Tas-data} plotting the two above mentioned measures for the Tas. dataset, and superimposing the same measures but for 100 simulation runs, shows a consistent good fit between simulations and real data.
-For this run parameters was set to $n=65$, $\lambda_0=0.25$, $t_d=5$, $T=35$ and default otherwise.
+For this run parameters was set to $n=65$, $\lambda_0=0.25$, $t_{\naive}=5$, $T=35$ and default otherwise.
 The down-sampling parameter ($n$) was set to the same number as sampled B cells in the Tas. dataset.
 The seed naive sequence used was a V gene of 264 nt. and with the often referred SHM rate of $10^{-3}$ \cite{victora2012germinal} this gives $\lambda_0=0.264$ which was rounded to $\lambda_0=0.25$.
-Target distance ($t_d$) and simulation time ($T$) was adjusted so the simulated sequences had approx. the same minimum Hamming distance to the naive sequence.
+Target distance ($t_{\naive}$) and simulation time ($T$) was adjusted so the simulated sequences had approx. the same minimum Hamming distance to the naive sequence.
 
 \begin{figure}
     \begin{center}
@@ -656,7 +655,7 @@ Target distance ($t_d$) and simulation time ($T$) was adjusted so the simulated 
     \vspace{-14mm} \hspace{42mm} (a) \hspace{52mm} (b)
     \caption{
         \label{fig:Tas-affsim_Tas-data}
-        Summary statistics for 100 simulations using $\lambda_0=0.25$, $t_d=5$, $T=35$ and $n=65$.
+        Summary statistics for 100 simulations using $\lambda_0=0.25$, $t_{\naive}=5$, $T=35$ and $n=65$.
         Simulations are colored and Tas. dataset is black.
         In a) the cumulative distribution of mutations (empirical CDF) and b) the number of genotypes in 1 Hamming distance away as function of genotype abundance.
     }
@@ -672,7 +671,7 @@ Topologically simulated trees also capture this notion of clonal bursts with one
     \includegraphics[width=0.8\textwidth]{figures/Tas_affsim_example_collapsed_runstat_color_tree.pdf}
     \caption{
         \label{fig:Tas_affsim_example.collapsed_runstat_color_tree}
-        Simulated tree using $\lambda_0=0.25$, $t_d=5$, $T=35$ and $n=66$.
+        Simulated tree using $\lambda_0=0.25$, $t_{\naive}=5$, $T=35$ and $n=66$.
         For simulation statistics and color to affinity mapping see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}.
     }
 \end{figure}
