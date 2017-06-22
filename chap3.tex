@@ -60,8 +60,15 @@ Lastly, the actual inferred ancestral sequences are determined by a combination 
 While inferring correct tree topology is also important, the correctness of the inferred ancestral sequences are the foremost important objective of a sequence reconstruction when these sequences are used for real applications involving DNA synthesis, protein expression and lab tests.
 For this reason the sole purpose of the COAR metric is to capture the correctness of the inferred ancestral sequences.
 
-
-
+The purpose of COAR is to compare two trees with the same leaves, lets call them the true -and inferred tree.
+When performing ASR the desired result is often to reconstruct the internal nodes in the direct path going from a leaf to the root, as illustrated in figure \ref{fig:ASR_true_vs_inferred}.
+This is extracted by starting at a leaf node and traversing upwards in the tree, parent by parent, until the root is reached.
+In the following, this list of sequences will be referred to as the ancestral lineage.
+The ancestral lineage is the objective so lets use this to define COAR, and lets also set COAR to be the expected per-site error in such a reconstruction.
+Now following the example in figure \ref{fig:ASR_true_vs_inferred}.
+Often there will be small differences in tree topology between the true -and inferred trees and these will likely make the number of internal states in the ancestral lineages differ.
+This makes comparison difficult because two lists of different length cannot be element wise compared.
+The lists could be made equal lengths by adding gaps but a systematic way of adding these would be needed.
 
 \begin{figure}[ht!]
     \centering
@@ -73,21 +80,11 @@ For this reason the sole purpose of the COAR metric is to capture the correctnes
 \end{figure}
 
 
-
-%EM I suggest reorganizing this paragraph in such a way that the definition is clear and concise. For example, we hear about gap penalties before we even know what our objective function is.
-%EM You could start by describing why we are especially interested in comparing reconstructions from leaf to root, perhaps introducing the ancestral lineage, then note that these lineages can be of different lengths, making comparison non-obvious. The solution is COAR, defined as follows.
-%EM fig:ASR_true_vs_inferred is a great figure for motivating COAR.
-To calculate the COAR metric two lists of ancestral sequences are compared.
-The lists are the ancestral sequences of all the nodes in the direct path going from a leaf to the root.
-This is extracted by starting at a leaf node and traversing upwards in the tree, parent by parent, until the root is reached.
-In the following, this list of sequences will be referred to as the ancestral lineage.
-Two such lists are made, one for the true -and one for the inferred tree, and it is the similarity of these two lists which is the core of the COAR metric.
-For lists of similar length the list comparison is easy, it will simply be the cumulated distance between the elements in the two list at the same position e.g.\ compare list 1 element 1 with list 2 element 1 and list 1 element 2 with list 2 element 2 etc.
-This corresponds to the sum of hamming distances between inferred and true ancestors.
-However complications arise when the lengths of the lists are not the same which can happen in the case of a wrong topology.
-To make a fair comparison between the true -and inferred tree we therefore need to align the two lists and introduce a missing state, called a gap, into one of the lists.
-The optimal solution to this alignment problem was described and solved by Needleman and Wunsch \cite{needleman1970general}.
-We restrict the global alignment result so that it has to start at the root of the tree and end at the leaf sequence because these two states are known, or explicitly inferred, for both the true and inferred phylogenies.
+The basis of COAR is a list comparison progressing element wise through the list i.e. element 1 in list 1 compared to element 1 in list 2, next element 2 in list 1 compared to element 2 in list 2 etc.
+For lists of similar length the list comparison is easy, it will simply be the cumulated distance between the elements in the two list at the same position, and this corresponds to the sum of hamming distances between inferred and true ancestors.
+When lists are not equally long one or more gaps must be introduced into one of the lists in such a way that the list similarity is maximized.
+This is an alignment problem and the optimal solution has been described and solved by Needleman and Wunsch \cite{needleman1970general}.
+We restrict the global alignment result so that it has to start at the root of the tree and end at the leaf sequence because these two states are known for both the true and inferred phylogenies.
 We further restrict the Needleman-Wunsch algorithm so that gaps are only allowed to be introduced in the shortest of the two lists being aligned to force the maximum number of true vs.\ inferred node comparisons.
 With this restriction on gaps, the number of gaps is determined solely by the differences in list lengths and as long as the gap penalty is less than or equal to zero the gaps will always be at the same positions.
 Practically this means that the magnitude of the gap penalty only serves the purpose of introducing an extra penalty for inferring a wrong topology and can be adjusted to put more, or less, emphasis on tree topological correctness.
