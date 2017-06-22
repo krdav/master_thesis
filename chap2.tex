@@ -16,6 +16,27 @@ Classically done by randomly permuting a sequence along a tree or sampling mutat
 %EM Also suggest distinguishing from the type of modeling done in https://paperpile.com/shared/UTRt7K, e.g.
 While many groups have simulated affinity maturation over time \cite{Reshetova_2017}, \cite{Balelli_2016}, \cite{Childs_Baskerville_Cobey_2015}, there have been no example of affinity centric simulations on single sequence level, and indeed most GC simulation studies treat the BCR sequence as a hidden state to focus on the summary statistics of the whole GC.
 
+
+
+%
+Agent based GC simulation \cite{robert2017simulate}.
+Cells are agents in a 3 dimensional grid of cells.
+
+
+
+The model defined in this work is sparse and do not suffer from the same extend of over-parameterization as agent based models.
+
+
+
+% From previous section, on other simulation tools
+Multiple articles have described simulations of VDJ recombined sequences \cite{safonova2015igsimulator}, \cite{ralph2016likelihood}, \cite{russ2015htjoinsolver} and few have also described simulation of B cell maturation \cite{shlomchik1998clone}, \cite{kleinstein2003estimating}.
+Recombination centric simulations are usually not using a realistic model for simulating the SHM induced mutations in the GC reaction because their purpose is to test VDJ inference, and the few simulation programs emulating maturation are either closed source, does not model central parts of the GC reaction or entirely avoids dealing with sequences.
+We are using a branching process, with and without selection, that is developed specifically for modelling the outcome of SHM in the GC reaction to test BCR lineage tree reconstruction under complex evolution.
+%
+
+
+
+
 We propose a simple model of affinity maturation that models sequence fitness as a function of BCR affinity.
 If the BCR affinity is high it means that the B cell will endocytose a lot of antigen, thereby getting plenty of T cell help to decrease the changes of undergoing apoptosis while increasing the chances of proliferation.
 Alternatively, if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
