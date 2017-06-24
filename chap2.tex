@@ -7,41 +7,35 @@ B cells undergoing GC affinity maturation express antibodies as B cell receptors
 All these factors leads back to the same thing: the ability to bind antigen, and this is measured by nearby T cells, which will be affecting the mutual probabilities of proliferation or apoptosis \cite{Bannard_Cyster_2017}, \cite{victora2012germinal}.
 As an example in a GC there is a direct T cell mediated selection for higher BCR affinity by means of sequestering more antigen.
 Selection against binding of self antigens is mediated by the fact that binding self antigens will block binding of pathogen antigens, resulting in decreased T cell help.
-Therefore, in its most simple way, affinity maturation is driven by affinity towards the presented antigen, and all the effects also attributed to selection, like folding, stability and aggregation, is selected by means of their shared effect on affinity.
+Therefore, in its most simple way, affinity maturation is driven by affinity towards the presented antigen, and all the effects also attributed to selection, like folding, stability and aggregation, is selected by means of their shared effect on antigen affinity.
 
 Affinity maturation is a strong selective pressure imposed on the B cell evolution, and this poses a challenge to phylogenetic reconstruction.
 To validate the correctness of phylogenetic methods simulation studies are among the most important tool.
 Classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions, but simulations can also be configured to have selection.
-%EM I suggest lit review be a little expanded, and clarify that you are talking about nucleotide sequence. There are other things to cite-- see https://paperpile.com/shared/dAcoWo
-%EM Also suggest distinguishing from the type of modeling done in https://paperpile.com/shared/UTRt7K, e.g.
-While many groups have simulated affinity maturation over time \cite{Reshetova_2017}, \cite{Balelli_2016}, \cite{Childs_Baskerville_Cobey_2015}, there have been no example of affinity centric simulations on single sequence level, and indeed most GC simulation studies treat the BCR sequence as a hidden state to focus on the summary statistics of the whole GC.
+There already is a large body of literature suggesting different ways of modelling the GC reaction from mechanistic ways \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, to probabilistic frameworks \cite{shlomchik1998clone}, \cite{Reshetova_2017}, systems of differential equations \cite{shahaf2008antigen} and birth-death processes \cite{Balelli_2016}.
+Shlomchik et al. \cite{shlomchik1998clone} developed "Clone", a simple statistical framework inspired by the intuition that CDRs are more likely to accept mutations than FRs.
+In Clone mutations are introduced, by an intrinsic mutation rate ($\lambda$), into either CDR or FR and being either synonymous or non-synonymous with the two probabilities drawn from two Bernoulli distributions.
+This gives four categories associated with their own probability, and for each category a Poisson progeny distribution can be defined to simulate death and/or cell divisions.
+Later Kleinstein et al. \cite{kleinstein2003estimating} used Clone as a statistical framework to find the maximum likelihood estimates of its model parameters, given some real BCR sequence dataset.
+This resulted in consistent estimates of the rate of somatic hypermutation that have later been confirmed in multiple studies.
+A very similar model was suggested by Reshetova et al. \cite{Reshetova_2017}, but unlike Clone, authors claimed that software can be access on request with a permissive open source license.
+An alternative model described by Shahaf et al. \cite{shahaf2008antigen} is based on a system of differential equations and uses distance between bit strings to represent complementarity between BCR and antigen.
+Unfortunately, software implementing this model has not been released publicly.
+A very different approach is to model the GC reaction by a mechanistic model where each B cell is explicitly represented as a single entity, called an agent.
+Mechanistic models start with a set of first principal physical laws used to define the molecular behaviour of a system.
+The system is initiated with a 3 dimensional grid with a number founding cells, and then solved by discretizing into small time steps and solving the equations for diffusion, cell motility, receptor binding etc.
+Examples of mechanistic models are hyphasma, described in Robert et al. \cite{robert2017simulate}, and the model described in Wang et al. \cite{wang2015manipulating} used to explain generation of cross-reactive HIV antibodies.
+Unfortunately both of the above examples are not publicly available.
+Childs et al. \cite{Childs_Baskerville_Cobey_2015} also used an agent based method to simulate the GC reaction and explaining the trade-offs between antigen specificity and breadth, and in addition this also appears to be one of the the only GC simulation software to be published as open source somewhere in the public domain (\url{https://github.com/cobeylab/gcdynamics}).
 
-
-
-%
-Agent based GC simulation \cite{robert2017simulate}.
-Cells are agents in a 3 dimensional grid of cells.
-
-
-
-The model defined in this work is sparse and do not suffer from the same extend of over-parameterization as agent based models.
-
-
-
-% From previous section, on other simulation tools
-Multiple articles have described simulations of VDJ recombined sequences \cite{safonova2015igsimulator}, \cite{ralph2016likelihood}, \cite{russ2015htjoinsolver} and few have also described simulation of B cell maturation \cite{shlomchik1998clone}, \cite{kleinstein2003estimating}.
-Recombination centric simulations are usually not using a realistic model for simulating the SHM induced mutations in the GC reaction because their purpose is to test VDJ inference, and the few simulation programs emulating maturation are either closed source, does not model central parts of the GC reaction or entirely avoids dealing with sequences.
-We are using a branching process, with and without selection, that is developed specifically for modelling the outcome of SHM in the GC reaction to test BCR lineage tree reconstruction under complex evolution.
-%
-
-
-
-
-We propose a simple model of affinity maturation that models sequence fitness as a function of BCR affinity.
-If the BCR affinity is high it means that the B cell will endocytose a lot of antigen, thereby getting plenty of T cell help to decrease the changes of undergoing apoptosis while increasing the chances of proliferation.
+Regardless of software availability non of the above mentioned simulation methods are suitable for validating BCR phylogenetics and testing the effect of antigen selection on tree inference.
+While the simplistic statistical framework of Clone is appealing it does not model selection towards a known high affinity BCR, rather it models selection as a random effect of a non-synonymous mutation located in the CDR.
+Non of the other above mentioned simulation methods are explicitly simulating the DNA sequences and therefore cannot be used without substantial adaptations.
+To get the best of the realism of a mechanistic model and the simplicity of a statistical model, we propose a simple model of affinity maturation that models sequence fitness solely as a function of antigen binding, modelled by a standard binding equilibrium.
+If the BCR affinity is high it means that the B cell will bind and endocytose a lot of antigen, thereby getting plenty of T cell help, decreasing the changes of undergoing apoptosis while increasing the chances of proliferation.
 Alternatively, if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
-Under this setup it is not the absolute affinity that matters, but rather the affinity relative to the affinities of all the competing cells in the whole GC, held against the total amount of antigens to compete for.
-By modularizing the simulation code we first make a model for a neutral branching process, and then make an optional affinity selection step that works in conjunction with the neutral process used to introduce substitutions.
+Under this setup it is not the absolute affinity that matters, but rather the affinity relative to the affinities of all the competing cells in the whole GC and the total amount of antigens to compete for.
+By modularizing the simulation code we can first make a model for a neutral branching process, and then make an optional affinity selection step that works in conjunction with the neutral process used to introduce substitutions.
 
 The purpose of the presented simulation method is to generate more realistic sequence simulations of clonal families to be widely used for assessing the performance of phylogenetic methods.
 The model is supposed to capture the most influential effects of affinity maturation without being a detailed mechanistic model, although be sufficient to recapitulate the features of real GC sequence data.
