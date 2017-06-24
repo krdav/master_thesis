@@ -1,35 +1,21 @@
 \chapter{Source code}
-It is my view that code should be shared via. online code repositories.
-Git is a great resource for this as it keeps version control easy and tracks changes which makes it possible to track down unexpected behaviour.
-Indeed all code written for this work is part of a git repository on GitHub.
+We find it unfortunate that the majority of previously published simulation methods does not offer publicly available software.
+Therefore, to facilitate as much transparency and usability of the method presented in this work, we have chosen to share all our code as open source through a Git repository.
+Hopefully this will encourage non developers to use and test our methods and potentially inspire to applications in fields that we have not yet investigated.
 
-Methods presented in chapter 3 and 4 is coded in Python and integrated into the GCtree code base accessible here:
-\url{somewhere.com}
-
-Methods in chapter 5 is coded in R, C++ and Python in its own repository accessible here:
-\url{somewhere.com}
-
-
-
-
-%It hardly makes any sense to append 200 pages of code.
-
-
-% Duplicate GH repos and add link:\newline
-% \url{https://help.github.com/articles/duplicating-a-repository/}
-
-
-\texttt{GCtree} source code:
+Methods for neutral, as well as affinity, simulations (used and described in chapter 3) are all collected in the same code repository along with SCons wrappers to run comparisons between inference methods (used in validation study in chapter 4).
+This is all available in the \texttt{GCtree} code base:
 \url{github.com/matsengrp/gctree}
 
+In addition, the SCons commands used in the validation study, used to create the statistics in Appendix A and the figures in Appendix B, are listed below:
 \begin{lstlisting}
-nohup scons --simulate --igphyml --gctree --dnaml --outdir=cft_benchmark_Laura_aff --frame=1 --naive=CAGGTGCAGCTGGTGCAGTCTGGGGCTGAGGTGAAGAAGCCTGGGGCCTCAGTGAAGGTCTCCTGCAAGGCTTCTGGATACACCTTCACCGGCTACTATATGCACTGGGTGCGACAGGCCCCTGGACAAGGGCTTGAGTGGATGGGATGGATCAACCCTAACAGTGGTGGCACAAACTATGCACAGAAGTTTCAGGGCAGGGTCACCATGACCAGGGACACGTCCATCAGCACAGCCTACATGGAGCTGAGCAGGCTGAGATCTGACGACACGGCCGTGTATTACTGTGCGAGAGGGCCATTCCCGAATTACTATGGTACGGGGAGTTATTGGGGGGGTTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA --experimental=/home/matsengrp/working/csmall/cft/output/laura-mb-v9-dnapars/*-igh/*/run-viterbi-best-plus-0/pruned.fa --naiveIDexp=naive0 --lambda0=0.25 --selection --target_dist=10 --target_count=1000 --verbose --T=90 --carry_cap=10000 --skip_update=1000 --nsim=100 --n=150 --quick --jobs=500 --srun  &> cft_benchmark_Laura_aff.log &
+scons --simulate --igphyml --gctree --dnaml --outdir=HTS_aff_sim --frame=1 --naive=CAGGTGCAGCTGGTGCAGTCTGGGGCTGAGGTGAAGAAGCCTGGGGCCTCAGTGAAGGTCTCCTGCAAGGCTTCTGGATACACCTTCACCGGCTACTATATGCACTGGGTGCGACAGGCCCCTGGACAAGGGCTTGAGTGGATGGGATGGATCAACCCTAACAGTGGTGGCACAAACTATGCACAGAAGTTTCAGGGCAGGGTCACCATGACCAGGGACACGTCCATCAGCACAGCCTACATGGAGCTGAGCAGGCTGAGATCTGACGACACGGCCGTGTATTACTGTGCGAGAGGGCCATTCCCGAATTACTATGGTACGGGGAGTTATTGGGGGGGTTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA --experimental=<PATH TO FASTA FILE WITH EXPERIMENTAL GC SEQUENCES> --naiveIDexp=naive0 --lambda0=0.25 --selection --target_dist=10 --target_count=1000 --verbose --T=90 --carry_cap=10000 --skip_update=1000 --nsim=100 --n=150 --quick &> HTS_aff_sim.log
 
-nohup scons --simulate --igphyml --gctree --dnaml --outdir=cft_benchmark_Laura_neut --frame=1 --nsim=100 --T=5 --lambda=2.5 --lambda0=3 --naive=CAGGTGCAGCTGGTGCAGTCTGGGGCTGAGGTGAAGAAGCCTGGGGCCTCAGTGAAGGTCTCCTGCAAGGCTTCTGGATACACCTTCACCGGCTACTATATGCACTGGGTGCGACAGGCCCCTGGACAAGGGCTTGAGTGGATGGGATGGATCAACCCTAACAGTGGTGGCACAAACTATGCACAGAAGTTTCAGGGCAGGGTCACCATGACCAGGGACACGTCCATCAGCACAGCCTACATGGAGCTGAGCAGGCTGAGATCTGACGACACGGCCGTGTATTACTGTGCGAGAGGGCCATTCCCGAATTACTATGGTACGGGGAGTTATTGGGGGGGTTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA --experimental=/home/matsengrp/working/csmall/cft/output/laura-mb-v9-dnapars/*-igh/*/run-viterbi-best-plus-0/pruned.fa --naiveIDexp=naive0 --quick --jobs=1000 --srun &> cft_benchmark_Laura_neut.log &
+scons --simulate --igphyml --gctree --dnaml --outdir=HTS_neut_sim --frame=1 --nsim=100 --T=5 --lambda=2.5 --lambda0=3 --naive=CAGGTGCAGCTGGTGCAGTCTGGGGCTGAGGTGAAGAAGCCTGGGGCCTCAGTGAAGGTCTCCTGCAAGGCTTCTGGATACACCTTCACCGGCTACTATATGCACTGGGTGCGACAGGCCCCTGGACAAGGGCTTGAGTGGATGGGATGGATCAACCCTAACAGTGGTGGCACAAACTATGCACAGAAGTTTCAGGGCAGGGTCACCATGACCAGGGACACGTCCATCAGCACAGCCTACATGGAGCTGAGCAGGCTGAGATCTGACGACACGGCCGTGTATTACTGTGCGAGAGGGCCATTCCCGAATTACTATGGTACGGGGAGTTATTGGGGGGGTTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA --experimental=<PATH TO FASTA FILE WITH EXPERIMENTAL GC SEQUENCES> --naiveIDexp=naive0 --quick &> HTS_neut_sim.log
 
-nohup scons --simulate --gctree --igphyml --dnaml --frame=1 --outdir=cft_benchmark_Tas_aff --naive=ggacctagcctcgtgaaaccttctcagactctgtccctcacctgttctgtcactggcgactccatcaccagtggttactggaactggatccggaaattcccagggaataaacttgagtacatggggtacataagctacagtggtagcacttactacaatccatctctcaaaagtcgaatctccatcactcgagacacatccaagaaccagtactacctgcagttgaattctgtgactactgaggacacagccacatattactgt --experimental=/home/matsengrp/working/csmall/cft/output/laura-mb-v9-dnapars/*-igh/*/run-viterbi-best-plus-0/pruned.fa --naiveIDexp=naive0 --lambda0=0.25 --selection --target_dist=5 --target_count=100 --verbose --T=35 --nsim=100 --n=65 --jobs=1000 --srun &> cft_benchmark_Tas_aff.log &
+scons --simulate --gctree --igphyml --dnaml --frame=1 --outdir=single_cell_aff_sim --naive=ggacctagcctcgtgaaaccttctcagactctgtccctcacctgttctgtcactggcgactccatcaccagtggttactggaactggatccggaaattcccagggaataaacttgagtacatggggtacataagctacagtggtagcacttactacaatccatctctcaaaagtcgaatctccatcactcgagacacatccaagaaccagtactacctgcagttgaattctgtgactactgaggacacagccacatattactgt --experimental=<PATH TO FASTA FILE WITH EXPERIMENTAL GC SEQUENCES> --naiveIDexp=naive0 --lambda0=0.25 --selection --target_dist=5 --target_count=100 --verbose --T=35 --nsim=100 --n=65 &> single_cell_aff_sim.log
 
-nohup scons --simulate --gctree --igphyml --dnaml --frame=1 --outdir=cft_benchmark_Tas_neut --nsim=100 --N=100 --n=70 --lambda=1.5 --lambda0=.25 --naive=ggacctagcctcgtgaaaccttctcagactctgtccctcacctgttctgtcactggcgactccatcaccagtggttactggaactggatccggaaattcccagggaataaacttgagtacatggggtacataagctacagtggtagcacttactacaatccatctctcaaaagtcgaatctccatcactcgagacacatccaagaaccagtactacctgcagttgaattctgtgactactgaggacacagccacatattactgt --experimental=/home/matsengrp/working/csmall/cft/output/laura-mb-v9-dnapars/*-igh/*/run-viterbi-best-plus-0/pruned.fa --naiveIDexp=naive0 --jobs=1000 --srun &> cft_benchmark_Tas_neut.log &
+scons --simulate --gctree --igphyml --dnaml --frame=1 --outdir=single_cell_neut_sim --nsim=100 --N=100 --n=70 --lambda=1.5 --lambda0=.25 --naive=ggacctagcctcgtgaaaccttctcagactctgtccctcacctgttctgtcactggcgactccatcaccagtggttactggaactggatccggaaattcccagggaataaacttgagtacatggggtacataagctacagtggtagcacttactacaatccatctctcaaaagtcgaatctccatcactcgagacacatccaagaaccagtactacctgcagttgaattctgtgactactgaggacacagccacatattactgt --experimental=<PATH TO FASTA FILE WITH EXPERIMENTAL GC SEQUENCES> --naiveIDexp=naive0 &> single_cell_neut_sim.log
 
 \end{lstlisting}
 
