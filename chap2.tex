@@ -11,14 +11,16 @@ Therefore, in its most simple way, affinity maturation is driven by affinity tow
 
 Affinity maturation is a strong selective pressure imposed on the B cell evolution, and this poses a challenge to phylogenetic reconstruction.
 To validate the correctness of phylogenetic methods simulation studies are among the most important tool.
+%EM This is a sentence fragment.
 Classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions, but simulations can also be configured to have selection.
-There already is a large body of literature suggesting different ways of modelling the GC reaction from mechanistic ways \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, to probabilistic frameworks \cite{shlomchik1998clone}, \cite{Reshetova_2017}, systems of differential equations \cite{shahaf2008antigen} and birth-death processes \cite{Balelli_2016}.
-Shlomchik et al. \cite{shlomchik1998clone} developed "Clone", a simple statistical framework inspired by the intuition that CDRs are more likely to accept mutations than FRs.
+
+There already is a large body of literature suggesting different ways of modelling the GC reaction from mechanistic models \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, to probabilistic frameworks \cite{shlomchik1998clone}, \cite{Reshetova_2017}, systems of differential equations \cite{shahaf2008antigen} and birth-death processes \cite{Balelli_2016}.
+Shlomchik et al. \cite{shlomchik1998clone} developed ``Clone,'' a simple statistical framework inspired by the intuition that CDRs are more likely to accept mutations than FRs.
 In Clone mutations are introduced, by an intrinsic mutation rate ($\lambda$), into either CDR or FR and being either synonymous or non-synonymous with the two probabilities drawn from two Bernoulli distributions.
 This gives four categories associated with their own probability, and for each category a Poisson progeny distribution can be defined to simulate death and/or cell divisions.
 Later Kleinstein et al. \cite{kleinstein2003estimating} used Clone as a statistical framework to find the maximum likelihood estimates of its model parameters, given some real BCR sequence dataset.
 This resulted in consistent estimates of the rate of somatic hypermutation that have later been confirmed in multiple studies.
-A very similar model was suggested by Reshetova et al. \cite{Reshetova_2017}, but unlike Clone, authors claimed that software can be access on request with a permissive open source license.
+A very similar model was suggested by Reshetova et al. \cite{Reshetova_2017}, but unlike Clone, authors claimed that software can be accessed on request with a permissive open source license.
 An alternative model described by Shahaf et al. \cite{shahaf2008antigen} is based on a system of differential equations and uses distance between bit strings to represent complementarity between BCR and antigen.
 Unfortunately, software implementing this model has not been released publicly.
 A very different approach is to model the GC reaction by a mechanistic model where each B cell is explicitly represented as a single entity, called an agent.
@@ -26,11 +28,11 @@ Mechanistic models start with a set of first principal physical laws used to def
 The system is initiated with a 3 dimensional grid with a number founding cells, and then solved by discretizing into small time steps and solving the equations for diffusion, cell motility, receptor binding etc.
 Examples of mechanistic models are hyphasma, described in Robert et al. \cite{robert2017simulate}, and the model described in Wang et al. \cite{wang2015manipulating} used to explain generation of cross-reactive HIV antibodies.
 Unfortunately both of the above examples are not publicly available.
-Childs et al. \cite{Childs_Baskerville_Cobey_2015} also used an agent based method to simulate the GC reaction and explaining the trade-offs between antigen specificity and breadth, and in addition this also appears to be one of the the only GC simulation software to be published as open source somewhere in the public domain (\url{https://github.com/cobeylab/gcdynamics}).
+Childs et al. \cite{Childs_Baskerville_Cobey_2015} also used an agent based method to simulate the GC reaction and explaining the trade-offs between antigen specificity and breadth, and in addition this also appears to be one of the only GC simulation software to be published as open source somewhere in the public domain (\url{https://github.com/cobeylab/gcdynamics}).
 
-Regardless of software availability non of the above mentioned simulation methods are suitable for validating BCR phylogenetics and testing the effect of antigen selection on tree inference.
+Regardless of software availability none of the above mentioned simulation methods are suitable for validating BCR phylogenetics and testing the effect of antigen selection on tree inference.
 While the simplistic statistical framework of Clone is appealing it does not model selection towards a known high affinity BCR, rather it models selection as a random effect of a non-synonymous mutation located in the CDR.
-Non of the other above mentioned simulation methods are explicitly simulating the DNA sequences and therefore cannot be used without substantial adaptations.
+None of the other above mentioned simulation methods are explicitly simulating the DNA sequences and therefore cannot be used in software to analyze DNA sequences without substantial adaptations.
 To get the best of the realism of a mechanistic model and the simplicity of a statistical model, we propose a simple model of affinity maturation that models sequence fitness solely as a function of antigen binding, modelled by a standard binding equilibrium.
 If the BCR affinity is high it means that the B cell will bind and endocytose a lot of antigen, thereby getting plenty of T cell help, decreasing the changes of undergoing apoptosis while increasing the chances of proliferation.
 Alternatively, if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
@@ -206,7 +208,7 @@ Now introducing mass conservation for $A$:
 A_{\total} = [A] + \sum_{i=1}^{n} [AB_i] \equiv [A] + \sum_{i=1}^{n} \frac{[B^i_{\total}]}{1 + \frac{K^i_d}{[A]}}
   \label{eq:A_objective}
 \end{equation}
-With this polynomial form the system can be solved to find $B_{\bound}$ for each B cell.
+By rearranging to a polynomial form the system can be solved to find $B_{\bound}$ for each B cell.
 A solution will be elaborated in the implementation section.
 
 
@@ -256,7 +258,7 @@ E.g.\ this will happen when multiple amino acids are equally fit on a given posi
 It will also happen if there are multiple distinct maturation paths that ends up with equally fit BCRs.
 The later effect can be introduced into the model be adding more target sequences and then determining the affinity based on the shortest distance to all target sequences:
 $$
-d = \argmin_{\Tseq \in \Targets} \operatorname{dist}(\Bseq, \Tseq) 
+d = \argmin_{\Tseq \in \Targets} \operatorname{dist}(\Bseq, \Tseq)
 $$
 
 
@@ -265,7 +267,7 @@ $$
 
 
 \subsubsection{Transforming BCR occupancy to fitness}
-In the affinity model the fitness of a B cell is determined by the amount of antigen it binds relative to the total number of receptors it has, we shall call this $B^i_{\bound}$ for the BCR $B_i$.
+In the affinity model the fitness of a B cell is determined by the amount of antigen it has bound divided by the total number of receptors it has, we shall call this $B^i_{\bound}$ for the BCR $B_i$.
 The progeny distribution should adjust according to $B^i_{\bound}$, so if $B^i_{\bound}$ is small the progeny distribution should favor terminating the B cell and opposite, if $B^i_{\bound}$ is large this should cause the progeny distribution to favor cell division.
 The Poisson distribution will reflect this behaviour by setting $\lambda_i$ small when $B^i_{\bound}$ is small and $\lambda_i$ large when $B^i_{\bound}$ is large.
 To use $\operatorname{Pois}(\lambda_i)$ as the progeny distribution we need a function transforming $B^i_{\bound}$ to $\lambda_i$: $Y(B^i_{\bound}) = \lambda_i$.
@@ -276,19 +278,22 @@ For this purpose we can use a generalized version of the logistic function since
 \end{equation}
 $G$ is chosen to be the typical value of $1$.
 $K$ is the upper bound of the function and is set to $2$, reflecting that the fastest average growth rate is $2^t$, with $t$ generations (setting $\operatorname{max}(\lambda) = 2$ is a model choice, but could be changed).
-$\alpha$, $\beta$ and $Q$ are fit to fulfill three conditions:
+$\alpha$, $\beta$, $Q$ and $U$ are fit to fulfill three conditions:
 \begin{equation}
 Y(0) = 0, \ \ \ Y \left(\frac{f_{\full}}{U} \right) = 1, \ \ \ Y(f_{\full}) = 2 - \epsilon
   \label{eq:BA_cond}
 \end{equation}
-With $0 < f_{\full} \leq 1$ being the fraction of bound BCRs ($B^i_{\bound}$) that is sufficient to make the B cell close to fully activated.
-Close in the sense that $Y(f_{\full})$ is close to the maximum $\lambda$ of 2, and therefore binding more antigen does not results in much change in the progeny distribution.
-The constant $U$ in condition 2 can be adjusted to set the value of $B^i_{bound}$ resulting in $\lambda_i = 1$, and because $\frac{f_{\full}}{U} < f_{\full}$ we have that $U > 1$.
+%EM I don't really know how to interpret "close to fully activated" besides that it gives 2-epsilon. Do we actually need f_full? Most places I only see f_full/U, or its inverse.
+Here $0 < f_{\full} \leq 1$ is the fraction of bound BCRs ($B^i_{\bound}$) that is sufficient to make the B cell close to fully activated, where close is in the sense that $Y(f_{\full})$ is close to the maximum $\lambda$ of 2.
+Therefore binding more antigen does not result in much change in the progeny distribution.
+The constant $U > 1$ in condition 2 can be adjusted to set the value of $B^i_{bound}$ resulting in $\lambda_i = 1$.
 The interpretation of $U$ is that it is the fraction of BCRs binding antigen necessary to sustain the life of the B cell, but nothing more or less.
 Using these conditions $\alpha$, $\beta$ and $Q$ can be found and the logistic function is fully defined.
+%EM alpha is the lower bound? It looks like the lower bound is 0.
 $\alpha$ can be interpreted as the lower bound of the function and is therefore expected to be negative but close to 0, unless $U$ is large in which case $\alpha$ has to adjust accordingly to a large negative value, see figure \ref{fig:T_Bbound_U}.
 $\beta$ is the growth rate, or steepness of the function, and it is coupled to the $Q$ parameter which will follow it according to the three conditions.
-The steepness has to be high if saturation is reached a low $B^i_{bound}$ making $f_{\full}$ small, see figure \ref{fig:T_Bbound_f_full}.
+%EM I find the following sentence confusing. Is it necessary?
+The steepness has to be high if saturation is reached a low $B^i_{\bound}$ making $f_{\full}$ small, see figure \ref{fig:T_Bbound_f_full}.
 \vfill
 
 \begin{figure}
@@ -296,7 +301,7 @@ The steepness has to be high if saturation is reached a low $B^i_{bound}$ making
     \includegraphics[width=0.8\textwidth]{figures/T_Bbound_U.pdf}
     \caption{
         \label{fig:T_Bbound_U}
-        Using a constant $f_{\full} = 1$, changing the $U$ parameter in the conditions in equation \ref{eq:BA_cond} to achieve a shift of the inflection point, at $\lambda=1$, on the $B_{bound}$ axis.
+        Using a constant $f_{\full} = 1$, changing the $U$ parameter in the conditions in equation \ref{eq:BA_cond} to achieve a shift of the inflection point, at $\lambda=1$, on the $B_{\bound}$ axis.
     }
 \end{figure}
 
@@ -305,7 +310,7 @@ The steepness has to be high if saturation is reached a low $B^i_{bound}$ making
     \includegraphics[width=0.8\textwidth]{figures/T_Bbound_f_full.pdf}
     \caption{
         \label{fig:T_Bbound_f_full}
-        Using a constant $U = 5$, changing the $f_{\full}$ parameter in the conditions in equation \ref{eq:BA_cond} to change the point where $B_{bound}$ reaches the largest $\lambda$.
+        Using a constant $U = 5$, changing the $f_{\full}$ parameter in the conditions in equation \ref{eq:BA_cond} to change the point where $B_{\bound}$ reaches the largest $\lambda$.
     }
 \end{figure}
 
@@ -320,7 +325,7 @@ The steepness has to be high if saturation is reached a low $B^i_{bound}$ making
 Finally we need to introduce the concept of a carrying capacity of a GC, which is defined as the number cells a GC is able to support in its micro environment.
 The carrying capacity is determined mainly by the total concentration of antigen, since binding to antigen controls the progeny distribution.
 BCR affinity is also influencing antigen binding, and therefore must influence the carrying capacity, but at high affinity nearly all antigen is bound, and hence the total antigen concentration is the most influential determinant of GC carrying capacity.
-At $\operatorname{Pois}(1)$ the progeny distribution is only just sustaining the population size of the GC, and given from condition 2 in equation \ref{eq:BA_cond} this happens at $\frac{f_{\full}}{U}$.
+At $\operatorname{Pois}(1)$ the progeny distribution is only just sustaining the population size of the GC, and given from condition 2 in \eqref{eq:BA_cond} this happens at $\frac{f_{\full}}{U}$.
 Under the assumption that the population of B cells all have identical BCR sequences, the maximum carrying capacity is:
 \begin{equation}
 C([A_{\total}]) = U \frac{[A_{\total}] - [A]}{f_{\full}}
@@ -331,12 +336,14 @@ It is fair to assume that there are many more BCRs than antigens, so for high af
 This makes it easy to calculate the carrying capacity given equation \ref{eq:carry_cap}.
 However in the cases with low affinity the concentration of free antigen cannot be assumed zero and in such cases $[A]$ can be determined through equation \ref{eq:A_objective}.
 
+%EM Here we have f_full by itself but it would seem as good to just say that it has a lot of bound antigen and this can lead to a clonal burst.
 In the situation where a newly arising mutant has higher affinity than the rest of the population the fraction of BCR binding antigen on this mutant will approach $f_{\full}$, and in the case of $f_{\full} < 1$ it is even possibly surpasses it.
 In these cases there is a probability that the clone will expand rapidly to overtake the GC population, also known as a clonal burst.
 The clonal burst has the characteristic time (average time of take over) being:
 $$
-T_{\burst} = log_\kappa \left(carrying\ capacity \right) = log_\kappa\left( U \frac{[A_{\total}] - [A]}{f_{\full}} \right)
+T_{\burst} = \log_\kappa \left(\text{carrying capacity} \right) = \log_\kappa\left( U \frac{[A_{\total}] - [A]}{f_{\full}} \right)
 $$
+%EM kappa was K above, but in any case I suggest just using 2 in the equation above.
 With $\kappa = \operatorname{max}(\lambda)$ in this model fixed to 2 and $U$ and $f_{\full}$ being constants defined in the next section.
 
 
@@ -355,7 +362,8 @@ Changing $f_{\full}$ will primarily effect the carrying capacity via. equation \
 Presumably this is because the shape of the logistic transformation $Y(\cdot)$ in equation \ref{eq:BA_trans} will remain intact, see figure \ref{fig:T_Bbound_f_full}.
 %Choosing a lower $f_{\full}$ will increase the carrying capacity but the shape of the logistic transformation $T$ will remain intact, see figure \ref{fig:T_Bbound_f_full}.
 %We have chosen $f_{\full}$ to be $1$, with the interpretation that when half of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are bound the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
-The choice if $f_{\full} = 1$ has the interpretation that when half of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are binding antigen, the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
+%EM ...? Doesn't the statement below leading to the Pois(1) depend on U?
+The choice of $f_{\full} = 1$ has the interpretation that when half of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are binding antigen, the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[height=49mm]{figures/f_full_1.pdf}
@@ -397,6 +405,8 @@ Classically these affinity measurements have been done using hapten induced immu
 Indeed it has been reported that naive sequences in some cases can be high affinity binders and affinity maturation is less useful \cite{frank2015simple}.
 Nevertheless several groups have reported 50-100 fold affinity increase due to affinity maturation in both complex and hapten induced immunizations \cite{Kelsoe_2016}, \cite{phan2006high}, \cite{ulrich1997interplay}.
 We choose the naive sequence to be $10^{-7} M$ ($100nM$) and the mature to be $10^{-9} M$ ($1nM$), giving a large span in affinity to select on.
+
+%Erick stopped here
 
 With the introduction of $K_d$'s we need to consider units.
 Lets start by estimating the concentration of BCRs per B cell in the GC, also denoted as $B^i_{\total}$.
