@@ -5,11 +5,11 @@ With the wide availability and cost reductions of high-throughput sequencing (HT
 Phylogenetic reconstruction of the evolution of the BCRs have recently gotten increasing attention because of its possible use in studying vaccine response.
 There is a hope that with better understanding of the evolutionary trajectories of BCRs that the fate of the immune response can be modelled in a probabilistic framework, and that this will lead to new avenues in vaccine design finally addressing vaccination of HIV and broad influenza immunity.
 
-By large the use of phylogenetics in BCR GC evolution has been made with the standard assumptions of site independence, constant mutation rates etc. using methods like maximum parsimony \cite{tas2016visualizing}, \cite{Barak2008-fw} and maximum likelihood \cite{Doria-Rose2014-vi}, \cite{Hoehn2016-wg}.
-However we find that no study has yet investigated the validity of the phylogenetic assumptions in the context of BCR evolution.
+By and large the use of phylogenetics in BCR GC evolution has been made with the standard assumptions of site independence, constant mutation rates etc. using methods like maximum parsimony \cite{tas2016visualizing}, \cite{Barak2008-fw} and maximum likelihood \cite{Doria-Rose2014-vi}, \cite{Hoehn2016-wg}.
 It is important to note that most algorithms for phylogenetic inference have been made to study population genetics largely evolving under a neutrality or track the evolution of organisms over millions of years.
-The consequences being that model assumptions are adjusted and validated in a completely different context than the highly selective, small population evolution that BCRs undergo in the GC reaction.
+The consequences being that model assumptions have been formulated and validated in a completely different context than the highly selective, small population evolution that BCRs undergo in the GC reaction.
 In contrast, BCR evolution has some interesting features that violates the assumption of classical phylogenetic methods e.g.\ the mutation model is DNA context sensitive, the root of the tree is known, high selection pressure on selected sites, sampled ancestors, very high mutation rates etc.
+We are not aware of any study that does a broad comparison of these commonly used phylogenetic inference tools in a parameter regime relevant to BCR sequence evolution.
 
 Validation studies are needed in order to understand weaknesses in the existing phylogenetic tool-chain, and opportunities to develop tools specific to the BCR case.
 Sequence simulation is the cornerstone of all validation studies but unfortunately there has been no publicly available method for simulation of BCR sequence evolution.
@@ -26,16 +26,17 @@ We do so in a realistic sequence simulation framework that can be used in the fu
 \subsection{Ancestral sequence reconstruction}
 When a phylogeny is inferred using a tree as a model for evolution, the tree will have internal nodes connecting the observations.
 An internal state is also the inferred common ancestor of a number of leaves and/or branches and therefore sometimes referred to as an ancestral state.
-All internal nodes are unknown, unobserved states, either explicitly defined by a sequence as in a parsimony tree, or defined by a likelihood function in model based phylogenies.
-When a likelihood function is used to define internal states there is no longer a well defined ancestral sequence, instead this needs to be inferred as the maximum likelihood (ML) sequence estimate.
+Internal nodes are typically unknown, unobserved states, either explicitly defined by a sequence as in a parsimony tree, or defined by a likelihood function in model based phylogenies.
+When a likelihood function is used there is no longer a well defined ancestral sequence, instead this needs to be inferred as the maximum likelihood (ML) sequence estimate.
+%EM Is this -or and -and thing something you've seen before? Point me to it-- I'm curious!
 The ML estimate can be defined in two ways, as either marginal -or joint ML reconstruction.
 
 In a marginal reconstruction the ML estimated sequence for one node is independent of the estimate of another i.e. $a_1 = \operatorname{max}(l(a_1 | t)), a_2 = \operatorname{max}(l(a_2 | t)), \hdots, a_n = \operatorname{max}(l(a_n | t))$, where $l$ is the likelihood function given a tree with branch length and data, $t$, and $a_i$ is an ancestral sequence on internal node $i$.
 This makes it easy to find ancestral sequences by iterating through all internal nodes in arbitrary order.
 
-Once an ancestral sequence has been fixed to an internal node this changes the likelihood function for the rest of the tree.
+However, once an ancestral sequence has been fixed to an internal node this changes the likelihood function for the rest of the tree.
 In fact all internal states are interdependent and while this is ignored in the marginal reconstruction it is taken into account in joint reconstruction by maximizing the likelihood of all ancestral states at once i.e. $a_1, a_2, \hdots, a_n = \operatorname{max}(l(a_1, a_2, \hdots, a_n | t)), a_2$.
-It is a non trivial task to minimize this likelihood for many internal nodes, and though Pupko et al. \cite{pupko2000fast} showed how to speed up the joint reconstruction algorithm, most software is using the more simple marginal reconstruction.
+It is a non trivial task to minimize this likelihood for many internal nodes, and though Pupko et al. \cite{pupko2000fast} showed how to speed up the joint reconstruction algorithm, most software uses the more simple marginal reconstruction.
 
 While it is clear that joint reconstruction is the more probabilistically correct way of inferring ancestral sequences there is less clarity about whether or not this changes the estimated sequences.
 The model based methods tested in this work are all using marginal reconstruction and therefore this will also be used in our validation.
@@ -59,6 +60,7 @@ If the model underlying the phylogeny is a clock-model, where the branch lengths
 Lastly, the actual inferred ancestral sequences are determined by a combination of the underlying substitution model, the chosen tree and its branch lengths.
 While inferring correct tree topology is also important, the correctness of the inferred ancestral sequences are the foremost important objective of a sequence reconstruction when these sequences are used for real applications involving DNA synthesis, protein expression and lab tests.
 For this reason the sole purpose of the COAR metric is to capture the correctness of the inferred ancestral sequences.
+In particular, we would like to have an inferred sequence loss function that makes sense even when the tree is incorrect.
 
 The purpose of COAR is to compare two trees with the same leaves, lets call them the true -and inferred tree.
 When performing ASR the desired result is often to reconstruct the internal nodes in the direct path going from a leaf to the root, as illustrated in figure \ref{fig:ASR_true_vs_inferred}.
@@ -81,29 +83,31 @@ The lists could be made equal lengths by adding gaps but a systematic way of add
 
 
 The basis of COAR is a list comparison progressing element wise through the list i.e. element 1 in list 1 compared to element 1 in list 2, next element 2 in list 1 compared to element 2 in list 2 etc.
-For lists of similar length the list comparison is easy, it will simply be the cumulated distance between the elements in the two list at the same position, and this corresponds to the sum of hamming distances between inferred and true ancestors.
-When lists are not equally long one or more gaps must be introduced into one of the lists in such a way that the list similarity is maximized.
+For lists of similar length the list comparison is easy, it will simply be the cumulated distance between the elements in the two list at the same position, and this corresponds to the sum of Hamming distances between inferred and true ancestors.
+When lists are not equally long one or more gaps must be introduced into one of the lists; we choose to do so in such a way that the list similarity is maximized.
 This is an alignment problem and the optimal solution has been described and solved by Needleman and Wunsch \cite{needleman1970general}.
 We restrict the global alignment result so that it has to start at the root of the tree and end at the leaf sequence because these two states are known for both the true and inferred phylogenies.
 We further restrict the Needleman-Wunsch algorithm so that gaps are only allowed to be introduced in the shortest of the two lists being aligned to force the maximum number of true vs.\ inferred node comparisons.
 With this restriction on gaps, the number of gaps is determined solely by the differences in list lengths and as long as the gap penalty is less than or equal to zero the gaps will always be at the same positions.
 Practically this means that the magnitude of the gap penalty only serves the purpose of introducing an extra penalty for inferring a wrong topology and can be adjusted to put more, or less, emphasis on tree topological correctness.
-A larger gap penalty meaning more emphasis on correctness of tree topology and vice versa.
+A larger gap penalty puts more emphasis on correctness of tree topology.
 
+%EM "mutation process" for me means something like the substitution matrix, I think "mutation history" is more what you want.
 One interpretation of the COAR value is that it is the distance between the true -and inferred mutation processes as shown in figure \ref{fig:mutation_process}.
 In this representation of an ancestral lineage the root and the leaf are two fixed states with a continuous mutation process running between them.
-The internal nodes in the ancestral lineage is discrete states in the continues process, and while on the true tree this corresponds to a single cell, on the inferred tree no such thing exists.
-Instead we can think about internal nodes on an inferred ancestral lineage as realizations along the continues mutation process defined by the inferred tree.
+The internal nodes in the ancestral lineage are discrete states in the continuous process, and while on the true tree this corresponds to a single cell, on the inferred tree they need not correspond to actual genotypes.
+Instead we can think about internal nodes on an inferred ancestral lineage as realizations along the continuous mutation process defined by the inferred tree.
 The COAR value is then a similarity measured between the true cell genotype and the inferred realizations, each sampled from the true -and inferred mutation processes respectively, and now in the case of a mismatch between the number of realizations and cells, a gap will be introduced in the alignment to compensate.
-In this view more sequences in the inferred ancestral lineage means more realization along the mutational path and vice versa.
-The important point being that that those extra realizations could in fact be correctly inferred sequences with no observations in the true phylogeny.
-For this reason the gap penalty is chosen to be zero so that the COAR value will only reflect the difference in ancestral lineages and not try to address the possible differences in tree topology.
+In this view more sequences in the inferred ancestral lineage means more realizations along the mutational path and vice versa.
+Those extra realizations could in fact be correctly inferred sequences with no observations in the true phylogeny.
+For this reason we set the gap penalty to be zero so that the COAR value will only reflect the difference in ancestral lineages and not try to address the possible differences in tree topology.
 The correctness of the tree topology can the be assessed separately by other metrics e.g.\ Robinson-Foulds distance.
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/mutation_process2.pdf}
     \caption{
         \label{fig:mutation_process}
+        %EM suggest history again
         One interpretation of the COAR value is that it is the distance between the true -and inferred mutation processes, here shown by the true -and inferred ancestral lineage nodes of an example phylogeny. The true ancestral lineage, left side, represents actual observed cells where the genotype is a known constant. The inferred ancestral lineage, right side, represents the estimated genotypes at branching points along the inferred topology. In some cases there is a mis-correspondence between observed cells in the true phylogeny and the branching points in the inferred tree. These are treated as missing realizations and ignored in the alignment of the two mutation processes.
     }
 \end{figure}
@@ -129,7 +133,7 @@ COAR is defined in the range from 0 to 1, where 0 is a perfect ancestral sequenc
 The COAR value is comparable across different trees, methods and datasets because of this normalization, and if the score is proportional to the sequence distance, COAR can be interpreted directly as the average per site error in the inferred ancestral lineage sequences.
 COAR for a single ancestral lineage can be expanded to the tree level by calculating the mean COAR value for the whole tree:
 $$
-\operatorname{mean}(\COAR) = \sum^{L_N}_{i=1} \frac{\alignscore(\leaf_i)}{\alignscore_{\min}(\leaf_i)} / L_N
+\operatorname{mean}(\COAR) = \left. \sum^{L_N}_{i=1} \frac{\alignscore(\leaf_i)}{\alignscore_{\min}(\leaf_i)} \right/ L_N
 $$
 Where $L_N$ is the number of leaves on the tree.
 
@@ -141,16 +145,14 @@ As an example of how the COAR metric works we will present a small example, summ
 The example is on the phylogeny of a B cell receptor (BCR) clonal family in which case the root sequence is a known state called the naive sequence.
 Assume that the true phylogeny is known with corresponding ancestral sequences along the tree.
 Given the leaves of this tree and their sequences a phylogeny can be inferred using any method e.g.\ maximum parsimony, maximum likelihood, Bayesian methods etc.
-We make the restriction that only one inferred tree can be evaluated i.e. if multiple equally parsimonious trees exists one should be chosen at random, or using prior expectations, and if a Bayesian method is used the maximum posterior tree or a random tree weighted according to the posterior distribution should be chosen.
+We make the restriction that only one inferred tree can be evaluated i.e. if multiple equally parsimonious trees exist one should be chosen at random, and if a Bayesian method is used the maximum posterior tree or a random tree weighted according to the posterior distribution should be chosen.
 % The true tree will often be derived from simulations while the inferred tree can be made by many different tree algorithms nevertheless these are the basic input to determine the COAR.
 
 Now take a leaf sequence on the tree and reconstruct its ancestral lineage by extracting the parent, the parent's parent, etc. until the root is reached.
 Results for the trees in figure \ref{fig:ASR_true_vs_inferred} are tabulated in table \ref{true_vs_inferred_table}.
 This ordered list of sequences constitute the reconstructed ancestral lineage for the chosen leaf and it always start at the root and ends with the leaf sequence.
 Both the true -and inferred tree may have any number of sequences in this list, however there must be as minimum 2, the root and the leaf.
-In this example the root state is known to be the naive BCR sequence, so we are imposing the restriction on the alignment that it must start with the root and end at the leaf, and that these are known states not counting towards the COAR value.
-
-%Erick stopped here
+In this example the root state is known to be the naive BCR sequence, so we are imposing the restriction on the alignment that it must start with the root and end at the leaf, and that these are known states do not count towards the COAR value.
 
 \begin{table}[ht!]
 \centering
@@ -188,16 +190,15 @@ Leaf (L)             & \texttt{TTT} & \texttt{TTT}   & 5         \\ \hline
 
 In cases of a wrongly inferred topology the true and inferred lists of ancestral lineage sequences can have different lengths, so we need a way of finding the best possible alignment between these lists.
 We know the start and end of this alignment since that is defined as the shared root and leaf sequences, but the sequences between are free to be shifted up or down to maximize the alignment fit.
-This problem is similar to that of the global sequence alignment problem solved by Needleman and Wunsch \cite{needleman1970general}.
-The solution can be implemented by dynamic programming and solved in squared time complexity.
-In this example phylogeny the calculation will be explicitly state by showing the matrix operations, but these operations also applies in the general case of the algorithm.
+As described above, we adapt the Needleman and Wunsch dynamic program \cite{needleman1970general} to solve the alignment problem in squared time complexity.
 A notable difference to the original Needleman-Wunsch algorithm is that it was intended to align two sequences of characters, like DNA or amino acids, while in this application instead of aligning a list of sequence characters a list of whole sequences are aligned.
+Here we work through an example in detail.
 
 % The first step in the alignment algorithm is to calculate a distance matrix of all pairwise distances.
 The first step in the alignment algorithm is to calculate a score matrix of all pairwise sequence comparisons.
-For this example we use the negative of the distance between sequences as a score and therefore populating the score matrix is a simple procedure of calculating hamming distances.
+For this example we use the negative of the Hamming distance between sequences as a score and therefore populating the score matrix is a simple procedure.
 However the score function can be extended to reflect different situations, like larger penalty for non-synonymous rather than synonymous mutations.
-By using simple hamming distances, we will in this example be weighting all mismatches equally.
+By using simple Hamming distances, we will in this example be weighting all mismatches equally.
 The score matrix is tabulated in table \ref{distance_matrix}.
 We use negative scores to reflect that mismatches represents a loss.
 % This matrix is called the score matrix to stress the fact that it is not exclusively for string distances but can accommodate more advanced loss functions.
@@ -246,17 +247,19 @@ Setting certain gap penalties to negative infinity is a simple way of dealing wi
 \end{tabular}
     \caption{
          \label{NW_fill_table1}
-             The starting alignment grid, initialized with the gap penalties which is negative infinity to disallow gap opening in the beginning of the alignment. The grid is filled up from left to right row by row, starting in the cells with left, top and diagonal cells filled (marked by ->).
+             The starting alignment grid, initialized with negative infinite gap penalties to disallow gap opening in the beginning of the alignment. The grid is filled up from left to right row by row, starting in the cells with left, top and diagonal cells filled (marked by ->).
              }
 \end{table}
 
-
+%EM If you want to use a short right arrow rather than an ascii one you can use http://ctan.math.washington.edu/tex-archive/fonts/stmaryrd/stmaryrd.pdf
 Then the alignment grid is filled up starting with the cell that has left, top and diagonal cells filled (marked by -> in table \ref{NW_fill_table1}) and continuing to the right side cell that also has left, top and diagonal cells filled.
 Each cell is filled up by the following equation:
+%EM up to you, but I'd say this could use some \text, etc.
 $$
 C_{i,j} = max\left\{ (C_{i-1,j} + gp_{down}); (C_{i,j-1} + gp_{right}); (C_{i-1,j-1} + SC_{i-1,j-1})  \right\}
 $$
-Moving in the order $i=1,2,3,4$ and $j=1,2,3,4,5$. Where $C_{i,j}$ is the ith row and jth column cell in the grid, $SC_{i-1,j-1}$ is the score of aligning the ith, jth elements found by look-up in the the score matrix (table \ref{distance_matrix}) and $gp_{down}$ and $gp_{right}$ is the gap penalty of the moving down and right respectively.
+%EM The following are sentence fragments.
+Moving in the order $i=1,2,3,4$ and $j=1,2,3,4,5$. Where $C_{i,j}$ is the ith row and jth column cell in the grid, $SC_{i-1,j-1}$ is the score of aligning the ith, jth elements found by look-up in the score matrix (table \ref{distance_matrix}) and $gp_{down}$ and $gp_{right}$ is the gap penalty of the moving down and right respectively.
 In this example the longest sequence list is the true ancestral lineage and therefore gaps are only allowed to be introduced into the inferred list of sequences.
 The penalty for introducing gaps in the true list of sequences is set to negative infinity to reflect this and therefore $gp_{down} = -\Inf$ and $gp_{right} = 0$.
 
@@ -278,7 +281,7 @@ The final alignment score is the number in the rightmost bottom cell.
              }
 \end{table}
 
-Last step is to traceback the best path through the alignment grid and store this alignment.
+The last step is to traceback the best path through the alignment grid and store this alignment.
 The traceback starts from the leaf sequence, in the right bottom corner, and ends with the naive sequence in the left top corner.
 A diagonal step is equivalent to a sequence match, a left move is introducing a gap character in the inferred list and a move up is introducing a gap in the true list.
 The path is found by moving backwards following the same path that was used to fill up the grid, and therefore using the same equation as to fill it, just reversed with moving from bottom right cell to top left, $i=4,3,2,1$ and $j=5,4,3,2,1$:
@@ -290,8 +293,9 @@ move_{i,j} = which\left\{ C_{i,j} = [(C_{i-1,j} + gp_{down}), (C_{i,j-1} + gp_{r
 $$
 Notice that this path has already been generated when the alignment grid was filled up and could be cached. The resulting alignment and the penalty for each position is tabulated in table \ref{NW_final_alignment}.
 
-Lastly this value is normalized by the smallest possibly alignment score assuming that all matched positions contained sequences with maximal distances i.e. no similarity, this normalized number is the COAR values and it runs between 0 to 1.
-In the presented example we only calculated the COAR value for the reconstructed ancestral lineage from one leaf node but doing the calculations on all leaves on the tree and taking the average would give the the mean COAR value for the whole tree.
+Lastly this value is normalized by the smallest legal alignment score assuming that all matched positions contained sequences with maximal distances i.e.\ no similarity.
+This normalized number is the COAR value and it runs between 0 to 1.
+In the presented example we only calculated the COAR value for the reconstructed ancestral lineage from one leaf node but doing the calculations on all leaves on the tree and taking the average would give the mean COAR value for the whole tree.
 % Doing the same calculations on all leaves on the tree and summing this will give the total alignment score of the inferred phylogeny.
 \begin{table}[ht!]
 \centering
@@ -324,9 +328,10 @@ $$
 $$
 All the pairwise combinations of leaves $l_i$ and $l_j$ ($i \neq j$) to find their true ($T_{MRCA}$) -and inferred ($I_{MRCA}$) MRCA.
 The distance between the two ancestral sequences are found with the function $\dist(\cdot, \cdot)$ and summed over all pairs.
-In this work we use the hamming distance as distance function.
+In this work we use the Hamming distance as distance function.
 
 Similar to COAR, ancestral sequences close to the root will have more influence on the result than sequences close to the tips.
+%EM Is there an inherent reason it couldn't be scaled?
 The major difference is that MRCA is not scaled and not representing the result of a lineage reconstruction and can therefore the value has no meaningful interpretation aside from measuring performance of different method on identical data.
 
 
@@ -342,7 +347,7 @@ The after sorting the list of partitions they are compared true vs.\ inferred tr
 
 \subsection{Algorithms tested}
 With the exception of a few methods there has been little published about BCR phylogeny specific software.
-Barak et al. made some vaguely defined rules written into a an algorithm they named IgTree \cite{Barak2008-fw}.
+Barak et al. made some vaguely defined rules written into an algorithm they named IgTree \cite{Barak2008-fw}.
 The description of IgTree is similar to that of maximum parsimony (MP) and it is unclear whether there is any difference at all.
 For that reason we use the MP algorithm \texttt{dnapars} from PHYLIP \cite{plotree1989phylip} as a substitute for IgTree and other methods e.g.\ Tas et al. \cite{tas2016visualizing}.
 
@@ -361,11 +366,12 @@ Lastly we also test the performance of an unpublished method that uses a likelih
 Briefly, the likelihood function is based on the assumption that the GC reaction can be modelled as a binary Galton-Watson process \cite{harris2002theory}.
 Some genotypes have many observations while others have fewer, the Galton-Watson process will favour a high abundance genotype to be the parent for a low abundance genotype.
 Each MP tree is evaluated and ranked according to its fit and then the highest likelihood tree is picked out as the GCtree inferred tree.
-
+%EM Note that this depends on having a solid estimate of the abundances, which we assume are known without error.
 
 
 \subsection{Simulated data}
 Simulations were performed using both the neutral branching process and the affinity simulation previously described in chapter 3.
+%EM did you end up using nestly? That's a separate thing.
 Both simulation, inference and evaluation was wrapped into an SCons script \cite{fomel2007reproducible} available in the codebase of \texttt{GCtree} (\url{github.com/matsengrp/gctree}).
 SCons commands used can be found in appendix C.
 
@@ -374,19 +380,18 @@ SCons commands used can be found in appendix C.
 
 
 \section{Results - comparing algorithms for B cell phylogenetic reconstruction}
-The most suitable dataset for clonal family phylogeny is dara collected from a single GC like one in Tas et al. \cite{tas2016visualizing}.
+The most suitable dataset for clonal family phylogeny is data collected from a single GC like one in Tas et al. \cite{tas2016visualizing}.
 But unlike single cell sequences most data is generated from bulk RNA extract from peripheral blood mononuclear cell (PBMC).
 To adjust the simulation parameters to recapitulate a given dataset we both used the single cell Tas dataset (see appendix B), and an HTS dataset generated from PBMCs from HIV infected individuals.
 In these HTS datasets cluster were done using partis resulting in hundreds of clonal families.
-To only isolate HIV relevant clonal families a seed sequence was used and only sequence in the same clonal family was extracted.
-Seed sequences were generated by single cell screening of the memory fraction of the PBMCs, followed by Sanger sequencing of the cells expressing HIV neutralizing antibodies.
-The size of the clonal families varied substantially as shown in figure \ref{fig:Laura-neutsim_Laura-data}, but they serve as a more realistic dataset case than the single cell data from Tas et al.
+To only isolate HIV relevant clonal families a seed sequence was used that was known from lab work to be HIV-responsive and only sequences in the same clonal family were extracted.
+These seed sequences were generated by single cell screening of the memory fraction of the PBMCs, followed by Sanger sequencing of the cells expressing HIV neutralizing antibodies.
+The size of the clonal families varied substantially as shown in figure \ref{fig:Laura-neutsim_Laura-data}, but they serve as a more realistic dataset case than the single cell data from Tas et al.\ for many cases.
 
-
-Simulation parameters are adjusted in order to recapitulate two measures: a) distribution of sequence across the length of the tree and b) how "spread out" the tree leaves.
+Simulation parameters were adjusted in order to recapitulate two measures: a) distribution of sequence across the length of the tree and b) how "spread out" the tree leaves were.
 Measure a) is captured by plotting the CDF of the distance to the naive/root sequence ((a) in figure \ref{fig:Laura-neutsim_Laura-data} and \ref{fig:Laura-affsim_Laura-data}).
 Measure b) is captured by plotting the CDF of the nearest neighbor distance ((b) in figure \ref{fig:Laura-neutsim_Laura-data} and \ref{fig:Laura-affsim_Laura-data}).
-The neutral simulation with a high $\lambda$ will naturally vary a lot early population size an therefore had no problem fitting into the large span of possible summary statistics defined by two chosen clonal family representatives from the HTS data, see figure \ref{fig:Laura-neutsim_Laura-data}.
+The neutral simulation with a high $\lambda$ will naturally vary a lot in early population size an therefore had no problem fitting into the large span of possible summary statistics defined by two chosen clonal family representatives from the HTS data, see figure \ref{fig:Laura-neutsim_Laura-data}.
 The nature of the affinity simulation forces it to have a rather constant population size defined by its carrying capacity.
 Instead the GC was down-sampled to 150 sequence and the variance in the number of observed sequences comes from the fact that some sequences are identical at DNA level and deduplicated, see figure \ref{fig:Laura-affsim_Laura-data}.
 
@@ -466,13 +471,19 @@ Again the best to worse rank would be: GCtree, dnaml, IgPhyML, Parsimony, but wi
 
 
 \section{Discussion and conclusion}
+%EM This is an unusual way to start out a discussion.
 Tree topology is not the biggest concern in this validation because often the topology is not a very important objective by itself.
 It is the reconstructed sequences and the order of these, the selection pressure etc. that is most important.
 These objectives then tend to be correlated with correct tree topology, but that does not necessarily need to be true, and therefore the main objective is to validate ASR and let the tree topology follow as a consequence of improving the ASR.
 
 The presented COAR metric is a suitable objective for ASR since it is robust to irrelevant errors in tree topology and directly interpretable as the expected per site error of sequences in a reconstructed lineage.
 The simulation study we present show that, regardless of the inference method used, the reconstruction of sequences along an ancestral lineage is robust and only rarely accumulate errors.
+%EM Don't you think that the fact that we see > 2 differences between dnapars and dnaml on real data indicates that we need to figure out a way to make the simulations harder?
 In a worst-case scenario there is an expected one nucleotide error per reconstructed sequence in a reconstructed lineage, based on affinity simulation with 4-8 sequences (including the a priori know root and leaf) in a lineage, see b) in figure \ref{fig:Laura-affsim_runstat} appendix B.
+
+%EM It's worth contrasting your simulation results with those of IgPhyML.
+%EM How did their tree sizes and lengths compare to your various simulations?
+% In fully context-dependent simulations, we also found that the HLP17 model provided an accuracy of ancestral state reconstructions that was similar to the GY94 model where h < 4, and that HLP17 noticeably improved accuracy at h = 4 (Figure S9 in File S1). While true ancestral sequences are not available for the three empirical bNAb lineages, we did observe differences between ancestral sequences reconstructed using the HLP17 and GY94 models. For each lineage, we compared the two models by calculating the mean number of amino acid differences between the predicted ancestral sequences at all internal nodes of each tree.
 
 Simulating under a neutral branching process is not realistic compared to the fast and stringent selection process which is undertaken in the GC reaction.
 The simulation with added affinity selection addresses this issue and challenges the inference methods with both epistasis and homoplasy.
@@ -480,7 +491,7 @@ Therefore it is not surprising to see that inference on affinity simulations obt
 What is surprising is that all inference methods seems to be equally effected by the imposed affinity selection.
 We would have expected a codon based model like IgPhyML to have a an advantage compared to the nucleotide based models because affinity selection is strictly on protein level, and hence there is a preference for synonymous over non-synonymous mutations that is incorporated in the model parameters of a codon model but not in a nucleotide model.
 IgPhyML should also have an advantage over the other methods due to its incorporation of AID hot/cold spot motif in its model.
-Although IgPhyML is marginalizing over motifs that span multiple codons, to achieve site independence, it should still capture some of the signal from mutational context bias.
+Although IgPhyML is marginalizing over motifs that span multiple codons to achieve site independence, it should still capture some of the signal from mutational context bias.
 Again this does not seem to improve the inference by IgPhyML over the other method.
 
 Looking at typical trees simulated from both the neutral -and affinity selected process (see trees in appendix B) it look like trees are relatively shallow i.e. the number of internal nodes from the leaf to the root is small.
@@ -491,7 +502,7 @@ This trait could explain why is there is no apparent benefit of integrating AID 
 
 The overall performance of all the evaluated inference methods is very similar.
 There is a consistent ranking that puts GCtree first, dnaml and IgPhyML second and sets Parsimony last, but it must be stressed that the difference is very small and that the performance can be regarded as practically equivalent.
-GCtree that stands out as the most consistently better performing algorithm is also dependent on the genotype abundance which is not readily available for most BCR data.
+GCtree stands out as the most consistently better performing algorithm is also dependent on the genotype abundance which is not readily available for most BCR data.
 Abundance data could potentially be extracted from standard HTS data but because of sequencing errors and primer biases these abundances are not reliable.
 With the introduction of UMIs this problem is getting addressed and it is expected that in most future datasets that the abundance information will be more reliable, giving the opportunity to integrate abundance data in methods such as GCtree to direct phylogenetic inference.
 
