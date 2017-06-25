@@ -14,20 +14,20 @@ In order to validate the correctness of phylogenetic methods, simulation studies
 Simulations are classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions, but a simulation can also be configured to have selection.
 
 There already is a large body of literature suggesting different ways of modelling the GC reaction from mechanistic models \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, to probabilistic frameworks \cite{shlomchik1998clone}, \cite{Reshetova_2017}, systems of differential equations \cite{shahaf2008antigen} and birth-death processes \cite{Balelli_2016}.
-Shlomchik et al. \cite{shlomchik1998clone} developed ``Clone,'' a simple statistical framework inspired by the intuition that CDRs are more likely to accept mutations than FRs.
+Shlomchik et al.\ \cite{shlomchik1998clone} developed ``Clone,'' a simple statistical framework inspired by the intuition that CDRs are more likely to accept mutations than FRs.
 In Clone mutations are introduced, by an intrinsic mutation rate ($\lambda$), into either CDR or FR and being either synonymous or non-synonymous with the two probabilities drawn from two Bernoulli distributions.
 This gives four categories associated with their own probability, and for each category a Poisson progeny distribution can be defined to simulate death and/or cell divisions.
-Later Kleinstein et al. \cite{kleinstein2003estimating} used Clone as a statistical framework to find the maximum likelihood estimates of its model parameters, given some real BCR sequence dataset.
+Later Kleinstein et al.\ \cite{kleinstein2003estimating} used Clone as a statistical framework to find the maximum likelihood estimates of its model parameters, given some real BCR sequence dataset.
 This resulted in consistent estimates of the rate of somatic hypermutation that have later been confirmed in multiple studies.
-A very similar model was suggested by Reshetova et al. \cite{Reshetova_2017}, but unlike Clone, authors claimed that software can be accessed on request with a permissive open source license.
-An alternative model described by Shahaf et al. \cite{shahaf2008antigen} is based on a system of differential equations and uses distance between bit strings to represent complementarity between BCR and antigen.
+A very similar model was suggested by Reshetova et al.\ \cite{Reshetova_2017}, but unlike Clone, authors claimed that software can be accessed on request with a permissive open source license.
+An alternative model described by Shahaf et al.\ \cite{shahaf2008antigen} is based on a system of differential equations and uses distance between bit strings to represent complementarity between BCR and antigen.
 Unfortunately, software implementing this model has not been released publicly.
 A very different approach is to model the GC reaction by a mechanistic model where each B cell is explicitly represented as a single entity, called an agent.
 Mechanistic models start with a set of first principal physical laws used to define the molecular behaviour of a system.
 The system is initiated with a 3 dimensional grid with a number founding cells, and then solved by discretizing into small time steps and solving the equations for diffusion, cell motility, receptor binding etc.
-Examples of mechanistic models are hyphasma, described in Robert et al. \cite{robert2017simulate}, and the model described in Wang et al. \cite{wang2015manipulating} used to explain generation of cross-reactive HIV antibodies.
+Examples of mechanistic models are hyphasma, described in Robert et al.\ \cite{robert2017simulate}, and the model described in Wang et al.\ \cite{wang2015manipulating} used to explain generation of cross-reactive HIV antibodies.
 Unfortunately both of the above examples are not publicly available.
-Childs et al. \cite{Childs_Baskerville_Cobey_2015} also used an agent based method to simulate the GC reaction and explaining the trade-offs between antigen specificity and breadth, and in addition this also appears to be one of the only GC simulation software to be published as open source somewhere in the public domain (\url{https://github.com/cobeylab/gcdynamics}).
+Childs et al.\ \cite{Childs_Baskerville_Cobey_2015} also used an agent based method to simulate the GC reaction and explaining the trade-offs between antigen specificity and breadth, and in addition this also appears to be one of the only GC simulation software to be published as open source somewhere in the public domain (\url{https://github.com/cobeylab/gcdynamics}).
 
 Regardless of software availability none of the above mentioned simulation methods are suitable for validating BCR phylogenetics and testing the effect of antigen selection on tree inference.
 While the simplistic statistical framework of Clone is appealing it does not model selection towards a known high affinity BCR, rather it models selection as a random effect of a non-synonymous mutation located in the CDR.
@@ -658,7 +658,7 @@ As a reminder, the phylogeny of the Tas. dataset is \textit{not} known but infer
     \includegraphics[width=0.8\textwidth]{figures/Tas_tree.pdf}
     \caption{
         \label{fig:Tas_tree}
-        Inferred phylogeny for the single GC dataset from Tas et al. \cite{tas2016visualizing}.
+        Inferred phylogeny for the single GC dataset from Tas et al.\ \cite{tas2016visualizing}.
         The inference method used is based on likelihood ranking of equally parsimonious trees, unpublished but implemented in the \texttt{GCtree} source code as a subprogram.
         Figure credit William S. DeWitt.
     }
@@ -722,14 +722,14 @@ In this work we have addressed this problem through a simple but yet unexplored 
 We hope that the simulation framework will be a valuable tool in the assessment of inference methods.
 
 It is interesting to see the similarities between the tree topologies of an affinity simulated tree compared to the inferred tree for the Tas et al.\ dataset.
-As it was also noted in the work of Tas et al. \cite{tas2016visualizing} this GC has undergone a clonal burst with a clear dominant genotype (abundance 17 in figure \ref{fig:Tas_tree}) having many slightly mutated offspring.
+As it was also noted in the work of Tas et al.\ \cite{tas2016visualizing} this GC has undergone a clonal burst with a clear dominant genotype (abundance 17 in figure \ref{fig:Tas_tree}) having many slightly mutated offspring.
 Clearly this topological trait is very similar to the affinity simulated tree in figure \ref{fig:Tas_affsim_example_with_runstats}, and by mapping affinity to each node it can be seen that the clonal burst happened as a result of affinity gain.
 However as they also observed in Tas et al.\ the appearance of a high affinity genotype does not guarantee a clonal burst, and as expected this is also true in the affinity simulation.
 Under the best conditions a B cell has $\lambda=2$ from which it follows that $\operatorname{Pois}(termination | \lambda=2) = 0.135$, so there is roughly a 14\% chance of a high affinity clone turning extinct.
 
 
 %The fitness function presented in this model is based on some rough assumptions about having a number of target sequences and using the distance from these as a proxy for affinity.
-%However it is possible to plug in an arbitrary fitness function based on empirical values e.g.\ the affinity values determined from ancestral reconstruction of an antibody lineage like Doria-Rose et al. \cite{Doria-Rose2014-vi}.
+%However it is possible to plug in an arbitrary fitness function based on empirical values e.g.\ the affinity values determined from ancestral reconstruction of an antibody lineage like Doria-Rose et al.\ \cite{Doria-Rose2014-vi}.
 
 
 The distribution of clones over time (e.g.\ see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}) reveals that mutations conferring a fitness advantage are quickly found and can quickly overtake the whole cell population.

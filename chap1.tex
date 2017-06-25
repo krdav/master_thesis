@@ -138,7 +138,7 @@ The extra nucleotides added in the junction between V-D and D-J are called N/P n
 Although the length of the junctions are not uniformly random, and there is a bias in the inserted nucleotides \cite{murugan2012statistical}, \cite{elhanati2015inferring}, the process adds orders of magnitude more diversity to the combinatorics of gene recombination.
 Furthermore all the junctional diversity is contained in the complementarity defining region (CDR), as opposed to the framework region (FR), see figure \ref{fig:VDJ_recomb}.
 As the name suggests the CDR is the structural region that binds the antigen, and to enable binding of a wide range of structures this must contain a lot of diversity.
-Based on a combination of gene recombination and junction diversity, and weighted by their biases, Elhanati et al. estimated that the naive repertoire is $10^{16} - 10^{18}$ productive sequences \cite{elhanati2015inferring}.
+Based on a combination of gene recombination and junction diversity, and weighted by their biases, Elhanati et al.\ estimated that the naive repertoire is $10^{16} - 10^{18}$ productive sequences \cite{elhanati2015inferring}.
 The resulting sequence of VDJ genes and N/P bases are referred to as the naive sequence to reflect that this is the stage before antigen experience and germinal center maturation explained later.
 All this diversification occurs within all individuals in the reactions of the adaptive immune system, but with the subtle difference that VDJ genes can differ between individuals.
 The different VDJ genes are called alleles and have the potential of expanding the binding breadth of the population wide BCR repertoire even further.
@@ -222,7 +222,7 @@ Structural conservation enables consistent mapping from the amino acid sequence 
 A mapping like this was first proposed as a numbering scheme where the immunoglobulin structural components are numbered and these numbers are mapped back to the linear amino acid sequence.
 First attempt on this was described by Kabat \cite{national1983sequences} and based on invariant residues and rule based matching (these rules are tabulated by Dr. Andrew Martins \url{http://www.bioinf.org.uk/abs/}).
 Unfortunately this scheme not good at handling insertion in the flexible CDR regions, e.g.\ CDR1 insertions and/or very long CDR3 \cite{martin2010protein}.
-Years later came another numbering scheme named after the first author of Clothia et al. \cite{chothia1987canonical}.
+Years later came another numbering scheme named after the first author of Clothia et al.\ \cite{chothia1987canonical}.
 The Clothia scheme was set out to correct the wrong mapping of CDR1 insertions and thereby achieve structurally consistent mapping, but later this has been updated to also accommodate structural consistent mapping of framework indels.
 
 In 2003 the IMGT numbering was proposed to unify numbering of BCRs and TCRs \cite{lefranc2003imgt}.
@@ -307,15 +307,15 @@ E.g.\ even though there is an observed relationship between clonal bursts and mu
 
 A notable case of a correction to the mechanistic understanding of the GC reaction happened recently.
 In 2012 a review by Victora, based on all previous evidence, suggested that GCs are initially colonized by little as 1-3 naive B cells \cite{victora2012germinal}.
-However just 4 year later the same author concluded in Tas et al. \cite{tas2016visualizing} that this number was largely underestimated.
+However just 4 year later the same author concluded in Tas et al.\ \cite{tas2016visualizing} that this number was largely underestimated.
 Using an elegant set of experiments, they were able to visualize the colonization of GCs in multiple lymph nodes across different animals and concludes that mice GCs are consistently being colonized by 50-200 naive B cells.
-Before the Tas et al. paper in 2016 it had been a good approximation to assume that GCs were being founded by just a single cell, and that this monoclonality would be upheld throughout the entire GC reaction.
+Before the Tas et al.\ paper in 2016 it had been a good approximation to assume that GCs were being founded by just a single cell, and that this monoclonality would be upheld throughout the entire GC reaction.
 The GC identify was therefore a convenient definition of what a B cell clone is, but this view has to be redefined with the findings that GCs are starting out as highly polyclonal, and even ends up with a substantial fraction that keeps being polyclonal throughput the whole GC reaction.
-Complicating things further, Tas et al. also observed that B cells with the same naive sequences was found across multiple GCs.
+Complicating things further, Tas et al.\ also observed that B cells with the same naive sequences was found across multiple GCs.
 It would be fair not to distinguish between B cell clones with identical naive sequences, but matured in different GCs, as long as they mature against the same antigen, because then they undergo the same selection pressure.
 But two distinct clones would need to be defined if two B cells with the same naive sequence were independently matured towards different antigens.
 However it is a) practically very difficult to distinguish clones that have identical naive sequence and b) very unlikely that the exactly same BCR nucleotide sequence will mature towards more than a single antigen.
-Therefore this impractical definition of a B cell clone is discouraged and instead, the simple definition from Ralph et al. \cite{ralph2016likelihood}, is used throughout this work.
+Therefore this impractical definition of a B cell clone is discouraged and instead, the simple definition from Ralph et al.\ \cite{ralph2016likelihood}, is used throughout this work.
 In this scheme if two different BCRs are derived from an identical naive DNA sequence, they are in the same clonal family regardless of the GC context they came from.
 
 
@@ -354,7 +354,7 @@ The contextual bias of AID was initially described as hot/cold spots defined by 
 
 It can be difficult to tease apart the different biases introduced by both AID and the DNA repair enzymes, and though the majority of the observed SHM bias most likely comes from preferential AID activity \cite{Pham_2016}, it is their combined effect that is observed as SHM during affinity maturation.
 Instead of a mechanistic model of SHM an empirical context model can be setup purely based on a large number of observed mutations and their nucleotide context.
-Such a model has been described by Yaari et al. \cite{yaari2013models} and later in an improved version called S5F \cite{cui2016model}.
+Such a model has been described by Yaari et al.\ \cite{yaari2013models} and later in an improved version called S5F \cite{cui2016model}.
 The S5F model is simply the complete set of 1024 5-mer DNA motifs and the relative probability of observing the middle base mutating.
 Given a motif and a mutation on its middle base, the S5F model also provides the probability of the nucleotide identity of the resulting mutation.
 A motif model is completely empirical and relies on the input data which is a large number of BCR sequences that have undergone SHM.
@@ -404,8 +404,8 @@ Maybe more importantly, the transcript levels can also be useful information tha
         In the first step an RT-PCR is run with template switching to introduce a UID.
         The fragments are then purified and the Illumina C7 clustering sequence, and barcode (BC), are attached to the 5'-end.
         Finally the C5 clustering sequence is attached and the library is ready for Illumina paired-end sequencing.
-        A similar (but not identical) DNA prep method was used in Stern et al. \cite{stern2014b} with figure \ref{fig:UMIread} showing the resulting data format.
-        Figure from Laustsen et al. \cite{laustsen2017exploration}.
+        A similar (but not identical) DNA prep method was used in Stern et al.\ \cite{stern2014b} with figure \ref{fig:UMIread} showing the resulting data format.
+        Figure from Laustsen et al.\ \cite{laustsen2017exploration}.
     }
 \end{figure}
 
@@ -424,7 +424,7 @@ However with the development of the 2x300bp Illumina MiSeq paired-end reads, see
     \includegraphics[width=1\textwidth]{figures/Stern2014_ReadConfiguration.pdf}
     \caption{
         \label{fig:UMIread}
-        Example of a sequencing strategy for sequencing the full variable BCR chain and parts of the constant region. The strategy is designed for Illumina paired-end reads and seen used in Stern et al. \cite{stern2014b}. Figure from pRESTO readthedocs \cite{vander2014presto}.
+        Example of a sequencing strategy for sequencing the full variable BCR chain and parts of the constant region. The strategy is designed for Illumina paired-end reads and seen used in Stern et al.\ \cite{stern2014b}. Figure from pRESTO readthedocs \cite{vander2014presto}.
     }
 \end{figure}
 
@@ -450,7 +450,7 @@ The final result should be a set of high confidence BCR sequences, and depending
     \includegraphics[width=0.5\textwidth]{figures/Stern2014_Flowchart.pdf}
     \caption{
         \label{fig:UMIread_flow}
-        Flow of the raw sequencing data through the pRESTO pipeline. This strategy is designed for Illumina paired-end reads, e.g.\ \ref{fig:UMIread}, and seen used in Stern et al. \cite{stern2014b}. From pRESTO readthedocs \cite{vander2014presto}.
+        Flow of the raw sequencing data through the pRESTO pipeline. This strategy is designed for Illumina paired-end reads, e.g.\ \ref{fig:UMIread}, and seen used in Stern et al.\ \cite{stern2014b}. From pRESTO readthedocs \cite{vander2014presto}.
     }
 \end{figure}
 
@@ -497,9 +497,9 @@ Each state has a list of emission probabilities that defines the probabilities o
 The hidden/unknown part is the identity of the states at a given position in a sequence e.g.\ when is the V gene stopping and the N/P insertion starting, like the example above.
 This is one of the question that is possible to answer using an HMM, specifically by calculating the so called Viterbi path, but what is more interesting is the inherent flexibility of an HMM to represent well known biological mechanisms in a statistical framework.
 % It is out of the scope of this work to explain the inner workings of HMMs, how to find the optimal path, estimating parameters etc.
-% For this the book by Durbin et al. \cite{durbin1998biological} is an excellent resource.
+% For this the book by Durbin et al.\ \cite{durbin1998biological} is an excellent resource.
 
-To address the problem of BCR sequence annotation Ralph et al. developed an HMM model of VDJ recombination and built it into a software called partis \cite{ralph2016consistency}.
+To address the problem of BCR sequence annotation Ralph et al.\ developed an HMM model of VDJ recombination and built it into a software called partis \cite{ralph2016consistency}.
 Using extensive simulation studies, the authors observed clear shortcomings of the purely alignment based method like IgBLAST and IMGT V-QUEST.
 Especially, alignment based methods appeared to have a low fraction of correct gene calls for the short germline genes D and J carrying a few mutations, see figure \ref{fig:partis_Jgene_comparison}.
 The length of the V gene makes it easy to correctly assign just by alignment, and therefore little performance difference was observed, however notice that this only applies for correctly calling the gene identity, regardless of allele identity.
@@ -522,7 +522,7 @@ With the more subtle variations among the alleles, there probably is an even big
 Now returning to the alignment problem exemplified in table \ref{extend_or_not}.
 The real shortcoming of using a pure alignment methods is that there is no robust way of deciding what is N/P nucleotides and what is inherited from germline genes, thereby making it very difficult to reconstruct the true naive sequence.
 A problem that is well handled by an HMM which will also, as a side effect of calculating the Viterbi path, return the maximum likelihood estimate of the naive sequence.
-The speculations were confirmed in the simulation study of Ralph et al. that showed substantial performance gains in naive sequence reconstruction using HMMs vs.\ alignment methods, see figure \ref{fig:partis_naiveseq_comparison}.
+The speculations were confirmed in the simulation study of Ralph et al.\ that showed substantial performance gains in naive sequence reconstruction using HMMs vs.\ alignment methods, see figure \ref{fig:partis_naiveseq_comparison}.
 
 \begin{figure}
     \centering
@@ -539,7 +539,7 @@ The speculations were confirmed in the simulation study of Ralph et al. that sho
 
 Next step is to partition the BCR sequences into clusters of sequence related by some definition of relatedness.
 These clusters are by some known as clones \cite{gupta2017hierarchical}, which is assumed to mean that they actually came from the same GC reaction.
-However as previously discussed the view of GCs as monoclonal is outdated \cite{tas2016visualizing}, so in this work the nomenclature from Ralph et al. \cite{ralph2016likelihood} is used, with the assumption that there is sufficient BCR diversity to distinguish clonal families exclusively based on their shared naive sequence.
+However as previously discussed the view of GCs as monoclonal is outdated \cite{tas2016visualizing}, so in this work the nomenclature from Ralph et al.\ \cite{ralph2016likelihood} is used, with the assumption that there is sufficient BCR diversity to distinguish clonal families exclusively based on their shared naive sequence.
 % Nevertheless the biologically interpretation is that all the sequences in a cluster are highly similar and share the same epitope for binding.
 Given this definition a logical first step would be to require that the assigned germline genes in a cluster to match, and indeed such simple clustering has been extensively used.
 However in acknowledgement of the uncertainty in assigning the correct D gene, only V and J genes are usually used, and regardless of their allelic variants.
@@ -571,7 +571,7 @@ The junction length is also problematic to use because it is also just a point e
 Lastly, hamming distance is weighting a mismatch in the N/P base region equally likely as a mismatch in the middle of germline gene while there is much more certainty of a real SHM event in the later case.
 In the example in figure \ref{fig:VJ_CDR3_agglomeration} VJ junction agglomeration is overestimating the number of clusters and indeed this intuition is also observed in simulation studies \cite{ralph2016likelihood}.
 
-A completely different approach is taken by Ralph et al. \cite{ralph2016likelihood}, extending on their HMM framework for germline gene annotation.
+A completely different approach is taken by Ralph et al.\ \cite{ralph2016likelihood}, extending on their HMM framework for germline gene annotation.
 They use the naive sequence as a centrality point for clustering, not in terms of hamming distance, but in the terms of likelihood.
 The HMM model is conveniently yielding a likelihood function defined over all possible naive sequences for each BCR sequence in the dataset.
 With this likelihood function it gets simple to do hypothesis testing based clustering e.g.\ to test whether a set of observed BCR sequences all belong to the same cluster through a common naive sequence ancestor, see figure \ref{fig:partis_clustering-with-likelihood_2}.
@@ -679,7 +679,7 @@ This effect is ignored in marginal reconstruction but accounted for in joint rec
 ASR is an important way of exploring the evolutionary trajectory and behaviour of ancient proteins.
 It has been used to investigate the specificity of the important cancer drug type kinase inhibitor \cite{Wilson2015-vi} and studying evolutionary trajectories of broadly neutralizing HIV antibodies \cite{Doria-Rose2014-vi}.
 Yet there has been little validation of ASR methods partly because it is difficult to test experimentally.
-An exception to this was enabled by a clever study design made by Randall et al. \cite{randall2016experimental}, using a controlled system of evolution on a single gene with sampling of ancestors, they could experimentally validate ASR inference methods on the using only the final time point.
+An exception to this was enabled by a clever study design made by Randall et al.\ \cite{randall2016experimental}, using a controlled system of evolution on a single gene with sampling of ancestors, they could experimentally validate ASR inference methods on the using only the final time point.
 Results showed high accurary of 97.17-98.88\% correct reconstruction and only small difference between chosen methods.
 
 

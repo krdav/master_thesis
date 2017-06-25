@@ -36,7 +36,7 @@ This makes it easy to find ancestral sequences by iterating through all internal
 
 However, once an ancestral sequence has been fixed to an internal node this changes the likelihood function for the rest of the tree.
 In fact all internal states are interdependent and while this is ignored in the marginal reconstruction it is taken into account in joint reconstruction by maximizing the likelihood of all ancestral states at once i.e. $a_1, a_2, \hdots, a_n = \operatorname{max}(l(a_1, a_2, \hdots, a_n | t)), a_2$.
-It is a non trivial task to minimize this likelihood for many internal nodes, and though Pupko et al. \cite{pupko2000fast} showed how to speed up the joint reconstruction algorithm, most software uses the more simple marginal reconstruction.
+It is a non trivial task to minimize this likelihood for many internal nodes, and though Pupko et al.\ \cite{pupko2000fast} showed how to speed up the joint reconstruction algorithm, most software uses the more simple marginal reconstruction.
 
 While it is clear that joint reconstruction is the more probabilistically correct way of inferring ancestral sequences there is less clarity about whether or not this changes the estimated sequences.
 The model based methods tested in this work are all using marginal reconstruction and therefore this will also be used in our validation.
@@ -347,18 +347,18 @@ The after sorting the list of partitions they are compared true vs.\ inferred tr
 
 \subsection{Algorithms tested}
 With the exception of a few methods there has been little published about BCR phylogeny specific software.
-Barak et al. made some vaguely defined rules written into an algorithm they named IgTree \cite{Barak2008-fw}.
+Barak et al.\ made some vaguely defined rules written into an algorithm they named IgTree \cite{Barak2008-fw}.
 The description of IgTree is similar to that of maximum parsimony (MP) and it is unclear whether there is any difference at all.
-For that reason we use the MP algorithm \texttt{dnapars} from PHYLIP \cite{plotree1989phylip} as a substitute for IgTree and other methods e.g.\ Tas et al. \cite{tas2016visualizing}.
+For that reason we use the MP algorithm \texttt{dnapars} from PHYLIP \cite{plotree1989phylip} as a substitute for IgTree and other methods e.g.\ Tas et al.\ \cite{tas2016visualizing}.
 
-In the paper from Doria-Rose et al. \cite{Doria-Rose2014-vi} they use the general time reversible (GTR) model implemented in MEGA5 \cite{tamura2011mega5}.
+In the paper from Doria-Rose et al.\ \cite{Doria-Rose2014-vi} they use the general time reversible (GTR) model implemented in MEGA5 \cite{tamura2011mega5}.
 Similarly Kepler \cite{Kepler2013-sy} was using \texttt{dnaml} from the PHYLIP package to infer BCR phylogenetic trees.
 To test these commonly used maximum likelihood trees we use \texttt{dnaml}.
 
-Two different models have been defined specifically for BCR evolution on protein level, the AB amino acid substitution matrix from Mirsky et al. \cite{mirsky2014antibody} and HLP17 codon model from Hoehn et al. \cite{Hoehn2016-wg}.
+Two different models have been defined specifically for BCR evolution on protein level, the AB amino acid substitution matrix from Mirsky et al.\ \cite{mirsky2014antibody} and HLP17 codon model from Hoehn et al.\ \cite{Hoehn2016-wg}.
 Both are implemented with codonPhyML \cite{gil2013codonphyml}.
 The AB substitution matrix is just a standard amino acids substitution rate matrix but fitted to substitutions observed in BCR sequences, yielding a symmetric rate matrix that assumes equilibrium.
-But recently Sheng et al. found large discrepancies between their findings and the AB substitution matrix \cite{sheng2017gene}, promoting us to exclude this from our evaluation.
+But recently Sheng et al.\ found large discrepancies between their findings and the AB substitution matrix \cite{sheng2017gene}, promoting us to exclude this from our evaluation.
 Instead we test the HLP17 model as it is implemented in the software IgPhyML (\url{github.com/kbhoehn/IgPhyML}).
 The HLP17 model is based on a GY94 model \cite{goldman1994codon} but adding parameters to account for AID hot/cold spots and thereby attempting to address the context sensitivity of SHM.
 
@@ -380,7 +380,7 @@ SCons commands used can be found in appendix C.
 
 
 \section{Results - comparing algorithms for B cell phylogenetic reconstruction}
-The most suitable dataset for clonal family phylogeny is data collected from a single GC like one in Tas et al. \cite{tas2016visualizing}.
+The most suitable dataset for clonal family phylogeny is data collected from a single GC like one in Tas et al.\ \cite{tas2016visualizing}.
 But unlike single cell sequences most data is generated from bulk RNA extract from peripheral blood mononuclear cell (PBMC).
 To adjust the simulation parameters to recapitulate a given dataset we both used the single cell Tas dataset (see appendix B), and an HTS dataset generated from PBMCs from HIV infected individuals.
 In these HTS datasets cluster were done using partis resulting in hundreds of clonal families.
@@ -498,7 +498,7 @@ Again this does not seem to improve the inference by IgPhyML over the other meth
 Looking at typical trees simulated from both the neutral -and affinity selected process (see trees in appendix B) it look like trees are relatively shallow i.e. the number of internal nodes from the leaf to the root is small.
 This of course makes it easier to get a low COAR score because there are only few states to reconstruct.
 In the affinity model trees are simulated over a long time range but still appear shallow because cells with low affinity are lost during maturation.
-On a tree this memory loss of lower affinity variants will show as a tree with a long trunk extending from the root to a bushy canopy, similar to observations made by Yaari et al. \cite{yaari2015mutation} (visualized in b) in figure \ref{fig:Laura-affsim_runstat} in appendix B).
+On a tree this memory loss of lower affinity variants will show as a tree with a long trunk extending from the root to a bushy canopy, similar to observations made by Yaari et al.\ \cite{yaari2015mutation} (visualized in b) in figure \ref{fig:Laura-affsim_runstat} in appendix B).
 This trait could explain why is there is no apparent benefit of integrating AID motifs into an inference algorithm like IgPhyML.
 
 The overall performance of all the evaluated inference methods is very similar.
