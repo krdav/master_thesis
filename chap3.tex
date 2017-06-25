@@ -483,6 +483,7 @@ In a worst-case scenario there is an expected one nucleotide error per reconstru
 
 %EM It's worth contrasting your simulation results with those of IgPhyML.
 %EM How did their tree sizes and lengths compare to your various simulations?
+%EM Also, if I understand their simulations in my quick look, it seems as though they simulated sequences on a fixed tree, which means that we lose connection between the tree structure and amino acid changes on the tree. There is also a fixed omega, which isn't a great model for when some AA subs are bad and some are good.
 % In fully context-dependent simulations, we also found that the HLP17 model provided an accuracy of ancestral state reconstructions that was similar to the GY94 model where h < 4, and that HLP17 noticeably improved accuracy at h = 4 (Figure S9 in File S1). While true ancestral sequences are not available for the three empirical bNAb lineages, we did observe differences between ancestral sequences reconstructed using the HLP17 and GY94 models. For each lineage, we compared the two models by calculating the mean number of amino acid differences between the predicted ancestral sequences at all internal nodes of each tree.
 
 Simulating under a neutral branching process is not realistic compared to the fast and stringent selection process which is undertaken in the GC reaction.
