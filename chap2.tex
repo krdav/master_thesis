@@ -10,9 +10,10 @@ Selection against binding of self antigens is mediated by the fact that binding 
 Therefore, in its most simple way, affinity maturation is driven by affinity towards the presented antigen, and all the effects also attributed to selection, like folding, stability and aggregation, is selected by means of their shared effect on antigen affinity.
 
 Affinity maturation is a strong selective pressure imposed on the B cell evolution, and this poses a challenge to phylogenetic reconstruction.
-To validate the correctness of phylogenetic methods simulation studies are among the most important tool.
+In order to validate the correctness of phylogenetic methods, simulation studies are among the most important tool.
 %EM This is a sentence fragment.
-Classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions, but simulations can also be configured to have selection.
+% @matsen What do you mean? Is this fixing it or is it more fundamental?
+Simulations are classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions, but a simulation can also be configured to have selection.
 
 There already is a large body of literature suggesting different ways of modelling the GC reaction from mechanistic models \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, to probabilistic frameworks \cite{shlomchik1998clone}, \cite{Reshetova_2017}, systems of differential equations \cite{shahaf2008antigen} and birth-death processes \cite{Balelli_2016}.
 Shlomchik et al. \cite{shlomchik1998clone} developed ``Clone,'' a simple statistical framework inspired by the intuition that CDRs are more likely to accept mutations than FRs.
@@ -273,7 +274,7 @@ The Poisson distribution will reflect this behaviour by setting $\lambda_i$ smal
 To use $\operatorname{Pois}(\lambda_i)$ as the progeny distribution we need a function transforming $B^i_{\bound}$ to $\lambda_i$: $Y(B^i_{\bound}) = \lambda_i$.
 For this purpose we can use a generalized version of the logistic function since this has the properties we need:
 \begin{equation}
-\lambda_i = Y(B^i_{\bound}) = \alpha \frac{K - \alpha}{G + Q \exp(-\beta B^i_{\bound})}
+\lambda_i = Y(B^i_{\bound}) = \alpha + \frac{K - \alpha}{G + Q \exp(-\beta B^i_{\bound})}
   \label{eq:BA_trans}
 \end{equation}
 $G$ is chosen to be the typical value of $1$.
@@ -284,16 +285,16 @@ Y(0) = 0, \ \ \ Y \left(\frac{f_{\full}}{U} \right) = 1, \ \ \ Y(f_{\full}) = 2 
   \label{eq:BA_cond}
 \end{equation}
 %EM I don't really know how to interpret "close to fully activated" besides that it gives 2-epsilon. Do we actually need f_full? Most places I only see f_full/U, or its inverse.
-Here $0 < f_{\full} \leq 1$ is the fraction of bound BCRs ($B^i_{\bound}$) that is sufficient to make the B cell close to fully activated, where close is in the sense that $Y(f_{\full})$ is close to the maximum $\lambda$ of 2.
-Therefore binding more antigen does not result in much change in the progeny distribution.
-The constant $U > 1$ in condition 2 can be adjusted to set the value of $B^i_{bound}$ resulting in $\lambda_i = 1$.
+% @matsen Yes, I would argue that f_full is part of the way the model is interpreted 
+Here $\epsilon$ can be regarded as a small value (e.g. $10^{-3}$), only added as a necessity to solve the unknown variables.
+$0 < f_{\full} \leq 1$ is the fraction of bound BCRs ($B^i_{\bound}$) sufficient to make the B cell fully activated, ignoring the negligible contribution of $\epsilon$.
+At $f_{\full}$ the highest fitness is achieved and binding more antigen will not change the progeny distribution.
+The constant $U > 1$ in condition 2 can be adjusted to set the value of $B^i_{\bound}$ resulting in $\lambda_i = 1$.
 The interpretation of $U$ is that it is the fraction of BCRs binding antigen necessary to sustain the life of the B cell, but nothing more or less.
 Using these conditions $\alpha$, $\beta$ and $Q$ can be found and the logistic function is fully defined.
-%EM alpha is the lower bound? It looks like the lower bound is 0.
-$\alpha$ can be interpreted as the lower bound of the function and is therefore expected to be negative but close to 0, unless $U$ is large in which case $\alpha$ has to adjust accordingly to a large negative value, see figure \ref{fig:T_Bbound_U}.
-$\beta$ is the growth rate, or steepness of the function, and it is coupled to the $Q$ parameter which will follow it according to the three conditions.
-%EM I find the following sentence confusing. Is it necessary?
-The steepness has to be high if saturation is reached a low $B^i_{\bound}$ making $f_{\full}$ small, see figure \ref{fig:T_Bbound_f_full}.
+% $\alpha$ can be interpreted as the lower asymptote of the function and is therefore expected to be close to 0, except the case when $U$ is large, in which $\alpha$ has to adjust to a larger negative value, see figure \ref{fig:T_Bbound_U}.
+$\alpha$ can be interpreted as the lower asymptote of the function.
+$\beta$ is the steepness of the function, and it is coupled to the $Q$ parameter, which will follow it according to the three conditions in \eqref{eq:BA_cond}.
 \vfill
 
 \begin{figure}
@@ -301,7 +302,7 @@ The steepness has to be high if saturation is reached a low $B^i_{\bound}$ makin
     \includegraphics[width=0.8\textwidth]{figures/T_Bbound_U.pdf}
     \caption{
         \label{fig:T_Bbound_U}
-        Using a constant $f_{\full} = 1$, changing the $U$ parameter in the conditions in equation \ref{eq:BA_cond} to achieve a shift of the inflection point, at $\lambda=1$, on the $B_{\bound}$ axis.
+        Using a constant $f_{\full} = 1$, changing the $U$ parameter in the conditions in \eqref{eq:BA_cond} to achieve a shift of the inflection point, at $\lambda=1$, on the $B_{\bound}$ axis.
     }
 \end{figure}
 
@@ -310,7 +311,7 @@ The steepness has to be high if saturation is reached a low $B^i_{\bound}$ makin
     \includegraphics[width=0.8\textwidth]{figures/T_Bbound_f_full.pdf}
     \caption{
         \label{fig:T_Bbound_f_full}
-        Using a constant $U = 5$, changing the $f_{\full}$ parameter in the conditions in equation \ref{eq:BA_cond} to change the point where $B_{\bound}$ reaches the largest $\lambda$.
+        Using a constant $U = 5$, changing the $f_{\full}$ parameter in the conditions in \eqref{eq:BA_cond} to change the point where $B_{\bound}$ reaches the largest $\lambda$.
     }
 \end{figure}
 
@@ -333,37 +334,28 @@ C([A_{\total}]) = U \frac{[A_{\total}] - [A]}{f_{\full}}
 \end{equation}
 The concentration of unbound antigen is determined by the affinity and concentration of BCRs.
 It is fair to assume that there are many more BCRs than antigens, so for high affinity BCRs, the majority of antigen should be in a bound state allowing for the approximation of setting $[A]=0$.
-This makes it easy to calculate the carrying capacity given equation \ref{eq:carry_cap}.
-However in the cases with low affinity the concentration of free antigen cannot be assumed zero and in such cases $[A]$ can be determined through equation \ref{eq:A_objective}.
+This makes it easy to calculate the carrying capacity given \eqref{eq:carry_cap}.
+However in the cases with low affinity the concentration of free antigen cannot be assumed zero and in such cases $[A]$ can be determined through \eqref{eq:A_objective}.
 
-%EM Here we have f_full by itself but it would seem as good to just say that it has a lot of bound antigen and this can lead to a clonal burst.
-In the situation where a newly arising mutant has higher affinity than the rest of the population the fraction of BCR binding antigen on this mutant will approach $f_{\full}$, and in the case of $f_{\full} < 1$ it is even possibly surpasses it.
-In these cases there is a probability that the clone will expand rapidly to overtake the GC population, also known as a clonal burst.
+In the situation where a newly arising mutant has higher affinity than the rest of the population the fraction of BCRs binding antigen on this mutant will approach the fitness limit ($f_{\full}$), resulting in a high probability that the clone will expand rapidly to overtake the GC population, also known as a clonal burst.
 The clonal burst has the characteristic time (average time of take over) being:
 $$
-T_{\burst} = \log_\kappa \left(\text{carrying capacity} \right) = \log_\kappa\left( U \frac{[A_{\total}] - [A]}{f_{\full}} \right)
+T_{\burst} = \log_2 \left(\text{carrying capacity} \right) = \log_2\left( U \frac{[A_{\total}] - [A]}{f_{\full}} \right)
 $$
-%EM kappa was K above, but in any case I suggest just using 2 in the equation above.
-With $\kappa = \operatorname{max}(\lambda)$ in this model fixed to 2 and $U$ and $f_{\full}$ being constants defined in the next section.
+% With $\kappa = \operatorname{max}(\lambda) = K$ but in this model fixed to $K=2$ and $U$ and $f_{\full}$ being constants defined in the next section.
 
 
 
 
 
-
-% \adcommentKD{This section will be supplemented by plots to justify the choice of parameters}
 
 \subsection{Parameter choice}
-%The choice of $f_{\full}$ determines the BCR occupancy when full activation of proliferation is achieved, but this interpretation is really just a simplification of the real biological system where multiple steps of interaction to both follicular dendritic cells and T cells are happening during the course of selection.
 The choice of $f_{\full}$ determines the BCR occupancy when full activation of proliferation is achieved.
 $f_{\full}$ does not have any known reference value so it is chosen to take a value of 1 because this is mathematically convenient.
 It turns out that the model is quite robust to different choices of $f_{\full}$ and it causes no substantial effect to change it from 1 to 0.05, see figure \ref{fig:no_effect_of_f_full}.
-Changing $f_{\full}$ will primarily effect the carrying capacity via. equation \ref{eq:carry_cap}, but by adjusting $[A_{\total}]$ to get the same carrying capacity simulations are indifferent to the choice of $f_{\full}$.
-Presumably this is because the shape of the logistic transformation $Y(\cdot)$ in equation \ref{eq:BA_trans} will remain intact, see figure \ref{fig:T_Bbound_f_full}.
-%Choosing a lower $f_{\full}$ will increase the carrying capacity but the shape of the logistic transformation $T$ will remain intact, see figure \ref{fig:T_Bbound_f_full}.
-%We have chosen $f_{\full}$ to be $1$, with the interpretation that when half of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are bound the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
-%EM ...? Doesn't the statement below leading to the Pois(1) depend on U?
-The choice of $f_{\full} = 1$ has the interpretation that when half of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are binding antigen, the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
+Changing $f_{\full}$ will primarily effect the carrying capacity via. \eqref{eq:carry_cap}, but by adjusting $[A_{\total}]$ to get the same carrying capacity simulations are indifferent to the choice of $f_{\full}$.
+Presumably this is because the shape of the logistic transformation $Y(\cdot)$ in \eqref{eq:BA_trans} will remain intact, see figure \ref{fig:T_Bbound_f_full}.
+The choice of $f_{\full} = 1$ has the interpretation that when $\frac{1}{U}$ of the BCRs on a B cell are binding antigen it has a $\operatorname{Pois}(1)$ progeny distribution and when all BCRs are binding antigen, the progeny distribution increases to $\operatorname{Pois}(2-\epsilon)$.
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[height=49mm]{figures/f_full_1.pdf}
@@ -385,7 +377,7 @@ Our expectation is that initially, when only a few BCRs are bound and stimulatio
 At some point close to $f_{\full}$, this increase in stimulus should level out because the cell can only be stimulated to $\operatorname{max}(\lambda)=2$.
 This expected shape is recapitulated by a $U=5$, see figure \ref{fig:T_Bbound_U}, and therefore this is where we fix $U$.
 
-In the transformation from distance to affinity in equation \ref{eq:hd2affy}, we have to make a choice about which exponent to use.
+In the transformation from distance to affinity in \eqref{eq:hd2affy}, we have to make a choice about which exponent to use.
 There is reason to believe that not all mutations are improving affinity with equal proportion and therefore the linear transformation is excluded.
 Another thing we would like to enforce is to disallow sequences to drift far away from both the mature -and naive sequence.
 A large sequence drift should not be very likely since it would complete abolish the binding of antigen.
@@ -496,7 +488,7 @@ For an overview see figure figure \ref{fig:tree_iteration}.
 
 
 Using tree terminology the progeny distribution of a leaf depends on all the states (i.e.\ sequences) of the non terminated leaves.
-Then by definition the affinity model needs to be updated, by re-evaluating equation \ref{eq:A_objective} and finding all $[AB]_i$, every single time a new leaf is generated, and the need for updating $[AB]_i$ will be a computational burden at large population sizes.
+Then by definition the affinity model needs to be updated, by re-evaluating \eqref{eq:A_objective} and finding all $[AB]_i$, every single time a new leaf is generated, and the need for updating $[AB]_i$ will be a computational burden at large population sizes.
 E.g.\ when simulating at a carrying capacity of 1000 cells, the vast majority of the computations are spent updating $[AB]_i$.
 An approximate solution is simply to skip some of these updates and rely the previous determination of $\lambda_i$.
 The rationale behind this is that when there is already a large population of cells, lets say 1000 non terminated leaves, then very little will change after a single leaf is evaluated.
@@ -590,7 +582,7 @@ ab = 1,\ Ab = \frac{1}{2},\ aB = \frac{1}{4},\ AB = 10
 $$
 Or any other non additive influence.
 
-In the affinity simulation there is inherent epistasis because the transformation from distance to affinity is non-linear, although we could choose to fix $k=1$ in equation \ref{eq:hd2affy} to obtain linear additive distance effects.
+In the affinity simulation there is inherent epistasis because the transformation from distance to affinity is non-linear, although we could choose to fix $k=1$ in \eqref{eq:hd2affy} to obtain linear additive distance effects.
 Regardless, if simulation is done using multiple different targets it will be epistatic with multimodal fitness landscape as illustrated in figure \ref{fig:epistasis}.
 
 \begin{figure}[!ht]
@@ -606,7 +598,7 @@ Regardless, if simulation is done using multiple different targets it will be ep
     \label{fig:epistasis}
         The effect of two target sequence on the fitness landscape.
         Two target sequences are created with varying overlap using $t_{\naive}=5$.
-        The fitness landscape is constructed using a linear distance to affinity function ($k=1$ in equation \ref{eq:hd2affy}).
+        The fitness landscape is constructed using a linear distance to affinity function ($k=1$ in \eqref{eq:hd2affy}).
         In a) no overlap makes a long distance between the two peaks in fitness, in b) peaks are getting closer when targets overlap, and in c) when the overlap is complete the two targets match and the system no longer is epistatic.
         }
 \end{figure}
