@@ -57,6 +57,7 @@ The branching process is controlled by an arbitrary discrete distribution, which
 Thus, in the below sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
 %Furthermore at each generation all progeny cells will undergo a mutation process determined by discrete distribution, again we use Poisson.
 %The number of nucleotide mutations is drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
+%EM Whoa, really? Mutability is lambda_0, while the progeny distribution parameters are lambda_i? That's a little confusing. Can we use \mu or something instead? Also, it would be great to get a little more detail on how these mutations are introduced WRT S5F. Do we draw from the poisson each step and then use S5F to decide where those mutations are?
 Furthermore at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
 Sequential mutations allow the possibility of back mutations.
 Mutations can be introduced using a uniform probability over all sites, but because it is well known that BCR sequences do not mutate uniformly at random \cite{Yeap2015-nl}, we used an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
@@ -69,6 +70,7 @@ Leaves are sampled from last time point, or in the case of 1) only terminated le
 In addition we introduced a parameter for down-sampling the cell population to $n$ cells.
 Down-sampling allows for emulating the incomplete sampling of a GC cell population, which is expected to happen in HTS data due to fall out during PCR, sequencing, quality control steps and limited sampling e.g.\ in the case of data from PBMCs.
 The five parameters of the model is tabulated in table \ref{neut_constants}, but only one of the stopping criteria can be used in a run, effectively making it a four parameter model.
+%EM I know this is for the next section, but have you considered terminating the affinity-selection simulations when one clone hits one of the target sequences exactly?
 
 \begin{table}[ht]
 \centering
@@ -603,19 +605,20 @@ Regardless, if simulation is done using multiple different targets it will be ep
 \vspace{-6mm} \hspace{26mm} (a) \hspace{39mm} (b) \hspace{39mm} (c)
     \caption{
     \label{fig:epistasis}
+    %EM I can see why you are connecting multiple targets and epistasis here, and it definitely leads to epistasis. But I think it would be clearest to start by talking about multiple targets and then say that this leads to an epistatic effect.
+    %EM BTW this is a gorgeous figure that perfectly shows what you intend.
         The effect of having two target sequences on the fitness landscape.
         Two target sequences are created with varying overlap using $t_{\naive}=5$.
         The fitness landscape is constructed using a linear distance to affinity function ($k=1$ in \eqref{eq:hd2affy}).
-        In a) no overlap makes a long distance between the two peaks in fitness, in b) peaks are getting closer when targets overlap, and in c) when the overlap is complete the two targets match and the system no longer is epistatic.
+        In a) no overlap makes a long distance between the two peaks in fitness, in b) peaks are getting closer when targets overlap, and in c) when the overlap is complete the two targets match and the system no longer is epistatic. %EM ... except for the nonlinear activation function.
         }
 \end{figure}
 
-%Erick stopped here
 
 
-Indeed the predictions of epistasis can be observed in simulation with multiple targets.
+Indeed the effects of epistasis can be observed in simulations with multiple targets.
 Often sequences are evolving towards a single target and once a few mutations have been accumulated a sequence is "committed" to this evolutionary trajectory.
-However trajectories can change when a few mutation coincides with another target as observed in figure \ref{fig:epistasis_figure}.
+However trajectories can change when a few mutations coincide with another target as observed in figure \ref{fig:epistasis_figure}.
 These observations supports the view that the presented affinity simulation is a convoluted model being a good challenge to test the assumptions of inference methods.
 
 \begin{figure}[!ht]
@@ -625,10 +628,11 @@ These observations supports the view that the presented affinity simulation is a
         \label{fig:epistasis_figure}
         Example of epistasis in a simulation run with multiple target sequences.
         Colors correspond to the affinity of the simulated cells, see figure \ref{fig:collapsed_epistasis} in appendix B for run stats.
-        Arrows show the evolutionary trajectory from lower levels in the fitness landscape to higher levels corresponding to root to tip on the phylogenetic tree, in both cases starting at the unfilled black circle.
-        Zero amino acid distances leaves are collapsed and values inside nodes correspond to the number of B cells.
+        Arrows show an evolutionary trajectory from a low levels in the fitness landscape (starting at the unfilled black circle) to a higher level.
+        %EM Just checking-- only at the leaves you collapse zero amino acid differences?
+        Zero amino acid distance leaves are collapsed and values inside nodes correspond to the number of B cells.
         Here we see that the simulation trajectory is following along several targets.
-        There is even observed a jump between two target sequences trajectories, with the highest frequency node (green 40) yielding a decedent with two amino acid mutations (green 9) that is equally close to another target, resulting in a change in mutational trajectory.
+        There is even a jump between two target sequence trajectories, with the highest frequency node (green 40) yielding a descendant with two amino acid mutations (green 9) that is equally close to another target, resulting in a change in mutational trajectory.
         }
     \end{center}
 \end{figure}
@@ -643,10 +647,11 @@ These observations supports the view that the presented affinity simulation is a
 %\clearpage
 \section{Results}
 To test the simulation protocol and whether it recapitulates real world affinity maturation we needed a dataset with a known phylogeny starting from the naive sequence as a root node.
-It is practically impossible to get such a dataset but something close was made by Tas et al. \cite{tas2016visualizing} with single cells sequencing of B cell isolated from the same GC.
-The Tas. dataset consists of 65 BCR sequences.
+It is practically impossible to get such a dataset.
+However, one of the current best single-GC data sets was made by Tas et al.\ \cite{tas2016visualizing} with single cells sequencing of B cell isolated from the same GC.
+The largest Tas et al.\ clonal family consists of 65 BCR sequences.
 Some sequences appear in multiple B cells and these are deduplicated and assigned abundances leaving a total of 42 different genotypes as observed in figure \ref{fig:Tas_tree}.
-Reminding, that the phylogeny of the Tas. dataset is \textit{not} known but inferred based on a likelihood ranking of equally parsimonious trees (unpublished data).
+As a reminder, the phylogeny of the Tas. dataset is \textit{not} known but inferred based on a likelihood ranking of equally parsimonious trees (unpublished data).
 
 \begin{figure}[!ht]
     \centering
@@ -659,20 +664,20 @@ Reminding, that the phylogeny of the Tas. dataset is \textit{not} known but infe
     }
 \end{figure}
 
-
-First we need a measure of accumulated SHM i.e.\ what is the percentage of mutations in the GC sequences and how is it distributed across the length of the tree.
+We would like to tune our simulations so as to match real data sets as much as possible.
+First we need a measure of accumulated SHM, i.e.\ what is the percentage of mutations in the GC sequences, and how is it distributed across the length of the tree.
 We plot this mutation distribution as an empirical cumulative distribution function (CDF), see a) in figure \ref{fig:Tas-affsim_Tas-data}.
 Next, genotype abundance is an important trait and indicator of clonal bursts.
 Higher abundance clones are assumed to be more fit and should therefore also yield more offspring.
-Some offspring will have a slightly different genotype with implication on fitness, hence high abundance clones should also have many different genotype descendents.
-A proxy for counting these descendents is to count the immediate neighbors being just a single Hamming edit away, see b) in figure \ref{fig:Tas-affsim_Tas-data}.
+Some offspring will have a slightly different genotype and correspondingly different fitnesses, hence high abundance clones should also have many different genotype descendants.
+A proxy for counting these descendants is to count the immediate neighbors being just a single Hamming edit away, see b) in figure \ref{fig:Tas-affsim_Tas-data}.
 If the assumption holds there should be a positive correlation between abundance and Hamming neighbors.
 
-In figure \ref{fig:Tas-affsim_Tas-data} plotting the two above mentioned measures for the Tas. dataset, and superimposing the same measures but for 100 simulation runs, shows a consistent good fit between simulations and real data.
-For this run parameters was set to $n=65$, $\lambda_0=0.25$, $t_{\naive}=5$, $T=35$ and default otherwise.
-The down-sampling parameter ($n$) was set to the same number as sampled B cells in the Tas. dataset.
-The seed naive sequence used was a V gene of 264 nt. and with the often referred SHM rate of $10^{-3}$ \cite{victora2012germinal} this gives $\lambda_0=0.264$ which was rounded to $\lambda_0=0.25$.
-Target distance ($t_{\naive}$) and simulation time ($T$) was adjusted so the simulated sequences had approx. the same minimum Hamming distance to the naive sequence.
+In figure \ref{fig:Tas-affsim_Tas-data} plotting the two above mentioned measures for the Tas dataset, and superimposing the same measures but for 100 simulation runs, shows a consistent good fit between simulations and real data.
+For this run, parameters were set to $n=65$, $\lambda_0=0.25$, $t_{\naive}=5$, $T=35$ and default otherwise.
+The down-sampling parameter ($n$) was set to the same number as sampled B cells in the Tas dataset.
+The seed naive sequence used was a V gene of 264 nt; using the commonly cited SHM rate of $10^{-3}$ \cite{victora2012germinal} this gives $\lambda_0=0.264$ which was rounded to $\lambda_0=0.25$.
+Target distance ($t_{\naive}$) and simulation time ($T$) was adjusted so the simulated sequences had approximately the same minimum Hamming distance to the naive sequence.
 
 \begin{figure}
     \begin{center}
@@ -682,15 +687,15 @@ Target distance ($t_{\naive}$) and simulation time ($T$) was adjusted so the sim
     \caption{
         \label{fig:Tas-affsim_Tas-data}
         Summary statistics for 100 simulations using $\lambda_0=0.25$, $t_{\naive}=5$, $T=35$ and $n=65$.
-        Simulations are colored and Tas. dataset is black.
+        Simulations are colored and the Tas dataset is black.
         In a) the cumulative distribution of mutations (empirical CDF) and b) the number of genotypes in 1 Hamming distance away as function of genotype abundance.
     }
 \end{figure}
 
 
-During affinity simulations the evolution of the cell population was plotted showing the emergence of new clones with higher affinity and their gradual take over of the cell population until an even more fit clone emerge, see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}.
+During affinity simulations the evolution of the cell population was plotted showing the emergence of new clones with higher affinity and their gradual take over of the cell population until an even more fit clone emerged (see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}).
 In all cases of affinity simulation there is a clear progression towards higher affinity as time passes until eventually a cell has reached the target sequence with highest affinity.
-Topologically simulated trees also capture this notion of clonal bursts with one genotype suddenly being very dominant and yielding many offspring, see figure \ref{fig:Tas_affsim_example.collapsed_runstat_color_tree}.
+Topologically simulated trees also capture this notion of clonal bursts with one genotype suddenly being very dominant and yielding many offspring (figure \ref{fig:Tas_affsim_example.collapsed_runstat_color_tree}).
 
 \begin{figure}
     \centering
@@ -714,12 +719,12 @@ Topologically simulated trees also capture this notion of clonal bursts with one
 Previously many groups have made models of the GC reaction and affinity maturation \cite{Reshetova_2017}, \cite{Shahaf_2008}, \cite{Chaudhury_2014}, \cite{Wang_Mata_2015}, but none of these have included an explicit definition of the BCR sequences.
 Neutral branching processes can easily be setup to simulation sequences undergoing the same mutational patterns as BCR sequences but they have no way of capturing the important clonal bursts happening due to the fitness gain from having a higher affinity BCR.
 In this work we have addressed this problem through a simple but yet unexplored way of integrating affinity related fitness into the simulation of BCR sequence evolution.
-A valuable tool in the assessment of inference methods.
+We hope that the simulation framework will be a valuable tool in the assessment of inference methods.
 
-It is interesting to see the similarities between the tree topologies of an affinity simulated tree compared to the inferred tree for the Tas. dataset.
+It is interesting to see the similarities between the tree topologies of an affinity simulated tree compared to the inferred tree for the Tas et al.\ dataset.
 As it was also noted in the work of Tas et al. \cite{tas2016visualizing} this GC has undergone a clonal burst with a clear dominant genotype (abundance 17 in figure \ref{fig:Tas_tree}) having many slightly mutated offspring.
-Clearly this topological trait is very similar to the affinity simulated tree in figure \ref{fig:Tas_affsim_example_with_runstats}, and by mapping affinity to each node it can be seen that the clonal burst happened as a result of affinity gain
-However as they also observed in Tas et al. appearance of a high affinity genotype does not guarantee a clonal burst, and as expected this is also true in the affinity simulation.
+Clearly this topological trait is very similar to the affinity simulated tree in figure \ref{fig:Tas_affsim_example_with_runstats}, and by mapping affinity to each node it can be seen that the clonal burst happened as a result of affinity gain.
+However as they also observed in Tas et al.\ the appearance of a high affinity genotype does not guarantee a clonal burst, and as expected this is also true in the affinity simulation.
 Under the best conditions a B cell has $\lambda=2$ from which it follows that $\operatorname{Pois}(termination | \lambda=2) = 0.135$, so there is roughly a 14\% chance of a high affinity clone turning extinct.
 
 
@@ -727,8 +732,9 @@ Under the best conditions a B cell has $\lambda=2$ from which it follows that $\
 %However it is possible to plug in an arbitrary fitness function based on empirical values e.g.\ the affinity values determined from ancestral reconstruction of an antibody lineage like Doria-Rose et al. \cite{Doria-Rose2014-vi}.
 
 
-The distribution of clones over time (e.g.\ see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}) reveals that mutations conferring a fitness advantage are quickly found and fast at overtaking the whole cell population follows.
+The distribution of clones over time (e.g.\ see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}) reveals that mutations conferring a fitness advantage are quickly found and can quickly overtake the whole cell population.
 If this represents real affinity maturation it poses the problem that the probability of a maturation trajectory will be defined by the steepness of the fitness function and not the fitness at the end of a trajectory.
+%EM You might say that we could investigate this phenomenon in later work by drawing a variety of steepnesses and final affinities from some distribution.
 There is then a way of leading maturation into a dead end that is far lower in fitness than the global optimum but too high, compared to the naive state, to be reverted.
 Indeed such a mechanism is a reasonable explanation why broadly neutralizing HIV antibodies are so rare.
 
