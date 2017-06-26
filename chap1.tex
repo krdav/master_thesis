@@ -77,7 +77,7 @@ The initial unspecific engulfing of extracellular fluids by macrophages will not
     \includegraphics[width=0.9\textwidth]{figures/innate_and_adaptive.png}
     \caption{
         \label{fig:innate_and_adaptive}
-        Connection between the innate -and adaptive immune system.
+        Connection between the innate and adaptive immune system.
         Macrophage (MAC), Polymorphonuclear leucocyte (PMN), Natural killer (NK).
         From \url{http://www.creative-diagnostics.com/innate-and-adaptive-immunity.htm}.
     }
@@ -94,7 +94,7 @@ Summarized, a typical path to adaptive immunity goes through the following steps
 \end{itemize}
 Each item on the list has many details omitted for the sake of simplicity, but one important thing missing is the concept of memory.
 The above list ends with clearance of the infection through secretion of antibodies binding the pathogen, but the process is slow and energy consuming, so keeping memory of the response is an mechanism for rapid response to repeated infections.
-Memory is build by immortalizing T -and B cells involved in the adaptive immunity reaction of the first encounter with a pathogen, then whenever the same pathogen is encountered again, memory cells will quickly start clearing of the invasion.
+Memory is build by immortalizing T and B cells involved in the adaptive immunity reaction of the first encounter with a pathogen, then whenever the same pathogen is encountered again, memory cells will quickly start clearing of the invasion.
 
 
 
@@ -111,8 +111,8 @@ Mechanisms of generation of BCRs and TCRs are so overlapping that it will be suf
 Antibodies are the secreted form of a BCRs, but the structure is the same, except for the missing membrane anchor.
 A BCR is a tetrameric protein of two identical heavy chains and two identical light chains, so called because one is longer than the other, see a) in figure \ref{fig:BCR_structure2}.
 The heavy/light chain pairs are linked together covalently by disulfide bonds, and so are the two heavy chains from each pair, making a BCR a very stable structure.
-Both heavy -and light chain starts with a variable region, defining their antigen binding capacity, and ends with a non-variable constant region (CH1-3/CL).
-%Both heavy -and light chains have a non-variable constant region (CH1-3/CL), but at the be of each chain they have a variable region which defines its antigen binding.
+Both heavy and light chain starts with a variable region, defining their antigen binding capacity, and ends with a non-variable constant region (CH1-3/CL).
+%Both heavy and light chains have a non-variable constant region (CH1-3/CL), but at the be of each chain they have a variable region which defines its antigen binding.
 The number of different variable regions found in a sample of naive (non antigen experienced) human B cells reveal that there are orders of magnitude too many different BCRs for them to be encoded as single genes on the genome.
 Instead the diversity is introduced by recombining several pieces of DNA from different loci into a full-sized variable region, see b) in figure \ref{fig:BCR_structure2}.
 These are called the germline genes and for heavy chain sequences there are three groups, the variable (V), the diversifying (D) and the joining (J).
@@ -159,7 +159,7 @@ The light chain variable sequence is also made by recombination, but light chain
 %Light chain germline genes are present in two non-identical copies named kappa and lambda, residing on different chromosomes due to a duplication event.
 Light chain germline genes are present in two non-identical copies named kappa and lambda residing on different chromosomes.
 The light chain sequence will only be expressed from one of these, the choice of which is determined by a selection process in the bone marrow.
-Pairing of a heavy -and light chain sequence yields an even larger possible naive repertoire, and with a production rate of at least $10^7$ naive B cells per day \cite{murphy2008immunobiology}, it is not surprising that the adaptive immune system can recognize nearly all foreign antigens.
+Pairing of a heavy and light chain sequence yields an even larger possible naive repertoire, and with a production rate of at least $10^7$ naive B cells per day \cite{murphy2008immunobiology}, it is not surprising that the adaptive immune system can recognize nearly all foreign antigens.
 With such a broad range of antigen binding it also becomes possible to bind endogenous proteins.
 This is not desirable because it would lead to immune attach against host cells, also known as auto-immunity, therefore the adaptive immune system has devised as selection process in the bone marrow to destroy B cells with non-functional or self antigen binding BCRs.
 A similar process is happening for T cells in the thymus.
@@ -234,7 +234,7 @@ This fixed length sequence numbering make analysis much more convenient and resu
 Therefore whenever BCR numbering is used throughout with work AHo numbering will be used if nothing else stated.
 The software ANARCI is used to annotate BCR sequences with AHo numbers \cite{dunbar2016anarci}, (\url{http://opig.stats.ox.ac.uk/webapps/sabdab-sabpred/ANARCI.php}).
 
-With a numbered BCR sequence also comes the rather arbitrary decision of how to define the framework -and complementary defining regions (CDRs/FRs).
+With a numbered BCR sequence also comes the rather arbitrary decision of how to define the framework and complementary defining regions (CDRs/FRs).
 Clearly FRs are suppose to be more conserved and less structurally flexible while CDRs are suppose to be flexible and highly variable, but putting a boundary between them is a context dependent problem, that depends on the problem at hand.
 In this work FRs are considered to be the most structurally conserved beta-sheets in the immunoglobulin domain, and CDRs are considered to be the structurally flexible loops connecting these beta-sheets.
 This definition is recapitulated in the CDR centric numbers tabulated by Andreas Pl{\"u}ckthun (\url{https://www.bioc.uzh.ch/plueckthun/antibody/Numbering/}).
@@ -429,7 +429,7 @@ However with the development of the 2x300bp Illumina MiSeq paired-end reads, see
 \end{figure}
 
 After DNA reads have acquired from sequencing, error correction becomes a substantial issue.
-In the normal uses of high throughput sequencing, errors are just averaged out by the use of consensus sequences, but in the case of BCR sequencing the inherent variability of the BCR makes it difficult to tease apart what DNA variations that can be attributed to SHM and junctional diversity, and which can be attributed to PCR -and sequencing errors.
+In the normal uses of high throughput sequencing, errors are just averaged out by the use of consensus sequences, but in the case of BCR sequencing the inherent variability of the BCR makes it difficult to tease apart what DNA variations that can be attributed to SHM and junctional diversity, and which can be attributed to PCR and sequencing errors.
 With the many different sequencing protocols there can also be large differences in the data processing afterwards, but pipelines exists that are fairly generic and will handle a wide range of data.
 A commonly used pipeline capable of processing a wide range of data is pRESTO (\url{presto.readthedocs.io}) \cite{vander2014presto}.
 Data processing with pRESTO is still sequencing protocol dependent but largely flexible and funnels down the data into the same end point regardless of protocol.
@@ -455,12 +455,12 @@ The final result should be a set of high confidence BCR sequences, and depending
 \end{figure}
 
 
-All of the above described sequencing methods suffer under the substantial caveat that they are mixing the heavy -and light chain sequences from multiple cells under the mRNA isolation step.
+All of the above described sequencing methods suffer under the substantial caveat that they are mixing the heavy and light chain sequences from multiple cells under the mRNA isolation step.
 This means that a given heavy chain sequence could have been paired with any of the light chain sequences observed for the same sample - and with high throughout sequencing this is millions.
 Pairing is not always necessary e.g.\ in some cases of diagnostics, but if the function of an antibody is to be tested the correctly paired heavy/light chain needs to be found.
-Some authors have done so using random pairing and selecting for binding via phage display \cite{glanville2009precise}, others have ranked heavy -and light chains according to their frequencies from sequencing and matched the highest frequency clones \cite{reddy2010monoclonal}, yet others have used phylogenetics to infer trees and then pair similar topology heavy/light chain trees, guided by a known pair to link to trees \cite{Zhu_undated-zz}, \cite{kwong2017antibodyomics}, \cite{huang2016identification}.
+Some authors have done so using random pairing and selecting for binding via phage display \cite{glanville2009precise}, others have ranked heavy and light chains according to their frequencies from sequencing and matched the highest frequency clones \cite{reddy2010monoclonal}, yet others have used phylogenetics to infer trees and then pair similar topology heavy/light chain trees, guided by a known pair to link to trees \cite{Zhu_undated-zz}, \cite{kwong2017antibodyomics}, \cite{huang2016identification}.
 The latest development is to use micro-droplets to capture single cells and then perform the DNA prepping steps inside these drops.
-Some authors are pairing heavy/light by physically linking them together via overlap PCR \cite{mcdaniel2016ultra}, while others are amplifying a UMI inside the drop and attaching it to both heavy -and light chains \cite{Briggs134841}.
+Some authors are pairing heavy/light by physically linking them together via overlap PCR \cite{mcdaniel2016ultra}, while others are amplifying a UMI inside the drop and attaching it to both heavy and light chains \cite{Briggs134841}.
 Though the methods for paired heavy/light chain sequencing now exists they are not widely used because of the requirement of having a micro-droplet platform and expert knowledge which is not common stock for most labs.
 Still the vast majority of public BCR sequencing data is unpaired and it will likely remain so for at least some years to come.
 
@@ -544,11 +544,11 @@ However as previously discussed the view of GCs as monoclonal is outdated \cite{
 Given this definition a logical first step would be to require that the assigned germline genes in a cluster to match, and indeed such simple clustering has been extensively used.
 However in acknowledgement of the uncertainty in assigning the correct D gene, only V and J genes are usually used, and regardless of their allelic variants.
 Furthermore the junction length or the CDR3 length has been used as second discriminator and the hamming distance between sequences is usually used as the last discriminator.
-Then the procedure for clustering is first to split BCR sequences into buckets with the same V and J gene and junction -or CDR3 length, and then sequences in each bucket are clustered based on a distance measure like hamming distance \cite{glanville2011naive}, SHM weighted hamming distance \cite{gupta2017hierarchical} or amino acid based hamming distance confined to CDR3 \cite{jiang2013lineage}.
+Then the procedure for clustering is first to split BCR sequences into buckets with the same V and J gene and junction or CDR3 length, and then sequences in each bucket are clustered based on a distance measure like hamming distance \cite{glanville2011naive}, SHM weighted hamming distance \cite{gupta2017hierarchical} or amino acid based hamming distance confined to CDR3 \cite{jiang2013lineage}.
 This method, which will be referred to as "VJ junction agglomeration", has the inherent problem of putting 100\% confidence on the V, J and junction annotations.
 However with just moderate SHM there are substantial uncertainties in the annotations and in such cases putting a hard boundary between sequences with different annotations causes problems.
 In an example, outlined in figure \ref{fig:VJ_CDR3_agglomeration}, a clonal family would wrongly be assigned into three different clusters (boxes defined by the solid gene lines) if VJ junction agglomeration is used.
-Contrarily, if integrating over germline and junctional annotation uncertainties, clustering is not restricted by the point estimate of the gene -or allele annotation, and at least has the possibility to merge all red dots into the same cluster.
+Contrarily, if integrating over germline and junctional annotation uncertainties, clustering is not restricted by the point estimate of the gene or allele annotation, and at least has the possibility to merge all red dots into the same cluster.
 
 \begin{figure}[ht]
     \centering
@@ -557,7 +557,7 @@ Contrarily, if integrating over germline and junctional annotation uncertainties
         \label{fig:VJ_CDR3_agglomeration}
         Two dimensional representation of the BCR sequence space that illustrates how V, J and junction point estimates leads to overestimation of the number of clusters.
         Vertical lines represent V genes and dashed lines represent alleles, same for J genes on the horizontal axis.
-        Naive sequences with no N/P nucleotides are in the cross section between a V -and J allele.
+        Naive sequences with no N/P nucleotides are in the cross section between a V and J allele.
         Colored with purple gradient is the range of junctional diversity extending from the V/J gene combinations, less color means lower probability, all the way to white which is sequences not within the reach of any VDJ recombination.
         The dot in blue represents a naive sequence with its SHM "breadth" marked by a yellow circle.
         Red dots are observed BCR sequences from the clonal family defined by the naive sequence.
@@ -671,7 +671,7 @@ There can also be a problem of reaching convergence in cases where sampling is d
 As a side result of inferring a phylogeny it is also possible to reconstruct the sequence of those nodes that are internal and unobserved in a tree.
 This process is known as ancestral sequence reconstruction (ASR).
 For the MP algorithm these ancestral states are part of the tree inference and found via Fitch's algorithm, but for a model based method ancestral sequences must be estimated by extracting the maximum likelihood estimate of the sequence at each internal node.
-ASR on ML trees can either be done as a marginal -or a joint reconstruction.
+ASR on ML trees can either be done as a marginal or a joint reconstruction.
 In the marginal case each node is reconstructed independently from one another, found as the ML estimate without fixing the sequence of any of the other internal nodes.
 Notice that when one ancestral sequence is found this will change likelihood function for the tree and thereby affecting all the other internal node.
 This effect is ignored in marginal reconstruction but accounted for in joint reconstruction where the problem is to find the ML estimate of all the ancestral sequences jointly.

@@ -28,8 +28,7 @@ When a phylogeny is inferred using a tree as a model for evolution, the tree wil
 An internal state is also the inferred common ancestor of a number of leaves and/or branches and therefore sometimes referred to as an ancestral state.
 Internal nodes are typically unknown, unobserved states, either explicitly defined by a sequence as in a parsimony tree, or defined by a likelihood function in model based phylogenies.
 When a likelihood function is used there is no longer a well defined ancestral sequence, instead this needs to be inferred as the maximum likelihood (ML) sequence estimate.
-%EM Is this -or and -and thing something you've seen before? Point me to it-- I'm curious!
-The ML estimate can be defined in two ways, as either marginal -or joint ML reconstruction.
+The ML estimate can be defined in two ways, as either marginal or joint ML reconstruction.
 
 In a marginal reconstruction the ML estimated sequence for one node is independent of the estimate of another i.e. $a_1 = \operatorname{max}(l(a_1 | t)), a_2 = \operatorname{max}(l(a_2 | t)), \hdots, a_n = \operatorname{max}(l(a_n | t))$, where $l$ is the likelihood function given a tree with branch length and data, $t$, and $a_i$ is an ancestral sequence on internal node $i$.
 This makes it easy to find ancestral sequences by iterating through all internal nodes in arbitrary order.
@@ -62,13 +61,13 @@ While inferring correct tree topology is also important, the correctness of the 
 For this reason the sole purpose of the COAR metric is to capture the correctness of the inferred ancestral sequences.
 In particular, we would like to have an inferred sequence loss function that makes sense even when the tree is incorrect.
 
-The purpose of COAR is to compare two trees with the same leaves, lets call them the true -and inferred tree.
+The purpose of COAR is to compare two trees with the same leaves, lets call them the true and inferred tree.
 When performing ASR the desired result is often to reconstruct the internal nodes in the direct path going from a leaf to the root, as illustrated in figure \ref{fig:ASR_true_vs_inferred}.
 This is extracted by starting at a leaf node and traversing upwards in the tree, parent by parent, until the root is reached.
 In the following, this list of sequences will be referred to as the ancestral lineage.
 The ancestral lineage is the objective so lets use this to define COAR, and lets also set COAR to be the expected per-site error in such a reconstruction.
 Now following the example in figure \ref{fig:ASR_true_vs_inferred}.
-Often there will be small differences in tree topology between the true -and inferred trees and these will likely make the number of internal states in the ancestral lineages differ.
+Often there will be small differences in tree topology between the true and inferred trees and these will likely make the number of internal states in the ancestral lineages differ.
 This makes comparison difficult because two lists of different length cannot be element wise compared.
 The lists could be made equal lengths by adding gaps but a systematic way of adding these would be needed.
 
@@ -93,22 +92,23 @@ Practically this means that the magnitude of the gap penalty only serves the pur
 A larger gap penalty puts more emphasis on correctness of tree topology.
 
 %EM "mutation process" for me means something like the substitution matrix, I think "mutation history" is more what you want.
-One interpretation of the COAR value is that it is the distance between the true -and inferred mutation processes as shown in figure \ref{fig:mutation_process}.
+% @matsen I just married you two words ;) When talking about observations along a process it is referred to as the history.
+One interpretation of the COAR value is that it is the distance between the true and inferred mutation histories as shown in figure \ref{fig:mutation_process}.
 In this representation of an ancestral lineage the root and the leaf are two fixed states with a continuous mutation process running between them.
-The internal nodes in the ancestral lineage are discrete states in the continuous process, and while on the true tree this corresponds to a single cell, on the inferred tree they need not correspond to actual genotypes.
+The internal nodes in the ancestral lineage are discrete states in the continuous process, and while on the true tree this corresponds to a single cell, on the inferred tree they need not correspond to actual observed genotypes.
 Instead we can think about internal nodes on an inferred ancestral lineage as realizations along the continuous mutation process defined by the inferred tree.
-The COAR value is then a similarity measured between the true cell genotype and the inferred realizations, each sampled from the true -and inferred mutation processes respectively, and now in the case of a mismatch between the number of realizations and cells, a gap will be introduced in the alignment to compensate.
+The COAR value is then a similarity measured between the true cell genotype and the inferred realizations, each sampled from the true and inferred mutation processes respectively, and now in the case of a mismatch between the number of realizations and cells, a gap will be introduced in the alignment to compensate.
 In this view more sequences in the inferred ancestral lineage means more realizations along the mutational path and vice versa.
-Those extra realizations could in fact be correctly inferred sequences with no observations in the true phylogeny.
-For this reason we set the gap penalty to be zero so that the COAR value will only reflect the difference in ancestral lineages and not try to address the possible differences in tree topology.
-The correctness of the tree topology can the be assessed separately by other metrics e.g.\ Robinson-Foulds distance.
+Those extra realizations could in fact be correctly inferred sequences with no cell observations on the true phylogeny.
+For this reason we set the gap penalty to be zero so that the COAR value will only reflect the difference in ancestral lineages and be indifferent to the possible differences in tree topology.
+The correctness of the tree topology can the be assessed separately by other metrics such as Robinson-Foulds distance.
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/mutation_process2.pdf}
     \caption{
         \label{fig:mutation_process}
         %EM suggest history again
-        One interpretation of the COAR value is that it is the distance between the true -and inferred mutation processes, here shown by the true -and inferred ancestral lineage nodes of an example phylogeny. The true ancestral lineage, left side, represents actual observed cells where the genotype is a known constant. The inferred ancestral lineage, right side, represents the estimated genotypes at branching points along the inferred topology. In some cases there is a mis-correspondence between observed cells in the true phylogeny and the branching points in the inferred tree. These are treated as missing realizations and ignored in the alignment of the two mutation processes.
+        One interpretation of the COAR value is that it is the distance between the true and inferred mutation histories, here shown by the true and inferred ancestral lineage nodes of an example phylogeny. The true ancestral lineage (left side) represents actual observed cells where the genotype is a known constant. The inferred ancestral lineage (right side) represents the estimated genotypes at branching points along the inferred topology. In some cases there is a mis-correspondence between observed cells in the true phylogeny and the branching points in the inferred tree. These are treated as missing realizations and ignored in the alignment of the two mutation histories.
     }
 \end{figure}
 
@@ -118,7 +118,7 @@ The correctness of the tree topology can the be assessed separately by other met
 
 %%% For phylogenies with known roots
 %The ordered list of sequences constitute the reconstructed ancestral lineage for the leaves picked and it always start with the root sequence and ends with the leaf.
-% The both the true -and inferred tree may have any number of sequences in this list however there must be as minimum 2; the root and the leaf.
+% The both the true and inferred tree may have any number of sequences in this list however there must be as minimum 2; the root and the leaf.
 
 
 Using the aligned ancestral lineages it is now possible to derive a score, similar to a sequence alignment score, and then normalizing the alignment score to the smallest possible alignment score will give our measure for correctness of ancestral reconstruction.
@@ -151,7 +151,7 @@ We make the restriction that only one inferred tree can be evaluated i.e. if mul
 Now take a leaf sequence on the tree and reconstruct its ancestral lineage by extracting the parent, the parent's parent, etc. until the root is reached.
 Results for the trees in figure \ref{fig:ASR_true_vs_inferred} are tabulated in table \ref{true_vs_inferred_table}.
 This ordered list of sequences constitute the reconstructed ancestral lineage for the chosen leaf and it always start at the root and ends with the leaf sequence.
-Both the true -and inferred tree may have any number of sequences in this list, however there must be as minimum 2, the root and the leaf.
+Both the true and inferred tree may have any number of sequences in this list, however there must be as minimum 2, the root and the leaf.
 In this example the root state is known to be the naive BCR sequence, so we are imposing the restriction on the alignment that it must start with the root and end at the leaf, and that these are known states do not count towards the COAR value.
 
 \begin{table}[ht!]
@@ -165,7 +165,7 @@ Leaf (L)             & \texttt{TTT} & \texttt{TTT}         \\ \hline
 \end{tabular}
     \caption{
          \label{true_vs_inferred_table}
-             Reconstructed ancestral lineage for true -and inferred trees as shown in figure \ref{fig:ASR_true_vs_inferred}.
+             Reconstructed ancestral lineage for true and inferred trees as shown in figure \ref{fig:ASR_true_vs_inferred}.
              }
 \end{table}
 
@@ -241,27 +241,24 @@ Setting certain gap penalties to negative infinity is a simple way of dealing wi
 \rowcolor[HTML]{EFEFEF}
                                  & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}-} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}N} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}$A_{1t}$} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}$A_{2t}$} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}L} \\ \hline
 \cellcolor[HTML]{EFEFEF}-        & 0                                              & -Inf                                            & -Inf                                                   & -Inf                                                   & -Inf                                            \\ \hline
-\cellcolor[HTML]{EFEFEF}N        & -Inf                                            & ->                                            &                                                    &                                                    &                                             \\ \hline
+\cellcolor[HTML]{EFEFEF}N        & -Inf                                            & $\rightarrowtriangle$                                            &                                                    &                                                    &                                             \\ \hline
 \cellcolor[HTML]{EFEFEF}$A_{1i}$ & -Inf                                            &                                             &                                                    &                                                    &                                             \\ \hline
 \cellcolor[HTML]{EFEFEF}L        & -Inf                                            &                                             &                                                    &                                                    &                                             \\ \hline
 \end{tabular}
     \caption{
          \label{NW_fill_table1}
-             The starting alignment grid, initialized with negative infinite gap penalties to disallow gap opening in the beginning of the alignment. The grid is filled up from left to right row by row, starting in the cells with left, top and diagonal cells filled (marked by ->).
+             The starting alignment grid, initialized with negative infinite gap penalties to disallow gap opening in the beginning of the alignment. The grid is filled up from left to right row by row, starting in the cells with left, top and diagonal cells filled (marked by $\rightarrowtriangle$).
              }
 \end{table}
 
-%EM If you want to use a short right arrow rather than an ascii one you can use http://ctan.math.washington.edu/tex-archive/fonts/stmaryrd/stmaryrd.pdf
-Then the alignment grid is filled up starting with the cell that has left, top and diagonal cells filled (marked by -> in table \ref{NW_fill_table1}) and continuing to the right side cell that also has left, top and diagonal cells filled.
-Each cell is filled up by the following equation:
-%EM up to you, but I'd say this could use some \text, etc.
+Then the alignment grid is filled up, starting with the cell that has left, top and diagonal cells filled (marked by $\rightarrowtriangle$ in table \ref{NW_fill_table1}) and continuing to the rightmost cell.
+Cells are filled up by the following equation:
 $$
-C_{i,j} = max\left\{ (C_{i-1,j} + gp_{down}); (C_{i,j-1} + gp_{right}); (C_{i-1,j-1} + SC_{i-1,j-1})  \right\}
+C_{i,j} = max\left\{ (C_{i-1,j} + gp_{\text{down}}); (C_{i,j-1} + gp_{\text{right}}); (C_{i-1,j-1} + S_{i-1,j-1})  \right\}
 $$
-%EM The following are sentence fragments.
-Moving in the order $i=1,2,3,4$ and $j=1,2,3,4,5$. Where $C_{i,j}$ is the ith row and jth column cell in the grid, $SC_{i-1,j-1}$ is the score of aligning the ith, jth elements found by look-up in the score matrix (table \ref{distance_matrix}) and $gp_{down}$ and $gp_{right}$ is the gap penalty of the moving down and right respectively.
+Cells are iterated through in the order $i=1,2,3,4$ and $j=1,2,3,4,5$, where $C_{i,j}$ is the $i$th row and $j$th column cell in the grid, $S_{i-1,j-1}$ is the score of aligning the $i$th, $j$th elements found by look-up in the score matrix (table \ref{distance_matrix}) and $gp_{\text{down}}$ and $gp_{\text{right}}$ is the gap penalty of the moving down and right respectively.
 In this example the longest sequence list is the true ancestral lineage and therefore gaps are only allowed to be introduced into the inferred list of sequences.
-The penalty for introducing gaps in the true list of sequences is set to negative infinity to reflect this and therefore $gp_{down} = -\Inf$ and $gp_{right} = 0$.
+The penalty for introducing gaps in the true list of sequences is set to negative infinity to reflect this and therefore $gp_{\text{down}} = -\Inf$ and $gp_{\text{right}} = 0$.
 
 The grid is filled and results store in table \ref{NW_full_table}.
 The final alignment score is the number in the rightmost bottom cell.
@@ -285,11 +282,8 @@ The last step is to traceback the best path through the alignment grid and store
 The traceback starts from the leaf sequence, in the right bottom corner, and ends with the naive sequence in the left top corner.
 A diagonal step is equivalent to a sequence match, a left move is introducing a gap character in the inferred list and a move up is introducing a gap in the true list.
 The path is found by moving backwards following the same path that was used to fill up the grid, and therefore using the same equation as to fill it, just reversed with moving from bottom right cell to top left, $i=4,3,2,1$ and $j=5,4,3,2,1$:
-%$$
-%move_{i,j} = which\left\{ (C_{i-1,j} + gp_{down} = C_{i,j}); (C_{i,j-1} + %gp_{right} = C_{i,j}); (C_{i-1,j-1 } + SC_{i-1,j-1} = C_{i,j})  \right\}
-%$$
 $$
-move_{i,j} = which\left\{ C_{i,j} = [(C_{i-1,j} + gp_{down}), (C_{i,j-1} + gp_{right}), (C_{i-1,j-1 } + SC_{i-1,j-1})] \right\}
+\text{move}_{i,j} = \text{which}\left\{ C_{i,j} = [(C_{i-1,j} + gp_{\text{down}}), (C_{i,j-1} + gp_{\text{right}}), (C_{i-1,j-1 } + S_{i-1,j-1})] \right\}
 $$
 Notice that this path has already been generated when the alignment grid was filled up and could be cached. The resulting alignment and the penalty for each position is tabulated in table \ref{NW_final_alignment}.
 
@@ -324,9 +318,9 @@ As an alternative to COAR we are also using a measure named the "most recent com
 In this more simple measure of correctness of ASR the MRCA ancestral sequence between two leaves are found and compared in the true vs.\ inferred phylogeny.
 By iterating through all pairwise combinations of leaves the MRCA distance can be found as the sum:
 $$
-\MRCA_{\dist} = \sum_{i=1}^{N} \sum_{j=i+1}^{N} \dist(T_{MRCA}(l_i, l_j), I_{MRCA}(l_i, l_j))
+\MRCA_{\dist} = \sum_{i=1}^{N} \sum_{j=i+1}^{N} \dist(T_{\MRCA}(l_i, l_j), I_{\MRCA}(l_i, l_j))
 $$
-All the pairwise combinations of leaves $l_i$ and $l_j$ ($i \neq j$) to find their true ($T_{MRCA}$) -and inferred ($I_{MRCA}$) MRCA.
+All the pairwise combinations of leaves $l_i$ and $l_j$ ($i \neq j$) to find their true ($T_{\MRCA}$) and inferred ($I_{\MRCA}$) MRCA.
 The distance between the two ancestral sequences are found with the function $\dist(\cdot, \cdot)$ and summed over all pairs.
 In this work we use the Hamming distance as distance function.
 
@@ -405,7 +399,7 @@ Instead the GC was down-sampled to 150 sequence and the variance in the number o
         Summary statistics for the unique sequences simulated under a neutral model fitted to HTS data.
         The two thick dark grey lines represents the characteristics of two clonal families extracted by partis seed clustering on HTS data.
         Smaller light grey lines are showing 1 of the 100 simulated datasets.
-        Non default parameters used: $T=5$, $\lambda=2.5$, $\lambda_{mut}=3$
+        Non default parameters used: $T=5$, $\lambda=2.5$, $\lambda_{\mut}=3$
     }
 \end{figure}
 
@@ -419,7 +413,7 @@ Instead the GC was down-sampled to 150 sequence and the variance in the number o
         Summary statistics for the unique sequences simulated under the affinity model fitted to HTS data.
         The two thick dark grey lines represents the characteristics of two clonal families extracted by partis seed clustering on HTS data.
         Smaller light grey lines are showing 1 of the 100 simulated datasets.
-        Non default parameters used: $T=90$, $n=150$, $\lambda_{mut}=0.25$
+        Non default parameters used: $T=90$, $n=150$, $\lambda_{\mut}=0.25$
     }
 \end{figure}
 
@@ -495,7 +489,7 @@ IgPhyML should also have an advantage over the other methods due to its incorpor
 Although IgPhyML is marginalizing over motifs that span multiple codons to achieve site independence, it should still capture some of the signal from mutational context bias.
 Again this does not seem to improve the inference by IgPhyML over the other method.
 
-Looking at typical trees simulated from both the neutral -and affinity selected process (see trees in appendix B) it look like trees are relatively shallow i.e. the number of internal nodes from the leaf to the root is small.
+Looking at typical trees simulated from both the neutral and affinity selected process (see trees in appendix B) it look like trees are relatively shallow i.e. the number of internal nodes from the leaf to the root is small.
 This of course makes it easier to get a low COAR score because there are only few states to reconstruct.
 In the affinity model trees are simulated over a long time range but still appear shallow because cells with low affinity are lost during maturation.
 On a tree this memory loss of lower affinity variants will show as a tree with a long trunk extending from the root to a bushy canopy, similar to observations made by Yaari et al.\ \cite{yaari2015mutation} (visualized in b) in figure \ref{fig:Laura-affsim_runstat} in appendix B).
