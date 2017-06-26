@@ -65,8 +65,6 @@ Leaves are sampled from last time point, or in the case of 1) only terminated le
 In addition we introduced a parameter for down-sampling the cell population to $n$ cells.
 Down-sampling allows for emulating the incomplete sampling of a GC cell population, which is expected in HTS data due to fall out during PCR, sequencing, quality control steps and limited sampling e.g.\ in the case of data from mRNA extracted from PBMCs.
 The five parameters of the model is tabulated in table \ref{neut_constants}, but only one of the stopping criteria can be used in a run, effectively making it a four parameter model.
-%EM I know this is for the next section, but have you considered terminating the affinity-selection simulations when one clone hits one of the target sequences exactly?
-% @matsen No, but that is a good idea - another one to the list. Nice and easy to implement.
 
 \begin{table}[ht]
 \centering
@@ -288,8 +286,6 @@ $\alpha$, $\beta$, $Q$ and $U$ are fit to fulfill three conditions:
 Y(0) = 0, \ \ \ Y \left(\frac{f_{\full}}{U} \right) = 1, \ \ \ Y(f_{\full}) = 2 - \epsilon
   \label{eq:BA_cond}
 \end{equation}
-%EM Why is epsilon a necessity?
-% @matsen Is this more clear? It really is an implementation detail, and I didn't want to loose focus to it, but it could be equally confusing if the epsilon is not introduced.
 The solution is undefined in $Y(f_{\full}) = 2$ because the function is asymptotically growing towards 2, therefore $\epsilon$ can be regarded as a small value (e.g. $10^{-3}$) so that $Y(f_{\full}) \approx 2$ but having a defined solution.
 $0 < f_{\full} \leq 1$ is the fraction of bound BCRs ($B^i_{\bound}$) sufficient to make the B cell fully activated, ignoring the negligible contribution of $\epsilon$.
 At $f_{\full}$ the highest fitness is achieved and binding more antigen will not change the progeny distribution.
@@ -565,12 +561,11 @@ $n$ & all & Down-sampled number of sequences
 
 
 \subsubsection{The epistatic effects of having multiple mature targets}
-%EM To be honest I don't really see why epistatic effects are the clearest way to motivate multiple targets. I think you just mean that there are a variety of number of ways in which the antibody can fit the antigen.
-% @matsen I agree. Actually I mostly investigated epistasis because my Danish supervisor asked me about it.
 A BCR is a highly dynamic structure that can bind a single antigen in many different ways, it is therefore also likely that the GC maturation would end up producing different BCRs if replicating the process.
 This can be thought of as a multimodal fitness landscape, and it can be emulated by introducing multiple targets for the affinity simulation.
 %EM We can have non-additive but non-multimodal fitness landscapes, so they aren't quite equivalent.
-Multimodality in the fitness landscape follows from epistasis, which is defined as non additive interaction between mutations, and is widely observed in nature e.g.\ the evolution of influenza nucleoprotein \cite{gong2013stability}.
+% @matsen Yes, I also meant to say it the other way around
+Multimodality in the fitness landscape results in epistasis, which is defined as non additive interaction between mutations, and is widely observed in nature e.g.\ the evolution of influenza nucleoprotein \cite{gong2013stability}.
 The manifestations of epistasis can be different, but here is a simple example where the fitness is shown for various genotypes:
 $$
 ab = 1,\ Ab = 1,\ aB = 1,\ AB = 10
@@ -729,8 +724,6 @@ Under the best conditions a B cell has $\lambda=2$, from which it follows that $
 
 The distribution of clones over time (e.g.\ see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}) reveals that mutations conferring a fitness advantage through higher affinity are quickly found and can quickly overtake the whole GC population.
 If this represents the events of real affinity maturation it poses the problem, that the probability of completing a maturation trajectory will be defined by the steepness of the fitness function, and not the fitness at the end of a trajectory.
-%EM You might say that we could investigate this phenomenon in later work by drawing a variety of steepnesses and final affinities from some distribution.
-% @matsen Good idea! I think I will do this in the perspective instead of here.
 This would be a way of leading maturation into a dead end, far lower in fitness than the global optimum, but too high to be reverted backwards towards the naive sequence.
 Indeed such a mechanism is a reasonable, although not the only, explanation why broadly neutralizing HIV antibodies are so rare, while their typical germline usage is normal \cite{scheepers2015ability}.
 
