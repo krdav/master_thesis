@@ -3,7 +3,7 @@
 \section{Introduction}
 Antibodies have an important role in adaptive immunity by specifically binding to and neutralizing invading pathogens like bacteria and viruses.
 Developing specific antibodies involves reactions across the entire immune system, but it is B cells that mature and secrete antibodies, after undergoing several rounds of selections in the bone marrow and the germinal centers (GCs).
-B cells undergoing GC affinity maturation express antibodies as B cell receptors (BCRs), and these are subject to a strict selection scheme, where many different factors come into play e.g.\ antigen affinity, receptor expression -and folding, codon choice affecting translation rates and affinity to self antigens.
+B cells undergoing GC affinity maturation express antibodies as B cell receptors (BCRs), and these are subject to a strict selection scheme, where many different factors come into play e.g.\ antigen affinity, receptor expression and folding, codon choice affecting translation rates and affinity to self antigens.
 All these factors leads back to the same thing: the ability to bind antigen, and this is measured by nearby T cells, which will be affecting the mutual probabilities of proliferation or apoptosis \cite{Bannard_Cyster_2017}, \cite{victora2012germinal}.
 As an example in a GC there is a direct T cell mediated selection for higher BCR affinity by means of sequestering more antigen.
 Selection against binding of self antigens is mediated by the fact that binding self antigens will block binding of pathogen antigens, resulting in decreased T cell help.
@@ -54,7 +54,7 @@ It can be viewed as a model of cell divisions, where at each generation a cell c
 The neutrality assumption lies in the fact that the mutations introduced will have no fitness effect.
 The root sequence is given at initialization as a starting point to evolve through a stochastic branching process, controlled by an arbitrary discrete distribution, which in this case we take to be a Poisson distribution, due to its convenient mathematical properties.
 Thus, in the below sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
-Furthermore at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from another Poisson distribution ($\operatorname{Pois}(\lambda_{mut})$) and then introduced sequentially into the sequence given a substitution model.
+Furthermore at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from another Poisson distribution ($\operatorname{Pois}(\lambda_{\mut})$) and then introduced sequentially into the sequence given a substitution model.
 By using sequential introduction of mutations we allow the possibility of back mutations.
 A possible possible choice of substitution model is a uniform probability over all sites and substitutions, but because it is well known that BCR sequences do not mutate uniformly at random \cite{Yeap2015-nl}, we use an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
 The S5F model describes mutability of the middle base of all 5-mer DNA motifs, and for each motif, the base preferences given a mutation i.e.\ if a random draw from the S5F site mutabilities of the sequence chose to mutate the 5-mer \texttt{AAAAA}, then the S5F model will also provides a list of probabilities for each middle base substitutions, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, probabilities summing to 1.
@@ -73,7 +73,7 @@ The five parameters of the model is tabulated in table \ref{neut_constants}, but
 \begin{tabular}{ll}
 Parameter    & Description \\ \hline
 $\lambda$ & $\operatorname{Pois}(\lambda)$ progeny distribution \\
-$\lambda_{mut}$ & $\operatorname{Pois}(\lambda_{mut})$ mutation distribution \\
+$\lambda_{\mut}$ & $\operatorname{Pois}(\lambda_{\mut})$ mutation distribution \\
 $T$ & Stopping time \\
 $N$ & Stopping number of sequences \\
 $n$ & Down-sampled number of sequences
@@ -161,7 +161,7 @@ We are modelling the binding equilibrium between free antigen ($[A]$), the free 
 \end{equation}
 
 \noindent
-The on -and off rate of binding is the expressed as constants $k_{\on}$ and $k_{\off}$. Affinity is the ratio of substrate and reactants at equilibrium, which is the same as the fraction between on vs.\ off rate:
+The on and off rate of binding is the expressed as constants $k_{\on}$ and $k_{\off}$. Affinity is the ratio of substrate and reactants at equilibrium, which is the same as the fraction between on vs.\ off rate:
 \begin{equation}
 K_d \equiv \frac{k_{\off}}{k_{\on}} = \frac{[A] [B]}{[AB]}
   \label{eq:Kd_def}
@@ -249,14 +249,14 @@ These conditions are satisfied by:
 \Affinity(\Bseq, \Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d + \left ( \frac{d}{t_{\naive}} \right )^k (K^{\naive}_d - K^{\mature}_d)
 \label{eq:hd2affy}
 \end{equation}
-Where $d = \operatorname{dist}(\Bseq, \Tseq)$ is the distance between BCR -and target sequence and $t_{\naive} = \operatorname{dist}(\Nseq, \Tseq)$ is the distance between naive -and target sequence.
+Where $d = \operatorname{dist}(\Bseq, \Tseq)$ is the distance between BCR and target sequence and $t_{\naive} = \operatorname{dist}(\Nseq, \Tseq)$ is the distance between naive and target sequence.
 The exponent, $k$, can be chosen to adjust the mapping between distance and affinity, with the restriction that $0 < k < \infty$ (figure \ref{fig:hd2affy}).
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{figures/hd2affy.pdf}
     \caption{
         \label{fig:hd2affy}
-        Varying the exponent $k$ in \eqref{eq:hd2affy} to achieve different mappings between distance and affinity. Naive -and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
+        Varying the exponent $k$ in \eqref{eq:hd2affy} to achieve different mappings between distance and affinity. Naive and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
     }
 \end{figure}
 
@@ -345,7 +345,7 @@ However in the cases with low affinity the concentration of free antigen cannot 
 
 %EM But f_full isn't the fitness limit-- which makes this statement confusing.
 % @matsen It is the fitness limit! epsilon can just be adjusted accordingly. Does the minus epsilon do the job? I was intentionally not mentioning epsilon because it, practically speaking, has no effect. 
-In the situation where a newly arising mutant has higher affinity than the rest of the population the fraction of BCRs binding antigen on this mutant will approach the fitness limit ($f_{\full} - \epsilon$), resulting in a high probability that the clone will expand rapidly to overtake the GC population, also known as a clonal burst.
+In the situation where a newly arising mutant has higher affinity than the rest of the population the fraction of BCRs binding antigen on this mutant will approach $f_{\full}$, resulting in a high probability that the clone will expand rapidly to overtake the GC population, also known as a clonal burst.
 The clonal burst has the characteristic time (average time of take over) being:
 $$
 T_{\burst} = \log_2 \left(\text{carrying capacity} \right) = \log_2\left( U \frac{[A_{\total}] - [A]}{f_{\full}} \right)
@@ -389,7 +389,7 @@ The choice of $f_{\full} = 1$ has the interpretation that when $\frac{1}{U}$ of 
 
 In the transformation from distance to affinity in \eqref{eq:hd2affy}, we have to make a choice about which exponent to use.
 There is reason to believe that not all mutations are improving affinity with equal proportion and therefore the linear transformation is excluded.
-Another thing we would like to enforce is to disallow sequences to drift far away from both the mature -and naive sequence.
+Another thing we would like to enforce is to disallow sequences to drift far away from both the mature and naive sequence.
 A large sequence drift should not be very likely since it would complete abolish the binding of antigen.
 For this reason it is preferred to have an exponent $k>1$.
 We choose $k=2$ since this puts an extra penalty on simulated sequences that are drifting, without putting an excessive emphasis on the first two steps of approaching the mature sequence, see \ref{fig:hd2affy}.
@@ -397,12 +397,12 @@ We choose $k=2$ since this puts an extra penalty on simulated sequences that are
 The logistic function is chosen to yield a maximum $\lambda$ of 2 since this would correspond to an average max progeny of 2 cells yielding a population exponentially increasing by $2^t$, which is a standard exponential population growth.
 %A $\operatorname{Pois}(2)$ progeny distribution is equal to saying that on average cells divide once per generation and that the total population is exponentially increasing by $2^t$, which is a standard exponential population growth.
 One useful feature of the logistic function is that it has a notion of maximum signal i.e.\ when more antigen binding does not give more signal.
-This flattening out is asymptotic approaching 2 which mean that the maximum growth rate of $\lambda=2$, is not reached completely at $f_{\full}$, so to fit the function we have to allow for this by choosing a small $\epsilon$ that make $Y(f_{\full})$ practically equivalent to 2.
+This flattening out is asymptotic approaching 2 which mean that the maximum growth rate of $\lambda=2$, is not reached completely at $f_{\full}$, so to fit the function we have to allow for this by choosing a small $\epsilon$ that makes $Y(f_{\full})$ practically equivalent to 2.
 Here we choose $\epsilon=\frac{1}{1000}$ meaning that $Y(f_{\full}) = \frac{1999}{1000}$.
 
 Next we need to find some realistic numbers for the constants such as affinity, carrying capacity and $B^i_{\total}$.
 First lets consider affinity.
-$K_d$ for a naive sequence is likely in the low micro molar range range of $10^{-6} - 10^{-7} M$, while the mature affinity is in the nano -or subnano molar range of $10^{-8} - 10^{-10} M$ \cite{berek1987mutation} ($M$ is used to denote molar concentration).
+$K_d$ for a naive sequence is likely in the low micro molar range range of $10^{-6} - 10^{-7} M$, while the mature affinity is in the nano or subnano molar range of $10^{-8} - 10^{-10} M$ \cite{berek1987mutation} ($M$ is used to denote molar concentration).
 Classically these affinity measurements have been done using hapten induced immunizations, and there is reason to believe that conclusions about affinities will be different for other antigens.
 Indeed it has been reported that naive sequences in some cases can be high affinity binders and affinity maturation is less useful \cite{frank2015simple}.
 Nevertheless several groups have reported 50-100 fold affinity increase due to affinity maturation in both complex and hapten induced immunizations \cite{Kelsoe_2016}, \cite{phan2006high}, \cite{ulrich1997interplay}.
@@ -428,7 +428,7 @@ All the above described values are tabulated in table \ref{constants} and used a
 
 %We then make the assumption that the total concentration of antigen is equal to half of the total amount of BCRs in a fully grown GC with $10^3$ B cells each having $10^4$ BCRs.
 %This makes a convenient reference point which is not unrealistic and we shall see later that the outcome of the simulations are rather insensitive to the concentration of antigens over a certain threshold.
-%By looking at the definition of $[AB_n]$ it can be seen that changing the total concentration of antigen has the same effect as shifting the affinity of both the naive -and mature sequence by the same fraction and this is the way it can easily be investigated.
+%By looking at the definition of $[AB_n]$ it can be seen that changing the total concentration of antigen has the same effect as shifting the affinity of both the naive and mature sequence by the same fraction and this is the way it can easily be investigated.
 %   - With the side effect of increasing the carrying capacity.
 
 
@@ -513,7 +513,7 @@ In fact it turns out that for simulations using a carrying capacity of 1000 cell
 \vspace{-9mm} \hspace{34mm} (a) \hspace{53mm} (b)
     \caption{
         \label{fig:skip_vs_no_skip_dist10}
-        Simulation with selection comparing (a) with and (b) without skipping recalculation of $\lambda_i$ at each cell evaluation. In (a) no steps are skipped while, in (b), 99\% of all recalculations are skipped (10 updates to a population of 1000 B cells). Simulation parameters are default as in table \ref{aff_constants}, with $\lambda_{mut} = 0.3$ and $T=100$.
+        Simulation with selection comparing (a) with and (b) without skipping recalculation of $\lambda_i$ at each cell evaluation. In (a) no steps are skipped while, in (b), 99\% of all recalculations are skipped (10 updates to a population of 1000 B cells). Simulation parameters are default as in table \ref{aff_constants}, with $\lambda_{\mut} = 0.3$ and $T=100$.
         }
 \end{figure}
 
@@ -549,7 +549,7 @@ The implementation is available as a simulation subprogram in the codebase of \t
 \centering
 \begin{tabular}{lll}
 Parameter    & Default & Description \\ \hline
-$\lambda_{mut}$ & None & $\operatorname{Pois}(\lambda_{mut})$ sequence mutability \\
+$\lambda_{\mut}$ & None & $\operatorname{Pois}(\lambda_{\mut})$ sequence mutability \\
 $T$ & None & Stopping time \\
 $cap$ & 1000 & Carrying capacity \\
 $t_n$ & 100 & Number of random target sequences \\
@@ -676,9 +676,9 @@ A proxy for counting these descendants is to count the immediate neighbors being
 If the assumption holds there should be a positive correlation between abundance and Hamming neighbors.
 
 In figure \ref{fig:Tas-affsim_Tas-data} plotting the two above mentioned measures for the Tas dataset, and superimposing the same measures but for 100 simulation runs, shows a consistent good fit between simulations and real data.
-For this run, parameters were set to $n=65$, $\lambda_{mut}=0.25$, $t_{\naive}=5$, $T=35$ and default otherwise.
+For this run, parameters were set to $n=65$, $\lambda_{\mut}=0.25$, $t_{\naive}=5$, $T=35$ and default otherwise.
 The down-sampling parameter ($n$) was set to the same number as sampled B cells in the Tas dataset.
-The seed naive sequence used was a V gene of 264 nt; using the commonly cited SHM rate of $10^{-3}$ \cite{victora2012germinal} this gives $\lambda_{mut}=0.264$ which was rounded to $\lambda_{mut}=0.25$.
+The seed naive sequence used was a V gene of 264 nt; using the commonly cited SHM rate of $10^{-3}$ \cite{victora2012germinal} this gives $\lambda_{\mut}=0.264$ which was rounded to $\lambda_{\mut}=0.25$.
 Target distance ($t_{\naive}$) and simulation time ($T$) was adjusted so the simulated sequences had approximately the same minimum Hamming distance to the naive sequence.
 
 \begin{figure}
@@ -688,7 +688,7 @@ Target distance ($t_{\naive}$) and simulation time ($T$) was adjusted so the sim
     \vspace{-14mm} \hspace{42mm} (a) \hspace{52mm} (b)
     \caption{
         \label{fig:Tas-affsim_Tas-data}
-        Summary statistics for 100 simulations using $\lambda_{mut}=0.25$, $t_{\naive}=5$, $T=35$ and $n=65$.
+        Summary statistics for 100 simulations using $\lambda_{\mut}=0.25$, $t_{\naive}=5$, $T=35$ and $n=65$.
         Simulations are colored and the Tas dataset is black.
         In a) the cumulative distribution of mutations (empirical CDF) and b) the number of genotypes in 1 Hamming distance away as function of genotype abundance.
     }
@@ -704,7 +704,7 @@ Topologically simulated trees also capture this notion of clonal bursts with one
     \includegraphics[width=0.8\textwidth]{figures/Tas_affsim_example_collapsed_runstat_color_tree.pdf}
     \caption{
         \label{fig:Tas_affsim_example.collapsed_runstat_color_tree}
-        Simulated tree using $\lambda_{mut}=0.25$, $t_{\naive}=5$, $T=35$ and $n=66$.
+        Simulated tree using $\lambda_{\mut}=0.25$, $t_{\naive}=5$, $T=35$ and $n=66$.
         For simulation statistics and color to affinity mapping see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}.
     }
 \end{figure}
