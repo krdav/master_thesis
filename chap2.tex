@@ -33,13 +33,13 @@ Regardless of software availability none of the above mentioned simulation metho
 While the simplistic statistical framework of Clone is appealing it does not model selection towards a known high affinity BCR, rather it models selection as a random effect of a non-synonymous mutation located in the CDR.
 None of the other above mentioned simulation methods are explicitly simulating the DNA sequences and therefore cannot be used in software to analyze DNA sequences without substantial adaptations.
 To get the best of the realism of a mechanistic model and the simplicity of a statistical model, we propose a simple model of affinity maturation that models sequence fitness solely as a function of antigen binding, modelled by a standard binding equilibrium.
-If the BCR affinity is high it means that the B cell will bind and endocytose a lot of antigen, thereby getting plenty of T cell help, decreasing the changes of undergoing apoptosis while increasing the chances of proliferation.
-Alternatively, if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
-Under this setup it is not the absolute affinity that matters, but rather the affinity relative to the affinities of all the competing cells in the whole GC and the total amount of antigens to compete for.
-By modularizing the simulation code we can first make a model for a neutral branching process, and then make an optional affinity selection step that works in conjunction with the neutral process used to introduce substitutions.
+If the BCR affinity is high it means that the B cell will bind and endocytose a lot of antigen, thereby getting plenty of T cell help, decreasing the chances of undergoing apoptosis while increasing the chances of proliferation.
+Alternatively, if the BCR affinity is low no antigen will be endocytosed, and chances are high that the cell will undergo apoptosis.
+In this setup it is not the absolute affinity that matters, but rather the affinity relative to the affinities of all the competing cells in the whole GC, and the total amount of antigens cells compete for.
+By modularizing the simulation code we can first make a model for a neutral branching process, and then add an optional affinity selection step that works in conjunction with the neutral process used to introduce substitutions.
 
-The purpose of the presented simulation method is to generate more realistic sequence simulations of clonal families to be widely used for assessing the performance of phylogenetic methods.
-The model is supposed to capture the most influential effects of affinity maturation without being a detailed mechanistic model, although be sufficient to recapitulate the features of real GC sequence data.
+The purpose of the presented simulation method is to generate more realistic sequence simulations of clonal family evolution, to be used for assessing the performance of phylogenetic methods.
+The model is designed to capture only the most influential effects of affinity maturation, without the need of a detailed mechanistic model, but still sufficient to recapitulate the features of real GC sequence data.
 
 
 
@@ -51,33 +51,29 @@ The model is supposed to capture the most influential effects of affinity matura
 \subsection{Neutral branching process}
 A neutral branching process, independent from the later described affinity model, was setup as a reference point for simulation.
 It can be viewed as a model of cell divisions, where at each generation a cell can either die or produce a number of offspring, and each offspring has some probability of carrying a mutation.
-The neutrality assumption lies in the fact that the mutations introduced will have no fitness effect in later generations.
-The root sequence is given at initialization as a starting point to evolve through a stochastic branching process, that also includes stochastic introduction of mutations at each generation.
-The branching process is controlled by an arbitrary discrete distribution, which in this case we take to be a Poisson distribution, due to its convenient mathematical properties.
+The neutrality assumption lies in the fact that the mutations introduced will have no fitness effect.
+The root sequence is given at initialization as a starting point to evolve through a stochastic branching process, controlled by an arbitrary discrete distribution, which in this case we take to be a Poisson distribution, due to its convenient mathematical properties.
 Thus, in the below sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
-%Furthermore at each generation all progeny cells will undergo a mutation process determined by discrete distribution, again we use Poisson.
-%The number of nucleotide mutations is drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
-%EM Whoa, really? Mutability is lambda_0, while the progeny distribution parameters are lambda_i? That's a little confusing. Can we use \mu or something instead? Also, it would be great to get a little more detail on how these mutations are introduced WRT S5F. Do we draw from the poisson each step and then use S5F to decide where those mutations are?
-Furthermore at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from $\operatorname{Pois}(\lambda_0)$ and then introduced sequentially into the sequence.
-Sequential mutations allow the possibility of back mutations.
-Mutations can be introduced using a uniform probability over all sites, but because it is well known that BCR sequences do not mutate uniformly at random \cite{Yeap2015-nl}, we used an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
-The S5F model describes mutability of the middle base of all 5-mer DNA motifs, and for each motif the base preferences given a mutation i.e.\ if a random process chooses to mutate the 5-mer \texttt{AAAAA}, then the S5F model will provides a list of probabilities for each middle base substitutions, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, probabilities summing to 1.
-A 5-mer mutability cannot be used directly on sites at the start or end of a sequence because of missing context.
-We fill in missing context with the unknown base, N, and average over all possible motifs fitting into this ambiguous context.
+Furthermore at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from another Poisson distribution ($\operatorname{Pois}(\lambda_{mut})$) and then introduced sequentially into the sequence given a substitution model.
+By using sequential introduction of mutations we allow the possibility of back mutations.
+A possible possible choice of substitution model is a uniform probability over all sites and substitutions, but because it is well known that BCR sequences do not mutate uniformly at random \cite{Yeap2015-nl}, we use an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
+The S5F model describes mutability of the middle base of all 5-mer DNA motifs, and for each motif, the base preferences given a mutation i.e.\ if a random draw from the S5F site mutabilities of the sequence chose to mutate the 5-mer \texttt{AAAAA}, then the S5F model will also provides a list of probabilities for each middle base substitutions, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, probabilities summing to 1.
+A 5-mer mutability cannot be used directly on sites at the start or end of a sequence because of missing context, therefore we fill in missing context with the unknown base, N, and average over all possible motifs fitting into this ambiguous context.
 
 Termination of the neutral branching process is enforced in either of three ways: 1) by simulating under a subcritical process ($\lambda < 1$) \cite{gwp} and following it until extinction, 2) by using a stopping time $T$, or 3) by stopping after a max population of $N$ has been reached.
 Leaves are sampled from last time point, or in the case of 1) only terminated leaves.
 In addition we introduced a parameter for down-sampling the cell population to $n$ cells.
-Down-sampling allows for emulating the incomplete sampling of a GC cell population, which is expected to happen in HTS data due to fall out during PCR, sequencing, quality control steps and limited sampling e.g.\ in the case of data from PBMCs.
+Down-sampling allows for emulating the incomplete sampling of a GC cell population, which is expected in HTS data due to fall out during PCR, sequencing, quality control steps and limited sampling e.g.\ in the case of data from mRNA extracted from PBMCs.
 The five parameters of the model is tabulated in table \ref{neut_constants}, but only one of the stopping criteria can be used in a run, effectively making it a four parameter model.
 %EM I know this is for the next section, but have you considered terminating the affinity-selection simulations when one clone hits one of the target sequences exactly?
+% @matsen No, but that is a good idea - another one to the list. Nice and easy to implement.
 
 \begin{table}[ht]
 \centering
 \begin{tabular}{ll}
 Parameter    & Description \\ \hline
 $\lambda$ & $\operatorname{Pois}(\lambda)$ progeny distribution \\
-$\lambda_0$ & $\operatorname{Pois}(\lambda_0)$ mutation distribution \\
+$\lambda_{mut}$ & $\operatorname{Pois}(\lambda_{mut})$ mutation distribution \\
 $T$ & Stopping time \\
 $N$ & Stopping number of sequences \\
 $n$ & Down-sampled number of sequences
@@ -93,11 +89,19 @@ $n$ & Down-sampled number of sequences
 
 
 \subsection{Simulations with affinity selection}
-
 %EM We don't hear clearly until the Implementation section that your model is still a branching process, but with different lambdas at the different tips. I suggest moving that material up here, and then saying that we need to figure out a way to turn the DNA sequences into lambdas.
+% @matsen This was a good suggestion. The fact that all this affinity modelling stuff can be condensed into a single parameters is important to realize from the start. It will be easier to follow the steps of the model definition when the endpoint is known.
+To model selection we will use the exact same framework as described for the neutral branching process, but now the $\operatorname{Pois}(\lambda)$ progeny distribution is no longer constant.
+We will consider the magnitude of $\lambda$ as the fitness of a cell.
+In the neutral model $\lambda$ is a fixed constant resulting in a completely flat fitness landscape, while in a system with selection the fitness landscape is more complex e.g.\ like a rugged surface.
+The following subsections will describe a model with the simple purpose of defining a function to calculate the fitness of any BCR sequence that could arise from the mutation process.
+The fitness is measured in terms of a single $\lambda$ associated with each cell and defines a sequence specific progeny distribution.
+Thus, selection is condensed into a dynamic $\lambda$, and this is the only difference to the neutral branching process.
+
+
 
 \subsubsection{Model concept and biological assumptions}
-In the following sections the model for affinity selection will be described in detail, but lets first make some basic assumptions to keep later definitions simpler.
+Now let us make some basic assumptions to keep later definitions simpler.
 First of all the system we intend to model is the affinity maturation that is happening in the GC reaction, as guided by the BCR's affinity towards a target antigen.
 A real GC reaction is seeded with 50-200 naive B cells and is therefore in its initial state highly polyclonal \cite{tas2016visualizing}.
 However, during the extend of a GC reaction the lineages descending from these seeds gradually die off \cite{tas2016visualizing} and the GC may even reach full monoclonality, in which a single lineage comes to dominate.
@@ -287,7 +291,8 @@ Y(0) = 0, \ \ \ Y \left(\frac{f_{\full}}{U} \right) = 1, \ \ \ Y(f_{\full}) = 2 
   \label{eq:BA_cond}
 \end{equation}
 %EM Why is epsilon a necessity?
-Here $\epsilon$ can be regarded as a small value (e.g. $10^{-3}$), only added as a necessity to solve the unknown variables.
+% @matsen Is this more clear? It really is an implementation detail, and I didn't want to loose focus to it, but it could be equally confusing if the epsilon is not introduced.
+The solution is undefined in $Y(f_{\full}) = 2$ because the function is asymptotically growing towards 2, therefore $\epsilon$ can be regarded as a small value (e.g. $10^{-3}$) so that $Y(f_{\full}) \approx 2$ but having a defined solution.
 $0 < f_{\full} \leq 1$ is the fraction of bound BCRs ($B^i_{\bound}$) sufficient to make the B cell fully activated, ignoring the negligible contribution of $\epsilon$.
 At $f_{\full}$ the highest fitness is achieved and binding more antigen will not change the progeny distribution.
 The constant $U > 1$ in condition 2 can be adjusted to set the value of $B^i_{\bound}$ resulting in $\lambda_i = 1$.
@@ -339,7 +344,8 @@ This makes it easy to calculate the carrying capacity given \eqref{eq:carry_cap}
 However in the cases with low affinity the concentration of free antigen cannot be assumed zero and in such cases $[A]$ can be determined through \eqref{eq:A_objective}.
 
 %EM But f_full isn't the fitness limit-- which makes this statement confusing.
-In the situation where a newly arising mutant has higher affinity than the rest of the population the fraction of BCRs binding antigen on this mutant will approach the fitness limit ($f_{\full}$), resulting in a high probability that the clone will expand rapidly to overtake the GC population, also known as a clonal burst.
+% @matsen It is the fitness limit! epsilon can just be adjusted accordingly. Does the minus epsilon do the job? I was intentionally not mentioning epsilon because it, practically speaking, has no effect. 
+In the situation where a newly arising mutant has higher affinity than the rest of the population the fraction of BCRs binding antigen on this mutant will approach the fitness limit ($f_{\full} - \epsilon$), resulting in a high probability that the clone will expand rapidly to overtake the GC population, also known as a clonal burst.
 The clonal burst has the characteristic time (average time of take over) being:
 $$
 T_{\burst} = \log_2 \left(\text{carrying capacity} \right) = \log_2\left( U \frac{[A_{\total}] - [A]}{f_{\full}} \right)
@@ -352,6 +358,12 @@ $$
 
 
 \subsection{Parameter choice}
+We chose the parameter $U$ in the logistic transformation to take a value to reflect our belief of how the shape of this transformation should look.
+Our expectation is that initially, when only a few BCRs are bound and stimulation is low, there will be a linear increase of the stimulus with increasing antigen binding.
+At some point close to $f_{\full}$, this increase in stimulus should level out because the cell can only be stimulated to $\operatorname{max}(\lambda)=2$.
+This expected shape is recapitulated by a $U=5$, see figure \ref{fig:T_Bbound_U}, and therefore this is where we fix $U$.
+
+
 The choice of $f_{\full}$ determines the BCR occupancy when full activation of proliferation is achieved.
 $f_{\full}$ does not have any known reference value so it is chosen to take a value of 1 because this is mathematically convenient.
 It turns out that the model is quite robust to different choices of $f_{\full}$ and it causes no substantial effect to change it from 1 to 0.05, see figure \ref{fig:no_effect_of_f_full}.
@@ -374,11 +386,6 @@ The choice of $f_{\full} = 1$ has the interpretation that when $\frac{1}{U}$ of 
         }
 \end{figure}
 
-%EM I'd suggest moving these next three paragraphs to the beginning of this subsection. Easiest to start with the more concretely set things.
-We then chose the parameter $U$ in the logistic transformation to take a value to reflect our belief of how the shape of this transformation should look.
-Our expectation is that initially, when only a few BCRs are bound and stimulation is low, there will be a linear increase of the stimulus with increasing antigen binding.
-At some point close to $f_{\full}$, this increase in stimulus should level out because the cell can only be stimulated to $\operatorname{max}(\lambda)=2$.
-This expected shape is recapitulated by a $U=5$, see figure \ref{fig:T_Bbound_U}, and therefore this is where we fix $U$.
 
 In the transformation from distance to affinity in \eqref{eq:hd2affy}, we have to make a choice about which exponent to use.
 There is reason to believe that not all mutations are improving affinity with equal proportion and therefore the linear transformation is excluded.
@@ -432,8 +439,7 @@ Constant    & Value & Description & Reference \\ \hline
 $B^i_{\total}$ & $1\times10^{4}$     & Number of BCRs on each B cell & \cite{immprot}, \cite{rieckmann2017social}*     \\
 $n_t$ & 1000 & B cells per GC &  \cite{kroese1990germinal}, \cite{Childs_Baskerville_Cobey_2015} \\
 d & $10^{-4} m$ & GC diameter &  \cite{Romppanen_1981} \\
-%EM Isn't this the inverse fraction bound?
-U           & 5     & Fraction BCR bound necessary to sustain population & See text \\
+$\frac{1}{U}$           & $\frac{1}{5}$     & Fraction of $f_{\full}$ necessary to sustain the population & See text \\
 k           & 2     & Exponent of affinity transformation & See text  \\
 $f_{\full}$  & 1     & Fraction BCR bound at full response & See text \\
 $K_d^{\naive}$ & 100nM & Naive affinity & \cite{berek1987mutation} \\
@@ -485,18 +491,19 @@ For an overview see figure \ref{fig:tree_iteration}.
         For neutral selection $\lambda_i$ is constant and identical for all cells.
         For simulation with affinity selection $\lambda_i$ is B cell dependent and re-evaluated every time there is a change in the population of non-terminated nodes.
         %EM Like below tell us when you do re-evaluate.
-        This re-evaluation of all the $\lambda$s that can be skipped for a number of nodes to save computation time without any substantial difference in simulation characteristics.
+        % @matsen rather want to keep it simple and let the text explain it so I cut that line out.
+        % This re-evaluation of all the $\lambda$s that can be skipped for a number of nodes to save computation time without any substantial difference in simulation characteristics.
     }
 \end{figure}
 
 
-Using tree terminology the progeny distribution of a leaf depends on all the states (i.e.\ sequences) of the non terminated leaves.
-Then by definition the affinity model needs to be updated, by re-evaluating \eqref{eq:A_objective} and finding all $[AB]_i$, every single time a new leaf is generated, and the need for updating $[AB]_i$ will be a computational burden at large population sizes.
+Using tree terminology, the progeny distribution of a leaf depends on all the states (i.e.\ sequences) of the non terminated leaves.
+Then by definition the affinity model needs to be updated, by re-evaluating \eqref{eq:A_objective} and finding all $[AB]_i$, every single time a new leaf is generated, creating a computational burden at large population sizes.
 E.g.\ when simulating at a carrying capacity of 1000 cells, the vast majority of the computations are spent updating $[AB]_i$.
-%EM You do updating every generation then, I think? Please mention this.
-An approximate solution is simply to skip some of these updates and rely the previous determination of $\lambda_i$.
-The rationale behind this is that when there is already a large population of cells, lets say 1000 non terminated leaves, then very little will change after a single leaf is evaluated.
-In fact it turns out that for simulations using a carrying capacity of 1000 cells, there are no distinct difference between updating $[AB]_i$ after every leaf is evaluated or once every $\frac{1}{100}$th leaf evaluation, see figure \ref{fig:skip_vs_no_skip_dist10}.
+An approximate solution is simply to skip some of these updates and rely on the previous determination of $\lambda_i$, as an example a system with 1000 cells could be update only at every 100th cell progeny evaluation, resulting in 10 evaluations per generation.
+Regardless of whether evaluations are skipped, all $\lambda_i$'s will be updated when a new generation is started.
+The rationale behind skipping evaluations is that when there is already a large population of cells, then very little will change after a single leaf is evaluated.
+In fact it turns out that for simulations using a carrying capacity of 1000 cells, there are no distinct difference between updating $[AB]_i$ after every leaf is evaluated or once every 100th leaf progeny evaluation, see figure \ref{fig:skip_vs_no_skip_dist10}.
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=80mm]{figures/sim_selection_default_run_dist10.pdf}
@@ -506,7 +513,7 @@ In fact it turns out that for simulations using a carrying capacity of 1000 cell
 \vspace{-9mm} \hspace{34mm} (a) \hspace{53mm} (b)
     \caption{
         \label{fig:skip_vs_no_skip_dist10}
-        Simulation with selection comparing (a) with and (b) without skipping recalculation of $\lambda_i$ at each cell evaluation. In (a) no steps are skipped while, in (b), 99\% of all recalculations are skipped (10 updates to a population of 1000 B cells). Simulation parameters are default as in table \ref{aff_constants}, with $\lambda_0 = 0.3$ and $T=100$.
+        Simulation with selection comparing (a) with and (b) without skipping recalculation of $\lambda_i$ at each cell evaluation. In (a) no steps are skipped while, in (b), 99\% of all recalculations are skipped (10 updates to a population of 1000 B cells). Simulation parameters are default as in table \ref{aff_constants}, with $\lambda_{mut} = 0.3$ and $T=100$.
         }
 \end{figure}
 
@@ -534,8 +541,7 @@ Using these parameters the target sequences are simulated by introducing DNA mut
 The mutations are introduced at DNA level given the neutral branching process described previously and thereby a distance of $t_{\naive}=10$ does not always correspond to 10 mutations, often the number is higher due to accumulation of synonymous mutations not counting towards protein level distance.
 The process is repeated until $t_n$ targets have been made.
 We reason that a good default choice of $t_{\naive}$, to achieve sufficient evolutionary distance, is 10, however the simulation behaviour seems rather indifferent to this, compare \ref{fig:no_effect_of_f_full} with \ref{fig:skip_vs_no_skip_dist10}.
-%EM isn't the number of targets t_n?
-The default number of targets ($t_{\naive}$) is set to 100 to provoke epistatic effects.
+The default number of targets ($t_n$) is set to 100 to provoke epistatic effects.
 All default parameters in the affinity simulation is tabulated in table \ref{aff_constants}.
 The implementation is available as a simulation subprogram in the codebase of \texttt{GCtree} (\url{github.com/matsengrp/gctree}).
 
@@ -543,7 +549,7 @@ The implementation is available as a simulation subprogram in the codebase of \t
 \centering
 \begin{tabular}{lll}
 Parameter    & Default & Description \\ \hline
-$\lambda_0$ & None & $\operatorname{Pois}(\lambda_0)$ sequence mutability \\
+$\lambda_{mut}$ & None & $\operatorname{Pois}(\lambda_{mut})$ sequence mutability \\
 $T$ & None & Stopping time \\
 $cap$ & 1000 & Carrying capacity \\
 $t_n$ & 100 & Number of random target sequences \\
@@ -564,20 +570,19 @@ $n$ & all & Down-sampled number of sequences
 
 
 
-\subsubsection{The effect of having multiple mature targets}
-%It is clearly easy to extend the affinity simulation with multiple target sequences serving as end point for maturation.
-%%% More epistasis. It is already there before having multiple targets
-% Since the affinity transformation is non-linear the effects of mutations are non-additive by definition.
+\subsubsection{The epistatic effects of having multiple mature targets}
 %EM To be honest I don't really see why epistatic effects are the clearest way to motivate multiple targets. I think you just mean that there are a variety of number of ways in which the antibody can fit the antigen.
-By introducing multiple targets a side effect is that this introduces epistasis to the fitness landscape.
-Epistasis is defined as non additive interaction between mutations and is widely observed in nature e.g.\ the evolution of influenza nucleoprotein \cite{gong2013stability}.
-The manifestations of epistasis can be different, but here is a simple example where we show fitness of various genotypes:
+% @matsen I agree. Actually I mostly investigated epistasis because my Danish supervisor asked me about it.
+A BCR is a highly dynamic structure that can bind a single antigen in many different ways, it is therefore also likely that the GC maturation would end up producing different BCRs if replicating the process.
+This can be thought of as a multimodal fitness landscape, and it can be emulated by introducing multiple targets for the affinity simulation.
+Multimodality in the fitness landscape is the same as epistasis, which is defined as non additive interaction between mutations, and is widely observed in nature e.g.\ the evolution of influenza nucleoprotein \cite{gong2013stability}.
+The manifestations of epistasis can be different, but here is a simple example where the fitness is shown for various genotypes:
 $$
 ab = 1,\ Ab = 1,\ aB = 1,\ AB = 10
 $$
 There are four different genotypes, based on two loci (positions) with two alleles (gene variants), three having a fitness of 1 and one having a fitness of 10.
-Each position is tolerable to the two states but only a combination of state $A$ and $B$ improves fitness.
-In an linear additive, non epistatic, setting the effect of the intermediate states ($Ab$ and $aB$) should be measurable and sum to the effect of both:
+Each position is tolerable to the two states, but only a combination of state $A$ and $B$ improves fitness.
+In a linear additive, non epistatic, setting the effect of the intermediate states ($Ab$ and $aB$) should sum to the effect of the full state:
 $$
 ab + (Ab - ab) + (aB -ab) = AB
 $$
@@ -588,11 +593,10 @@ ab = 1,\ Ab = \frac{1}{2},\ aB = \frac{1}{4},\ AB = 10
 $$
 Or any other non additive influence.
 
-%EM Yes, I agree with this non-linearity, but the title of this section is about multiple targets...
 In the affinity simulation there is inherent epistasis because the transformation from distance to affinity is non-linear, although we could choose to fix $k=1$ in \eqref{eq:hd2affy} to obtain linear additive distance effects.
-Regardless, if simulation is done using multiple different targets it will be epistatic with multimodal fitness landscape as illustrated in figure \ref{fig:epistasis}.
-
-%EM before this figure can you define what target overlap is?
+Regardless, if simulation is done using multiple different targets it will be epistatic.
+The shape of the fitness landscape, i.e. the distance between modalities, depends on the distance between targets.
+Most likely, when two targets are generated, they will be $2 \times t_{\naive}$ apart, but sometimes they have overlapping substitutions squeezing modalities together as illustrated in figure \ref{fig:epistasis}.
 
 \begin{figure}[!ht]
 \begin{center}
@@ -605,15 +609,12 @@ Regardless, if simulation is done using multiple different targets it will be ep
 \vspace{-6mm} \hspace{26mm} (a) \hspace{39mm} (b) \hspace{39mm} (c)
     \caption{
     \label{fig:epistasis}
-    %EM I can see why you are connecting multiple targets and epistasis here, and it definitely leads to epistasis. But I think it would be clearest to start by talking about multiple targets and then say that this leads to an epistatic effect.
-    %EM BTW this is a gorgeous figure that perfectly shows what you intend.
         The effect of having two target sequences on the fitness landscape.
         Two target sequences are created with varying overlap using $t_{\naive}=5$.
         The fitness landscape is constructed using a linear distance to affinity function ($k=1$ in \eqref{eq:hd2affy}).
-        In a) no overlap makes a long distance between the two peaks in fitness, in b) peaks are getting closer when targets overlap, and in c) when the overlap is complete the two targets match and the system no longer is epistatic. %EM ... except for the nonlinear activation function.
+        In a) no overlap makes a long distance between the two fitness peaks, in b) peaks are getting closer when targets overlap, and in c) when the overlap is complete the two targets match and the system no longer is epistatic, under a linear distance to affinity function.
         }
 \end{figure}
-
 
 
 Indeed the effects of epistasis can be observed in simulations with multiple targets.
@@ -630,6 +631,7 @@ These observations supports the view that the presented affinity simulation is a
         Colors correspond to the affinity of the simulated cells, see figure \ref{fig:collapsed_epistasis} in appendix B for run stats.
         Arrows show an evolutionary trajectory from a low levels in the fitness landscape (starting at the unfilled black circle) to a higher level.
         %EM Just checking-- only at the leaves you collapse zero amino acid differences?
+        % @matsen Yep, all branches are collapsed. What you see a true jump from one target to another :)
         Zero amino acid distance leaves are collapsed and values inside nodes correspond to the number of B cells.
         Here we see that the simulation trajectory is following along several targets.
         There is even a jump between two target sequence trajectories, with the highest frequency node (green 40) yielding a descendant with two amino acid mutations (green 9) that is equally close to another target, resulting in a change in mutational trajectory.
@@ -674,9 +676,9 @@ A proxy for counting these descendants is to count the immediate neighbors being
 If the assumption holds there should be a positive correlation between abundance and Hamming neighbors.
 
 In figure \ref{fig:Tas-affsim_Tas-data} plotting the two above mentioned measures for the Tas dataset, and superimposing the same measures but for 100 simulation runs, shows a consistent good fit between simulations and real data.
-For this run, parameters were set to $n=65$, $\lambda_0=0.25$, $t_{\naive}=5$, $T=35$ and default otherwise.
+For this run, parameters were set to $n=65$, $\lambda_{mut}=0.25$, $t_{\naive}=5$, $T=35$ and default otherwise.
 The down-sampling parameter ($n$) was set to the same number as sampled B cells in the Tas dataset.
-The seed naive sequence used was a V gene of 264 nt; using the commonly cited SHM rate of $10^{-3}$ \cite{victora2012germinal} this gives $\lambda_0=0.264$ which was rounded to $\lambda_0=0.25$.
+The seed naive sequence used was a V gene of 264 nt; using the commonly cited SHM rate of $10^{-3}$ \cite{victora2012germinal} this gives $\lambda_{mut}=0.264$ which was rounded to $\lambda_{mut}=0.25$.
 Target distance ($t_{\naive}$) and simulation time ($T$) was adjusted so the simulated sequences had approximately the same minimum Hamming distance to the naive sequence.
 
 \begin{figure}
@@ -686,7 +688,7 @@ Target distance ($t_{\naive}$) and simulation time ($T$) was adjusted so the sim
     \vspace{-14mm} \hspace{42mm} (a) \hspace{52mm} (b)
     \caption{
         \label{fig:Tas-affsim_Tas-data}
-        Summary statistics for 100 simulations using $\lambda_0=0.25$, $t_{\naive}=5$, $T=35$ and $n=65$.
+        Summary statistics for 100 simulations using $\lambda_{mut}=0.25$, $t_{\naive}=5$, $T=35$ and $n=65$.
         Simulations are colored and the Tas dataset is black.
         In a) the cumulative distribution of mutations (empirical CDF) and b) the number of genotypes in 1 Hamming distance away as function of genotype abundance.
     }
@@ -702,7 +704,7 @@ Topologically simulated trees also capture this notion of clonal bursts with one
     \includegraphics[width=0.8\textwidth]{figures/Tas_affsim_example_collapsed_runstat_color_tree.pdf}
     \caption{
         \label{fig:Tas_affsim_example.collapsed_runstat_color_tree}
-        Simulated tree using $\lambda_0=0.25$, $t_{\naive}=5$, $T=35$ and $n=66$.
+        Simulated tree using $\lambda_{mut}=0.25$, $t_{\naive}=5$, $T=35$ and $n=66$.
         For simulation statistics and color to affinity mapping see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}.
     }
 \end{figure}
@@ -716,26 +718,26 @@ Topologically simulated trees also capture this notion of clonal bursts with one
 % fitness([AB_i]) = AB_i/sum(AB_i, i from 1 to N)
 % In this way it would reflect T cell more realistically, but nevertheless the current model is already capturing most of this relative effect simply by binding more antigen when affinity is increased.
 \section{Discussion and conclusion}
-Previously many groups have made models of the GC reaction and affinity maturation \cite{Reshetova_2017}, \cite{Shahaf_2008}, \cite{Chaudhury_2014}, \cite{Wang_Mata_2015}, but none of these have included an explicit definition of the BCR sequences.
-Neutral branching processes can easily be setup to simulation sequences undergoing the same mutational patterns as BCR sequences but they have no way of capturing the important clonal bursts happening due to the fitness gain from having a higher affinity BCR.
-In this work we have addressed this problem through a simple but yet unexplored way of integrating affinity related fitness into the simulation of BCR sequence evolution.
+Previously many groups have made models of the GC reaction and affinity maturation \cite{Reshetova_2017}, \cite{Shahaf_2008}, \cite{Chaudhury_2014}, \cite{Wang_Mata_2015}, \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, but none of these have included a definition of the BCR sequences on DNA level.
+Neutral branching processes can easily be setup to simulation sequences undergoing the same mutational patterns as real BCR sequences, but they have no way of capturing the important clonal bursts happening due to the fitness gain from mutating to a higher affinity BCR.
+In this work we have addressed this problem through a simple, but yet unexplored way, of integrating affinity related fitness into the simulation of BCR sequence evolution.
 We hope that the simulation framework will be a valuable tool in the assessment of inference methods.
 
 It is interesting to see the similarities between the tree topologies of an affinity simulated tree compared to the inferred tree for the Tas et al.\ dataset.
-As it was also noted in the work of Tas et al.\ \cite{tas2016visualizing} this GC has undergone a clonal burst with a clear dominant genotype (abundance 17 in figure \ref{fig:Tas_tree}) having many slightly mutated offspring.
-Clearly this topological trait is very similar to the affinity simulated tree in figure \ref{fig:Tas_affsim_example_with_runstats}, and by mapping affinity to each node it can be seen that the clonal burst happened as a result of affinity gain.
-However as they also observed in Tas et al.\ the appearance of a high affinity genotype does not guarantee a clonal burst, and as expected this is also true in the affinity simulation.
-Under the best conditions a B cell has $\lambda=2$ from which it follows that $\operatorname{Pois}(termination | \lambda=2) = 0.135$, so there is roughly a 14\% chance of a high affinity clone turning extinct.
+As it was also noted in the work of Tas et al.\ \cite{tas2016visualizing} this GC has undergone a clonal burst with an apparent dominant genotype (abundance 17 in figure \ref{fig:Tas_tree}) having many slightly mutated offspring.
+Clearly this topological trait is very similar to the affinity simulated tree in figure \ref{fig:Tas_affsim_example_with_runstats}, and by mapping affinity to each node it can be seen that the clonal burst happened as a result of a mutation causing higher affinity.
+However, as Tas et al.\ also observed, the appearance of a high affinity genotype does not guarantee a clonal burst, and as expected this is also true in the affinity simulation.
+Under the best conditions a B cell has $\lambda=2$, from which it follows that $\operatorname{Pois}(termination | \lambda=2) = 0.135$, so there is roughly a 14\% chance of a high affinity clone turning extinct.
 
 
 %The fitness function presented in this model is based on some rough assumptions about having a number of target sequences and using the distance from these as a proxy for affinity.
 %However it is possible to plug in an arbitrary fitness function based on empirical values e.g.\ the affinity values determined from ancestral reconstruction of an antibody lineage like Doria-Rose et al.\ \cite{Doria-Rose2014-vi}.
 
 
-The distribution of clones over time (e.g.\ see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}) reveals that mutations conferring a fitness advantage are quickly found and can quickly overtake the whole cell population.
-If this represents real affinity maturation it poses the problem that the probability of a maturation trajectory will be defined by the steepness of the fitness function and not the fitness at the end of a trajectory.
+The distribution of clones over time (e.g.\ see appendix B figure \ref{fig:Tas_affsim_example_with_runstats}) reveals that mutations conferring a fitness advantage through higher affinity are quickly found and can quickly overtake the whole GC population.
+If this represents the events of real affinity maturation it poses the problem, that the probability of completing a maturation trajectory will be defined by the steepness of the fitness function, and not the fitness at the end of a trajectory.
 %EM You might say that we could investigate this phenomenon in later work by drawing a variety of steepnesses and final affinities from some distribution.
-There is then a way of leading maturation into a dead end that is far lower in fitness than the global optimum but too high, compared to the naive state, to be reverted.
-Indeed such a mechanism is a reasonable explanation why broadly neutralizing HIV antibodies are so rare.
-
+% @matsen Good idea! I think I will do this in the perspective instead of here.
+This would be a way of leading maturation into a dead end, far lower in fitness than the global optimum, but too high to be reverted backwards towards the naive sequence.
+Indeed such a mechanism is a reasonable, although not the only, explanation why broadly neutralizing HIV antibodies are so rare, while their typical germline usage is normal \cite{scheepers2015ability}.
 
