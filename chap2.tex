@@ -54,6 +54,7 @@ It can be viewed as a model of cell divisions, where at each generation a cell c
 The neutrality assumption lies in the fact that the mutations introduced will have no fitness effect.
 The root sequence is given at initialization as a starting point to evolve through a stochastic branching process, controlled by an arbitrary discrete distribution, which in this case we take to be a Poisson distribution, due to its convenient mathematical properties.
 Thus, in the below sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
+%EM Of course I'd like \operatorname{mut}! (You can ignore me for your thesis, but not for the eventual write-up. :) )
 Furthermore at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from another Poisson distribution ($\operatorname{Pois}(\lambda_{mut})$) and then introduced sequentially into the sequence given a substitution model.
 By using sequential introduction of mutations we allow the possibility of back mutations.
 A possible possible choice of substitution model is a uniform probability over all sites and substitutions, but because it is well known that BCR sequences do not mutate uniformly at random \cite{Yeap2015-nl}, we use an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
@@ -89,9 +90,7 @@ $n$ & Down-sampled number of sequences
 
 
 \subsection{Simulations with affinity selection}
-%EM We don't hear clearly until the Implementation section that your model is still a branching process, but with different lambdas at the different tips. I suggest moving that material up here, and then saying that we need to figure out a way to turn the DNA sequences into lambdas.
-% @matsen This was a good suggestion. The fact that all this affinity modelling stuff can be condensed into a single parameters is important to realize from the start. It will be easier to follow the steps of the model definition when the endpoint is known.
-To model selection we will use the exact same framework as described for the neutral branching process, but now the $\operatorname{Pois}(\lambda)$ progeny distribution is no longer constant.
+To model the affinity maturation process with selection we will use the exact same framework as described for the neutral branching process, but now the $\operatorname{Pois}(\lambda)$ progeny distribution is no longer constant.
 We will consider the magnitude of $\lambda$ as the fitness of a cell.
 In the neutral model $\lambda$ is a fixed constant resulting in a completely flat fitness landscape, while in a system with selection the fitness landscape is more complex e.g.\ like a rugged surface.
 The following subsections will describe a model with the simple purpose of defining a function to calculate the fitness of any BCR sequence that could arise from the mutation process.
@@ -344,7 +343,7 @@ This makes it easy to calculate the carrying capacity given \eqref{eq:carry_cap}
 However in the cases with low affinity the concentration of free antigen cannot be assumed zero and in such cases $[A]$ can be determined through \eqref{eq:A_objective}.
 
 %EM But f_full isn't the fitness limit-- which makes this statement confusing.
-% @matsen It is the fitness limit! epsilon can just be adjusted accordingly. Does the minus epsilon do the job? I was intentionally not mentioning epsilon because it, practically speaking, has no effect. 
+% @matsen It is the fitness limit! epsilon can just be adjusted accordingly. Does the minus epsilon do the job? I was intentionally not mentioning epsilon because it, practically speaking, has no effect.
 In the situation where a newly arising mutant has higher affinity than the rest of the population the fraction of BCRs binding antigen on this mutant will approach the fitness limit ($f_{\full} - \epsilon$), resulting in a high probability that the clone will expand rapidly to overtake the GC population, also known as a clonal burst.
 The clonal burst has the characteristic time (average time of take over) being:
 $$
@@ -490,8 +489,6 @@ For an overview see figure \ref{fig:tree_iteration}.
         At each generation all non-terminated nodes will be evaluated in random order.
         For neutral selection $\lambda_i$ is constant and identical for all cells.
         For simulation with affinity selection $\lambda_i$ is B cell dependent and re-evaluated every time there is a change in the population of non-terminated nodes.
-        %EM Like below tell us when you do re-evaluate.
-        % @matsen rather want to keep it simple and let the text explain it so I cut that line out.
         % This re-evaluation of all the $\lambda$s that can be skipped for a number of nodes to save computation time without any substantial difference in simulation characteristics.
     }
 \end{figure}
@@ -575,14 +572,15 @@ $n$ & all & Down-sampled number of sequences
 % @matsen I agree. Actually I mostly investigated epistasis because my Danish supervisor asked me about it.
 A BCR is a highly dynamic structure that can bind a single antigen in many different ways, it is therefore also likely that the GC maturation would end up producing different BCRs if replicating the process.
 This can be thought of as a multimodal fitness landscape, and it can be emulated by introducing multiple targets for the affinity simulation.
-Multimodality in the fitness landscape is the same as epistasis, which is defined as non additive interaction between mutations, and is widely observed in nature e.g.\ the evolution of influenza nucleoprotein \cite{gong2013stability}.
+%EM We can have non-additive but non-multimodal fitness landscapes, so they aren't quite equivalent.
+Multimodality in the fitness landscape follows from epistasis, which is defined as non additive interaction between mutations, and is widely observed in nature e.g.\ the evolution of influenza nucleoprotein \cite{gong2013stability}.
 The manifestations of epistasis can be different, but here is a simple example where the fitness is shown for various genotypes:
 $$
 ab = 1,\ Ab = 1,\ aB = 1,\ AB = 10
 $$
 There are four different genotypes, based on two loci (positions) with two alleles (gene variants), three having a fitness of 1 and one having a fitness of 10.
 Each position is tolerable to the two states, but only a combination of state $A$ and $B$ improves fitness.
-In a linear additive, non epistatic, setting the effect of the intermediate states ($Ab$ and $aB$) should sum to the effect of the full state:
+In a linear additive, non epistatic, model setting the effect of the intermediate states ($Ab$ and $aB$) should sum to the effect of the full state:
 $$
 ab + (Ab - ab) + (aB -ab) = AB
 $$
@@ -630,9 +628,7 @@ These observations supports the view that the presented affinity simulation is a
         Example of epistasis in a simulation run with multiple target sequences.
         Colors correspond to the affinity of the simulated cells, see figure \ref{fig:collapsed_epistasis} in appendix B for run stats.
         Arrows show an evolutionary trajectory from a low levels in the fitness landscape (starting at the unfilled black circle) to a higher level.
-        %EM Just checking-- only at the leaves you collapse zero amino acid differences?
-        % @matsen Yep, all branches are collapsed. What you see a true jump from one target to another :)
-        Zero amino acid distance leaves are collapsed and values inside nodes correspond to the number of B cells.
+        Zero amino acid distance branches are collapsed and values inside nodes correspond to the number of B cells.
         Here we see that the simulation trajectory is following along several targets.
         There is even a jump between two target sequence trajectories, with the highest frequency node (green 40) yielding a descendant with two amino acid mutations (green 9) that is equally close to another target, resulting in a change in mutational trajectory.
         }
