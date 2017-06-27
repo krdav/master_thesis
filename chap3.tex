@@ -326,6 +326,7 @@ In this work we use the Hamming distance as distance function.
 
 Similar to COAR, ancestral sequences close to the root will have more influence on the result than sequences close to the tips.
 %EM Is there an inherent reason it couldn't be scaled?
+% @matsen It could, surely. Don't know exactly why we didn't... Something you think I should include?
 The major difference is that MRCA is not scaled and not representing the result of a lineage reconstruction and can therefore the value has no meaningful interpretation aside from measuring performance of different method on identical data.
 
 
@@ -357,16 +358,17 @@ Instead we test the HLP17 model as it is implemented in the software IgPhyML (\u
 The HLP17 model is based on a GY94 model \cite{goldman1994codon} but adding parameters to account for AID hot/cold spots and thereby attempting to address the context sensitivity of SHM.
 
 Lastly we also test the performance of an unpublished method that uses a likelihood based ranking of equally parsimonious trees, we call this method GCtree, for genotype collapsed tree.
-Briefly, the likelihood function is based on the assumption that the GC reaction can be modelled as a binary Galton-Watson process \cite{harris2002theory}.
+Briefly, the GCtree likelihood function is based on the assumption that the germinal center reaction can be modelled as a binary Galton-Watson process \cite{harris2002theory}.
 Some genotypes have many observations while others have fewer, the Galton-Watson process will favour a high abundance genotype to be the parent for a low abundance genotype.
 Each MP tree is evaluated and ranked according to its fit and then the highest likelihood tree is picked out as the GCtree inferred tree.
-%EM Note that this depends on having a solid estimate of the abundances, which we assume are known without error.
+The GCtree method assumes getting the correct genotype abundances and will be sensitive to experimental errors in these.
+
 
 
 \subsection{Simulated data}
 Simulations were performed using both the neutral branching process and the affinity simulation previously described in chapter 3.
-%EM did you end up using nestly? That's a separate thing.
-Both simulation, inference and evaluation was wrapped into an SCons script \cite{fomel2007reproducible} available in the codebase of \texttt{GCtree} (\url{github.com/matsengrp/gctree}).
+Both simulation, inference and evaluation was wrapped into an SCons script \cite{fomel2007reproducible} using nestly \cite{mccoy2012nestly} to loop through all combinations of requested parameters.
+This script is available in the codebase of \texttt{GCtree} (\url{github.com/matsengrp/gctree}).
 SCons commands used can be found in appendix C.
 
 
@@ -465,49 +467,43 @@ Again the best to worse rank would be: GCtree, dnaml, IgPhyML, Parsimony, but wi
 
 
 \section{Discussion and conclusion}
-%EM This is an unusual way to start out a discussion.
-Tree topology is not the biggest concern in this validation because often the topology is not a very important objective by itself.
-It is the reconstructed sequences and the order of these, the selection pressure etc. that is most important.
-These objectives then tend to be correlated with correct tree topology, but that does not necessarily need to be true, and therefore the main objective is to validate ASR and let the tree topology follow as a consequence of improving the ASR.
+We have presented the COAR metric as an objective function tailored for evaluating ASR on a non-fixed inferred phylogeny.
+COAR is different from other tree metrics by being robust towards tree topology errors irrelevant for ASR and by being directly interpretable as the expected per site error of the sequences in a reconstructed lineage.
+Using COAR and other tree metrics we went on to show that reconstruction of sequences along an ancestral lineage is robust and only rarely accumulate errors, regardless of the inference method tested.
+In a worst-case scenario we found an expected one nucleotide error per reconstructed lineage sequence, based on affinity simulation with 4-8 sequences (including the a priori know root and leaf) in a lineage, see b) in figure \ref{fig:Laura-affsim_runstat} appendix B.
 
-The presented COAR metric is a suitable objective for ASR since it is robust to irrelevant errors in tree topology and directly interpretable as the expected per site error of sequences in a reconstructed lineage.
-The simulation study we present show that, regardless of the inference method used, the reconstruction of sequences along an ancestral lineage is robust and only rarely accumulate errors.
-%EM Don't you think that the fact that we see > 2 differences between dnapars and dnaml on real data indicates that we need to figure out a way to make the simulations harder?
-In a worst-case scenario there is an expected one nucleotide error per reconstructed sequence in a reconstructed lineage, based on affinity simulation with 4-8 sequences (including the a priori know root and leaf) in a lineage, see b) in figure \ref{fig:Laura-affsim_runstat} appendix B.
+We use two kinds of simulation, with and without selection.
+A neutral branching process serve as a good baseline but is not realistic compared to the fast and stringent selection process which is undertaken in the GC reaction.
+The simulation with added affinity selection attempts to address this issue by including a semi-mechanistic model for BCR-antigen affinity, challenging the inference methods with both epistasis and homoplasy.
+It is therefore not surprising to see that inference made on affinity simulations obtain higher COAR values than neutral simulation under comparable conditions.
+What we do find surprising is that all inference methods seems to be equally effected by the imposed affinity selection.
+We would have expected a codon based model like IgPhyML to have an advantage compared to the nucleotide based models because affinity selection is strictly acting on protein level, and hence there is a preference for synonymous over non-synonymous mutations that is an integrated part of a codon model but not accounted for in a nucleotide model.
+IgPhyML should also have an advantage over the other methods due to its model incorporating AID hot/cold spot motifs.
+Although IgPhyML is marginalizing over motifs that span multiple codons to achieve site independence and this might water out some signal, it should still capture some of the signal from mutational context bias.
+However, again this does not seem to improve the inference by IgPhyML over the other methods.
 
-%EM It's worth contrasting your simulation results with those of IgPhyML.
-%EM How did their tree sizes and lengths compare to your various simulations?
-%EM Also, if I understand their simulations in my quick look, it seems as though they simulated sequences on a fixed tree, which means that we lose connection between the tree structure and amino acid changes on the tree. There is also a fixed omega, which isn't a great model for when some AA subs are bad and some are good.
-% In fully context-dependent simulations, we also found that the HLP17 model provided an accuracy of ancestral state reconstructions that was similar to the GY94 model where h < 4, and that HLP17 noticeably improved accuracy at h = 4 (Figure S9 in File S1). While true ancestral sequences are not available for the three empirical bNAb lineages, we did observe differences between ancestral sequences reconstructed using the HLP17 and GY94 models. For each lineage, we compared the two models by calculating the mean number of amino acid differences between the predicted ancestral sequences at all internal nodes of each tree.
-
-Simulating under a neutral branching process is not realistic compared to the fast and stringent selection process which is undertaken in the GC reaction.
-The simulation with added affinity selection addresses this issue and challenges the inference methods with both epistasis and homoplasy.
-Therefore it is not surprising to see that inference on affinity simulations obtain higher COAR values than neutral simulation under comparable conditions.
-What is surprising is that all inference methods seems to be equally effected by the imposed affinity selection.
-We would have expected a codon based model like IgPhyML to have a an advantage compared to the nucleotide based models because affinity selection is strictly on protein level, and hence there is a preference for synonymous over non-synonymous mutations that is incorporated in the model parameters of a codon model but not in a nucleotide model.
-IgPhyML should also have an advantage over the other methods due to its incorporation of AID hot/cold spot motif in its model.
-Although IgPhyML is marginalizing over motifs that span multiple codons to achieve site independence, it should still capture some of the signal from mutational context bias.
-Again this does not seem to improve the inference by IgPhyML over the other method.
-
-Looking at typical trees simulated from both the neutral and affinity selected process (see trees in appendix B) it look like trees are relatively shallow i.e. the number of internal nodes from the leaf to the root is small.
+Looking at typical trees simulated from both the neutral and affinity selected process (see trees in appendix B) it looks like trees are relatively shallow i.e.\ the number of internal nodes from the leaf to the root is small.
 This of course makes it easier to get a low COAR score because there are only few states to reconstruct.
-In the affinity model trees are simulated over a long time range but still appear shallow because cells with low affinity are lost during maturation.
-On a tree this memory loss of lower affinity variants will show as a tree with a long trunk extending from the root to a bushy canopy, similar to observations made by Yaari et al.\ \cite{yaari2015mutation} (visualized in b) in figure \ref{fig:Laura-affsim_runstat} in appendix B).
-This trait could explain why is there is no apparent benefit of integrating AID motifs into an inference algorithm like IgPhyML.
+In the affinity model trees are simulated over many generations but still appear shallow because cells with low affinity are lost during the competitive selection of maturation.
+On a tree this "memory loss" of lower affinity variants will result in a tree with a long trunk extending from the root to a most recent common ancestor of a bushy canopy of leaves, similar to observations made by Yaari et al.\ \cite{yaari2015mutation} (visualized in b) in figure \ref{fig:Laura-affsim_runstat} in appendix B).
+This trait could explain why is there is no apparent benefit of integrating AID motifs into an inference algorithm like IgPhyML, the effect could in fact be positive but too small to be detected in our ASR validation using shallow trees.
+Hoehn et al. describing IgPhyML provides results of their own simulation study based on a fixed tree topology inferred from clonal BCR data ranging from approx.\ 300 to 1000 taxa.
+With these trees containing more taxa than our simulations, they show that integration of AID hotspots does increase ASR correctness slightly compared to the GY94 codon model.
+Still, they only get an average of 3\% improvement (at h=2) over the regular GY94 model confirming our findings of high similarity between methods.
 
 The overall performance of all the evaluated inference methods is very similar.
-There is a consistent ranking that puts GCtree first, dnaml and IgPhyML second and sets Parsimony last, but it must be stressed that the difference is very small and that the performance can be regarded as practically equivalent.
-GCtree stands out as the most consistently better performing algorithm is also dependent on the genotype abundance which is not readily available for most BCR data.
-Abundance data could potentially be extracted from standard HTS data but because of sequencing errors and primer biases these abundances are not reliable.
-With the introduction of UMIs this problem is getting addressed and it is expected that in most future datasets that the abundance information will be more reliable, giving the opportunity to integrate abundance data in methods such as GCtree to direct phylogenetic inference.
+There is a consistent ranking that puts GCtree first, dnaml and IgPhyML second and finds Parsimony last, but it must be stressed that the difference is very small and that the performance can be regarded as practically equivalent.
+GCtree does stand out as the most consistently better performing algorithm but it is also dependent on genotype abundance data, which is not readily available for most BCR data sets.
+Abundance data could potentially be extracted from standard HTS data, but because of sequencing errors and primer biases these abundances are not expected to be reliable.
+But with the introduction of UMIs it is expected most future datasets will have much more reliable abundance information, giving the opportunity to integrate abundance data in methods such as GCtree to direct phylogenetic inference.
 
 
 
 
 \section{Conclusion}
 The problem of inferring BCR phylogenies appears to be insensitive to the method used on the simulation regimes tested.
-With a significant improvement of GCtree inference we suggest that this is used when reliable abundance information exists.
-Otherwise the methods tested are practically equivalent suggesting that users should care mostly about which tool provide the most convenient solution to inferring their BCR phylogeny.
+With the GCtree inference being significantly better than the other tested method, we suggest that this is the first choice if reliable abundance information exists.
+Otherwise, if GCtree cannot be used because of missing abundance information, the methods tested are practically equivalent suggesting that users should care mostly about which tool provide the most convenient solution to inferring their BCR phylogeny.
 It remains to be tested whether different sampling conditions, such as time series sampling, will alter the results.
 Likewise it is undetermined if joint reconstruction will do any improvement over marginal reconstruction.
 
