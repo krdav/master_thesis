@@ -105,7 +105,6 @@ The correctness of the tree topology can the be assessed separately by other met
     \includegraphics[width=0.5\textwidth]{figures/mutation_process2.pdf}
     \caption{
         \label{fig:mutation_process}
-        %EM suggest history again
         One interpretation of the COAR value is that it is the distance between the true and inferred mutation histories, here shown by the true and inferred ancestral lineage nodes of an example phylogeny. The true ancestral lineage (left side) represents actual observed cells where the genotype is a known constant. The inferred ancestral lineage (right side) represents the estimated genotypes at branching points along the inferred topology. In some cases there is a mis-correspondence between observed cells in the true phylogeny and the branching points in the inferred tree. These are treated as missing realizations and ignored in the alignment of the two mutation histories.
     }
 \end{figure}
@@ -323,9 +322,6 @@ The distance between the two ancestral sequences are found with the function $\d
 In this work we use the Hamming distance as distance function.
 
 Similar to COAR, ancestral sequences close to the root will have more influence on the result than sequences close to the tips.
-%EM Is there an inherent reason it couldn't be scaled?
-% @matsen It could, surely. Don't know exactly why we didn't... Something you think I should include?
-%EM I think a scaled variant would be nice. We only compare on the same data sets so far so it wouldn't change much.
 The major difference is that MRCA is not scaled and not representing the result of a lineage reconstruction and can therefore the value has no meaningful interpretation aside from measuring performance of different method on identical data.
 
 

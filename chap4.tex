@@ -83,48 +83,48 @@ Simulation of expected substitution profile given the naive sequence, mutation b
 
 
 \chapter{Perspectives}
-Understanding the mechanisms of BCR GC evolution is one of the most important topics in the research area of adaptive immunity.
-The ability to produce high affinity antibodies has profound implications in human medicine, immediately apparent by their role in preventing bacterial and viral infections through vaccines or previous exposure, but also through the role of auto-antibodies in autoimmune diseases like pemphigus vulgaris \cite{payne2005genetic} myasthenia gravis \cite{lindstrom1998antibody}, rheumatoid arthritis \cite{steiner2002autoantibodies} etc.
-Not only will better understanding of GC evolution be an advancement in human molecular physiology but, maybe even more so, an important step towards utilize mechanistic understanding of adaptive immunity to engineer better vaccines, the next cancer drug or treatment of autoimmune diseases.
+Understanding the mechanisms of BCR GC evolution is one of the most fundamental topics in the research area of adaptive immunity.
+The ability of the human body to produce high affinity antibodies has profound implications in human medicine, immediately apparent by their role in preventing bacterial and viral infections through vaccines or previous exposure, but also through the role of auto-antibodies in autoimmune diseases, with pemphigus vulgaris \cite{payne2005genetic} myasthenia gravis \cite{lindstrom1998antibody} and rheumatoid arthritis \cite{steiner2002autoantibodies} being just a few examples.
+Not only will better understanding of GC evolution be an advancement in human molecular physiology but, maybe even more so, an important step towards taking advantage of mechanistic understanding of adaptive immunity to engineer better vaccines, the next cancer drug or treatments of autoimmune diseases.
 
 Phylogenetic inference takes a small but important part in the study of BCR evolution.
-Used correctly phylogenetic inference is a very strong tool offering a large body of ordered information directly useful to create new hypotheses to be scrutinized by experimental studies.
-On the other hand phylogenetic inference can also be misused by over-emphasizing its importance, neglecting the uncertainties involved in inference or just by plain misuse.
-With the recent technological advances of HTS the possibilities of studying BCR evolution has expanded tremendously, and with this have followed an increasing interest in applying phylogenetic tools to study everything from vaccine responses \cite{raymond2016influenza}, to development of broadly neutralizing antibodies (bnAbs) targeting HIV \cite{Doria-Rose2014-vi}, \cite{Wu2011-yj}, \cite{Zhu_undated-zz} and influenza \cite{pappas2014rapid}, \cite{xu2015key} and even in studying the repertoire effects of aging \cite{de2017phylogenetic}.
-ASR has been used to reveal that one of the barriers for eliciting bnAbs towards HIV is that they tend to evolve from self-reactive naive sequence \cite{williams2017potent}, \cite{liao2011initial} and thereby making it less likely for possible bnAb precursors to receive T cell help.
+Used correctly, phylogenetic inference is a strong tool offering a large body of ordered information directly useful as an engineering tool or to create new hypotheses to be scrutinized by experimental studies.
+On the other hand phylogenetic inference can also be misused by over-emphasizing its importance, neglecting the uncertainties involved in the inference or just by plain misunderstanding.
+With the recent technological advances of HTS the possibilities of studying BCR evolution has expanded into new dimensions, and with this have followed an increasing interest in applying phylogenetic tools to study everything from vaccine responses \cite{raymond2016influenza}, to development of broadly neutralizing antibodies (bnAbs) targeting HIV \cite{Doria-Rose2014-vi}, \cite{Wu2011-yj}, \cite{Zhu_undated-zz} and influenza \cite{pappas2014rapid}, \cite{xu2015key} and even in studying the repertoire effects of aging \cite{de2017phylogenetic}.
+ASR has been used to reveal that one of the barriers for eliciting bnAbs towards HIV is that they tend to evolve from self-reactive naive sequences \cite{williams2017potent}, \cite{liao2011initial}, thereby making it less likely for possible bnAb precursors to receive T cell help to found and sustain a GC.
 
-Development of therapeutic antibodies has boomed, with at least 47 FDA approved and marketed therapeutic antibodies and growing number of approvals \cite{ecker2015therapeutic}, the market for antibodies has never been stronger.
-Most antibodies derive from animal immunization or human isolation \cite{reichert2012marketed} and are therefore a direct outcome of GC affinity maturation.
-In such instances the evolutionary history of the antibody of interest can have many applications.
-Suppose the phylogenetic tree can be reconstructed, this will provide a wealth of information about sequence conservation and relationship to other sequences with the same antigen binding site.
-Such information can be applied in engineering and optimization which is a bottleneck in the antibody discovery phase \cite{dubel2014handbook}.
-Phylogenetic method are therefore important across the board, in basic research to pure sequence engineering.
+In the last decade development of therapeutic antibodies has boomed, with at least 47 FDA approved and marketed antibodies and growing number of approvals \cite{ecker2015therapeutic} the market for antibodies has never been stronger.
+Most antibodies derive from animal immunization or human PBMC isolation \cite{reichert2012marketed} and are therefore a direct outcome of GC affinity maturation.
+In such instances the evolutionary history of a antibody can be of tremendous interest due to its application in antibody engineering.
+Suppose the phylogenetic tree of the GC maturation can be reconstructed, this will provide a wealth of information about sequence conservation and relationship to other sequences with the same antigen binding site, information that can be applied in engineering and optimization which is a bottleneck in the antibody discovery phase \cite{dubel2014handbook}.
+Phylogenetic method are therefore important across the board, from basic research to pure sequence engineering.
 
-In this work we have defined a novel way of comparing ASR using an alignment of reconstructed lineages and normalizing to a per-site expected error named COAR.
-The COAR metric is especially useful for assessing the ASR performance of different phylogenetic inference method on simulated data.
-For simulation of sequences on a fixed tree ASR performance can readily be evaluated by comparing equivalent nodes, as done by Hoehn et al.\ \cite{Hoehn2016-wg}, however when the tree itself is also simulated e.g.\ by a stochastic branching processes, then the comparison becomes less trivial.
+In this work we have defined a novel way of comparing ASR using an alignment of reconstructed lineages and normalizing to a per-site expected error.
+We call this the COAR metric, and it is especially useful for assessing the ASR performance of different phylogenetic inference method on simulated data.
+For simulation of sequences on a fixed tree ASR performance can readily be evaluated by comparing equivalent nodes, as done by Hoehn et al.\ \cite{Hoehn2016-wg}, however when the tree itself is also being simulated e.g.\ by a stochastic branching processes, then the comparison becomes less trivial.
 COAR provides a way of producing comparable ASR benchmark values regardless of the simulation methods used and we hope that this will be useful in future work of ASR validation.
 
-To validate different inference methods we created a framework for simulating both trees and sequences on them by a stochastic branching process with an SHM bias mutation process.
-To simulate the Darwinian selection occurring in the GC maturation we couple the tree/sequence simulation with affinity based selection.
-Using COAR and other validation metrics we have run extensive validation studies and shown that phylogenetic inference is robust and accurately reconstructed ancestral sequences.
-The validation also showed that incorporation of sequence meta data like abundance can significantly increase the performance of ASR.
-Surprisingly, IgPhyML which is the only method to explicitly model the context sensitive mutation process of SHM, did not perform better than other methods.
-We speculate that this lack of signal is due to the relatively shallow trees and the fact that IgPhyML is using a mean field approximation to achieve site independence, but also prone to averaging out large parts of signal embedded in the sequence motifs.
+To validate different inference methods we also created a framework for simulating trees by a stochastic branching process using an SHM biased mutation process.
+To simulate the Darwinian selection occurring in the GC maturation we couple the neutral tree simulation to affinity based selection acting on individual sequences.
+Using COAR and other validation metrics we have run extensive validation studies and shown that a variety of phylogenetic inference is robust and accurately reconstructs ancestral sequences.
+The validation also showed that incorporation of sequence metadata like abundances can significantly increase the performance of ASR.
+IgPhyML, which is the only method to explicitly model the context sensitive mutation process of SHM, did to our surprise not perform better than the other methods.
+We speculate that there is there is not enough signal from the SHM bias due to the relatively shallow trees, including the fact that IgPhyML is using a mean field approximation which is prone to averaging out large parts of signal embedded in the sequence motifs.
+Unfortunately this mean field approximation is necessary to achieve site independence and making a tractable likelihood evaluation and therefore the problem is not easily solved by a modification to the model.
 
 In future iterations of this validation we would like to investigate in more details whether SHM motifs can be integrated in other ways into the inference algorithm and then search for situations where this might add significant value.
 We are currently working on using motif information in a similar way as abundance information is used in GCtree i.e.\ calculating the likelihood of a tree given a motif model and then ranking a set of equally parsimonious trees according to their motif based likelihood.
-By sampling multiple time points during the simulated GC evolution we can avoid the problem of shallow trees, and in addition this will answers essential questions about the validity of BCR phylogenies inferred on PBMC samples drawn at different stages of an immunization.
-Inferring phylogenies from a time series of samples is an interesting way of exploring the evolutionary trajectories of an immunization.
+It is also possible for us to avoid the problem of shallow trees by sampling multiple time points during the simulated GC evolution, and in addition to solving that problem it will answers essential questions about the validity of BCR phylogenies inferred on PBMC samples drawn at different stages of an immunization.
+Inferring phylogenies from a time series of samples could be an interesting way of exploring the evolutionary trajectories of an immunization in the future.
 
-There will always be a question about just how realistic these sequence simulations are, whether they are too easy, bias or over-optimistic.
-We have presented two alternative methods and shown that these represent varying degrees of difficulties, however we imagine that the affinity selection model could be even more challenging by drawing target affinities and distance to affinity conversion steepnesses ($k$ in \eqref{eq:hd2affy}) from a distribution rather than having a static value.
+There will always be a question about just how realistic sequence simulations are, whether they are too easy, bias or not capturing the traits of real GC evolution.
+We have presented two alternative approaches to simulate GC evolution and shown that these represent varying degrees of difficulties for inference methods, however we imagine that the affinity selection model could be even more challenging by drawing target affinities and "distance to affinity" conversion steepnesses ($k$ in \eqref{eq:hd2affy}) from a distribution rather than having a single value for all targets.
 Alternatively a much more detailed mechanistic model could be used for affinity simulations.
-Unfortunately methods like hyphasma \cite{robert2017simulate} does not support simulation of BCR sequences but it does integrate a string comparison method as a proxy for affinity.
-It appears to be possible that the explicit DNA representation of BCR sequences described in our affinity simulation could be transferred into a the larger framework of hyphasma thereby enabling sequence simulation from a high level mechanistic model.
-It is also possible that we can improve simulations further by adjusting simulation parameters to fit more characteristic behaviours of real datasets.
-One example would be to use the MP tree degeneracy as a metric to recapitulate.
-With the high interest in germinal center biology increasing technical advances we expect to see more single GC datasets like the one from Tas et al.\ \cite{tas2016visualizing}.
-Some of these might even contain information like antigen affinities which could be used to adjust our affinity simulation at the same time as being excellent experimental test sets.
+Unfortunately, methods like hyphasma \cite{robert2017simulate} does not support simulation of BCR sequences but it does integrate a string comparison method as a proxy for affinity.
+It appears to be possible that the explicit DNA representation of BCR sequences described in our affinity simulation could be transferred into a the larger framework of hyphasma, thereby enabling sequence simulation from a high level mechanistic model.
+Lastly it is also possible that we can improve simulations further by adjusting simulation parameters to fit more characteristic behaviours found in real datasets.
+One example would be to use the MP tree degeneracy as another metric for the simulated sequences to recapitulate.
+With the big interest in germinal center biology and increasing technical advances, we expect soon to see more single GC datasets like the one from Tas et al.\ \cite{tas2016visualizing}.
+Such datasets might even contain information like antigen affinities which could be used to adjust our affinity simulation at the same time as being excellent experimental data to recapitulate in a simulation.
 
 
