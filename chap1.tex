@@ -1,23 +1,23 @@
 \chapter{Introduction}
 Since the first vaccine research, by Edward Jenner on smallpox, it has been clear that the human immune system is adaptable and able to protect its host from serious infections.
 During the 20th century an impressive amount of basic research effort resulted in the deep understanding we have about immunology today.
-Many areas of immunology later turned out to be directly applicable in medicine as vaccines, anti-inflammatory agents, cancer treatment etc.
-Especially the area of adaptive immunity has been extensively studied due to its fascinating abilities to protect humans from diseases.
+Many discoveries in immunology later turned out to be directly applicable in medicine as vaccines, anti-inflammatory agents, cancer treatments etc.
+Especially the area of adaptive immunity has been extensively studied due to its fascinating abilities to protect humans from bacterial and viral infection.
 
 B and T cells and their receptors (BCRs and TCRs respectively) play a central role in the adaptive immune system which have classically been studied by low throughput techniques like microscopy, ELISA and PCR.
-However the most important part of these cells are their receptors and the binding abilities of these, which are purely sequence dependent.
+However, the most important part of these cells are their receptors and the binding abilities of these, which are purely sequence dependent.
 After this was recognized the first sequencing studies were slowly undertaken but with no where near enough sequences to give detailed insights about BCR and TCR function.
-It was first recently, around 2008, that high-throughput pyrosequencing (Roche 454) was used to sequence thousands of BCRs and TCRs \cite{campbell2008subclonal}, \cite{boyd2008high}.
-Since then high throughput sequencing is becoming a more standard lab technique and sequencing BCR/TCR repertoires (Rep-Seq) is now done by many academic groups and commercially by several companies.
+It was first recently, around 2008, that it got possible with high-throughput pyrosequencing (Roche 454) to sequence thousands of BCRs and TCRs \cite{campbell2008subclonal}, \cite{boyd2008high}.
+Since then high throughput sequencing (HTS) is becoming a standard lab technique and sequencing BCR/TCR repertoires (Rep-Seq) is now done by many academic groups as well as commercially by several companies.
 
 Despite the initial enthusiasm around Rep-Seq, the dust has settled, revealing a slightly disappointing reality.
-Slightly disappointing because Rep-Seq is, for various reasons, not answering as many scientific questions as it was hoped.
-There has been a number of studies showing just how vast a diverse the immune receptor repertoire is \cite{zhang20173d}, \cite{elhanati2015inferring}, and how there is a repertoire bias across different individuals \cite{dewitt2016public}, \cite{vander2017dysregulation}, but because BCR sequences themselves does not provide information about their function, interpretation of Rep-Seq results is difficult and too often ends up being a hunt for significant case vs.\ control changes that has little meaningful interpretation.
-For example there might be a significant change in the use of certain germline genes, under circumstances of an auto-immune disease, but is this caused by the self reactive auto-antibodies or is it just a side effect of the disease's influence on the repertoire?
-Questions like this are difficult to answer without extra information about the function of the antibody present in the sample.
+Slightly disappointing because Rep-Seq is, for various reasons, not answering as many scientific questions as it was initially hoped.
+There has been a number of studies showing just how vast and diverse the immune receptor repertoire is \cite{zhang20173d}, \cite{elhanati2015inferring} and how there is a repertoire bias across different individuals \cite{dewitt2016public}, \cite{vander2017dysregulation}, but because BCR sequences themselves does not provide information about their function, interpretation of these Rep-Seq results are difficult and too often ends up being a hunt for significant case vs.\ control changes with little meaningful interpretation.
+For example there might be a significant change in the use of certain germline genes, under circumstances of an autoimmune disease, but is this caused by the self reactive auto-antibodies or is the change in gene usage just a side effect of the disease's influence on the repertoire?
+A question like this is difficult to answer without extra information about the function of the antibody present in the sample and therefore conclusions drawn from changes in germline gene usage lack causality.
 However Rep-Seq is still in its infancy and indeed is starting to find a niche of applications e.g.\ lineage tracing for vaccine response \cite{Doria-Rose2014-vi}, \cite{Wu2011-yj} and in antibody discovery applications \cite{reddy2010monoclonal}.
 
-Missing functional information for Rep-Seq data is what makes it difficult to interpret because there is no known truth to use as a reference.
+Missing functional information about the sequences from Rep-Seq data is what makes it difficult to interpret because there is no known truth to use as a reference.
 E.g.\ it cannot be known exactly which B cells are sharing the same common ancestor cell (clonal relationship), it can only be inferred from sequence similarity and epitope binding specificity.
 Most often epitope binding specificity it not available for each cell so clonal relationship is inferred solely based on sequence similarity with no test to validate this assumptions.
 In such cases when sequence information is rich, but functional and relational information is sparse, or non-existing, the importance of simulation studies cannot be understated.
@@ -728,7 +728,7 @@ Embedded in the GCtree visualization is a number of traits: genotype abundance i
 
 
 \subsection{Clonal family tree}
-Most often the source of BCR sequences is throughput sequencing (HTS) data generated from bulk RNA, extracted from peripheral blood mononuclear cells (PBMCs).
+Most often the source of BCR sequences is HTS data generated from bulk RNA, extracted from peripheral blood mononuclear cells (PBMCs).
 Clonal family relationships therefore needs to be inferred by means of clustering before sequences can be inputted to phylogenetic tools.
 An automated pipeline can be envisioned, with HTS data as input and inferred clonal family trees as output.
 One attempt at this task is the publicly available ImmuneDB \cite{rosenfeld2017immunedb}.
