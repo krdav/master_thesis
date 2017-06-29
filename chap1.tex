@@ -39,36 +39,28 @@ In this chapter I will describe the theoretical fundamentals that makes the foun
 
 \section{Adaptive immunity}
 The function of the immune system is to protect its host against invading pathogens.
-To carry out this role the effector cells of the immune system have been equipped with a license to kill, and not only to kill pathogen, but also to kill its own host cells.
+To carry out this job the effector cells of the immune system have been equipped with a license to kill, and not only to kill pathogen, but also to kill its own host cells.
 With this potential harmful weapon the immune system needs to be tightly regulated to balance between fighting off pathogens while doing least possible harm on the host.
 
 At the lowest level of classification the immune system is split up into innate and adaptive immunity.
 As the name suggested the innate immunity is hard coded in the genome and cannot change during the course of an infection.
 The opposite is true for the adaptive immunity, this is not hard coded in the genome and is undergoing development throughout the course of an infection.
-%Without more information one could think that the adaptive immunity is sufficient for protection and the innate immunity is superfluous when having a specific response from the adaptive immunity.
-%This turns out to be wrong, and in fact innate immunity is much more important, and the reason is that there would not be any adaptive immunity without the help of the innate immunity.
-Innate immunity is the oldest of the defense mechanisms, adaptive immunity came along later with a huge advantage to the host, but always on the terms of the innate immune system.
+Innate immunity is the oldest of the defense mechanisms, adaptive immunity came along later giving a large selection advantage to the host, but always on the terms of the innate immune system.
 The innate immune system is broadly defined as both the physical barriers, like skin, mucous, stomach acid etc. but also covers cells like macrophages, dendritic cells and the proteins of the complement system.
 The adaptive immune system includes less elements and is defined as the cells of the B and T cell lineages.
-There is a tight interaction between the two systems and events in the innate system can cause activation of elements in the adaptive, and vice versa, see figure \ref{fig:innate_and_adaptive}.
-% However the adaptive immune system always needs to be activated by the innate system before any event can happen here.
+There is a tight interaction between the two systems and events in the innate system can cause activation of elements in the adaptive and vice versa, see figure \ref{fig:innate_and_adaptive}.
 
-%To better understand this lets walk through an example of a simple bacterial infection cause by a skin tear.
 To get a more complete picture of the processes involved lets walk through an example of a simple bacterial infection cause by a skin tear.
-First bacteria enters the blood stream where they proliferate, but some are also getting engulfed by macrophages.
-A macrophage will process the engulfed bacteria in small intracellular membrane vesicles (called lysosomes), first by killing and thereafter by chopping it up the content.
-The vesicles of chopped up bacteria will contain short peptides that was previously part of full-sized bacterial proteins, and these peptides are loaded into special surface receptors called the major histocompatibility complex class II (MHCII) and presented on the surface of macrophages.
-A large number of T cell with different TCRs are monitoring the blood stream and some will carry a TCR that binds specifically to an MHCII presenting a bacterial peptide on the surface of a macrophage.
-Upon binding the macrophage activates the T cell to undergo proliferation and a burst of T cells with identical TCRs will emerge (clonal burst).
-At the same time a large number of B cells with different BCRs are monitoring the blood stream binding a variety of different proteins.
-Whatever these B cells bind to their BCR is getting transported into the cell, chopped up and presented in MHCII is a similar fashion as the macrophages (this is a highly idealized description, for a detailed mechanistic review of antigen presentation to B cells see \cite{batista2009and}).
-Some of these B cell will bind proteins from the immunizing pathogen and present peptides from these protein in MHCII on its cell surface.
-Now some of these MHCII:peptide complexes are identical to the ones presented on the macrophages and the clonally expanded T cells bind them.
-When a TCR binds an MHCII:peptide complex presented by a B cell this activates the B cell to undergo a number of steps, which will be discussed in details later in this section.
-The result is secretion of large quantities of antibodies (a secreted form of a BCR) that binds to the surface proteins of the pathogen and thereby signalling the complement system and other immune cells to clear the infection.
-% Antibodies are just a secreted from of the B cells BCRs.
-%Clearance can occur rapidly and only when pathogens are flagged for phagocytosis by an antibody.
-The initial unspecific engulfing of extracellular fluids by macrophages will not be efficient enough to clear an infection, but once flagged with antibodies, clearance can be mediated by the complement system and occur rapidly.
+At first bacteria enters the blood stream where they start proliferating, but some are also getting engulfed by macrophages.
+A macrophage will process the engulfed bacteria in small intracellular membrane vesicles (called lysosomes), first by killing and thereafter by chopping up the lysosome content.
+Among the content of the lysosomes will be short bacterial peptides that was previously part of full-sized bacterial proteins, and these peptides are then loaded into special surface receptors called the major histocompatibility complex class II (MHCII) and presented on the surface of macrophages circulating through the blood stream.
+At the same time a large number of T cell with different TCRs are monitoring the blood and some will carry a TCR that binds specifically to an MHCII presenting a bacterial peptide on the surface of a macrophage.
+As a result of binding the macrophage activates the T cell to undergo proliferation and a burst of T cells with identical TCRs will emerge (clonal burst).
+At the same time a large number of B cells with different BCRs are monitoring the blood stream binding a variety of different proteins, and whatever these B cells bind to their BCRs are getting transported into the cell, chopped up and presented in MHCII is a similar fashion as the macrophages (this is a highly idealized description of antigen sequestering and presentation, for a detailed mechanistic review see \cite{batista2009and}).
+Some of these B cells will bind proteins from the immunizing pathogen and present peptides from these protein in MHCII on its cell surface.
+Now some of these MHCII:peptide complexes are identical to the ones presented on the macrophages, and the recently clonally expanded T cells will bind them and activate the B cells to undergo a number of maturation steps, discussed in details later in this section.
+The result is secretion of large quantities of antibodies (a secreted form of a BCR) that binds to the surface proteins of the bacteria and thereby signalling the complement system and other immune cells to clear the infection.
+Sometimes the unspecific engulfing of extracellular fluids by macrophages will not be efficient enough to clear a bacterial infection, but once flagged with antibodies, clearance can be mediated by the complement system and occur rapidly.
 
 \begin{figure}
     \centering
@@ -82,17 +74,16 @@ The initial unspecific engulfing of extracellular fluids by macrophages will not
 \end{figure}
 
 
-Summarized, a typical path to adaptive immunity goes through the following steps:
+In summary, we can think of adaptive immunity, in a highly idealized and simplistic way, as going through the following steps:
 \begin{itemize}
-  \item An antigen presenting cell (macrophage or dendritic cell) presents a foreign peptide in its MHCII.
-  \item A T cell clone with TCRs binding the MHCII:peptide complex gets clonally expanded.
-  \item A B cell clone binds a foreign protein, engulfs it and presents its peptides in MHCII.
-  \item The clonally expanded T cells bind MHCII:peptide complexes complementary to its TCR, inducing B cell proliferation and the production of antibodies.
-%  \item The TCR of the clonally expanded T cells bind complementary MHCII:peptide complexes on a B cell and induces it to proliferate and produce antibodies.
+  \item An antigen presenting cell (e.g.\ a macrophage or dendritic cell) engulfs a foreign protein and presents a its peptide in MHCII.
+  \item A T cell clone with TCRs binding this MHCII:peptide complex gets clonally expanded.
+  \item A B cell clone binds the same foreign protein, engulfs it and presents its peptides in MHCII.
+  \item The clonally expanded T cells bind these MHCII:peptide complexes, inducing B cell proliferation and the production of antibodies.
 \end{itemize}
-Each item on the list has many details omitted for the sake of simplicity, but one important thing missing is the concept of memory.
-The above list ends with clearance of the infection through secretion of antibodies binding the pathogen, but the process is slow and energy consuming, so keeping memory of the response is an mechanism for rapid response to repeated infections.
-Memory is build by immortalizing T and B cells involved in the adaptive immunity reaction of the first encounter with a pathogen, then whenever the same pathogen is encountered again, memory cells will quickly start clearing of the invasion.
+Each item on the list has many details omitted for the sake of simplicity, but one thing missing and worth to highlight is the concept of memory.
+The list ends with clearance of the infection through secretion of antibodies binding the pathogen, but this process is slow and very energy consuming, so keeping a memory of the pathogen is an important mechanism to mount rapid response towards repeated infections.
+Immune memory is build by immortalizing T and B cells involved in the adaptive immunity reaction of the first encounter with a pathogen, then whenever the same pathogen is encountered again, memory cells will quickly be able to start attacking the invasion.
 
 
 
@@ -104,18 +95,17 @@ Memory is build by immortalizing T and B cells involved in the adaptive immunity
 The adaptivity of adaptive immunity lies in the diversity of BCRs and TCRs.
 Like so many receptors involved in the immune system both BCRs and TCRs are built up by protein domains from the immunoglobulin superfamily.
 But unlike other receptors in the immune system they are not encoded by a single gene but by several genes stochastically recombined from multiple loci.
-Mechanisms of generation of BCRs and TCRs are so overlapping that it will be sufficient to only describe the mechanism of generating BCRs.
+Mechanisms of generation of BCRs and TCRs are so overlapping that it will be sufficient in the following section to only describe the mechanism of generating BCRs.
 
-Antibodies are the secreted form of a BCRs, but the structure is the same, except for the missing membrane anchor.
-A BCR is a tetrameric protein of two identical heavy chains and two identical light chains, so called because one is longer than the other, see a) in figure \ref{fig:BCR_structure2}.
-The heavy/light chain pairs are linked together covalently by disulfide bonds, and so are the two heavy chains from each pair, making a BCR a very stable structure.
-Both heavy and light chain starts with a variable region, defining their antigen binding capacity, and ends with a non-variable constant region (CH1-3/CL).
-%Both heavy and light chains have a non-variable constant region (CH1-3/CL), but at the be of each chain they have a variable region which defines its antigen binding.
-The number of different variable regions found in a sample of naive (non antigen experienced) human B cells reveal that there are orders of magnitude too many different BCRs for them to be encoded as single genes on the genome.
-Instead the diversity is introduced by recombining several pieces of DNA from different loci into a full-sized variable region, see b) in figure \ref{fig:BCR_structure2}.
-These are called the germline genes and for heavy chain sequences there are three groups, the variable (V), the diversifying (D) and the joining (J).
+Antibodies are the secreted form of a BCRs having with the same structure except for the missing membrane anchor.
+A BCR is a tetrameric protein of two pairs of identical chains referred to as the heavy and light chains because one is longer than the other, see a) in figure \ref{fig:BCR_structure2}.
+The heavy/light chain pairs are linked together covalently by disulfide bonds, likewise are the two heavy chains from each pair, making a BCR a very stable structure.
+Both chains starts with a variable region that defines the antigen binding ability of an antibody, and ends with a non-variable constant region (CH1-3/CL).
+The number of different variable regions found in a sample of naive (non antigen experienced) human B cells reveal that there are orders of magnitude more different BCRs than single genes on the genome.
+Instead of being gene encoded this diversity is introduced by recombining several pieces of DNA from different loci into a full-sized variable region, see b) in figure \ref{fig:BCR_structure2}.
+These segments are called the germline genes and for heavy chain sequences there are three groups, the variable (V), the diversifying (D) and the joining (J).
 These V, D and J germline gene groups have multiple variants existing in sequential order on the chromosome, and during a stochastic process called VDJ recombination, one of the genes from each germline gene group is physically spliced together into a full-size variable region VDJ gene.
-Coupled to a constant region gene further downstream this is being expressed as a single chain in the BCR protein.
+Coupled to a constant region gene further downstream this is being transcribed and translated into one of the heavy/light chains of a BCR protein.
 
 \begin{figure}
     \centering
@@ -128,17 +118,16 @@ Coupled to a constant region gene further downstream this is being expressed as 
 \end{figure}
 
 
-While VDJ recombination is not a completely random process \cite{li2012recombinatorial}, it is the basis of all the variability in the variable region.
-But the combinatorics of all the germline genes is only modest, $\approx 39\times27\times6=6318$ different VDJ combinations.
-%The rest of the observed diversity comes from another stochastic process involving trimming and inserting new nucleotides at the DNA ends flanking the D gene, see figure \ref{fig:VDJ_recomb}.
-The rest of the observed diversity comes from another stochastic process involving trimming and inserting new nucleotides at the DNA ends that are joined together, see figure \ref{fig:VDJ_recomb}.
-The extra nucleotides added in the junction between V-D and D-J are called N/P nucleotides and the length of these insertions can vary from zero to tens of nucleotides.
-Although the length of the junctions are not uniformly random, and there is a bias in the inserted nucleotides \cite{murugan2012statistical}, \cite{elhanati2015inferring}, the process adds orders of magnitude more diversity to the combinatorics of gene recombination.
-Furthermore all the junctional diversity is contained in the complementarity defining region (CDR), as opposed to the framework region (FR), see figure \ref{fig:VDJ_recomb}.
-As the name suggests the CDR is the structural region that binds the antigen, and to enable binding of a wide range of structures this must contain a lot of diversity.
-Based on a combination of gene recombination and junction diversity, and weighted by their biases, Elhanati et al.\ estimated that the naive repertoire is $10^{16} - 10^{18}$ productive sequences \cite{elhanati2015inferring}.
-The resulting sequence of VDJ genes and N/P bases are referred to as the naive sequence to reflect that this is the stage before antigen experience and germinal center maturation explained later.
-All this diversification occurs within all individuals in the reactions of the adaptive immune system, but with the subtle difference that VDJ genes can differ between individuals.
+While VDJ recombination is not a completely random process \cite{li2012recombinatorial}, it is the basis of all the variability in the variable region in a BCR sequence.
+But the combinatorics of all the germline genes are only modest, $\approx 39\times27\times6=6318$ different VDJ combinations times two (due to humans being diploid organisms), vastly less than what is observed in experimental studies.
+The rest of the observed diversity comes from another stochastic process involving trimming and inserting new nucleotides at those DNA ends that are joined together, see figure \ref{fig:VDJ_recomb}.
+The extra nucleotides added in the junction between V-D and D-J are called N/P nucleotides and the length of these indels can vary from zero to tens of nucleotides.
+Although the observed distribution of junctions lengths is not uniformly random, and there is a bias in the inserted nucleotides \cite{murugan2012statistical}, \cite{elhanati2015inferring}, N/P nucleotides adds orders of magnitude more diversity to the combinatorics of gene recombination.
+Furthermore all the junctional diversity is contained in the third complementarity defining region (CDR), as opposed to the framework region (FR), see figure \ref{fig:VDJ_recomb}.
+As the name suggests the CDR is the structural region that binds the antigen, and to enable binding of a wide range of structures this region must be highly diverse.
+Based on a combination of gene recombination and junction diversity and weighted by their distributional biases, Elhanati et al.\ estimated that the naive repertoire is $10^{16} - 10^{18}$ productive sequences \cite{elhanati2015inferring}.
+The sequences resulting directly from VDJ recombination and N/P bases are referred to as naive sequences to reflect that these are in a stage before antigen experience and germinal center maturation explained later.
+All this diversification occurs within all individuals in the B cell generation in the bone marrow, however with the subtle difference that VDJ genes can differ between individuals.
 The different VDJ genes are called alleles and have the potential of expanding the binding breadth of the population wide BCR repertoire even further.
 
 \begin{figure}
@@ -152,14 +141,13 @@ The different VDJ genes are called alleles and have the potential of expanding t
 \end{figure}
 
 
-While the above description covers the concepts of BCR diversification in general it was applied specifically to an example using a heavy chain variable sequence.
-The light chain variable sequence is also made by recombination, but light chains have no D germline gene and therefore performs a VJ recombination with substantially less junctional diversity.
-%Light chain germline genes are present in two non-identical copies named kappa and lambda, residing on different chromosomes due to a duplication event.
+While the above description covers the concepts of BCR diversification in general it was applied specifically to an example of a heavy chain variable sequence.
+The light chain variable sequence is generated by similar recombination, but light chains do not have the D germline gene and therefore only performs a VJ recombination with substantially less junctional diversity.
 Light chain germline genes are present in two non-identical copies named kappa and lambda residing on different chromosomes.
-The light chain sequence will only be expressed from one of these, the choice of which is determined by a selection process in the bone marrow.
+The light chain sequence will only be expressed from one of these, the choice of which is determined by a selection process in the bone marrow excluding self-antigen binding BCRs.
 Pairing of a heavy and light chain sequence yields an even larger possible naive repertoire, and with a production rate of at least $10^7$ naive B cells per day \cite{murphy2008immunobiology}, it is not surprising that the adaptive immune system can recognize nearly all foreign antigens.
-With such a broad range of antigen binding it also becomes possible to bind endogenous proteins.
-This is not desirable because it would lead to immune attach against host cells, also known as auto-immunity, therefore the adaptive immune system has devised as selection process in the bone marrow to destroy B cells with non-functional or self antigen binding BCRs.
+With such a broad range of antigen binding there will naturally be many BCRs binding endogenous proteins (self-antigens).
+This is not desirable because it would lead to immune attach against host cells, known as autoimmunity, and therefore the adaptive immune system has a strict selection process in the bone marrow to destroy B cells with non-functional or self-antigen binding BCRs.
 A similar process is happening for T cells in the thymus.
 
 
@@ -167,8 +155,8 @@ A similar process is happening for T cells in the thymus.
 
 \subsubsection{Germline nomenclature}
 The standard nomenclature for BCR genes used throughout this work is defined by the IMGT ontology summarized in figure \ref{fig:IMGT_classification} and described by Lefranc \cite{lefranc2001nomenclature}.
-The first part of the name is always "IG" then followed by a locus identifier that can be either H (for heavy chain), K or L (for kappa or lambda light chain).
-Next letter represents the gene group which can be V, D or J for the variable region, and for the constant region the different isotypes e.g.\ A, E, G1, G2 etc.
+The first part of the gene name is always "IG" and followed by a locus identifier that can be either H (for heavy chain), K or L (for kappa or lambda light chain).
+The next letter represents the gene group which can be V, D or J for the variable region, and for the constant region the different isotypes e.g.\ A, E, G1, G2 etc.
 
 \begin{figure}[ht]
     \centering
@@ -181,9 +169,9 @@ Next letter represents the gene group which can be V, D or J for the variable re
 \end{figure}
 
 
-For the variable region gene group more layers of nomenclature is needed since there are many different V, D and J genes under each group.
+For the variable region gene group additional layers of nomenclature are needed since there are many different V, D and J genes under each group.
 The first layer is the subgroup level which is defined as a cluster of genes sharing at least 75\% nucleotide similarity.
-There are 7 of these subgroups and presumably they each derive from distinct gene duplication events, an interpretation supported by the distances separating subgroup genes on their inferred phylogeny, see figure \ref{fig:IGHV_tree}.
+There are 7 of these subgroups in IMGT and presumably they each derive from distinct gene duplication events, an interpretation supported by the distances separating subgroup genes on their inferred phylogeny, see figure \ref{fig:IGHV_tree}.
 However the subgroup level is \textit{not} defined phylogenetically, even though it might coincide with a phylogenetic interpretation.
 
 \begin{figure}
@@ -333,7 +321,7 @@ A motif model is completely empirical and relies on the input data which is a la
 A survival model \cite{cox1992regression} is a good way to describe the observed data, with the event rate Theta, being proportional to the logarithm of the mutation rate of the motif (unpublished data from David Shaw and Jean Feng), see figure \ref{fig:SAMM_plot}.
 Fitting the model is non-trivial, because neighboring motifs share the same context and in the case of an observed event in one motif this changed the context, and thereby Theta, in the other motifs.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.45\textwidth]{figures/SAMM_plot.pdf}
     \caption{
