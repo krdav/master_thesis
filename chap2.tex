@@ -133,7 +133,6 @@ Finally when all B cells have been evaluated a new round of selection starts.
 
 
 
-
 \subsubsection{Kinetic model of BCRs binding antigen}
 Using the most simplistic view, B cells and antigens can be seen as molecules binding and unbinding at some rate intrinsic to the BCR sequences, and their dynamics can then be modelled as a continuously stirred tank reactor (CSTR) \cite{CSTR}, widely used in chemical engineering models.
 The CSTR model makes the assumption that the antigen is spread evenly across the GC and that the binding between BCRs and antigen is at equilibrium at all time.
@@ -247,14 +246,6 @@ These conditions are satisfied by:
 \end{equation}
 Where $d = \operatorname{dist}(\Bseq, \Tseq)$ is the distance between BCR and target sequence and $t_{\naive} = \operatorname{dist}(\Nseq, \Tseq)$ is the distance between naive and target sequence.
 The exponent, $k$, can be chosen to adjust the mapping between distance and affinity, with the restriction that $0 < k < \infty$ (figure \ref{fig:hd2affy}).
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{figures/hd2affy.pdf}
-    \caption{
-        \label{fig:hd2affy}
-        Varying the exponent $k$ in \eqref{eq:hd2affy} to achieve different mappings between distance and affinity. Naive and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
-    }
-\end{figure}
 
 It is easy to imagine that in a real affinity maturation process there will be many different BCR sequences that are practically equally fit.
 E.g.\ this will happen when multiple amino acids are equally fit on a given position.
@@ -264,7 +255,15 @@ $$
 d = \argmin_{\Tseq \in \Targets} \operatorname{dist}(\Bseq, \Tseq)
 $$
 
-
+\clearpage
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/hd2affy.pdf}
+    \caption{
+        \label{fig:hd2affy}
+        Varying the exponent $k$ in \eqref{eq:hd2affy} to achieve different mappings between distance and affinity. Naive and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
+    }
+\end{figure}
 
 
 
@@ -295,9 +294,11 @@ Using these conditions $\alpha$, $\beta$ and $Q$ can be found and the logistic f
 % $\alpha$ can be interpreted as the lower asymptote of the function and is therefore expected to be close to 0, except the case when $U$ is large, in which $\alpha$ has to adjust to a larger negative value, see figure \ref{fig:T_Bbound_U}.
 $\alpha$ can be interpreted as the lower asymptote of the function.
 $\beta$ is the steepness of the function, and it is coupled to the $Q$ parameter, which will follow it according to the three conditions in \eqref{eq:BA_cond}.
-\vfill
 
-\begin{figure}
+
+
+
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/T_Bbound_U.pdf}
     \caption{
@@ -306,7 +307,7 @@ $\beta$ is the steepness of the function, and it is coupled to the $Q$ parameter
     }
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/T_Bbound_f_full.pdf}
     \caption{
@@ -316,8 +317,22 @@ $\beta$ is the steepness of the function, and it is coupled to the $Q$ parameter
 \end{figure}
 
 
-
-
+\iffalse
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/T_Bbound_U.pdf}
+    \caption{
+        \label{fig:T_Bbound_U}
+        Using a constant $f_{\full} = 1$, changing the $U$ parameter in the conditions in \eqref{eq:BA_cond} to achieve a shift of the inflection point, at $\lambda=1$, on the $B_{\bound}$ axis.
+    }
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/T_Bbound_f_full.pdf}
+    \caption{
+        \label{fig:T_Bbound_f_full}
+        Using a constant $U = 5$, changing the $f_{\full}$ parameter in the conditions in \eqref{eq:BA_cond} to change the point where $B_{\bound}$ reaches the largest $\lambda$.
+    }
+\end{figure}
+\fi
 
 
 
@@ -472,9 +487,9 @@ One generation is defined as one iteration through all the non terminated leaves
 Once every leaf has be evaluated this marks a new generation and the generation time is increased by one.
 For an overview see figure \ref{fig:tree_iteration}.
 
-\begin{figure}
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{figures/tree_iteration.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/tree_iteration.pdf}
     \caption{
         \label{fig:tree_iteration}
         Illustration the sampling procedure in a time slice ($T=5$) of the simulation of a phylogeny undergoing affinity selection.
