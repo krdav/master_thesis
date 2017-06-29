@@ -27,7 +27,7 @@ Mechanistic models start with a set of first principal physical laws used to def
 The system is initiated with a 3 dimensional grid with a number founding cells, and then solved by discretizing into small time steps and solving the equations for diffusion, cell motility, receptor binding etc.
 Examples of mechanistic models are hyphasma, described in Robert et al.\ \cite{robert2017simulate}, and the model described in Wang et al.\ \cite{wang2015manipulating} used to explain generation of cross-reactive HIV antibodies.
 Unfortunately both of the above examples are not publicly available.
-Childs et al.\ \cite{Childs_Baskerville_Cobey_2015} also used an agent based method to simulate the GC reaction and explaining the trade-offs between antigen specificity and breadth, and in addition this also appears to be one of the only GC simulation software to be published as open source somewhere in the public domain (\url{https://github.com/cobeylab/gcdynamics}).
+Childs et al.\ \cite{Childs_Baskerville_Cobey_2015} also used an agent based method to simulate the GC reaction and explaining the trade-offs between antigen specificity and breadth, and in addition this also appears to be one of the only GC simulation software to be published as open source somewhere in the public domain (\url{github.com/cobeylab/gcdynamics}).
 
 Regardless of software availability none of the above mentioned simulation methods are suitable for validating BCR phylogenetics and testing the effect of antigen selection on tree inference.
 While the simplistic statistical framework of Clone is appealing it does not model selection towards a known high affinity BCR, rather it models selection as a random effect of a non-synonymous mutation located in the CDR.
@@ -548,7 +548,7 @@ The process is repeated until $t_n$ targets have been made.
 We reason that a good default choice of $t_{\naive}$, to achieve sufficient evolutionary distance, is 10, however the simulation behaviour seems rather indifferent to this, compare \ref{fig:no_effect_of_f_full} with \ref{fig:skip_vs_no_skip_dist10}.
 The default number of targets ($t_n$) is set to 100 to provoke epistatic effects.
 All default parameters in the affinity simulation is tabulated in table \ref{aff_constants}.
-The implementation is available as a simulation subprogram in the codebase of \texttt{GCtree} (\url{github.com/matsengrp/gctree}).
+The implementation is available as a simulation subprogram in the codebase of \texttt{GCtree} (static copy used in this work \url{github.com/krdav/master_thesis_code}).
 
 \begin{table}[ht]
 \centering
