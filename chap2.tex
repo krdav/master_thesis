@@ -2,39 +2,39 @@
 
 \section{Introduction}
 Antibodies have an important role in adaptive immunity by specifically binding to and neutralizing invading pathogens like bacteria and viruses.
-Developing specific antibodies involves reactions across the entire immune system, but it is B cells that mature and secrete antibodies, after undergoing several rounds of selections in the bone marrow and the germinal centers (GCs).
-B cells undergoing GC affinity maturation express antibodies as B cell receptors (BCRs), and these are subject to a strict selection scheme, where many different factors come into play e.g.\ antigen affinity, receptor expression and folding, codon choice affecting translation rates and affinity to self antigens.
-All these factors leads back to the same thing: the ability to bind antigen, and this is measured by nearby T cells, which will be affecting the mutual probabilities of proliferation or apoptosis \cite{Bannard_Cyster_2017}, \cite{victora2012germinal}.
+Developing specific antibodies involves reactions across the entire immune system, but it is B cells that mature and secrete antibodies after undergoing several rounds of selections in the bone marrow and the germinal centers (GCs).
+B cells undergoing GC affinity maturation express antibodies as B cell receptors (BCRs), and these are subject to a strict selection scheme where many different selection factors come into play e.g.\ antigen affinity, receptor expression and folding, codon choice affecting translation rates and affinity to self-antigens.
+All these factors lead back to the same thing: the ability to bind antigen, measured by nearby T cells and affecting the mutual probabilities of proliferation or apoptosis \cite{Bannard_Cyster_2017}, \cite{victora2012germinal}.
 As an example in a GC there is a direct T cell mediated selection for higher BCR affinity by means of sequestering more antigen.
-Selection against binding of self antigens is mediated by the fact that binding self antigens will block binding of pathogen antigens, resulting in decreased T cell help.
-Therefore, in its most simple way, affinity maturation is driven by affinity towards the presented antigen, and all the effects also attributed to selection, like folding, stability and aggregation, is selected by means of their shared effect on antigen affinity.
+Selection against binding of self-antigens are mediated by the fact that this will block receptors otherwise binding the pathogen antigen thereby decreasing T cell help.
+Therefore, in its most simple way, affinity maturation is driven by affinity towards the presented antigen.
+All other effects also attributed to selection like folding, stability and aggregation, are selected by means of their shared effect on antigen affinity.
 
-Affinity maturation is a strong selective pressure imposed on the B cell evolution, and this poses a challenge to phylogenetic reconstruction.
-In order to validate the correctness of phylogenetic methods, simulation studies are among the most important tool.
-Simulations are classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions, but a simulation can also be configured to have selection.
+Affinity maturation is a strong selective pressure imposed on the B cell evolution challenging the assumptions of phylogenetic reconstruction.
+In order to validate the correctness of phylogenetic methods, simulation studies are among the most important approaches.
+Simulations are classically done by randomly permuting a sequence or sampling mutations from a distribution of substitutions, but a simulation can also be configured with selection.
 
-There already is a large body of literature suggesting different ways of modelling the GC reaction from mechanistic models \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, to probabilistic frameworks \cite{shlomchik1998clone}, \cite{Reshetova_2017}, systems of differential equations \cite{shahaf2008antigen} and birth-death processes \cite{Balelli_2016}.
+There are already a large body of literature suggesting different ways of modelling the GC reaction from mechanistic models \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, to probabilistic frameworks \cite{shlomchik1998clone}, \cite{Reshetova_2017}, systems of differential equations \cite{shahaf2008antigen} and birth-death processes \cite{Balelli_2016}.
 Shlomchik et al.\ \cite{shlomchik1998clone} developed ``Clone'', a simple statistical framework inspired by the intuition that CDRs are more likely to accept mutations than FRs.
-In Clone mutations are introduced, by an intrinsic mutation rate ($\lambda$), into either CDR or FR and being either synonymous or non-synonymous with the two probabilities drawn from two Bernoulli distributions.
-This gives four categories associated with their own probability, and for each category a Poisson progeny distribution can be defined to simulate death and/or cell divisions.
-Later Kleinstein et al.\ \cite{kleinstein2003estimating} used Clone as a statistical framework to find the maximum likelihood estimates of its model parameters, given some real BCR sequence dataset.
-This resulted in consistent estimates of the rate of somatic hypermutation that have later been confirmed in multiple studies.
-A very similar model was suggested by Reshetova et al.\ \cite{Reshetova_2017}, but unlike Clone, authors claimed that software can be accessed on request with a permissive open source license.
+In Clone mutations are introduced by an intrinsic mutation rate ($\lambda$), into either CDR or FR being synonymous or non-synonymous, with some probabilities drawn from two Bernoulli distributions.
+This gives four categories associated with their own probability and for each category a Poisson progeny distribution can be defined to simulate death and/or cell divisions.
+Later Kleinstein et al.\ \cite{kleinstein2003estimating} used Clone as a statistical framework to find the maximum likelihood estimates of its model parameters given an experimental dataset of clonal BCR sequences.
+This resulted in consistent estimates of the rate of somatic hypermutation later confirmed in multiple studies.
+A very similar model was suggested by Reshetova et al.\ \cite{Reshetova_2017}, but unlike Clone, authors claim that the software can be accessed on request with a permissive open source license.
 An alternative model described by Shahaf et al.\ \cite{shahaf2008antigen} is based on a system of differential equations and uses distance between bit strings to represent complementarity between BCR and antigen.
-Unfortunately, software implementing this model has not been released publicly.
+Unfortunately, the software implementing this model has not been released publicly.
 A very different approach is to model the GC reaction by a mechanistic model where each B cell is explicitly represented as a single entity, called an agent.
-Mechanistic models start with a set of first principal physical laws used to define the molecular behaviour of a system.
+Mechanistic models start with a set of first principle physical laws used to define the molecular behaviour of a system.
 The system is initiated with a 3 dimensional grid with a number founding cells, and then solved by discretizing into small time steps and solving the equations for diffusion, cell motility, receptor binding etc.
-Examples of mechanistic models are hyphasma, described in Robert et al.\ \cite{robert2017simulate}, and the model described in Wang et al.\ \cite{wang2015manipulating} used to explain generation of cross-reactive HIV antibodies.
-Unfortunately both of the above examples are not publicly available.
-Childs et al.\ \cite{Childs_Baskerville_Cobey_2015} also used an agent based method to simulate the GC reaction and explaining the trade-offs between antigen specificity and breadth, and in addition this also appears to be one of the only GC simulation software to be published as open source somewhere in the public domain (\url{github.com/cobeylab/gcdynamics}).
+Examples of mechanistic models are hyphasma described in Robert et al.\ \cite{robert2017simulate} and the model described in Wang et al.\ \cite{wang2015manipulating} used to explain generation of cross-reactive HIV antibodies, but unfortunately both of these are not publicly available.
+Childs et al.\ \cite{Childs_Baskerville_Cobey_2015} also developed an agent based method to simulate the GC reaction to explain the trade-offs between antigen specificity and breadth, and in addition this also appears to be one of the only GC simulation software to be published as open source somewhere in the public domain (\url{github.com/cobeylab/gcdynamics}).
 
-Regardless of software availability none of the above mentioned simulation methods are suitable for validating BCR phylogenetics and testing the effect of antigen selection on tree inference.
-While the simplistic statistical framework of Clone is appealing it does not model selection towards a known high affinity BCR, rather it models selection as a random effect of a non-synonymous mutation located in the CDR.
+Regardless of software availability we have found no method suitable for validating BCR phylogenetics and testing the effect of antigen selection on tree inference.
+While the simplistic statistical framework of Clone is appealing, it does not model selection towards a known high affinity BCR, instead it models selection as a random effect when non-synonymous mutations fall in the CDR.
 None of the other above mentioned simulation methods are explicitly simulating the DNA sequences and therefore cannot be used in software to analyze DNA sequences without substantial adaptations.
 To get the best of the realism of a mechanistic model and the simplicity of a statistical model, we propose a simple model of affinity maturation that models sequence fitness solely as a function of antigen binding, modelled by a standard binding equilibrium.
-If the BCR affinity is high it means that the B cell will bind and endocytose a lot of antigen, thereby getting plenty of T cell help, decreasing the chances of undergoing apoptosis while increasing the chances of proliferation.
-Alternatively, if the BCR affinity is low no antigen will be endocytosed, and chances are high that the cell will undergo apoptosis.
+If the BCR affinity is high it means that the B cell will bind and endocytose a lot of antigen, getting plenty of T cell help and decreasing the chances of undergoing apoptosis while increasing the chances of proliferation.
+Alternatively, if the BCR affinity is low no antigen will be endocytosed and chances are high that the cell will undergo apoptosis.
 In this setup it is not the absolute affinity that matters, but rather the affinity relative to the affinities of all the competing cells in the whole GC, and the total amount of antigens cells compete for.
 By modularizing the simulation code we can first make a model for a neutral branching process, and then add an optional affinity selection step that works in conjunction with the neutral process used to introduce substitutions.
 
@@ -52,19 +52,19 @@ The model is designed to capture only the most influential effects of affinity m
 A neutral branching process, independent from the later described affinity model, was setup as a reference point for simulation.
 It can be viewed as a model of cell divisions, where at each generation a cell can either die or produce a number of offspring, and each offspring has some probability of carrying a mutation.
 The neutrality assumption lies in the fact that the mutations introduced will have no fitness effect.
-The root sequence is given at initialization as a starting point to evolve through a stochastic branching process, controlled by an arbitrary discrete distribution, which in this case we take to be a Poisson distribution, due to its convenient mathematical properties.
+The root sequence is given at initialization as a starting point to evolve through a stochastic branching process, controlled by an arbitrary discrete distribution, which in this case we take to be a Poisson distribution due to its convenient mathematical properties.
 Thus, in the below sections the branching process is controlled by a $\operatorname{Pois}(\lambda)$ progeny distribution.
-Furthermore at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from another Poisson distribution ($\operatorname{Pois}(\lambda_{\mut})$) and then introduced sequentially into the sequence given a substitution model.
+Furthermore, at each generation all progeny cells will undergo a mutation process with the number of nucleotide mutations drawn from another Poisson distribution ($\operatorname{Pois}(\lambda_{\mut})$) and introduced sequentially into the sequence given a substitution model.
 By using sequential introduction of mutations we allow the possibility of back mutations.
-A possible possible choice of substitution model is a uniform probability over all sites and substitutions, but because it is well known that BCR sequences do not mutate uniformly at random \cite{Yeap2015-nl}, we use an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
-The S5F model describes mutability of the middle base of all 5-mer DNA motifs, and for each motif, the base preferences given a mutation i.e.\ if a random draw from the S5F site mutabilities of the sequence chose to mutate the 5-mer \texttt{AAAAA}, then the S5F model will also provides a list of probabilities for each middle base substitutions, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, probabilities summing to 1.
+A possible possible choice of substitution model is a uniform probability over all sites and substitutions, but because it is well known that BCR sequences do not mutate uniformly at random \cite{Yeap2015-nl} we use an empirical approximation of the mutation context sensitivity, called S5F \cite{cui2016model}.
+The S5F model describes mutability of the middle base of all 5-mer DNA motifs, and for each motif, the base preferences given a mutation i.e.\ if a random draw from the S5F site mutabilities of the sequence chose to mutate the 5-mer \texttt{AAAAA}, then the S5F model will also provides a list of probabilities for each middle base substitution, either $P(\AAAAA \rightarrow \AATAA)$, $P(\AAAAA \rightarrow \AAGAA)$ or $P(\AAAAA \rightarrow \AACAA)$, probabilities summing to 1.
 A 5-mer mutability cannot be used directly on sites at the start or end of a sequence because of missing context, therefore we fill in missing context with the unknown base, N, and average over all possible motifs fitting into this ambiguous context.
 
-Termination of the neutral branching process is enforced in either of three ways: 1) by simulating under a subcritical process ($\lambda < 1$) \cite{gwp} and following it until extinction, 2) by using a stopping time $T$, or 3) by stopping after a max population of $N$ has been reached.
-Leaves are sampled from last time point, or in the case of 1) only terminated leaves.
+Termination of the neutral branching process is enforced in either of three ways: 1) by simulating under a subcritical process ($\lambda < 1$) \cite{gwp} and following it until extinction, 2) by using a stopping time $T$, or 3) by stopping after a maximum population of $N$ has been reached.
+Leaves are sampled from last time point, or in the case of 1) terminal leaves.
 In addition we introduced a parameter for down-sampling the cell population to $n$ cells.
 Down-sampling allows for emulating the incomplete sampling of a GC cell population, which is expected in HTS data due to fall out during PCR, sequencing, quality control steps and limited sampling e.g.\ in the case of data from mRNA extracted from PBMCs.
-The five parameters of the model is tabulated in table \ref{neut_constants}, but only one of the stopping criteria can be used in a run, effectively making it a four parameter model.
+The five parameters of the model are tabulated in table \ref{neut_constants}, but only one of the stopping criteria can be used in a run, effectively making it a four parameter model.
 
 \begin{table}[ht]
 \centering
@@ -88,29 +88,28 @@ $n$ & Down-sampled number of sequences
 
 \subsection{Simulations with affinity selection}
 To model the affinity maturation process with selection we will use the exact same framework as described for the neutral branching process, but now the $\operatorname{Pois}(\lambda)$ progeny distribution is no longer constant.
-We will consider the magnitude of $\lambda$ as the fitness of a cell.
-In the neutral model $\lambda$ is a fixed constant resulting in a completely flat fitness landscape, while in a system with selection the fitness landscape is more complex e.g.\ like a rugged surface.
+Consider the magnitude of $\lambda$ as the fitness of a cell.
+In the neutral model $\lambda$ is a fixed constant resulting in a completely flat fitness landscape, opposed to a system with selection where the fitness landscape is more complex normally thought of as a rugged surface.
 The following subsections will describe a model with the simple purpose of defining a function to calculate the fitness of any BCR sequence that could arise from the mutation process.
-The fitness is measured in terms of a single $\lambda$ associated with each cell and defines a sequence specific progeny distribution.
+The fitness is measured in terms of a single $\lambda$ associated with each cell defining a cell specific progeny distribution.
 Thus, selection is condensed into a dynamic $\lambda$, and this is the only difference to the neutral branching process.
 
 
 
 \subsubsection{Model concept and biological assumptions}
 Now let us make some basic assumptions to keep later definitions simpler.
-First of all the system we intend to model is the affinity maturation that is happening in the GC reaction, as guided by the BCR's affinity towards a target antigen.
+First of all the system we intend to model is the affinity maturation happening in the GC reaction and guided by the BCR's affinity towards a target antigen.
 A real GC reaction is seeded with 50-200 naive B cells and is therefore in its initial state highly polyclonal \cite{tas2016visualizing}.
-However, during the extend of a GC reaction the lineages descending from these seeds gradually die off \cite{tas2016visualizing} and the GC may even reach full monoclonality, in which a single lineage comes to dominate.
-Because we are interested in relatively large lineages that eventually lead to immune memory, we thus make the simplifying assumption that the simulated GC is monoclonal seeded by a single cell.
-Although polyclonality could be integrated into the simulation method, this would not change the simulation results significantly and therefore prefer to keep the description simple.
-In this model it is the BCR amino acid sequence that is under selection, thus we ignore the possible fitness effects of synonymous mutations.
-Although these might affect transcription and/or translation rates, we ignore these more minor effects to simplify the model.
+However, due to the extensive competition in a GC reaction polarity tends to increase \cite{tas2016visualizing}, and sometimes to the extent that the GC reaches full monoclonality.
+Because we are mainly interested the large lineages that eventually lead to immune memory, we make the simplifying assumption that the simulated GC is monoclonally seeded by a single cell.
+%Although polyclonality could be integrated into the simulation method it would not change the simulation results significantly and therefore we prefer to keep the description simple.
+In this model it is the BCR amino acid sequence that is under selection, thus we ignore the possible fitness effects of synonymous mutations, although these could have minor effects on transcription and/or translation rates.
 
-The system is modelled as a GC with constant volume and constant total concentration of antigen which a number of B cells compete to bind, summarized here and detailed below (figure~\ref{fig:simulation_figure}).
-Those B cells that have high affinity BCRs will bind more antigen and these B cells will be more likely to undergo proliferation, while the opposite is true for those BCRs with low affinity.
-When the binding equilibrium has been reached the progeny distribution for a B cell is evaluated given the amount of antigen bound.
-Affinity of a progeny cell is a function of the BCR sequence, as defined by the BCR fitness landscape, and after cell division the binding equilibrium is updated according to the progeny cells and their affinities.
-Finally when all B cells have been evaluated a new round of selection starts.
+The system is modelled as a GC with constant volume and constant total concentration of antigen for B cells to compete for, summarized in figure~\ref{fig:simulation_figure}.
+Those B cells that have high affinity BCRs will bind more antigen being more likely to undergo proliferation, while the opposite is true for those B cells with low affinity BCRs.
+When the binding equilibrium has been reached the progeny distribution for a B cell is evaluated as a function of the amount of antigen bound.
+Affinity of a progeny cell is a function of the BCR sequence defined by the fitness landscape, and after cell division the binding equilibrium is updated with the progeny cells and their affinities.
+Finally, when all B cells have been evaluated a new round of selection starts.
 
 \begin{figure}[ht!]
     \centering
@@ -118,13 +117,11 @@ Finally when all B cells have been evaluated a new round of selection starts.
     \caption{
         \label{fig:simulation_figure}
         Simulation overview.
-        The system is considered as a closed environment with free floating antigen and a number of B cells presenting BCRs on their surface, as illustrated in the top panel.
-        Different colors correspond to different BCR sequences with different affinities.
-        In the middle panel a sequence alignment shows how the different BCR sequences and their distance to the target mature BCR.
-        Third panel shows first how distance from the mature BCR is used to find the affinity.
-        Next affinity of individual BCRs relative to affinity of all BCRs is used to find the fraction of bound BCRs for a given B cell.
-        The fraction bound BCR is then transformed to a $\lambda$ used in the progeny distribution for the next generation.
-        At the rightmost of panel three, a tree is showing the evolutionary path with an ellipse marking the B cells of the current generation also displayed in the upper part of the figure.
+        The system is considered as a closed environment with free floating antigen and a number of B cells presenting BCRs on their surface, illustrated in the top panel.
+        Different colors correspond to different affinity BCR sequences.
+        In the middle panel a sequence alignment shows the distance between BCR sequences and the target mature BCR.
+        Third panel shows first how distance from the mature BCR is used to find the affinity, next the fraction of bound BCRs is transformed to a $\lambda$ defining the progeny distribution.
+        At the rightmost of panel three a tree is showing the lineage tree with an ellipse marking the B cells of the current generation also displayed in the first panel.
     }
 \end{figure}
 
@@ -134,13 +131,13 @@ Finally when all B cells have been evaluated a new round of selection starts.
 
 
 \subsubsection{Kinetic model of BCRs binding antigen}
-Using the most simplistic view, B cells and antigens can be seen as molecules binding and unbinding at some rate intrinsic to the BCR sequences, and their dynamics can then be modelled as a continuously stirred tank reactor (CSTR) \cite{CSTR}, widely used in chemical engineering models.
-The CSTR model makes the assumption that the antigen is spread evenly across the GC and that the binding between BCRs and antigen is at equilibrium at all time.
-Here we derive the steady state amount of bound antigen given these assumptions.
+Using the most simplistic view, B cells and antigens can be seen as molecules binding and unbinding at some rate intrinsic to the BCR sequences, and their dynamics can then be modelled as a continuously stirred tank reactor (CSTR) \cite{CSTR} widely used in chemical engineering.
+The CSTR model makes the assumption that antigen is spread evenly across the GC and that the binding between BCRs and antigen is at equilibrium at all time.
+In the following we derive the the fraction of B cell BCRs bound to antigen at steady state given these assumptions.
 
 
-First lets consider what should constitute the measure of fitness.
-Fitness is related to antigen bound and as an alternative to the total amount of bound antigen, we normalize this number between 0 and 1 by using the fraction of BCRs bound to antigen.
+First let's consider what should constitute the measure of fitness in this system.
+Fitness is related to amount of antigen bound and as an alternative to the total amount of bound antigen, we choose to normalize this number between 0 and 1 by using the fraction of BCRs bound to antigen.
 Considering the BCRs as free molecules with a total concentration of $[B_{\total}]$, the fraction of BCRs bound to antigen at equilibrium is:
 $$
 B_{\bound} = \frac{[AB]}{[B_{\total}]}
@@ -164,7 +161,8 @@ K_d \equiv \frac{k_{\off}}{k_{\on}} = \frac{[A] [B]}{[AB]}
 %The law of mass conservation gives us that $B_{\total} = B + AB$.
 
 \noindent
-Isolating $[AB]$ and substituting in the affinity definition $K_d$ from \eqref{eq:Kd_def}:
+%Isolating $[AB]$ and substituting in the affinity definition $K_d$ from \eqref{eq:Kd_def}:
+Isolating $[AB]$:
 $$
 [AB] = [B] \frac{[A]}{K_d}
 $$
@@ -210,28 +208,27 @@ Now introducing mass conservation for $A$:
 A_{\total} = [A] + \sum_{i=1}^{n} [AB_i] \equiv [A] + \sum_{i=1}^{n} \frac{[B^i_{\total}]}{1 + \frac{K^i_d}{[A]}}
   \label{eq:A_objective}
 \end{equation}
-By rearranging to a polynomial form the system can be solved to find $B_{\bound}$ for each B cell.
+By rearranging to a polynomial form the system can be solved to find $[AB_i]$ for each B cell, afterwards transformed to $B^i_{\bound}$.
 A solution will be elaborated in the implementation section.
 
 
 
 
 \subsubsection{Transforming distance to target to affinity}
-Next we describe how to simulate the affinity ($K_d$) of the BCRs.
-Potentially the affinities can be generated in any imaginable way, by having a function transforming a BCR sequence ($\Bseq$) into a number that represents affinity.
-Formally this would be a function: $\Affinity(\Bseq_i) = K^i_d$.
+Next we describe how to simulate the affinity ($K_d$) of each BCR.
+Potentially the affinities can be generated in any imaginable way by transforming a BCR sequence ($\Bseq$) into a number that represents affinity.
+Formally this would be a function: $f(\Bseq_i) = K^i_d$.
 In a realistic, yet still minimalistic, model we would imagine that the BCRs in a GC were evolving towards a specific target sequence denoted $\Tseq$.
-A target is the sequence with the highest affinity, the state where fitness plateaus out.
-We will define a fitness landscape around this plateau using a distance function, $\operatorname{dist}(\cdot,\cdot)$, which we assume to be given as the Hamming distance between amino acid sequences.
+A target is the sequence with the highest affinity, the state where fitness max out.
+We will define a fitness landscape around the target using a distance function, $\operatorname{dist}(\cdot,\cdot)$, which we assume to be given as the Hamming distance between amino acid sequences.
 
-%In the framework of affinity driven simulation of selection, the BCR sequence with the highest affinity will also be the most fit and therefore the target.
-Let us define the affinity of the naive input sequence as $K^{\naive}_d$ and correspondingly affinity for the mature target sequence, $K^{\mature}_d$.
+Let's define the affinity of the naive input sequence as $K^{\naive}_d$ and correspondingly the affinity for the mature target sequence as $K^{\mature}_d$.
 Now we can define an arbitrary function with reference points in $K^{\naive}_d$ and $K^{\mature}_d$, that transforms a distance between $\Bseq$ and $\Tseq$ to an affinity:
 $$
 \Affinity(\Bseq, \Tseq, K^{\naive}_d, K^{\mature}_d) = K^i_d
 $$
 There are two conditions we want to impose.
-If the BCR sequences is equal to the naive sequence ($\Nseq$), then it takes the affinity of the naive, and if it is equal to the mature target sequence ($\Tseq$), it takes the affinity of the mature:
+If the BCR sequences is equal to the naive sequence ($\Nseq$), then it takes the affinity of the naive BCR, and if it is equal to the mature target sequence ($\Tseq$), it takes the affinity of the mature BCR:
 \begin{equation}
 \begin{split}
 \Affinity(\Nseq, \Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\naive}_d \\
@@ -244,26 +241,26 @@ These conditions are satisfied by:
 \Affinity(\Bseq, \Tseq, K^{\naive}_d, K^{\mature}_d) = K^{\mature}_d + \left ( \frac{d}{t_{\naive}} \right )^k (K^{\naive}_d - K^{\mature}_d)
 \label{eq:hd2affy}
 \end{equation}
-Where $d = \operatorname{dist}(\Bseq, \Tseq)$ is the distance between BCR and target sequence and $t_{\naive} = \operatorname{dist}(\Nseq, \Tseq)$ is the distance between naive and target sequence.
+Where $d = \operatorname{dist}(\Bseq, \Tseq)$ is the distance between input and target sequence and $t_{\naive} = \operatorname{dist}(\Nseq, \Tseq)$ is the distance between naive and target sequence.
 The exponent, $k$, can be chosen to adjust the mapping between distance and affinity, with the restriction that $0 < k < \infty$ (figure \ref{fig:hd2affy}).
 
-It is easy to imagine that in a real affinity maturation process there will be many different BCR sequences that are practically equally fit.
-E.g.\ this will happen when multiple amino acids are equally fit on a given position.
-It will also happen if there are multiple distinct maturation paths that ends up with equally fit BCRs.
-The later effect can be introduced into the model be adding more target sequences and then determining the affinity based on the shortest distance to all target sequences:
-$$
-d = \argmin_{\Tseq \in \Targets} \operatorname{dist}(\Bseq, \Tseq)
-$$
-
-\clearpage
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/hd2affy.pdf}
     \caption{
         \label{fig:hd2affy}
-        Varying the exponent $k$ in \eqref{eq:hd2affy} to achieve different mappings between distance and affinity. Naive and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
+        Varying the exponent $k$ in \eqref{eq:hd2affy} to achieve different mappings between distance and affinity.
+        Naive and mature affinity is held constant, $K^{\naive}_d = 100nM$ and $K^{\mature}_d = 1nM$.
     }
 \end{figure}
+
+
+It is easy to imagine that in a real affinity maturation process there will be many different BCR sequences that are practically equally fit.
+E.g.\ this will happen when multiple amino acids are equally fit on a given position, and it will also happen if there are multiple distinct maturation paths that ends up with equally fit BCRs.
+The later effect can be introduced into the model be adding multiple target sequences and then determining the affinity based on the shortest distance to any of these:
+$$
+d = \argmin_{\Tseq \in \Targets} \operatorname{dist}(\Bseq, \Tseq)
+$$
 
 
 
