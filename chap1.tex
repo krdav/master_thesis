@@ -418,7 +418,7 @@ The final result should be a set of high confidence BCR sequences, and depending
 All of the above described sequencing methods suffer under the substantial caveat that they are mixing the heavy and light chain sequences from multiple cells under the mRNA isolation step.
 This means that a given heavy chain sequence could have been paired with any of the light chain sequences observed for the same sample - and with HTS this is millions.
 Pairing is not always necessary e.g.\ in some cases of diagnostics, but if the function of an antibody is to be tested the correctly paired heavy/light chain needs to be found.
-Some authors have done so using random pairing and selecting for binding via.\ phage display \cite{glanville2009precise}, others have used read frequencies and matched chains by equal clone frequency \cite{reddy2010monoclonal}, yet others have used phylogenetics to infer trees and then pair similar topology heavy/light chain trees, guided by a known pair to link the two trees \cite{Zhu_undated-zz}, \cite{kwong2017antibodyomics}, \cite{huang2016identification}.
+Some authors have done so using random pairing and selecting for binding via phage display \cite{glanville2009precise}, others have used read frequencies and matched chains by equal clone frequency \cite{reddy2010monoclonal}, yet others have used phylogenetics to infer trees and then pair similar topology heavy/light chain trees, guided by a known pair to link the two trees \cite{Zhu_undated-zz}, \cite{kwong2017antibodyomics}, \cite{huang2016identification}.
 The latest development is to use micro-droplets to capture single cells and then perform the DNA prepping steps inside these drops.
 Some authors are pairing heavy/light by physically linking them together by overlap PCR \cite{mcdaniel2016ultra}, while others are amplifying a UMI inside the drop and attaching it to both heavy and light chains \cite{Briggs134841}.
 Though methods now exists for paired heavy/light chain sequencing, they are not widely used because of the requirement of having a micro-droplet platform and expert knowledge not common stock for most labs.
@@ -565,91 +565,91 @@ This claim is supported by striking improvement in both annotation (figure \ref{
 
 
 \section{Phylogeny of a clonal family}
-The problem of determining phylogenies is the problem of reconstructing the unobserved evolutionary history, usually, using only a sample of states at a single time point.
-Since there are no observations of the events prior to the sampling time we cannot be certain about a phylogeny.
-The problem turns into an inference problem.
-For B cells this translates into finding the evolutionary history starting from a naive B cell, progressing through rounds of SHM in the GC reaction and finally getting sampled at some time $t$.
-The only information available is the BCR sequences at the sampling time.
+The problem of determining phylogenies is the problem of reconstructing the unobserved evolutionary history using a sample of states, usually only, at a single time point.
+Since there are no observations of the events prior to the sampling time we cannot be certain about a phylogeny and the problem turns into an inference problem.
+For affinity maturing B cells this translates into finding the evolutionary history starting from a naive B cell, progressing through rounds of SHM in the GC reaction and finally getting sampled at some time $t$.
+The only information available for phylogenetic inference is the BCR sequences at the sampling time.
 
 To represent the process of cell division and apoptosis in the GC it is convenient to use a tree.
-The root of this tree is the naive B cell, a branching event is a cell division and a terminal leaf is a B cell that have died.
-The tree model of evolution is also a useful way of representing relationship among sequences e.g.\ some sequences which are all members of the same tree clade share a common ancestor and most likely are more similar than some other sequence not included in this clade.
-The phylogenetic tree should be viewed as a model framework used to describe the evolutionary process, the details that goes into the model framework depends on the problem at hand.
-
+The root of this tree is the naive B cell, a branching event is a cell division and a terminal leaf is a B cell that died.
+This tree model of evolution is also a useful way of representing relationships among sequences e.g.\ some sequences which are all members of the same tree clade share a common ancestor and most likely they share more similarity within the clade than with some other sequences not included in this clade.
+The phylogenetic tree should be viewed as a model framework used to describe the evolutionary process, parameters can be added into this framework to explain the mutation, selection, birth/death processes etc.
 
 
 \subsection{Parsimonious tree inference}
 Now given that the evolution is following a tree model, the model for inferring the topology must be specified.
-A classical method for inference is to maximize tree parsimony.
-Motivated by Occam's Razor the best tree is simply the tree that with the fewest changes explain the observed data.
-Practically this is done by calculating the tree parsimony score with Fitch's algorithm \cite{fitch1971toward} and then finding the tree with the lowest score.
+A classical method is to maximize tree parsimony, motivated by Occam's Razor the best tree is simply the tree that with the fewest changes explain the observed data.
+Practically this is done by calculating the tree parsimony score with Fitch's algorithm \cite{fitch1971toward} and then picking the tree with the lowest score.
 The parsimony score of a tree ($T$) can be calculated as a sum of all the scores at each site ($p_i$): $S(T) = \sum_{i=1}^m F(p_i | T)$.
 
 With a parsimony score function the possible tree space can be searched and the maximum parsimony (MP) tree can be found.
 Tree space can be searched exhaustively only with few taxa but everything above 10 taxa has more than tens of millions of tree making it practically impossible to search exhaustively \cite{felsenstein1978number}.
-The branch and bound algorithm is a way of decreasing search space but still finding the best solution \cite{hendy1982branch}, however even with this hill climbing methods have to be used.
-In a hill climbing tree search various heuristic tree moves like, nearest neighbor interchange (NNI), subtree pruning and regrafting (SPR) and tree bisection and reconnection (TBR) are used to explore widely around the tree space.
+The branch and bound (BnB) algorithm is a way of decreasing search space and still finding the best solution \cite{hendy1982branch}, however even with BnB  it is necessary to go further and use hill climbing methods.
+In a hill climbing tree search various heuristic tree moves like nearest neighbor interchange (NNI), subtree pruning and regrafting (SPR) and tree bisection and reconnection (TBR) are used to explore widely around the tree space.
 
 It it clear that the MP method for tree inference is very simple and while this will work in some applications the criterion of maximum parsimony is not strictly how evolution works.
-In cases with rate heterogeneity due to a biased mutation processes or selection some sites might evolve much faster than others and this makes the parsimony assumption of equal weight on all substitutions break.
+The MP method for tree inference is very simple and while it will work in some applications the evolution does not always obey the criterion of maximum parsimony.
+In cases with rate heterogeneity due to a biased mutation processes or selection, some sites might evolve much faster than others breaking the parsimony assumption of equal weight on all substitutions.
 Such complex processes are not accounted for in the MP method making it prone to errors, but even with the simplest sequence evolution process theoretical arguments by Felsenstein have shown that parsimony is inconsistent \cite{felsenstein1978cases}, and since adding parameters to model a complex process is not readily compatible with parsimony, most researchers have turned to model based tree inference.
 
 
 
 
 \subsection{Model based tree inference}
-As an alternative to maximizing the parsimony a likelihood function could be formulated to return the likelihood of the data given the tree. Then the problem turns into finding the most likely tree, referred to as the maximum likelihood (ML) tree.
-The likelihood function is conditioned on a tree with branch lengths representing distances in a continuous mutation process driven by a mutation rate.% determined by a matrix of substitution rates.
-Using gradient decent tree parameters like branch lengths can be adjusted to their ML estimates.
-To accommodate more advanced things such as differences in substitution rates, e.g.\ higher rate of \texttt{T->G} than \texttt{T->A}, a rate matrix can be defined.
-If the data is at DNA level the rate matrix contains all possible substitutions between DNA characters.
-Examples such matrices: the F81 model \cite{felsenstein1981evolutionary} or the widely used general time reversible (GTR) model \cite{tavare1986some}.
+As an alternative to maximizing the parsimony, a likelihood function could be formulated to return the likelihood of the data given the tree.
+Then the problem turns into finding the most likely tree, referred to as the maximum likelihood (ML) tree.
+The likelihood function is conditioned on a tree (the model framework) with branch lengths representing time in a continuous mutation process driven by a mutation rate.
+Using fast gradient decent tree parameters like branch lengths and parameters in the underlying substitution model can be adjusted to their ML estimates.
+To accommodate more advanced things such as differences between certain substitution rates, e.g.\ higher rate of \texttt{T->G} than \texttt{T->A}, a rate matrix can be defined.
+If the data is at DNA level the rate matrix contains all possible substitutions between DNA bases.
+Examples such matrices are: the F81 model \cite{felsenstein1981evolutionary} or the widely used general time reversible (GTR) model \cite{tavare1986some}.
 
 DNA substitution models are not aware of protein encoding and therefore does not explicitly discriminate between synonymous and non-synonymous mutations, something that is otherwise crucial for proteins under tight selection.
 Therefore it might be useful to translate a DNA sequence into its protein sequence and then use an amino acid substitution matrix like PAM \cite{dayhoff197822}, BLOSUM \cite{henikoff1992amino} or others.
 Information is lost in the translation process so if an amino acid model is to replace the DNA model, information loss needs to be outweighed by the gain in performance.
-Alternatively a codon model is defined on DNA level, but with DNA level substitutions working on units defined by protein encoding codons.
+Alternatively, a codon model is defined on DNA level, but with DNA level substitutions working on units defined by protein encoding codons.
 In this way a codon model will both account for a difference in the rate of synonymous and non-synonymous substitutions and the rate difference between amino acids.
 Two popular choices for a codon model are GY94 \cite{goldman1994codon} and MG94 \cite{muse1994likelihood}.
 
 
 
 \subsubsection{Bayesian phylogenetics}
-In the ML framework both tree, branch length and substitution parameters are all point estimates adjusted to maximize the likelihood function, but point estimates might not always be desirable.
-E.g.\ when information like time or rate is to be extracted from a tree then a single point estimate is not very useful because the variance of such estimate is unknown.
-Bayesian phylogeny addresses this challenge by integrating over the distribution of trees, branch lengths and substitution parameters by Monte Carlo sampling.
+In the ML framework both tree, branch lengths and substitution parameters are all point estimates adjusted to maximize the likelihood function, but point estimates might not always be the most desirable output.
+E.g.\ when information like time or rate is to be extracted from a tree, then a single point estimate is not very useful because the variance of the estimate is unknown.
+Bayesian phylogeny copes with the challenge by integrating over the distribution of trees, branch lengths and substitution parameters using Monte Carlo sampling.
 When sampling has converged the resulting posterior distributions of all parameters can be used to express confidence in the maximum a posteriori (MAP) estimate e.g.\ by providing the high density interval (HDI) along with the MAP estimate.
-The real drawback of Bayesian phylogeny is that sampling can make runtime much slower than a similar ML problem.
-There can also be a problem of reaching convergence in cases where sampling is difficult.
+The real drawback of Bayesian phylogeny is that Monte Carlo sampling can increase runtime by orders of magnitude compared to a similar ML run.
+Other caveats include the problem of reaching convergence in cases where sampling is difficult.
 
 
 
 
 
 \subsection{Ancestral sequence reconstruction}
-As a side result of inferring a phylogeny it is also possible to reconstruct the sequence of those nodes that are internal and unobserved in a tree.
-This process is known as ancestral sequence reconstruction (ASR).
+As a side result of inferring a phylogeny it is also possible to reconstruct the sequence of those nodes that are internal and unobserved on a tree.
+This procedure is known as ancestral sequence reconstruction (ASR).
 For the MP algorithm these ancestral states are part of the tree inference and found via Fitch's algorithm, but for a model based method ancestral sequences must be estimated by extracting the maximum likelihood estimate of the sequence at each internal node.
 ASR on ML trees can either be done as a marginal or a joint reconstruction.
 In the marginal case each node is reconstructed independently from one another, found as the ML estimate without fixing the sequence of any of the other internal nodes.
-Notice that when one ancestral sequence is found this will change likelihood function for the tree and thereby affecting all the other internal node.
+Notice that when one ancestral sequence is found and fixed to its node it will change the likelihood function for the tree, affecting all the other internal nodes.
 This effect is ignored in marginal reconstruction but accounted for in joint reconstruction where the problem is to find the ML estimate of all the ancestral sequences jointly.
 
 ASR is an important way of exploring the evolutionary trajectory and behaviour of ancient proteins.
 It has been used to investigate the specificity of the important cancer drug type kinase inhibitor \cite{Wilson2015-vi} and studying evolutionary trajectories of broadly neutralizing HIV antibodies \cite{Doria-Rose2014-vi}.
 Yet there has been little validation of ASR methods partly because it is difficult to test experimentally.
-An exception to this was enabled by a clever study design made by Randall et al.\ \cite{randall2016experimental}, using a controlled system of evolution on a single gene with sampling of ancestors, they could experimentally validate ASR inference methods on the using only the final time point.
-Results showed high accurary of 97.17-98.88\% correct reconstruction and only small difference between chosen methods.
+An exception to this was enabled by a clever study design made by Randall et al.\ \cite{randall2016experimental}, using a controlled system of evolution on a single gene with sampling of ancestors, they experimentally validated different methods of ASR inferred using only the final time point.
+Results showed high accurary of 97.17-98.88\% per-site correct reconstruction and only small difference between chosen methods.
 
 
 
 
 \subsection{Genotype collapsed tree}
-While B cells in a GC reaction are having a high mutation rate there are still many B cell with the same genotype.
-Especially after a clonal expansion many B cells will have the same genotype, and furthermore ancestral B cells might have the same genotype as their descendents.
+While B cells in a GC reaction are having a high mutation rate there are still many B cells with the same genotype.
+Especially after a clonal expansion many B cells will have identical genotype, and furthermore ancestral B cells might have the same genotype as their descendents.
 BCR clonal family sequences are generally of low complexity and not very divergent, but because there are many B cells in a GC their phylogenetic trees are seemingly complex with hundreds to thousands of taxa.
 To reduce this complexity we use the concept of a genotype collapsed tree (GCtree).
-In a GCtree B cells with the same genotype are merged into a single node carrying their total abundance and a leaf descending from a B cell with the same genotype is merged upwards, see figure \ref{fig:GCtree_illu}.
+In a GCtree B cells with the same genotype are merged into a single node carrying their total abundance as metadata.
+To collapse the tree a leaf descending from an ancestral node with the same genotype is merged upwards, see figure \ref{fig:GCtree_illu}.
 
 \begin{figure}[!ht]
     \centering
@@ -665,9 +665,9 @@ In a GCtree B cells with the same genotype are merged into a single node carryin
 
 
 We find that the GCtree gives a good visual overview of the BCR phylogeny enabling interpretations such as recent clonal bursts, fitness advantages etc.
-In the rest of this work all trees will be shown as a GCtree using custom tree plotting from the ETE package \cite{huerta2016ete}.
-Figure \ref{fig:collapsed_tree_example} is an example of how a standard phylogenetic tree is collapsed and represented in GCtree format.
-Embedded in the GCtree visualization is a number of traits: genotype abundance is annotated in the middle of each node and proportional to the node size, dashed branches represents synonymous mutations while fully drawn lines are non-synonymous, branch length is proportional to the hamming distance between nodes and branch thickness is proportional to the number of amino acid differences.
+In the rest of this work all trees will be shown as GCtrees plotted with custom tree visualization scripts developed from the ETE package \cite{huerta2016ete}.
+Figure \ref{fig:collapsed_tree_example} is an example of how a standard phylogenetic tree is collapsed into a GCtree format.
+Embedded in the GCtree visualization is a number of features: genotype abundance is annotated in the middle of each node and proportional to the node size, dashed branches represents synonymous mutations while fully drawn lines are non-synonymous, branch length is proportional to the hamming distance between two nodes and branch thickness is proportional to the number of amino acid differences.
 
 \begin{figure}[!ht]
     \centering
@@ -675,7 +675,7 @@ Embedded in the GCtree visualization is a number of traits: genotype abundance i
     \caption{
         \label{fig:collapsed_tree_example}
         Genotype collapsing of a simulated tree with node coloring according to genotype.
-        In a) a full lineage tree showing a simulation of several rounds of replication.
+        In a) full lineage tree showing a simulation of several rounds of replication.
         Only the leafs are sampled at the end of the simulation and collapsed into the GCtree in b).
         The GCtree shows the leaf abundance of each node by way of node size and the integer in the middle of the node.
         In the GCtree synonymous mutations are indicated by dashed branch lines, branch length is reflecting the hamming distance between nodes at DNA level and solid branch line thickness reflects the number of non-synonymous mutations.
@@ -689,10 +689,10 @@ Embedded in the GCtree visualization is a number of traits: genotype abundance i
 \subsection{Clonal family tree}
 Most often the source of BCR sequences is HTS data generated from bulk RNA, extracted from peripheral blood mononuclear cells (PBMCs).
 Clonal family relationships therefore needs to be inferred by means of clustering before sequences can be inputted to phylogenetic tools.
-An automated pipeline can be envisioned, with HTS data as input and inferred clonal family trees as output.
+An automated pipeline can be envisioned with HTS data as input and inferred clonal family trees as output.
 One attempt at this task is the publicly available ImmuneDB \cite{rosenfeld2017immunedb}.
-Using relatively simple clustering and inference of naive sequences ImmuneDB still has room for improvements, but the concept remains extremely important as a way of aiding the interpretation of Rep-Seq data.
-On the conceptual side of the clonal family tree representation is it possible to map meta information about binding affinity, cross reactivity, self-binding etc. back to individual trees to get a detailed picture of the evolutionary process at a single cell level.
+Using relatively simple clustering and inference of naive sequences ImmuneDB still has room for improvements, but the concept remains extremely relevant as a way of aiding the interpretation of Rep-Seq data.
+It is possible to imagine a clonal family tree representation used as a framework to map metadata about binding affinity, cross reactivity, self-antigen binding etc. back to individual leaves on a tree to get a detailed picture of the evolutionary process at a single cell level.
 
 
 
