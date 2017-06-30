@@ -345,15 +345,15 @@ Fitting the model is non-trivial because neighboring motifs share the same conte
 During the centuries of immunological research a large array of techniques have been directly invented or adapted from other fields of science to monitor the cells in an immune response.
 Starting with hybridoma techniques \cite{larrick1989polymemse}, antibodies could be produced and tested in a single cell setting after which sequencing would reveal the DNA encoding the antibody.
 A large number of other techniques was already used or followed e.g.\ ELISA, single cell staining and sorting, ELISPOT, fluorescence imaging techniques etc.
-Already in 1991, when Sanger sequencing was the most high throughput sequencing method, the diversity of the immunoglobulin genes and the matured BCR was being explored by sequencing single clones \cite{yamada1991preferential}.
-In more recent time sequencing by Illumina and Roche 454 have revolutionized the way we are monitoring adaptive immunity by enabling complete sequencing of millions of different BCR sequences.
+Already in 1991, when Sanger sequencing was the highest throughput sequencing method at the time, the diversity of the immunoglobulin genes and the matured BCR was being explored by sequencing single clones \cite{yamada1991preferential}.
+In more recent times sequencing by Illumina and Roche 454 have revolutionized the way we are monitoring adaptive immunity by enabling complete sequencing of millions of different BCR sequences.
 
 
 \subsection{Repertoire sequencing}
-In the following the focus will be on BCR sequencing but the same considerations apply to TCR sequencing.
-Several sequencing strategies have been devised to capture various aspects of the immunoglobulin genes, but most start at the same place; the BCR transcripts.
+In the following section the focus will be on BCR sequencing but the same considerations apply to TCR sequencing.
+Several sequencing strategies have been devised to capture various aspects of the immunoglobulin genes, but most start at the same place; with a BCR transcripts.
 The use of genomic DNA is also possible, but with only a single copy of a highly variable gene, this is prone to failure.
-Maybe more importantly, the transcript levels can also be useful information that genome level sequencing cannot provide and therefore most studies do bulk mRNA isolation from tissue or cells of interest, followed by reverse transcriptase PCR (RT-PCR) to create a pool of DNA with PCR primed ends, see figure \ref{fig:BCR_RTPCR}.
+Maybe more importantly, the transcript levels can also provide useful information like transcriptional levels that genome level sequencing cannot, and therefore most studies do bulk mRNA isolation from tissue or cells of interest, followed by reverse transcriptase PCR (RT-PCR) to create a pool of DNA with PCR primed ends, see figure \ref{fig:BCR_RTPCR}.
 
 \begin{figure}[ht]
     \centering
@@ -362,47 +362,47 @@ Maybe more importantly, the transcript levels can also be useful information tha
         \label{fig:BCR_RTPCR}
         DNA prep method for BCR sequencing on Illumina developed and used by AbVitro (now Juno Therapeutics).
         In the first step an RT-PCR is run with template switching to introduce a UID.
-        The fragments are then purified and the Illumina C7 clustering sequence, and barcode (BC), are attached to the 5'-end.
+        The fragments are then purified and the Illumina C7 clustering sequence and barcode (BC), are attached to the 5'-end.
         Finally the C5 clustering sequence is attached and the library is ready for Illumina paired-end sequencing.
         A similar (but not identical) DNA prep method was used in Stern et al.\ \cite{stern2014b} with figure \ref{fig:UMIread} showing the resulting data format.
-        Figure from Laustsen et al.\ \cite{laustsen2017exploration}.
+        From \cite{laustsen2017exploration}.
     }
 \end{figure}
 
-An effective way to minimize errors introduced by the several steps of RT-PCR, PCR and sequencing is to attach a short unique molecular barcode (UMI, also known as unique identifier or UID) to the end of each read already at the RT-PCR step \cite{turchaninova2016high}.
-With enough random UMIs in the pool chances are extremely low that the same UMI will be incorporated into multiple BCR transcripts.
-Therefore each UMI will represent a single BCR transcript from the unamplified pool of mRNA, and reads with the same UMI should therefore be identical in the rest of the read.
-Conversely reads with different UMIs can have identical BCR sequences because a single cell can, and likely will, have multiple copies of the same BCR transcript.
-UMIs therefore also provide a way of transcript level quantification on top of its error correction.
+An effective way to minimize errors introduced by the several steps of RT-PCR, PCR and sequencing is to attach a short unique molecular barcode (UMI, also known as unique identifier or UID) to the end of each read, already at the RT-PCR step \cite{turchaninova2016high}.
+With enough random UMIs chances are extremely low that the same UMI will be incorporated into multiple BCR transcripts.
+Therefore each UMI will represent a single BCR mRNA molecule from the unamplified pool of mRNA, and reads with the same UMI should be identical in the rest of the read.
+Conversely, reads with different UMIs can have identical BCR sequences because a single cell can, and likely will, have multiple copies of the same BCR transcript.
+UMIs therefore also provide a way of quantifying transcript levels, on top of its error correction.
 
-Once the read library has been prepared sequencing is undertakes, usually either on Roche 454, or Illumina MiSeq.
-In the early days of Rep-Seq the advantage of Roche 454 was its long read length that could be adjusted to span the entire V gene, and additionally going all the way into J when a short CDR3 appeared.
-However with the development of the 2x300bp Illumina MiSeq paired-end reads, see figure \ref{fig:UMIread}, the 454 is out phased in favor of higher throughout and better read quality with much lower chance of indel calling.
+Once the read library has been prepared sequencing is undertakes, usually on either Roche 454, or Illumina MiSeq.
+In the early days of Rep-Seq the advantage of Roche 454 was its long read length that could be adjusted to span the entire V gene, and possibly going all the way into the J gene when a short CDR3 appeared.
+However, with the development of the 2x300bp Illumina MiSeq paired-end reads, see figure \ref{fig:UMIread}, the 454 is phased out in favor of higher throughput and better read quality with much lower chance of indel calling.
 
 \begin{figure}
     \centering
     \includegraphics[width=1\textwidth]{figures/Stern2014_ReadConfiguration.pdf}
     \caption{
         \label{fig:UMIread}
-        Example of a sequencing strategy for sequencing the full variable BCR chain and parts of the constant region. The strategy is designed for Illumina paired-end reads and seen used in Stern et al.\ \cite{stern2014b}. Figure from pRESTO readthedocs \cite{vander2014presto}.
+        Example of a sequencing strategy for the full variable BCR chain and parts of the constant region. The strategy is designed for Illumina paired-end reads and used in e.g.\  Stern et al.\ \cite{stern2014b}. Figure from pRESTO's readthedocs \cite{vander2014presto}.
     }
 \end{figure}
 
-After DNA reads have acquired from sequencing, error correction becomes a substantial issue.
-In the normal uses of high throughput sequencing, errors are just averaged out by the use of consensus sequences, but in the case of BCR sequencing the inherent variability of the BCR makes it difficult to tease apart what DNA variations that can be attributed to SHM and junctional diversity, and which can be attributed to PCR and sequencing errors.
+After DNA reads are acquired from sequencing error correction becomes a substantial issue.
+In the typical applications of HTS errors are just averaged out by the use of consensus sequences, but in the case of BCR sequencing the inherent variability of the BCR sequence makes it difficult to tease apart what DNA variations that can be attributed to SHM and junctional diversity, and which can be attributed to PCR and sequencing errors.
 With the many different sequencing protocols there can also be large differences in the data processing afterwards, but pipelines exists that are fairly generic and will handle a wide range of data.
 A commonly used pipeline capable of processing a wide range of data is pRESTO (\url{presto.readthedocs.io}) \cite{vander2014presto}.
 Data processing with pRESTO is still sequencing protocol dependent but largely flexible and funnels down the data into the same end point regardless of protocol.
-In the case of paired-end Illumina reads with UMIs, similar to figure \ref{fig:UMIread}, the workflow can be summarized by the flowchart in figure \ref{fig:UMIread_flow}.
-Input data is paired-end reads with Phred quality scores in fastq format.
-The data quality is first assessed by running FastQC \cite{andrews2010fastqc}, then bad reads are removed or ends are trimmed to sufficient minimum quality.
+In the case of paired-end Illumina reads with UMIs similar to figure \ref{fig:UMIread}, the workflow can be summarized by the flowchart in figure \ref{fig:UMIread_flow}.
+Input data is MiSeq paired-end reads containing Phred quality scores in fastq format.
+The data quality is usually first assessed by running FastQC \cite{andrews2010fastqc}, then bad reads are removed or read ends are trimmed to sufficient minimum quality.
 Many DNA prep protocols are using degenerate primers for PCR amplification by binding to the 5'-end of all possible V genes, see figure \ref{fig:UMIread}.
 This will possibly introduce what will look like a mutation, but in fact is a PCR artifact due to promiscuous primer binding.
-These should be removed by trimming off the primer binding region or "masking" it by reverting these mutations back to germline (red in figure \ref{fig:UMIread_flow}).
-Then the paired-end sequences are merged by merging on the overlapping stretch of read 1 and 2 using simple alignment score maximization.
-Read pairs that failed to merge are discarded but the reads are still kept in separate files to build a consensus sequence over the sequences with the same UMI.
-Then anther instance of pairing is done on these consensus sequences to synchronize the files followed by merging reads into the same file (orange and green in figure \ref{fig:UMIread_flow}).
-Next a series of filtering and deduplication steps are undertaken e.g.\ only allowing sequences with multiple reads, a maximum number of ambiguous nucleotides etc. to pass through.
+These should be removed by trimming off the primer binding region or "masked" by reverting back to germline (red in figure \ref{fig:UMIread_flow}).
+Then the paired-end reads are joined by merging on the overlapping stretch of read 1 and 2 using simple alignment score maximization.
+Read pairs that fail to merge are discarded but still kept in separate files to build a consensus sequence over the sequences with the same UMI.
+Then another instance of pairing is done on all the UMI consensus sequences, followed by a synchronization of the pairing information and merging reads into the same file (orange and green in figure \ref{fig:UMIread_flow}).
+Next a series of filtering and deduplication steps are undertaken e.g.\ only allowing sequences with multiple reads, a maximum number of ambiguous nucleotides etc.\ to pass through.
 The final result should be a set of high confidence BCR sequences, and depending on the sequencing protocol, with or without information about the constant region and/or mRNA abundances.
 
 \begin{figure}[ht]
@@ -410,34 +410,34 @@ The final result should be a set of high confidence BCR sequences, and depending
     \includegraphics[width=0.55\textwidth]{figures/Stern2014_Flowchart.pdf}
     \caption{
         \label{fig:UMIread_flow}
-        Flow of the raw sequencing data through the pRESTO pipeline. This strategy is designed for Illumina paired-end reads, e.g.\ \ref{fig:UMIread}, and seen used in Stern et al.\ \cite{stern2014b}. From pRESTO readthedocs \cite{vander2014presto}.
+        Flow of the raw sequencing data through the pRESTO pipeline. This strategy is designed for Illumina paired-end reads, e.g.\ \ref{fig:UMIread} used in Stern et al.\ \cite{stern2014b}. From pRESTO's readthedocs \cite{vander2014presto}.
     }
 \end{figure}
 
 
 All of the above described sequencing methods suffer under the substantial caveat that they are mixing the heavy and light chain sequences from multiple cells under the mRNA isolation step.
-This means that a given heavy chain sequence could have been paired with any of the light chain sequences observed for the same sample - and with high throughout sequencing this is millions.
+This means that a given heavy chain sequence could have been paired with any of the light chain sequences observed for the same sample - and with HTS this is millions.
 Pairing is not always necessary e.g.\ in some cases of diagnostics, but if the function of an antibody is to be tested the correctly paired heavy/light chain needs to be found.
-Some authors have done so using random pairing and selecting for binding via phage display \cite{glanville2009precise}, others have ranked heavy and light chains according to their frequencies from sequencing and matched the highest frequency clones \cite{reddy2010monoclonal}, yet others have used phylogenetics to infer trees and then pair similar topology heavy/light chain trees, guided by a known pair to link to trees \cite{Zhu_undated-zz}, \cite{kwong2017antibodyomics}, \cite{huang2016identification}.
+Some authors have done so using random pairing and selecting for binding via.\ phage display \cite{glanville2009precise}, others have used read frequencies and matched chains by equal clone frequency \cite{reddy2010monoclonal}, yet others have used phylogenetics to infer trees and then pair similar topology heavy/light chain trees, guided by a known pair to link the two trees \cite{Zhu_undated-zz}, \cite{kwong2017antibodyomics}, \cite{huang2016identification}.
 The latest development is to use micro-droplets to capture single cells and then perform the DNA prepping steps inside these drops.
-Some authors are pairing heavy/light by physically linking them together via overlap PCR \cite{mcdaniel2016ultra}, while others are amplifying a UMI inside the drop and attaching it to both heavy and light chains \cite{Briggs134841}.
-Though the methods for paired heavy/light chain sequencing now exists they are not widely used because of the requirement of having a micro-droplet platform and expert knowledge which is not common stock for most labs.
+Some authors are pairing heavy/light by physically linking them together by overlap PCR \cite{mcdaniel2016ultra}, while others are amplifying a UMI inside the drop and attaching it to both heavy and light chains \cite{Briggs134841}.
+Though methods now exists for paired heavy/light chain sequencing, they are not widely used because of the requirement of having a micro-droplet platform and expert knowledge not common stock for most labs.
 Still the vast majority of public BCR sequencing data is unpaired and it will likely remain so for at least some years to come.
 
 
 
 \subsection{Inferring B cell clonal families}
-Once high quality sequences have been obtained from a BCR repertoire sequencing they become the input to the following analysis steps, either as hypothesis testing or hypothesis creating.
-A first step in the analysis is simply to annotate sequences by their germline VDJ genes, which can be done simply by aligning each sequence from a database of germline genes to the BCR sequence at hand.
+Once high quality BCR repertoire sequences have been obtained they become the input to a number of analysis steps, either as hypothesis testing or hypothesis creating.
+A first step in the analysis is simply to annotate sequences by their germline VDJ genes, which can be done by aligning each putative gene from a database of germline genes to the BCR sequence at hand.
 The V, D and J genes achieving the highest alignment score are the winners and inferred to be the true germline gene present on the ancestral naive sequence.
-This approach is used by many studies to VDJ annotate BCR sequences, usually either through the NCBI hosted IgBLAST \cite{ye2013igblast} or IMGT's V-QUEST \cite{li2013imgt}.
+This approach is used in many studies to VDJ annotate BCR sequences, usually either through the NCBI hosted IgBLAST \cite{ye2013igblast} or IMGT's V-QUEST \cite{li2013imgt}.
 The advantage of using IgBLAST is its fast turnover and stand-alone software under a permissive license.
 Next, an extension to inferring the germline genes is to infer the full naive VDJ sequence of its unmutated ancestor.
-Inferring the full naive sequence is a bit more complicated because it requires inferring the original sequence flanking the D gene, where the junctional diversity from N/P nucleotides is complicating the problem.
-Given a BCR sequence and assuming some distribution of N/P nucleotide insertion, how many bases is trimmed of the V-D junction and how many are trimmed of the D-J junction?
-%Assuming uniform randomly inserted N/P nucleotides nothing can be inferred other than the 25\% chance of either of the bases, however the problem is how many bases is trimmed of the V-D junction and how many are trimmed of the D-J junction?
+Inferring the naive sequence is a bit more complicated because it requires inferring the original sequence flanking the D gene, where the junctional diversity from N/P nucleotides is complicating the problem.
+Given a BCR sequence and assuming some distribution of N/P nucleotide insertion, how many bases are trimmed of the V-D junction and how many are trimmed of the D-J junction?
 This question is non-trivial because of SHM e.g.\ if a single mismatch is preventing a V gene alignment match to extend further 4 bases downstream, see table \ref{extend_or_not}, should that be regarded as a mutation due to SHM, or is it regarded as the last 3 random N/P nucleotides incidentally had the same identity (uniform random chances $0.25^3=0.0156$)?
-Clearly it looks like an extension to the alignment would be the optimal solution but what then if the last base was also a mismatch? Or that about the effect of the underlying distribution of N/P nucleotide insertions?
+Clearly it looks like an extension to the alignment would be the optimal solution but what then if the last base was also a mismatch?
+And what about the effect of the underlying distribution of N/P nucleotide insertions?
 In these complex cases intuition starts breaking down, instead there is need for a statistical model that can integrate over probabilities and give consistent estimates.
 \begin{table}[ht]
 \centering
@@ -451,19 +451,18 @@ In these complex cases intuition starts breaking down, instead there is need for
 \end{table}
 
 The classical "go to" statistical model for biological sequence analysis is a hidden Markov model (HMM) \cite{durbin1998biological}.
-Briefly an HMM is set of user defined states, e.g.\ the V, D or J genes, N/P insertions, etc., and the jump between states are then connected by probabilities.
-Each state has a list of emission probabilities that defines the probabilities of observing a given base.
-%There is also a probability of changing state e.g.\ from V gene to N/P insertion.
+Briefly an HMM is set of user defined states, e.g.\ the V, D or J genes, N/P insertions, etc.\ connected by transition probabilities.
+In a profile HMM each state also has a list of emission probabilities that defines the probabilities of observing a given base, a gap or an insertion.
 The hidden/unknown part is the identity of the states at a given position in a sequence e.g.\ when is the V gene stopping and the N/P insertion starting, like the example above.
-This is one of the question that is possible to answer using an HMM, specifically by calculating the so called Viterbi path, but what is more interesting is the inherent flexibility of an HMM to represent well known biological mechanisms in a statistical framework.
+This is possible to answer consistently using an HMM and calculating the so called Viterbi path, but what is more interesting is the inherent flexibility of an HMM to represent biological mechanisms in a statistical framework.
 % It is out of the scope of this work to explain the inner workings of HMMs, how to find the optimal path, estimating parameters etc.
 % For this the book by Durbin et al.\ \cite{durbin1998biological} is an excellent resource.
 
-To address the problem of BCR sequence annotation Ralph et al.\ developed an HMM model of VDJ recombination and built it into a software called partis \cite{ralph2016consistency}.
-Using extensive simulation studies, the authors observed clear shortcomings of the purely alignment based method like IgBLAST and IMGT V-QUEST.
-Especially, alignment based methods appeared to have a low fraction of correct gene calls for the short germline genes D and J carrying a few mutations, see figure \ref{fig:partis_Jgene_comparison}.
-The length of the V gene makes it easy to correctly assign just by alignment, and therefore little performance difference was observed, however notice that this only applies for correctly calling the gene identity, regardless of allele identity.
-With the more subtle variations among the alleles, there probably is an even bigger performance gain here, by using HMMs like partis compared to pure alignment based methods.
+To address the problem of BCR sequence annotation Ralph et al.\ developed an HMM model of VDJ recombination and built it into a software called \texttt{partis} \cite{ralph2016consistency}.
+By performing extensive simulation studies, the authors observed the clear shortcomings of the purely alignment based method like IgBLAST and IMGT's V-QUEST.
+Especially, alignment based methods appeared to have a low fraction of correct gene calls for the short germline genes D and J carrying a few mutations (figure \ref{fig:partis_Jgene_comparison}).
+The length of the V gene makes it easy to correctly assign just by alignment and therefore little performance difference was observed on the V gene assignment, but notice that this only applies for correctly calling the gene identity, regardless of allele identity.
+With the more subtle variations among the alleles, there is likely an even bigger performance gain here by using HMMs like \texttt{partis} compared to pure alignment based methods.
 
 \begin{figure}
     \centering
@@ -472,17 +471,17 @@ With the more subtle variations among the alleles, there probably is an even big
         \label{fig:partis_Jgene_comparison}
         J gene assignment performance for different methods.
         With higher mutational burden most methods struggle to make the correct gene assignments, presumably because of the problem outlined in table \ref{extend_or_not}.
-        The HMM method in partis is robust to the mutation burden, and achieves even higher performance by integrate over multiple (k=5) sequences from the same clonal family.
-        IHMMunealign and partis are the only HMM methods while the rest are alignment based.
+        The HMM method in \texttt{partis} is robust to the mutation burden, and achieves even higher performance by integrating multiple (k=5) sequences from the same clonal family.
+        IHMMunealign and \texttt{partis} are the only HMM methods while the rest are alignment based.
         From \cite{ralph2016consistency}.
     }
 \end{figure}
 
 
 Now returning to the alignment problem exemplified in table \ref{extend_or_not}.
-The real shortcoming of using a pure alignment methods is that there is no robust way of deciding what is N/P nucleotides and what is inherited from germline genes, thereby making it very difficult to reconstruct the true naive sequence.
+The real shortcoming of using a pure alignment methods is that there is no robust way of deciding what are N/P nucleotides and what are inherited from germline genes, thereby making it very difficult to reconstruct the true naive sequence.
 A problem that is well handled by an HMM which will also, as a side effect of calculating the Viterbi path, return the maximum likelihood estimate of the naive sequence.
-The speculations were confirmed in the simulation study of Ralph et al.\ that showed substantial performance gains in naive sequence reconstruction using HMMs vs.\ alignment methods, see figure \ref{fig:partis_naiveseq_comparison}.
+These speculations were confirmed by other simulation results in Ralph et al.\ showing substantial performance gains in naive sequence reconstruction using HMMs vs.\ alignment methods (figure \ref{fig:partis_naiveseq_comparison}).
 
 \begin{figure}
     \centering
@@ -490,24 +489,23 @@ The speculations were confirmed in the simulation study of Ralph et al.\ that sh
     \caption{
         \label{fig:partis_naiveseq_comparison}
         Distribution of hamming distances true vs.\ inferred for 30,000 simulations compared across different inference methods.
-        There is a clear advantage of using HMM methods like partis, but the largest performance leap is to integrate over multiple (k=5) sequences from the same clonal family (explained in the clustering section).
-        IHMMunealign and partis are the only HMM methods while the rest are alignment based.
+        There is a clear advantage of using HMM methods like partis, but the largest performance leap is by integrating multiple (k=5) sequences from the same clonal family (explained in the clustering section).
+        IHMMunealign and \texttt{partis} are the only HMM methods while the rest are alignment based.
         From \cite{ralph2016consistency}.
     }
 \end{figure}
 
 
-Next step is to partition the BCR sequences into clusters of sequence related by some definition of relatedness.
+Next step is to partition the BCR sequences into clusters by some definition of relatedness.
 These clusters are by some known as clones \cite{gupta2017hierarchical}, which is assumed to mean that they actually came from the same GC reaction.
-However as previously discussed the view of GCs as monoclonal is outdated \cite{tas2016visualizing}, so in this work the nomenclature from Ralph et al.\ \cite{ralph2016likelihood} is used, with the assumption that there is sufficient BCR diversity to distinguish clonal families exclusively based on their shared naive sequence.
-% Nevertheless the biologically interpretation is that all the sequences in a cluster are highly similar and share the same epitope for binding.
-Given this definition a logical first step would be to require that the assigned germline genes in a cluster to match, and indeed such simple clustering has been extensively used.
-However in acknowledgement of the uncertainty in assigning the correct D gene, only V and J genes are usually used, and regardless of their allelic variants.
-Furthermore the junction length or the CDR3 length has been used as second discriminator and the hamming distance between sequences is usually used as the last discriminator.
+However, as previously discussed the view of GCs as monoclonal is outdated \cite{tas2016visualizing}, so in this work we use the definition from Ralph et al.\ \cite{ralph2016likelihood} that a clonal family as descending from the same naive DNA sequence.
+Given this definition a logical first step would be to require that the assigned germline genes in a cluster match, and indeed such simple clustering methods have been extensively used.
+However, in acknowledgement of the uncertainty in assigning the correct D gene, usually only V and J genes are used disregarding their allelic variants.
+Furthermore the junction length or the CDR3 length has been used as second discriminator, and the hamming distance between sequences is usually used as the last discriminator.
 Then the procedure for clustering is first to split BCR sequences into buckets with the same V and J gene and junction or CDR3 length, and then sequences in each bucket are clustered based on a distance measure like hamming distance \cite{glanville2011naive}, SHM weighted hamming distance \cite{gupta2017hierarchical} or amino acid based hamming distance confined to CDR3 \cite{jiang2013lineage}.
-This method, which will be referred to as "VJ junction agglomeration", has the inherent problem of putting 100\% confidence on the V, J and junction annotations.
-However with just moderate SHM there are substantial uncertainties in the annotations and in such cases putting a hard boundary between sequences with different annotations causes problems.
-In an example, outlined in figure \ref{fig:VJ_CDR3_agglomeration}, a clonal family would wrongly be assigned into three different clusters (boxes defined by the solid gene lines) if VJ junction agglomeration is used.
+These methods, which will all be referred to as "VJ junction agglomeration", have the inherent problem of putting 100\% confidence on the V, J and junction annotations.
+But with just moderate SHM there are considerable uncertainties in the annotations and then putting a hard boundary between sequences with different annotations causes problems.
+In an example outlined in figure \ref{fig:VJ_CDR3_agglomeration}, a single clonal family would wrongly be assigned into three different clusters (boxes defined by the solid gene lines) if VJ junction agglomeration is used.
 Contrarily, if integrating over germline and junctional annotation uncertainties, clustering is not restricted by the point estimate of the gene or allele annotation, and at least has the possibility to merge all red dots into the same cluster.
 
 \begin{figure}[ht]
@@ -515,26 +513,27 @@ Contrarily, if integrating over germline and junctional annotation uncertainties
     \includegraphics[width=0.5\textwidth]{figures/VJ_CDR3_agglomeration.pdf}
     \caption{
         \label{fig:VJ_CDR3_agglomeration}
-        Two dimensional representation of the BCR sequence space that illustrates how V, J and junction point estimates leads to overestimation of the number of clusters.
+        Two dimensional representation of the BCR sequence space illustrates how V, J and junction point estimates lead to overestimation of the number of clusters.
         Vertical lines represent V genes and dashed lines represent alleles, same for J genes on the horizontal axis.
         Naive sequences with no N/P nucleotides are in the cross section between a V and J allele.
-        Colored with purple gradient is the range of junctional diversity extending from the V/J gene combinations, less color means lower probability, all the way to white which is sequences not within the reach of any VDJ recombination.
+        Colored with purple gradient is the range of junctional diversity extending from the V/J gene combinations, less color means lower probability going all the way to white which is sequences not within the reach of any VDJ recombination.
         The dot in blue represents a naive sequence with its SHM "breadth" marked by a yellow circle.
-        Red dots are observed BCR sequences from the clonal family defined by the naive sequence.
+        Red dots are observed hypermutated BCR sequences from the clonal family defined by the blue naive sequence.
     }
 \end{figure}
 
 
-Now it should be clear that the root cause of the clustering problem is propagation of errors in point estimates, i.e.\ ignoring the substantial uncertainty in VDJ annotations of a BCR sequence that has undergone SHM.
-When a clustering criterion is based on the point estimate of both the V and J assignment, both the assignment uncertainties are affecting the clustering performance negatively.
-The junction length is also problematic to use because it is also just a point estimate, and often estimated from by a problematic alignment method as outlined in the example in table \ref{extend_or_not}.
-Lastly, hamming distance is weighting a mismatch in the N/P base region equally likely as a mismatch in the middle of germline gene while there is much more certainty of a real SHM event in the later case.
-In the example in figure \ref{fig:VJ_CDR3_agglomeration} VJ junction agglomeration is overestimating the number of clusters and indeed this intuition is also observed in simulation studies \cite{ralph2016likelihood}.
+Now it should be clear that the root cause of the clustering problem is propagation of errors in point estimates, i.e.\ ignoring uncertainties in VDJ assignments.
+When a clustering criterion is based on the point estimate of both the V and J assignment each assignment uncertainty is affecting the clustering performance negatively.
+The junction length suffers the same problem and is often being further problematic because of the alignments issue outlined in the example in table \ref{extend_or_not}.
+Lastly, hamming distance is weighting a mutation in the N/P base region equally likely as a mutation in the middle of the germline gene while there is much more certainty of a real SHM event in the later case.
+In the example in figure \ref{fig:VJ_CDR3_agglomeration} VJ junction agglomeration is overestimating the number of clusters and indeed this intuition is also found by simulation studies \cite{ralph2016likelihood}.
 
-A completely different approach is taken by Ralph et al.\ \cite{ralph2016likelihood}, extending on their HMM framework for germline gene annotation.
+A completely different approach is taken by Ralph et al.\ \cite{ralph2016likelihood} by extending on their HMM framework for germline gene annotation.
 They use the naive sequence as a centrality point for clustering, not in terms of hamming distance, but in the terms of likelihood.
 The HMM model is conveniently yielding a likelihood function defined over all possible naive sequences for each BCR sequence in the dataset.
-With this likelihood function it gets simple to do hypothesis testing based clustering e.g.\ to test whether a set of observed BCR sequences all belong to the same cluster through a common naive sequence ancestor, see figure \ref{fig:partis_clustering-with-likelihood_2}.
+With this likelihood function it gets simple to do hypothesis testing based clustering e.g.\ to test whether two BCR sequences descended from the same naive sequence ancestor by a likelihood ratio test (figure \ref{fig:partis_clustering-with-likelihood_2}).
+Agglomeration is continued until no more clusters can be merged.
 
 \begin{figure}
     \centering
@@ -546,14 +545,14 @@ With this likelihood function it gets simple to do hypothesis testing based clus
 \end{figure}
 
 
-Notice that the likelihood ratio test based clustering in partis is centered around the likelihood of the proposed naive sequence and the thus allow for merging of sequences with different VJ gene annotation point estimates.
+Notice that the likelihood ratio test clustering in \texttt{partis} is based on the likelihood of a proposed naive sequence and the thus allow for merging of sequences with different VJ gene annotation point estimates.
 When clustering has run to an end the final annotation of each sequence will change to reflect a common VDJ rearrangement for all cluster members.
-The shared information among cluster members makes inference of the naive sequence much more probable because all sequences can be integrated into the same HMM, referred to as multi-HMM in Ralph et al.
+The shared information among cluster members makes inference of the naive sequence much more reliable because all sequences can be integrated into the same HMM, referred to as multi-HMM in Ralph et al.
 The strength of using multi-HMM to infer a naive sequence is obvious from a theoretical stand-point.
-Multiple sequences are regarded as multiple independent observations of the same mutation process and this will increase the probability of the germline annotation, but more so, it will increase the odds of observing the true naive sequence in the N/P junction.
+Multiple sequences from the same clonal family are regarded as independent observations of the same mutation process increasing the probability of correct germline annotation, likewise increasing the odds of observing the unmutated sequence in the N/P junction.
 This claim is supported by striking improvement in both annotation (figure \ref{fig:partis_Jgene_comparison}) and naive sequence inference (figure \ref{fig:partis_naiveseq_comparison}) for just 5 clonal family sequences (k=5).
 
-The advantages of HMM based BCR annotation and clustering should now be clear and therefore all germline annotation, naive sequence inference and clustering of BCR sequence throughout this work was done with the partis software (\url{github.com/psathyrella/partis}).
+%The advantages of HMM based BCR annotation and clustering should now be clear and therefore all germline annotation, naive sequence inference and clustering of BCR sequence throughout this work was done with the \texttt{partis} software (\url{github.com/psathyrella/partis}).
 
 
 
