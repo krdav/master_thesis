@@ -6,21 +6,21 @@ Especially the area of adaptive immunity has been extensively studied due to its
 
 B and T cells and their receptors (BCRs and TCRs respectively) play a central role in the adaptive immune system which have classically been studied by low throughput techniques like microscopy, ELISA and PCR.
 However, the most important part of these cells are their receptors and the binding abilities of these, which are purely sequence dependent.
-After this was recognized the first sequencing studies were slowly undertaken but with no where near enough sequences to give detailed insights about BCR and TCR function.
+After this was recognized, the first sequencing studies were slowly undertaken but with no where near enough sequences to give detailed insights about BCR and TCR function.
 It was first recently, around 2008, that it got possible with high-throughput pyrosequencing (Roche 454) to sequence thousands of BCRs and TCRs \cite{campbell2008subclonal}, \cite{boyd2008high}.
-Since then high throughput sequencing (HTS) is becoming a standard lab technique and sequencing BCR/TCR repertoires (Rep-Seq) is now done by many academic groups as well as commercially by several companies.
+Since then, high throughput sequencing (HTS) is becoming a standard lab technique, and sequencing BCR/TCR repertoires (Rep-Seq) is now done by many academic groups as well as commercially by several companies.
 
 Despite the initial enthusiasm around Rep-Seq, the dust has settled, revealing a slightly disappointing reality.
 Slightly disappointing because Rep-Seq is, for various reasons, not answering as many scientific questions as it was initially hoped.
-There has been a number of studies showing just how vast and diverse the immune receptor repertoire is \cite{zhang20173d}, \cite{elhanati2015inferring} and how there is a repertoire bias across different individuals \cite{dewitt2016public}, \cite{vander2017dysregulation}, but because BCR sequences themselves does not provide information about their function, interpretation of these Rep-Seq results are difficult and too often ends up being a hunt for significant case vs.\ control changes with little meaningful interpretation.
-For example there might be a significant change in the use of certain germline genes, under circumstances of an autoimmune disease, but is this caused by the self reactive auto-antibodies or is the change in gene usage just a side effect of the disease's influence on the repertoire?
+There has been a number of studies showing just how vast and diverse the immune receptor repertoire is \cite{zhang20173d}, \cite{elhanati2015inferring} and how there is a repertoire bias across different individuals \cite{dewitt2016public}, \cite{vander2017dysregulation}, but because BCR sequences themselves do not provide information about their function, interpretation of these Rep-Seq results are difficult and too often ends up being a hunt for significant case vs.\ control changes with little meaningful interpretation.
+For example, there might be a significant change in the use of certain germline genes under circumstances of an autoimmune disease, but is this caused by the self reactive auto-antibodies or is the change in gene usage just a side effect of the disease's influence on the repertoire?
 A question like this is difficult to answer without extra information about the function of the antibody present in the sample and therefore conclusions drawn from changes in germline gene usage lack causality.
-However Rep-Seq is still in its infancy and indeed is starting to find a niche of applications e.g.\ lineage tracing for vaccine response \cite{Doria-Rose2014-vi}, \cite{Wu2011-yj} and in antibody discovery applications \cite{reddy2010monoclonal}.
+However, Rep-Seq is still in its infancy and indeed is starting to find a niche of applications e.g.\ lineage tracing for vaccine response \cite{Doria-Rose2014-vi}, \cite{Wu2011-yj} and in antibody discovery applications \cite{reddy2010monoclonal}.
 
 Missing functional information about the sequences from Rep-Seq data is what makes it difficult to interpret because there is no known truth to use as a reference.
 E.g.\ it cannot be known exactly which B cells are sharing the same common ancestor cell (clonal relationship), it can only be inferred from sequence similarity and epitope binding specificity.
-Most often epitope binding specificity it not available for each cell so clonal relationship is inferred solely based on sequence similarity with no test to validate this assumptions.
-In such cases when sequence information is rich, but functional and relational information is sparse, or non-existing, the importance of simulation studies cannot be understated.
+Most often, epitope binding specificity is not available for each cell, so clonal relationship is inferred solely based on sequence similarity with no test to validate this assumptions.
+In such cases, when sequence information is rich but functional and relational information is sparse, or non-existing, the importance of simulation studies cannot be understated.
 Simulating the missing information is often the only way to validate Rep-Seq analysis tools and therefore there is a real need for setting up simulation protocols mimicking real Rep-Seq data.
 
 In this work I will present tools and methods for simulating the phylogeny of B cells evolving in a germinal center (GC) reaction, and then apply the simulated sequences to validate phylogenetic methods.
@@ -43,21 +43,21 @@ To carry out this job the effector cells of the immune system have been equipped
 With this potential harmful weapon the immune system needs to be tightly regulated to balance between fighting off pathogens while doing least possible harm on the host.
 
 At the lowest level of classification the immune system is split up into innate and adaptive immunity.
-As the name suggested the innate immunity is hard coded in the genome and cannot change during the course of an infection.
+As the name suggests the innate immunity is hard coded in the genome and cannot change during the course of an infection.
 The opposite is true for the adaptive immunity, this is not hard coded in the genome and is undergoing development throughout the course of an infection.
 Innate immunity is the oldest of the defense mechanisms, adaptive immunity came along later giving a large selection advantage to the host, but always on the terms of the innate immune system.
 The innate immune system is broadly defined as both the physical barriers, like skin, mucous, stomach acid etc. but also covers cells like macrophages, dendritic cells and the proteins of the complement system.
 The adaptive immune system includes less elements and is defined as the cells of the B and T cell lineages.
 There is a tight interaction between the two systems and events in the innate system can cause activation of elements in the adaptive and vice versa, see figure \ref{fig:innate_and_adaptive}.
 
-To get a more complete picture of the processes involved lets walk through an example of a simple bacterial infection cause by a skin tear.
-At first bacteria enters the blood stream where they start proliferating, but some are also getting engulfed by macrophages.
+To get a more complete picture of the processes involved let's walk through an example of a simple bacterial infection caused by a skin tear.
+At first bacteria enter the blood stream where they start proliferating, but some also get engulfed by macrophages.
 A macrophage will process the engulfed bacteria in small intracellular membrane vesicles (called lysosomes), first by killing and thereafter by chopping up the lysosome content.
-Among the content of the lysosomes will be short bacterial peptides that was previously part of full-sized bacterial proteins, and these peptides are then loaded into special surface receptors called the major histocompatibility complex class II (MHCII) and presented on the surface of macrophages circulating through the blood stream.
-At the same time a large number of T cell with different TCRs are monitoring the blood and some will carry a TCR that binds specifically to an MHCII presenting a bacterial peptide on the surface of a macrophage.
-As a result of binding the macrophage activates the T cell to undergo proliferation and a burst of T cells with identical TCRs will emerge (clonal burst).
-At the same time a large number of B cells with different BCRs are monitoring the blood stream binding a variety of different proteins, and whatever these B cells bind to their BCRs are getting transported into the cell, chopped up and presented in MHCII is a similar fashion as the macrophages (this is a highly idealized description of antigen sequestering and presentation, for a detailed mechanistic review see \cite{batista2009and}).
-Some of these B cells will bind proteins from the immunizing pathogen and present peptides from these protein in MHCII on its cell surface.
+Among the content of the lysosomes will be short bacterial peptides that were previously part of full-sized bacterial proteins, and these peptides are then loaded into special surface receptors called the major histocompatibility complex class II (MHCII) and presented on the surface of macrophages circulating through the blood stream.
+At the same time a large number of T cells with different TCRs monitor the blood, and some will carry a TCR that binds specifically to an MHCII presenting a bacterial peptide on the surface of a macrophage.
+As a result of binding the macrophage activates the T cell to undergo proliferation and a burst of T cells with identical TCRs emerge (clonal burst).
+At the same time a large number of B cells with different BCRs monitor the blood stream binding a variety of different proteins, and whatever these B cells bind to their BCRs are getting transported into the cell, chopped up and presented in MHCII is a similar fashion as the macrophages (this is a highly idealized description of antigen sequestering and presentation, for a detailed mechanistic review see \cite{batista2009and}).
+Some of these B cells bind proteins from the immunizing pathogen and present peptides from these protein in MHCII on its cell surface.
 Now some of these MHCII:peptide complexes are identical to the ones presented on the macrophages, and the recently clonally expanded T cells will bind them and activate the B cells to undergo a number of maturation steps, discussed in details later in this section.
 The result is secretion of large quantities of antibodies (a secreted form of a BCR) that binds to the surface proteins of the bacteria and thereby signalling the complement system and other immune cells to clear the infection.
 Sometimes the unspecific engulfing of extracellular fluids by macrophages will not be efficient enough to clear a bacterial infection, but once flagged with antibodies, clearance can be mediated by the complement system and occur rapidly.
@@ -187,12 +187,12 @@ However the subgroup level is \textit{not} defined phylogenetically, even though
 \end{figure}
 
 
-Each subgroup has a number of genes that are defined by their chromosomal position (locus) and present in all individuals in a species.
-Each gene is encoded by a single sequence, the allele, that can vary between individuals and will by present in two copies, one on each chromosome.
+Each subgroup have a number of genes that are defined by their chromosomal position (locus) and present in all individuals in a species.
+Each gene is encoded by a single sequence, the allele, that can vary between individuals and will by present in two copies, one on each chromosome copy.
 A gene can have many different observed alleles in a population, and while these allelic differences between individuals are usually just single nucleotide polymorphism, indels do occur causing some alleles of the same gene to have different length.
 
-The rules described above is the intended IMGT nomenclature, however it turns out that gene duplications/deletions are commonly observed at the immunoglobuline locus in both humans \cite{scheepers2015ability} and other animals \cite{collins2015mouse}, \cite{corcoran2016production}, and hence it is not certain that all individuals will have the same number of genes on the same chromosomal locations.
-This presents a large problem for germline annotation and mutation frequency estimation and as of now this is still an unresolved problem.
+The rules described above are those intended by the IMGT nomenclature derived from regular genetics, however it turns out that gene duplications/deletions are commonly observed at the immunoglobuline locus in both humans \cite{scheepers2015ability} and other animals \cite{collins2015mouse}, \cite{corcoran2016production}, and hence it is not certain that all individuals will have the same number of genes on the same chromosomal locations.
+This is a large problem for germline annotation and mutation frequency estimation but as of now it is still an unresolved problem.
 However, for a majority of the human data, the germline gene set is comprehensive enough that no major errors are expected, and in this case IMGT nomenclature can be used reliably.
 Nonetheless, it is worth to keep in mind that gene duplications/deletions can be a problem, especially with data derived from non-European individuals \cite{scheepers2015ability}.
 
@@ -204,25 +204,25 @@ Nonetheless, it is worth to keep in mind that gene duplications/deletions can be
 
 \subsubsection{Antibody numbering}
 For both B and T cell receptors the huge diversity of the variable region is obvious on the sequence level, but much less so on the protein structural level.
-Actually even the variable region of a highly mutated BCR is strictly following the structural constraints of the beta-sheet sandwich structure of the immunoglobulin domain.
-Structural conservation enables consistent mapping from the amino acid sequence onto a protein structure.
-A mapping like this was first proposed as a numbering scheme where the immunoglobulin structural components are numbered and these numbers are mapped back to the linear amino acid sequence.
-First attempt on this was described by Kabat \cite{national1983sequences} and based on invariant residues and rule based matching (these rules are tabulated by Dr. Andrew Martins \url{http://www.bioinf.org.uk/abs/}).
-Unfortunately this scheme not good at handling insertion in the flexible CDR regions, e.g.\ CDR1 insertions and/or very long CDR3 \cite{martin2010protein}.
+Actually even the variable region of a highly mutated BCR is strictly following the structural constraints of a beta-sheet sandwich structure defining the immunoglobulin domain.
+Structural conservation also enables a structural consistent mapping from an amino acid sequence onto an antibody protein structure.
+A mapping like this was first proposed as a numbering scheme where the immunoglobulin structural components are numbered, and then these numbers are mapped back to the linear amino acid sequence.
+First attempt at this was described by Kabat \cite{national1983sequences} and based on a few invariant residues used as anchor points and located by a rule based matching algorithm (these rules are tabulated by Dr.\ Andrew Martins \url{http://www.bioinf.org.uk/abs/}).
+Unfortunately this scheme is not good at handling insertion in the flexible CDR regions e.g.\ CDR1 insertions and/or very long CDR3 \cite{martin2010protein}.
 Years later came another numbering scheme named after the first author of Clothia et al.\ \cite{chothia1987canonical}.
-The Clothia scheme was set out to correct the wrong mapping of CDR1 insertions and thereby achieve structurally consistent mapping, but later this has been updated to also accommodate structural consistent mapping of framework indels.
+The Clothia scheme was set out to correct the wrong mapping of CDR1 insertions and thereby achieve structurally consistent mapping, but was first later updated to also accommodate structural consistent mapping of framework indels.
 
-In 2003 the IMGT numbering was proposed to unify numbering of BCRs and TCRs \cite{lefranc2003imgt}.
-Similar to the IMGT scheme another scheme, called AHo, was made unifying numbering of BCRs and TCRs \cite{honegger2001yet}.
-Like Clothia, AHo numbering is structurally consistent, but unlike any other scheme it has a fixed standard length of 149 positions with enough space for even very long CDR3 sequences.
-Only in rare cases of germline indels, or an extremely long junctions, the scheme has to use insertion codes, which are otherwise standard use in all other numbering schemes.
-This fixed length sequence numbering make analysis much more convenient and results easy to interpret e.g.\ all BCR sequences can be encoded by a vector of length 149 and a given position in this vector always correspond to the same position on the protein structure regardless of the sequence.
-Therefore whenever BCR numbering is used throughout with work AHo numbering will be used if nothing else stated.
-The software ANARCI is used to annotate BCR sequences with AHo numbers \cite{dunbar2016anarci}, (\url{http://opig.stats.ox.ac.uk/webapps/sabdab-sabpred/ANARCI.php}).
+In 2003 the IMGT numbering was proposed as a way to unify numbering of BCRs and TCRs \cite{lefranc2003imgt}.
+Similar to the IMGT scheme another scheme, called AHo, also unified numbering of BCRs and TCRs \cite{honegger2001yet}.
+Like Clothia, AHo numbering is structurally consistent, but unlike any other scheme it has a fixed standard length of 149 positions with enough space for even very long CDR3 length sequences.
+Only in rare cases of germline indels, or an extremely large number of N/P bases, the scheme has to use insertion codes, which are otherwise standard use in all other numbering schemes.
+This fixed length sequence numbering makes analysis much more convenient in addition to being easier to interpret e.g.\ all BCR sequences can be encoded by a vector of length 149 and a given position in this vector always correspond to the same position on the protein structure, regardless of sequence.
+%Therefore whenever BCR numbering is used throughout with work AHo numbering will be used if nothing else stated.
+The software ``ANARCI'' provides a convenient and free open source solution to annotate BCR sequences with AHo numbers \cite{dunbar2016anarci}, (\url{http://opig.stats.ox.ac.uk/webapps/sabdab-sabpred/ANARCI.php}).
 
-With a numbered BCR sequence also comes the rather arbitrary decision of how to define the framework and complementary defining regions (CDRs/FRs).
-Clearly FRs are suppose to be more conserved and less structurally flexible while CDRs are suppose to be flexible and highly variable, but putting a boundary between them is a context dependent problem, that depends on the problem at hand.
-In this work FRs are considered to be the most structurally conserved beta-sheets in the immunoglobulin domain, and CDRs are considered to be the structurally flexible loops connecting these beta-sheets.
+With a numbered BCR sequence also comes the rather arbitrary decision of how to define the boundaries between FRs and CDRs.
+Clearly FRs are suppose to be more conserved and less structurally flexible while CDRs are suppose to be flexible and highly variable, but putting a boundary between them is a problem that depends on the context in which these annotations are used.
+We consider FRs to be the most structurally conserved beta-sheets in the immunoglobulin domain while CDRs are considered to be the structurally flexible loops connecting these beta-sheets.
 This definition is recapitulated in the CDR centric numbers tabulated by Andreas Pl{\"u}ckthun (\url{https://www.bioc.uzh.ch/plueckthun/antibody/Numbering/}).
 The FR1-4 ranges are: \texttt{1-27, 41-57, 78-108, 138-149} and the CDR1-3 ranges are: \texttt{28-40, 58-77, 109-137}.
 
@@ -232,101 +232,102 @@ The FR1-4 ranges are: \texttt{1-27, 41-57, 78-108, 138-149} and the CDR1-3 range
 
 
 \subsection{Biology of the germinal center reaction}
-It was discovered by Eisen and Siskind already in 1964 \cite{eisen1964variations} that antibody affinity was increasing during the course of an immune reaction.
-The phenomenon is known as affinity maturation and by employing single cell techniques for staining, sorting and sequencing it has now been revealed that maturation is driven by a Darwinian selection process spatially confined into small nodules called germinal centers (GCs) residing in lymph nodes.
-Affinity maturation typically starts in the GCs 6 days after immunization and ends 4 weeks later when the GCs are dissolved and GC B cells die from apoptosis \cite{victora2012germinal}.
-Before dissolving, a GC will export plasma cells, that secretes large quantities of high affinity antibodies, and memory B cells that will work as a permanent memory to be quickly re-initiated upon repeated antigen exposure.
-%after the death of plasma cells.
+It was discovered by Eisen and Siskind already in 1964 \cite{eisen1964variations} that antibody affinity is steadily increasing during the course of an immune reaction.
+The phenomenon is known as affinity maturation and by employing single cell techniques for staining, sorting and sequencing it has now been revealed that maturation is driven by a Darwinian selection process spatially confined into small nodules called germinal centers (GCs) that forms in the lymph nodes.
+Affinity maturation typically starts by GC formation 6 days after immunization in begun and ends 4 weeks later when the GCs are dissolved due to B cell apoptosis \cite{victora2012germinal}.
+Before dissolving, a GC will export plasma cells that secretes large quantities of high affinity antibodies, but also memory B cells that will work as a permanent memory to be quickly re-initiated upon repeated antigen exposure.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/GC_reaction.pdf}
     \caption{
         \label{fig:GC_reaction}
-        Dynamics of the GC reaction, adapted from \cite{victora2014clonal}.
+        Dynamics of the GC reaction, adapted from \cite{victora2014clonal} by Frederick Matsen.
         Follicular dendritic (FDZ) cell in red, T follicular helper (Tfh) cells in blue and B cells in orange.
     }
 \end{figure}
 
 
 Taking a step back, the formation of a GC starts with an immune reaction against an antigen.
-Two things are required in the initial phase, a) T cells with a TCR specific for an MHCII-peptide, with the peptide from the antigen and b) B cells with a BCR that can bind the whole antigen, engulf it and present its peptides in MHCII for the T cells to bind, see figure \ref{fig:GC_reaction}.
+Two things are required in the initial phase, a) T cells with TCRs specific for an MHCII:peptide complex presenting a peptide from the antigen and b) B cells with BCRs that can bind the whole antigen, engulf it and present its peptides in MHCII for the T cells to bind, see figure \ref{fig:GC_reaction}.
 When these two requirements are fulfilled GC foci will start to form in the lymph nodes.
+
 A GC is a micro-environment containing follicular dendritic cells (FDCs), T follicular helper (Tfh) cells and of course B cells.
-The FDCs are antigen storage cells, they engulf large amounts of whole immunogenic proteins and slowly presents them intactly on the cell surface where they can be extracted by B cells.
+The FDCs are antigen storage cells, they capture large amounts of whole proteins and presents them intactly on the cell surface where they can be bound and extracted by B cells.
 The B cells undergo a mutation/selection process with two elements a) T cell help and selection and followed by b) mutation and proliferation.
-The two elements are spatially separated in the GC and defined as the light zone (LZ) and the dark zone (DZ), called so because the dark zone is more densely populated with cells and appears darker when viewed under the microscope.
-In the LZ B cells are attracted to the large surface of the FDC membrane through secretion of the chemokine CXCL13, some B cells will have BCR affinities strong enough that they are able to release antigen from the FDC membrane \cite{suzuki2009visualizing}.
-Bound and released antigen will be engulfed, processed and presented in MHCII molecules for the Tfh cells to bind.
+The two elements are spatially separated in the GC and defined as the light zone (LZ) and the dark zone (DZ), called so because the dark zone is more densely populated with cells and appears darker when viewed under a light microscope.
+In the LZ B cells are attracted to the large surface of the FDC membrane through its secretion of the chemokine CXCL13, and some B cells will have BCR affinities strong enough that they are able to bind and release antigen from the FDC membrane \cite{suzuki2009visualizing}.
+Released antigen will be engulfed, processed and presented by MHCII molecules for Tfh cells to bind.
 The more antigen a B cells is sequestering, the more peptide is presented and the more Tfh binding will occur.
-If sufficient Tfh binding is achieved the B cell is signaled to migrate to the DZ by following another chemokine called CXCL12.
+If sufficient Tfh binding is achieved the B cell is signaled to migrate to the DZ by following another chemokine CXCL12.
 In the DZ it proliferates while expressing high levels of the somatic hypermutation (SHM) inducing enzyme activation-induced cytidine deaminase (AID).
-With an approximate mutation rate of $10^{-3}$ per position per cell generation ($10^{6}$ higher than the normal rate) and a cell cycle time of only 6-12 hours, a large amount of variability is introduced in the DZ cells \cite{victora2012germinal}.
-Eventually the progeny cells re-enter the LZ and the SHM induced variability will undergo selection, thereby completing the cycle.
+This results in an approximate mutation rate of $10^{-3}$ per position per cell generation ($10^{6}$ higher than the normal rate), and a cell cycle time of only 6-12 hours, introducing a large amount of sequence variability in the DZ cells \cite{victora2012germinal}.
+Eventually the progeny cells re-enter the LZ and the SHM induced variability will undergo selection and thereby completing the cycle.
 B Cells are constantly cycling between LZ and DZ by switching between high expression of chemokine receptor CXCR5 and low expression of CXCR4 to migrate towards chemokine CXCL13 in the LZ, and low expression of CXCR5 and high expression of CXCR4 to migrate towards CXCL12 in the DZ.
-This process is called cyclic re-entry and it continues until the GC dissolves.
+This process is called cyclic re-entry and it continues until the GC dissolves through a mechanism still unknown.
 During selection there are a limited amount of Tfh cells, so this is where B cells have to compete to get the activation signal.
-The more antigen a B cell can sequester relative to the others, the more likely it is to get Tfh help, migrate to the DZ and go to proliferation, as oppose to undergoing apoptosis if Tfh help is insufficient.
-A fraction of the B cells in the LZ will get a special Tfh differentiation signal and these are exported outside of the GC with fate as either a plasma cell or a memory cell.
+The more antigen a B cell can sequester relative to the others, the more likely it is to get Tfh help, migrate to the DZ and go on to proliferate, as oppose to undergoing apoptosis if Tfh help is insufficient.
+By an unknown mechanism a fraction of the B cells in the LZ will get a special Tfh differentiation signal and these are exported outside of the GC with fate as either a plasma cell or a memory cell.
 
 While many mechanistic details of the GC reaction is known much remains to be elucidated.
-The mechanisms of selection has been difficult to study but current evidence suggests that it is solely mediated through T cell interaction \cite{victora2012germinal}, \cite{victora2014clonal}.
-Indeed using Tfh interaction as a model for understanding the observations, it is possible to explain all the modes of selection.
+The mechanisms of selection has been difficult to study, but current evidence suggests that it is solely mediated through T cell interaction \cite{victora2012germinal}, \cite{victora2014clonal}.
+Although the importance of Tfh interaction has recently been challenged \cite{yeh2017limit}, it currently remains as the best model for understanding the observations all the mechanisms of selection.
 Selection can be split into three main elements:
 \begin{itemize}
   \item Affinity
   \item Stability and expression
-  \item Non-self binding
+  \item Self-antigen binding
 \end{itemize}
 
 To improve antigen affinity is the most obvious point for selection to occur on.
 A gain in BCR affinity will enable a B cell to sequester more antigen from the FDCs and present more MHCII:peptide to the limited number of Tfh cells.
 Those B cells that have many MHCII:peptide complexes are much more likely to interact sufficiently to get the signal for proliferation, meaning that higher affinity is positively selected.
-An extension to this is in the case of mutations altering the stability and/or expressing of a BCR, resulting in less BCRs to be presented on the cell surface.
-Lower BCR levels on the cell surface will cause less antigen sequestering from the FDCs resulting in less Tfh cell interaction and causing negative selection.
-Finally a more convoluted example of Tfh cell mediated selection is the negative selection of self binding BCRs.
+An extension to this is in the case of mutations altering the stability and/or expression of a BCR, resulting in less BCRs to be presented on the cell surface.
+Lower BCR levels on the cell surface will cause less antigen sequestering from the FDCs resulting in less Tfh cell interaction leading to negative selection.
+Finally a more convoluted example of Tfh cell mediated selection is the negative selection of self-antigen binding BCRs.
 %It has been suggested that self antigen binding B cells will mostly present self antigen derived peptides in MHCII because of the large quantities of self antigen compared to the immunizing antigen \cite{Sabouri_2014}, \cite{Bannard_Cyster_2017}.
-Self antigen binding B cells are simply clogging up MHCII molecules with self peptides leading to less T cell help, and again easily explained by a Tfh cell mediated selection process.
+Self-antigen binding B cells are simply clogging up MHCII molecules with self-peptides leading to less T cell help \cite{Sabouri_2014}, \cite{Bannard_Cyster_2017} and negative selection.
+Again, this mechanism is conveniently explained by a Tfh cell mediated selection process.
 
-Despite the convincing mechanistic models it must be stressed that the GC reaction contains many, either mechanistically unknown, or purely stochastic elements.
-E.g.\ even though there is an observed relationship between clonal bursts and mutational gain in affinity, this does not appear to happen consistently i.e.\ large affinity gains are observed without clonal bursting \cite{tas2016visualizing}, leading to the conclusion that either the reaction is highly stochastic, or a mechanism is unknown or unmonitored e.g.\ higher affinity but worse expression could make the net balance of selection turn negative, while it appears to be positive if only looking at affinity.
+Despite the convincing mechanistic understanding it must be stressed that the GC reaction contains many, either mechanistically unknown, or purely stochastic elements.
+E.g.\ even though there is an observed relationship between clonal bursts and mutational induced gain in affinity, this does not appear to happen consistently i.e.\ large affinity gains are observed without clonal bursting \cite{tas2016visualizing}, supporting the conclusion that either selection is highly stochastic or other mechanisms are still unknown or unmonitored e.g.\ higher affinity but worse expression could make the net balance of selection turn negative, while it appears to be positive if only looking at affinity.
 
 A notable case of a correction to the mechanistic understanding of the GC reaction happened recently.
 In 2012 a review by Victora, based on all previous evidence, suggested that GCs are initially colonized by little as 1-3 naive B cells \cite{victora2012germinal}.
-However just 4 year later the same author concluded in Tas et al.\ \cite{tas2016visualizing} that this number was largely underestimated.
-Using an elegant set of experiments, they were able to visualize the colonization of GCs in multiple lymph nodes across different animals and concludes that mice GCs are consistently being colonized by 50-200 naive B cells.
+However, just 4 years later the same author concluded in Tas et al.\ \cite{tas2016visualizing} that this number was largely underestimated.
+Using an elegant experimental setup, they were able to visualize the colonization of GCs in multiple lymph nodes across different mice and concludes that mice GCs are consistently being colonized by 50-200 naive B cells.
 Before the Tas et al.\ paper in 2016 it had been a good approximation to assume that GCs were being founded by just a single cell, and that this monoclonality would be upheld throughout the entire GC reaction.
-The GC identify was therefore a convenient definition of what a B cell clone is, but this view has to be redefined with the findings that GCs are starting out as highly polyclonal, and even ends up with a substantial fraction that keeps being polyclonal throughput the whole GC reaction.
-Complicating things further, Tas et al.\ also observed that B cells with the same naive sequences was found across multiple GCs.
-It would be fair not to distinguish between B cell clones with identical naive sequences, but matured in different GCs, as long as they mature against the same antigen, because then they undergo the same selection pressure.
-But two distinct clones would need to be defined if two B cells with the same naive sequence were independently matured towards different antigens.
-However it is a) practically very difficult to distinguish clones that have identical naive sequence and b) very unlikely that the exactly same BCR nucleotide sequence will mature towards more than a single antigen.
-Therefore this impractical definition of a B cell clone is discouraged and instead, the simple definition from Ralph et al.\ \cite{ralph2016likelihood}, is used throughout this work.
+In the view of monoclonality the GC identity has been a convenient definition of a B cell clone, but this view has to be redefined with the findings that GCs are starting out as highly polyclonal, and even ends up with a substantial fraction of GCs that keeps being polyclonal throughput the whole GC reaction.
+Complicating things further, Tas et al.\ also observed that B cells with the same naive sequences were found across multiple GCs reacting to the same antigen.
+For an updated definition it would be fair not to distinguish between B cells with identical naive sequences but matured in different GCs, as long as they mature against the same antigen, because then they are under the same selection pressure.
+But then two distinct clones would need to be defined if two B cells with the same naive sequence were independently matured towards different antigens.
+However it is a) practically very difficult to distinguish clones that have identical naive sequence and b) very unlikely that the exactly same naive BCR nucleotide sequence will mature towards more than a single antigen.
+Therefore the old and impractical definition of a B cell clone is discouraged, and instead the simpler definition from Ralph et al.\ \cite{ralph2016likelihood} is used throughout this work.
 In this scheme if two different BCRs are derived from an identical naive DNA sequence, they are in the same clonal family regardless of the GC context they came from.
 
 SHM is driven by the enzyme AID that works by deaminating cytosines during DNA transcription.
-DNA repair enzymes are then recruited to the deaminated cytosines where they with some probability will introduce point mutations both at the site of deamination and at neighboring sites.
+DNA repair enzymes are then recruited to the deaminated cytosines, where they with some probability will introduce point mutations both at the site of deamination or at neighboring sites.
 Increased mutation rate during SHM is therefore the combined effects of AID and a number of DNA repair enzymes.
-With a whopping $10^6$ times increase in mutation rate during SHM (from $10^{-9}$ to $10^{-3}$ mutations per bp per cell generation) there is a need to contain SHM so it does not destroy the function of the cell itself.
-SHM achieves this by working preferentially close to the chromosomal location of the variable region genes \cite{Yeap_2015}, \cite{liu2008two}.
-In addition SHM appears to be biased and preferentially introduce mutations in some contexts rather than others, incidentally this context is over represented in the variable chain genes.
+With a whopping $10^6$ times increase in mutation rate during SHM (from $10^{-9}$ to $10^{-3}$ mutations per bp per cell generation), there is a need to contain SHM so it does not run loose and destroys the function of the cell itself.
+SHM achieves this by acting preferentially close to the chromosomal location of the variable region genes \cite{Yeap_2015}, \cite{liu2008two}.
+In addition SHM appears to be biased and preferentially introduce mutations in some contexts rather than others \cite{Yeap_2015}, incidentally consisting of sequence motifs that are over represented in the variable chain genes.
 The contextual bias of AID was initially described as hot/cold spots defined by a few specific 3-mer motifs (WRC/GYW hotspots and SYG/GRS coldspots) observed to change mutation rate significantly by preferentially recruiting AID \cite{pham2003processive}.
 
 It can be difficult to tease apart the different biases introduced by both AID and the DNA repair enzymes, and though the majority of the observed SHM bias most likely comes from preferential AID activity \cite{Pham_2016}, it is their combined effect that is observed as SHM during affinity maturation.
-Instead of a mechanistic model of SHM an empirical context model can be setup purely based on a large number of observed mutations and their nucleotide context.
-Such a model has been described by Yaari et al.\ \cite{yaari2013models} and later in an improved version called S5F \cite{cui2016model}.
-The S5F model is simply the complete set of 1024 5-mer DNA motifs and the relative probability of observing the middle base mutating.
+Instead of a mechanistic model of SHM an empirical context model can be setup purely based on a large number of observed mutations and their surrounding nucleotide context.
+Such a model has been described by Yaari et al.\ \cite{yaari2013models}, and later in an improved version \cite{cui2016model}, as the so called S5F model.
+The S5F model is simply the a list of relative probabilities of observing the middle base mutating in all the possible 1024 5-mer DNA motifs.
 Given a motif and a mutation on its middle base, the S5F model also provides the probability of the nucleotide identity of the resulting mutation.
-A motif model is completely empirical and relies on the input data which is a large number of BCR sequences that have undergone SHM.
+This motif model is completely empirical and relies on the input data which is a large number of BCR sequences that have undergone SHM without selection.
 A survival model \cite{cox1992regression} is a good way to describe the observed data, with the event rate Theta, being proportional to the logarithm of the mutation rate of the motif (unpublished data from David Shaw and Jean Feng), see figure \ref{fig:SAMM_plot}.
-Fitting the model is non-trivial, because neighboring motifs share the same context and in the case of an observed event in one motif this changed the context, and thereby Theta, in the other motifs.
+Fitting the model is non-trivial because neighboring motifs share the same context and in the case of an observed event in one motif this changed the context, and thereby Theta, in the other motifs.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.45\textwidth]{figures/SAMM_plot.pdf}
     \caption{
         \label{fig:SAMM_plot}
-        Plot of a 5-mer SHM motif model analogous to S5F \cite{cui2016model}. Bottom row is the 5'-end of the motif progressing upwards to the 3'-end with G as the central base. Theta is the rate parameter of the survival model, used to fit the data, and is proportional to the logarithm of the mutation rate.
+        Plot of a 5-mer SHM motif model analogous to S5F \cite{cui2016model}. Bottom row is the 5'-end of the 5-mer motif progressing upwards to the 3'-end and with G as the central base. Theta is the rate parameter of the survival model and is proportional to the logarithm of the mutation rate.
         Figure credit: David Shaw and Jean Feng.
     }
 \end{figure}

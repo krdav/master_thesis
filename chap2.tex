@@ -14,7 +14,7 @@ In order to validate the correctness of phylogenetic methods, simulation studies
 Simulations are classically done by randomly permuting a sequence along a tree or sampling mutations from a distribution of substitutions, but a simulation can also be configured to have selection.
 
 There already is a large body of literature suggesting different ways of modelling the GC reaction from mechanistic models \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, to probabilistic frameworks \cite{shlomchik1998clone}, \cite{Reshetova_2017}, systems of differential equations \cite{shahaf2008antigen} and birth-death processes \cite{Balelli_2016}.
-Shlomchik et al.\ \cite{shlomchik1998clone} developed ``Clone,'' a simple statistical framework inspired by the intuition that CDRs are more likely to accept mutations than FRs.
+Shlomchik et al.\ \cite{shlomchik1998clone} developed ``Clone'', a simple statistical framework inspired by the intuition that CDRs are more likely to accept mutations than FRs.
 In Clone mutations are introduced, by an intrinsic mutation rate ($\lambda$), into either CDR or FR and being either synonymous or non-synonymous with the two probabilities drawn from two Bernoulli distributions.
 This gives four categories associated with their own probability, and for each category a Poisson progeny distribution can be defined to simulate death and/or cell divisions.
 Later Kleinstein et al.\ \cite{kleinstein2003estimating} used Clone as a statistical framework to find the maximum likelihood estimates of its model parameters, given some real BCR sequence dataset.
