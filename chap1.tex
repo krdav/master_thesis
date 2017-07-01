@@ -526,7 +526,7 @@ Contrarily, if integrating over germline and junctional annotation uncertainties
 Now it should be clear that the root cause of the clustering problem is propagation of errors in point estimates, i.e.\ ignoring uncertainties in VDJ assignments.
 When a clustering criterion is based on the point estimate of both the V and J assignment each assignment uncertainty is affecting the clustering performance negatively.
 The junction length suffers the same problem and is often being further problematic because of the alignments issue outlined in the example in table \ref{extend_or_not}.
-Lastly, hamming distance is weighting a mutation in the N/P base region equally likely as a mutation in the middle of the germline gene while there is much more certainty of a real SHM event in the later case.
+Lastly, hamming distance is weighting a mutation in the N/P base region equally likely as a mutation in the middle of the germline gene while there is much more certainty of a real SHM event in the latter case.
 In the example in figure \ref{fig:VJ_CDR3_agglomeration} VJ junction agglomeration is overestimating the number of clusters and indeed this intuition is also found by simulation studies \cite{ralph2016likelihood}.
 
 A completely different approach is taken by Ralph et al.\ \cite{ralph2016likelihood} by extending on their HMM framework for germline gene annotation.

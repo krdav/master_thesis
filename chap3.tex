@@ -65,7 +65,7 @@ The purpose of COAR is to compare two trees with the same leaves; let's call the
 When performing ASR the desired result is often to reconstruct the internal nodes in the direct path going from a leaf to the root, as illustrated in figure \ref{fig:ASR_true_vs_inferred}.
 This is extracted by starting at a leaf node and traversing upwards in the tree, parent by parent, until the root is reached.
 In the following, this list of sequences will be referred to as the ancestral lineage.
-The ancestral lineage is the objective so lets use this to define COAR, and lets also set COAR to be the expected per-site error in such a reconstruction.
+The ancestral lineage is the objective so let's use this to define COAR, and let's also set COAR to be the expected per-site error in such a reconstruction.
 Now following the example in figure \ref{fig:ASR_true_vs_inferred}.
 Often there will be small differences in tree topology between the true and inferred trees and these will likely make the number of internal states in the ancestral lineages differ.
 This makes comparison difficult because two lists of different length cannot be element wise compared.
