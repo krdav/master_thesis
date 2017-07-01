@@ -111,6 +111,7 @@ When the binding equilibrium has been reached the progeny distribution for a B c
 Affinity of a progeny cell is a function of the BCR sequence defined by the fitness landscape, and after cell division the binding equilibrium is updated with the progeny cells and their affinities.
 Finally, when all B cells have been evaluated a new round of selection starts.
 
+\clearpage
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=1\textwidth]{figures/simulation_figure.pdf}
@@ -192,6 +193,7 @@ Extending to multiple BCR affinities:
 \]
 
 \noindent
+\clearpage
 Affinity is a constant for each BCR and since all B cells compete for the same antigen, each $[AB_i]$ is dependent only through the concentration of unbound antigen:
 \[
  \begin{matrix}
@@ -254,7 +256,7 @@ The exponent, $k$, can be chosen to adjust the mapping between distance and affi
     }
 \end{figure}
 
-
+\clearpage
 It is easy to imagine that in a real affinity maturation process there will be many different BCR sequences that are practically equally fit.
 E.g.\ this will happen when multiple amino acids are equally fit on a given position, and it will also happen if there are multiple distinct maturation paths that ends up with equally fit BCRs.
 The later effect can be introduced into the model be adding multiple target sequences and then determining the affinity based on the shortest distance to any of these:
@@ -715,6 +717,7 @@ We see that the topology of simulated trees also capture this notion of clonal b
 % Expressed in equations:
 % fitness([AB_i]) = AB_i/sum(AB_i, i from 1 to N)
 % In this way it would reflect T cell more realistically, but nevertheless the current model is already capturing most of this relative effect simply by binding more antigen when affinity is increased.
+\clearpage
 \section{Discussion and conclusion}
 Previously, many groups have made models of the GC reaction and affinity maturation \cite{Reshetova_2017}, \cite{Shahaf_2008}, \cite{Chaudhury_2014}, \cite{Wang_Mata_2015}, \cite{Childs_Baskerville_Cobey_2015}, \cite{robert2017simulate}, but none of these have included a definition of the BCR sequences on DNA level.
 Neutral branching processes can easily be setup to simulate tree with sequences undergoing the same mutational patterns as real BCRs, but they have no way of capturing the important clonal bursts happening due to the fitness gain from mutating to a higher affinity state.
